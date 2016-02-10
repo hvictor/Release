@@ -164,12 +164,12 @@ void Configuration::display()
 	cout << "[Optical Layer]" << endl;
 	cout << "\tLinear Low-Pass Filter X:\t\t" << opticalLayerParameters.linearLowPassFilterX << endl;
 	cout << "\tLinear Low-Pass Filter Y:\t\t" << opticalLayerParameters.linearLowPassFilterY << endl;
-	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereX:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereX;
-	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereY:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereY;
-	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalX:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalX;
-	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalY:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalY;
-	cout << "\tOpticalLayer_StatefulObjectFilterIdleMaxTicks:\t" << opticalLayerParameters.statefulObjectFilterIdleMaxTicks;
-	cout << "\tOpticalLayer_StatefulObjectFilterTrajectoryMinStates:\t" <<
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereX:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereX << endl;
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereY:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereY << endl;
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalX:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalX << endl;
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalY:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalY << endl;
+	cout << "\tOpticalLayer_StatefulObjectFilterIdleMaxTicks:\t" << opticalLayerParameters.statefulObjectFilterIdleMaxTicks << endl;
+	cout << "\tOpticalLayer_StatefulObjectFilterTrajectoryMinStates:\t" << opticalLayerParameters.statefulObjectFilterTrajectoryMinStates << endl;
 	cout << "[DUO Stereo Camera]" << endl;
 	cout << "\tGain:\t\t" << duoHardwareParameters.gain << endl;
 	cout << "\tExposure:\t\t" << duoHardwareParameters.exposure << endl;
