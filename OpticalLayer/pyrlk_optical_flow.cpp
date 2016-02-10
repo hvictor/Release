@@ -65,7 +65,7 @@ vector<FlowObject> getFlowObjects(Mat& frame, const vector<Point2f>& prevPts, co
 			double displacement_y = p.y - q.y;
 			double dist = sqrt(displacement_x*displacement_x + displacement_y*displacement_y);
 
-			if (dist < Configuration::getInstance()->opticalLayerParameters.lucasKanadeOpticalFlowMinMotion)
+			if (dist < Configuration::getInstance()->getOpticalLayerParameters().lucasKanadeOpticalFlowMinMotion)
 				continue;
 
 			FlowObject fwobj;
