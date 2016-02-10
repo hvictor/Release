@@ -1,3 +1,6 @@
+// Spinlock Queue
+// Victor Huerlimann
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
