@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<Frame_Width>1280</Frame_Width>
+<Frame_Height>720</Frame_Height>
+<Frame_Channels>1</Frame_Channels>
+<Frame_OutputType>0</Frame_OutputType>
+<OperationalMode_InputDevice>0</OperationalMode_InputDevice>
+<OperationalMode_ProcessingMode>0</OperationalMode_ProcessingMode>
+<OpticalLayer_LinearLowPassFilterX>9.3000000000000005e-01</OpticalLayer_LinearLowPassFilterX>
+<OpticalLayer_LinearLowPassFilterY>9.8999999999999999e-01</OpticalLayer_LinearLowPassFilterY>
+<StereoCameraDUO_Gain>100</StereoCameraDUO_Gain>
+<StereoCameraDUO_Exposure>100</StereoCameraDUO_Exposure>
+<StereoCameraDUO_Leds>75</StereoCameraDUO_Leds>
+</opencv_storage>
