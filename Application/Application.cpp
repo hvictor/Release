@@ -170,7 +170,8 @@ void *frames_processor(void *)
 			StateRelatedTable *stateTable = statefulObjectFilter->updateFilterState(flowObjects[j]);
 		}
 
-		statefulObjectFilter->computeMeanMotionCenters();
+		// Compute mean motion centers (Disabled, possible correspondance precision loss)
+		//statefulObjectFilter->computeMeanMotionCenters();
 
 		vector<StateRelatedTable *> t = statefulObjectFilter->getTrajectoryCandidateTables();
 
