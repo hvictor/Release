@@ -10,6 +10,7 @@
 #include "pyrlk_optical_flow.h"
 #include <stdio.h>
 #include "../Configuration/configs.h"
+#include "../Configuration/Configuration.h"
 
 void download(const GpuMat& d_mat, vector<uchar>& vec)
 {
@@ -64,7 +65,7 @@ vector<FlowObject> getFlowObjects(Mat& frame, const vector<Point2f>& prevPts, co
 			double displacement_y = p.y - q.y;
 			double dist = sqrt(displacement_x*displacement_x + displacement_y*displacement_y);
 
-			if (dist < 1.0)
+			if (dist < Configuration::getInstance()->opticalLayerParameters.lucasKanadeOpticalFlowMinMotion)
 				continue;
 
 			FlowObject fwobj;

@@ -77,6 +77,13 @@ void Configuration::writeConfigFile(string fileName)
 	// Optical Layer
 	fs << "OpticalLayer_LinearLowPassFilterX" << opticalLayerParameters.linearLowPassFilterX;
 	fs << "OpticalLayer_LinearLowPassFilterY" << opticalLayerParameters.linearLowPassFilterY;
+	fs << "OpticalLayer_LucasKanadeOpticalFlowMinMotion" << opticalLayerParameters.lucasKanadeOpticalFlowMinMotion;
+	fs << "OpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereX" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereX;
+	fs << "OpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereY" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereY;
+	fs << "OpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalX" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalX;
+	fs << "OpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalY" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalY;
+	fs << "OpticalLayer_StatefulObjectFilterIdleMaxTicks" << opticalLayerParameters.statefulObjectFilterIdleMaxTicks;
+	fs << "OpticalLayer_StatefulObjectFilterTrajectoryMinStates" << opticalLayerParameters.statefulObjectFilterTrajectoryMinStates;
 
 	// DUO Stereo Camera
 	fs << "StereoCameraDUO_Gain" << duoHardwareParameters.gain;
@@ -121,6 +128,13 @@ void Configuration::loadConfigFile(string fileName)
 	opticalLayerParameters.linearLowPassFilterX = dTmp;
 	fs["OpticalLayer_LinearLowPassFilterY"] >> dTmp;
 	opticalLayerParameters.linearLowPassFilterY = dTmp;
+	fs["OpticalLayer_LucasKanadeOpticalFlowMinMotion"] >> opticalLayerParameters.lucasKanadeOpticalFlowMinMotion;
+	fs["OpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereX"] >> opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereX;
+	fs["OpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereY"] >> opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereY;
+	fs["OpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalX"] >> opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalX;
+	fs["OpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalY"] >> opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalY;
+	fs["OpticalLayer_StatefulObjectFilterIdleMaxTicks"] >> opticalLayerParameters.statefulObjectFilterIdleMaxTicks;
+	fs["OpticalLayer_StatefulObjectFilterTrajectoryMinStates"] >> opticalLayerParameters.statefulObjectFilterTrajectoryMinStates;
 
 	// DUO Stereo Camera
 	fs["StereoCameraDUO_Gain"] >> duoHardwareParameters.gain;
@@ -145,6 +159,12 @@ void Configuration::display()
 	cout << "[Optical Layer]" << endl;
 	cout << "\tLinear Low-Pass Filter X:\t\t" << opticalLayerParameters.linearLowPassFilterX << endl;
 	cout << "\tLinear Low-Pass Filter Y:\t\t" << opticalLayerParameters.linearLowPassFilterY << endl;
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereX:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereX;
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereY:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereY;
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalX:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalX;
+	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffDirectionalY:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalY;
+	cout << "\tOpticalLayer_StatefulObjectFilterIdleMaxTicks:\t" << opticalLayerParameters.statefulObjectFilterIdleMaxTicks;
+	cout << "\tOpticalLayer_StatefulObjectFilterTrajectoryMinStates:\t" <<
 	cout << "[DUO Stereo Camera]" << endl;
 	cout << "\tGain:\t\t" << duoHardwareParameters.gain << endl;
 	cout << "\tExposure:\t\t" << duoHardwareParameters.exposure << endl;

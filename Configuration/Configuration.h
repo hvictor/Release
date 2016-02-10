@@ -58,8 +58,19 @@ typedef struct
 
 typedef struct
 {
+	// Linear Low-Pass filter parameters
 	double linearLowPassFilterX;
 	double linearLowPassFilterY;
+
+	// Stateful Object Filter (SOF) parameter
+	double lucasKanadeOpticalFlowMinMotion;
+	double statefulObjectFilterRelatedMaxDiffSphereX;
+	double statefulObjectFilterRelatedMaxDiffSphereY;
+	double statefulObjectFilterRelatedMaxDiffDirectionalX;
+	double statefulObjectFilterRelatedMaxDiffDirectionalY;
+	int statefulObjectFilterIdleMaxTicks;
+	int statefulObjectFilterTrajectoryMinStates;
+
 } OpticalLayerParameters;
 
 typedef struct
