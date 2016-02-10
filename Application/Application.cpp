@@ -1,7 +1,7 @@
 /*
  * *****************************************************************
  * Module: 		Real-Time Tennis Tracker Application
- * Description:		Main module
+ * Description:		Main Module
  *
  * Author:		Victor Huerlimann
  * *****************************************************************
