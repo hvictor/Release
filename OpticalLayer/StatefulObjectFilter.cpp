@@ -40,7 +40,7 @@ void StatefulObjectFilter::deleteTable(StateRelatedTable *table)
 
 bool StatefulObjectFilter::suppressionNeeded(StateRelatedTable *t)
 {
-	return ((timer - t->updateTick) >= Configuration::getInstance()->opticalLayerParameters.statefulObjectFilterIdleMaxTicks);
+	return ((timer - t->updateTick) >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterIdleMaxTicks);
 }
 
 vector<StateRelatedTable *> StatefulObjectFilter::getTables()
@@ -59,7 +59,7 @@ vector<StateRelatedTable *> StatefulObjectFilter::getTrajectoryCandidateTables()
 			s = tables.erase(s);
 			continue;
 		}
-		else if ((*s)->relatedStates.size() >= Configuration::getInstance()->opticalLayerParameters.statefulObjectFilterTrajectoryMinStates) {
+		else if ((*s)->relatedStates.size() >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterTrajectoryMinStates) {
 			c.push_back(*s);
 		}
 
@@ -87,7 +87,7 @@ bool StatefulObjectFilter::relatedDisplacement(TrackedState *state, StateRelated
 	double diff_x = fabsl((double)state->state.x - (double)((double)s->state.x - s->state.displacement_x));
 	double diff_y = fabsl((double)state->state.y - (double)((double)s->state.y - s->state.displacement_y));
 
-	return (diff_x <= Configuration::getInstance()->opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalX && diff_y <= Configuration::getInstance()->opticalLayerParameters.statefulObjectFilterRelatedMaxDiffDirectionalY);
+	return (diff_x <= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterRelatedMaxDiffDirectionalX && diff_y <= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterRelatedMaxDiffDirectionalY);
 }
 
 bool StatefulObjectFilter::related(TrackedState *state, StateRelatedTable *table)
@@ -118,7 +118,7 @@ bool StatefulObjectFilter::related(TrackedState *state, StateRelatedTable *table
 	diff_x = fabsl((double)state->state.x - (double)((double)table->relatedStates[argmax]->state.x));
 	diff_y = fabsl((double)state->state.y - (double)((double)table->relatedStates[argmax]->state.y));
 
-	return (sqrt(diff_x*diff_x + diff_y*diff_y) <= Configuration::getInstance()->opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereX);
+	return (sqrt(diff_x*diff_x + diff_y*diff_y) <= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterRelatedMaxDiffSphereX);
 }
 
 StateRelatedTable *StatefulObjectFilter::relateStateToTable(TrackedState *state)
