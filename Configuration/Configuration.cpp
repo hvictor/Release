@@ -40,6 +40,11 @@ OperationalMode Configuration::getOperationalMode()
 	return operationalMode;
 }
 
+OpticalLayerParameters Configuration::getOpticalLayerParameters()
+{
+	return opticalLayerParameters;
+}
+
 DUOStereoCameraHardwareParameters Configuration::getDUOStereoCameraHardwareParameters()
 {
 	return duoHardwareParameters;
