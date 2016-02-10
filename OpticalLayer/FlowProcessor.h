@@ -32,6 +32,9 @@ typedef struct
 	Rect rect;
 	double displacement_x;
 	double displacement_y;
+
+	Point currentPosition;
+	Point nextPosition;
 } FlowObject;
 
 vector<FlowObject> FlowProcessor_ProcessSparseFlow(Mat frame0, Mat frame1, vector<Rect> discardedImageAreas);

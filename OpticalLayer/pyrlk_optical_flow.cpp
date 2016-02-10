@@ -61,8 +61,8 @@ vector<FlowObject> getFlowObjects(Mat& frame, const vector<Point2f>& prevPts, co
 
 		if (status[i] && pointsNotInArea(p, q, discardedImageAreas)) {
 
-			double displacement_x = p.x - q.x;
-			double displacement_y = p.y - q.y;
+			double displacement_x = q.x - p.x;
+			double displacement_y = q.y - p.y;
 			double dist = sqrt(displacement_x*displacement_x + displacement_y*displacement_y);
 
 			if (dist < Configuration::getInstance()->getOpticalLayerParameters().lucasKanadeOpticalFlowMinMotion)
@@ -72,6 +72,8 @@ vector<FlowObject> getFlowObjects(Mat& frame, const vector<Point2f>& prevPts, co
 
 			fwobj.x = p.x;
 			fwobj.y = p.y;
+			fwobj.currentPosition = p;
+			fwobj.nextPosition = q;
 			fwobj.displacement_x = displacement_x;
 			fwobj.displacement_y = displacement_y;
 

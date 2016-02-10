@@ -84,10 +84,16 @@ bool StatefulObjectFilter::relatedDisplacement(TrackedState *state, StateRelated
 
 	// The current state is related with this table, iff its position corresponds
 	// to the latest state's position plus the displacement
-	double diff_x = fabsl((double)state->state.x - (double)((double)s->state.x - s->state.displacement_x));
-	double diff_y = fabsl((double)state->state.y - (double)((double)s->state.y - s->state.displacement_y));
+	double diff_x = fabsl((double)state->state.x - (double)((double)s->state.x + s->state.displacement_x));
+	double diff_y = fabsl((double)state->state.y - (double)((double)s->state.y + s->state.displacement_y));
 
 	return (diff_x <= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterRelatedMaxDiffDirectionalX && diff_y <= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterRelatedMaxDiffDirectionalY);
+}
+
+bool StatefulObjectFilter::relatedPrecise(TrackedState *state, StateRelatedTable *table)
+{
+	TrackedState *s = table->relatedStates[table->relatedStates.size() - 1];
+	return (s->state.nextPosition == state->state.currentPosition);
 }
 
 bool StatefulObjectFilter::related(TrackedState *state, StateRelatedTable *table)
