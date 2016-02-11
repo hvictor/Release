@@ -173,8 +173,6 @@ void StatefulObjectFilter::computeMeanMotionCenters()
 		if (t->currentUpdateFirstIndex < 0 || t->relatedStates.size() < 2)
 			continue;
 
-		/*
-
 		double accum_displacementx = 0.0;
 		double accum_displacementy = 0.0;
 		double xmin = RAND_MAX;
@@ -206,7 +204,6 @@ void StatefulObjectFilter::computeMeanMotionCenters()
 		tmp.y = ymin + (ymax - ymin) / 2;
 
 		t->relatedStates.push_back(makeTrackedState(tmp));
-		*/
 
 		t->currentUpdateFirstIndex = -1;
 	}
