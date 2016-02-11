@@ -111,18 +111,29 @@ bool StatefulObjectFilter::relatedPreciseMultipleStates(TrackedState *state, Sta
 {
 	bool retval = false;
 	int t = table->relatedStates[table->relatedStates.size() - 1]->t;
+	double d = Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterRelatedMaxDiffDirectionalX;
 
 	for (int i = table->relatedStates.size() - 1; i >= 0; i--) {
 		if (table->relatedStates[i]->t != t) {
-			//break;
+			break;
 		}
 
 		TrackedState *s = table->relatedStates[i];
 
+		Point p = s->state.nextPosition;
+		Point q = state->state.currentPosition;
+		double dx = fabsl(q.x - p.x);
+		double dy = fabsl(q.y - p.y);
+		if (sqrt(dx*dx + dy*dy) < d) {
+			retval = true;
+			break;
+		}
+		/*
 		if (s->state.nextPosition == state->state.currentPosition) {
 			retval = true;
 			break;
 		}
+		*/
 	}
 
 	return retval;
