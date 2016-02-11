@@ -184,16 +184,20 @@ void *frames_processor(void *)
 			gpu::cvtColor(d_frame, d_frame_BGR, CV_GRAY2BGR);
 			d_frame_BGR.download(h_frame_BGR);
 
-			for (int j = 0; j < flowObjects.size(); j++) {
-				Point2f p(flowObjects[j].x, flowObjects[j].y);
-				rectangle(h_frame_BGR, Point2f(p.x - 4, p.y - 4), Point2f(p.x + 4, p.y + 4), Scalar(0, 255, 255), 1);
+			// Draw mean motion centers
+			for (int j = 0; j < statefulObjectFilter->getTables().size(); j++) {
+				StateRelatedTable *table = tables[j];
+				for (int k = 0; k < table->relatedStates.size(); k++) {
+					Point2f p(table->relatedStates[k].x, table->relatedStates[k].y);
+					rectangle(h_frame_BGR, Point2f(p.x - 8, p.y - 8), Point2f(p.x + 8, p.y + 8), Scalar(0, 0, 255), 1);
+				}
 				//line(h_frame_BGR, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
 			}
 
 			for (int k = 0; k < t.size(); k++) {
 				FlowObject tmp = t[k]->relatedStates[t[k]->relatedStates.size()-1]->state;
-				circle(h_frame_BGR, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 1);
-				line(h_frame_BGR, Point2f(tmp.x, tmp.y), Point2f(tmp.x-tmp.displacement_x*3, tmp.y-tmp.displacement_y*3), Scalar(0,255,0), 1);
+				circle(h_frame_BGR, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
+				line(h_frame_BGR, Point2f(tmp.x, tmp.y), Point2f(tmp.x+tmp.displacement_x*3, tmp.y+tmp.displacement_y*3), Scalar(0,200,255), 1);
 			}
 
 			statefulObjectFilter->tick();
