@@ -186,8 +186,8 @@ void *frames_processor(void *)
 
 			for (int j = 0; j < flowObjects.size(); j++) {
 				Point2f p(flowObjects[j].x, flowObjects[j].y);
-				rectangle(h_frame_BGR, Point2f(p.x - 4, p.y - 4), Point2f(p.x + 4, p.y + 4), Scalar(0, 0, 255), 1);
-				line(h_frame_BGR, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
+				rectangle(h_frame_BGR, Point2f(p.x - 4, p.y - 4), Point2f(p.x + 4, p.y + 4), Scalar(0, 255, 255), 1);
+				//line(h_frame_BGR, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
 			}
 
 			for (int k = 0; k < t.size(); k++) {
