@@ -107,6 +107,27 @@ bool StatefulObjectFilter::relatedPrecise(TrackedState *state, StateRelatedTable
 	//return retval;
 }
 
+bool StatefulObjectFilter::relatedPreciseMultipleStates(TrackedState *state, StateRelatedTable *table)
+{
+	bool retval = false;
+	int t = table->relatedStates[table->relatedStates.size() - 1]->t;
+
+	for (int i = table->relatedStates.size() - 1; i >= 0; i--) {
+		if (table->relatedStates[i]->t != t) {
+			break;
+		}
+
+		TrackedState *s = table->relatedStates[i];
+
+		if (s->state.nextPosition == state->state.currentPosition) {
+			retval = true;
+			break;
+		}
+	}
+
+	return retval;
+}
+
 bool StatefulObjectFilter::related(TrackedState *state, StateRelatedTable *table)
 {
 	// Get table's latest state
@@ -143,7 +164,7 @@ StateRelatedTable *StatefulObjectFilter::relateStateToTable(TrackedState *state)
 	StateRelatedTable *stateTable = NULL;
 
 	for (int i = 0; i < tables.size(); i++) {
-		if (related(state, tables[i])) {
+		if (relatedPreciseMultipleStates(state, tables[i])) {
 			stateTable = tables[i];
 			break;
 		}

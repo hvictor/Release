@@ -58,6 +58,7 @@ private:
 	bool related(TrackedState *state, StateRelatedTable *table);
 	bool relatedDisplacement(TrackedState *state, StateRelatedTable *table);
 	bool relatedPrecise(TrackedState *state, StateRelatedTable *table);
+	bool relatedPreciseMultipleStates(TrackedState *state, StateRelatedTable *table);
 };
 
 #endif /* STATEFULOBJECTFILTER_H_ */
