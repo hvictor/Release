@@ -195,11 +195,13 @@ void *frames_processor(void *)
 				//line(h_frame_BGR, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
 			}
 
+			/*
 			for (int k = 0; k < t.size(); k++) {
 				FlowObject tmp = t[k]->relatedStates[t[k]->relatedStates.size()-1]->state;
 				circle(h_frame_BGR, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
 				line(h_frame_BGR, Point2f(tmp.x, tmp.y), Point2f(tmp.x+tmp.displacement_x*3, tmp.y+tmp.displacement_y*3), Scalar(0,200,255), 1);
 			}
+			*/
 
 			statefulObjectFilter->tick();
 
