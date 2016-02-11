@@ -186,7 +186,7 @@ void *frames_processor(void *)
 
 			// Draw mean motion centers
 			for (int j = 0; j < statefulObjectFilter->getTables().size(); j++) {
-				StateRelatedTable *table = tables[j];
+				StateRelatedTable *table = (statefulObjectFilter->getTables())[j];
 				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point2f p(table->relatedStates[k].x, table->relatedStates[k].y);
 					rectangle(h_frame_BGR, Point2f(p.x - 8, p.y - 8), Point2f(p.x + 8, p.y + 8), Scalar(0, 0, 255), 1);
