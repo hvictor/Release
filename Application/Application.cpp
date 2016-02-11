@@ -189,7 +189,7 @@ void *frames_processor(void *)
 				StateRelatedTable *table = (statefulObjectFilter->getTables())[j];
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
-					Point2f p(table->relatedStates[k].x, table->relatedStates[k].y);
+					Point2f p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
 					rectangle(h_frame_BGR, Point2f(p.x - 8, p.y - 8), Point2f(p.x + 8, p.y + 8), Scalar(0, 0, 255), 1);
 				}
 				//line(h_frame_BGR, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
