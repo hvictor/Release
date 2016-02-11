@@ -143,7 +143,7 @@ StateRelatedTable *StatefulObjectFilter::relateStateToTable(TrackedState *state)
 	StateRelatedTable *stateTable = NULL;
 
 	for (int i = 0; i < tables.size(); i++) {
-		if (relatedPrecise(state, tables[i])) {
+		if (related(state, tables[i])) {
 			stateTable = tables[i];
 			break;
 		}
