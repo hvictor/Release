@@ -92,8 +92,19 @@ bool StatefulObjectFilter::relatedDisplacement(TrackedState *state, StateRelated
 
 bool StatefulObjectFilter::relatedPrecise(TrackedState *state, StateRelatedTable *table)
 {
-	TrackedState *s = table->relatedStates[table->relatedStates.size() - 1];
-	return (s->state.nextPosition == state->state.currentPosition);
+	bool retval = false;
+	//TrackedState *s = table->relatedStates[table->relatedStates.size() - 1];
+
+	for (int i = table->currentUpdateFirstIndex; i < table->relatedStates.size(); i++) {
+		TrackedState *s = table->relatedStates[i];
+		if (s->state.nextPosition == state->state.currentPosition) {
+			retval = true;
+			break;
+		}
+	}
+
+	//return (s->state.nextPosition == state->state.currentPosition);
+	return retval;
 }
 
 bool StatefulObjectFilter::related(TrackedState *state, StateRelatedTable *table)
