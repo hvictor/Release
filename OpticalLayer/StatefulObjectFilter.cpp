@@ -114,7 +114,7 @@ bool StatefulObjectFilter::relatedPreciseMultipleStates(TrackedState *state, Sta
 
 	for (int i = table->relatedStates.size() - 1; i >= 0; i--) {
 		if (table->relatedStates[i]->t != t) {
-			break;
+			//break;
 		}
 
 		TrackedState *s = table->relatedStates[i];
