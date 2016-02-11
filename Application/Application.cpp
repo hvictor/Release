@@ -193,7 +193,7 @@ void *frames_processor(void *)
 					if (k == table->relatedStates.size()-1) {
 						char id[30];
 						sprintf(id, "%d", table->stateTableID);
-						putText(frame, id, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.3, cvScalar(50, 205, 50), 1, CV_AA);
+						putText(h_frame_BGR, id, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.3, cvScalar(50, 205, 50), 1, CV_AA);
 					}
 				}
 				//line(h_frame_BGR, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
