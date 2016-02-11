@@ -188,10 +188,10 @@ void *frames_processor(void *)
 			for (int j = 0; j < statefulObjectFilter->getTables().size(); j++) {
 				StateRelatedTable *table = (statefulObjectFilter->getTables())[j];
 
-				for (int k = table->relatedStates.size()-1; k < table->relatedStates.size(); k++) {
+				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
 					Point q = table->relatedStates[k]->state.nextPosition;
-					rectangle(h_frame_BGR, Point(p.x - 8, p.y - 8), Point(p.x + 8, p.y + 8), Scalar(0, 0, 255), 1);
+					rectangle(h_frame_BGR, Point(p.x - 4, p.y - 4), Point(p.x + 4, p.y + 4), Scalar(0, 0, 255), 1);
 					line(h_frame_BGR, p, q, Scalar(0, 200, 255));
 					rectangle(h_frame_BGR, Point(q.x - 4, q.y - 4), Point(q.x + 4, q.y + 4), Scalar(0, 200, 255), 1);
 				}
