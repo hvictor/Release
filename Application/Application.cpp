@@ -191,14 +191,14 @@ void *frames_processor(void *)
 				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
 					Point q = table->relatedStates[k]->state.nextPosition;
-					rectangle(h_frame_BGR, Point(p.x - 4, p.y - 4), Point(p.x + 4, p.y + 4), Scalar(0, 0, 255), 1);
 					line(h_frame_BGR, p, q, Scalar(0, 200, 255));
 					//rectangle(h_frame_BGR, Point(q.x - 4, q.y - 4), Point(q.x + 4, q.y + 4), Scalar(0, 200, 255), 1);
 
 					if (k == table->relatedStates.size()-1) {
+						rectangle(h_frame_BGR, Point(p.x - 4, p.y - 4), Point(p.x + 4, p.y + 4), Scalar(0, 0, 255), 1);
 						char id[30];
-						sprintf(id, "%d", table->stateTableID);
-						putText(h_frame_BGR, id, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.5, cvScalar(50, 205, 50), 1, CV_AA);
+						sprintf(id, "[%d]", table->stateTableID);
+						putText(h_frame_BGR, id, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.4, cvScalar(50, 205, 50), 1, CV_AA);
 					}
 				}
 			}
