@@ -171,7 +171,7 @@ void *frames_processor(void *)
 		}
 
 		// Compute mean motion centers (Disabled, possible correspondance precision loss)
-		statefulObjectFilter->computeMeanMotionCenters();
+		//statefulObjectFilter->computeMeanMotionCenters();
 
 		vector<StateRelatedTable *> t = statefulObjectFilter->getTrajectoryCandidateTables();
 
