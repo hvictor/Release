@@ -21,7 +21,9 @@ typedef struct
 struct state_related_table
 {
 	int stateTableID;
+	int stateTemporalLayers;
 	int updateTick;
+
 	vector<TrackedState *> relatedStates;
 
 	int currentUpdateFirstIndex;
