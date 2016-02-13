@@ -185,8 +185,8 @@ void *frames_processor(void *)
 			d_frame_BGR.download(h_frame_BGR);
 
 			// Draw motion centers
-			for (int j = 0; j < statefulObjectFilter->getTables().size(); j++) {
-				StateRelatedTable *table = statefulObjectFilter->getTables()[j];
+			for (int j = 0; j < trajectoryCandidates.size(); j++) {
+				StateRelatedTable *table = trajectoryCandidates[j];
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);

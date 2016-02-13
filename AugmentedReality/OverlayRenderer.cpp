@@ -36,7 +36,7 @@ void OverlayRenderer::renderTracker(Mat frame, Point p, int size)
 void OverlayRenderer::renderTrackerState(Mat frame, StateRelatedTable *table, Point p)
 {
 	char stateMessage[60];
-	sprintf(stateMessage, "[STA:%d|LAY:%d]", table->stateTableID, table->stateTemporalLayers);
+	sprintf(stateMessage, "[%d]", table->stateTableID);
 	putText(frame, stateMessage, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.4, OVERLAY_COLOR_GREEN, 1, CV_AA);
 }
 
