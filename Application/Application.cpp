@@ -173,7 +173,7 @@ void *frames_processor(void *)
 		// Compute mean motion centers (Disabled, possible correspondance precision loss)
 		//statefulObjectFilter->computeMeanMotionCenters();
 
-		vector<StateRelatedTable *> trajectoryCandidates = statefulObjectFilter->getTrajectoryCandidateTables();
+		//vector<StateRelatedTable *> trajectoryCandidates = statefulObjectFilter->getTrajectoryCandidateTables();
 
 		// If forcing RGB output
 		if (force_rgb_output) {
@@ -185,8 +185,8 @@ void *frames_processor(void *)
 			d_frame_BGR.download(h_frame_BGR);
 
 			// Draw motion centers
-			for (int j = 0; j < trajectoryCandidates.size(); j++) {
-				StateRelatedTable *table = trajectoryCandidates[j];
+			for (int j = 0; j < statefulObjectFilter->getTables().size(); j++) {
+				StateRelatedTable *table = statefulObjectFilter->getTables()[j];
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
