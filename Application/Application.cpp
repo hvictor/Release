@@ -173,7 +173,7 @@ void *frames_processor(void *)
 		// Compute mean motion centers (Disabled, possible correspondance precision loss)
 		//statefulObjectFilter->computeMeanMotionCenters();
 
-		vector<StateRelatedTable *> trajectoryCandidates = statefulObjectFilter->getTrajectoryCandidateTables();
+		//vector<StateRelatedTable *> trajectoryCandidates = statefulObjectFilter->getTrajectoryCandidateTables();
 
 		// If forcing RGB output
 		if (force_rgb_output) {
@@ -195,7 +195,7 @@ void *frames_processor(void *)
 					//line(h_frame_BGR, p, q, Scalar(0, 200, 255));
 					//rectangle(h_frame_BGR, Point(q.x - 4, q.y - 4), Point(q.x + 4, q.y + 4), Scalar(0, 200, 255), 1);
 
-					rectangle(h_frame_BGR, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), Scalar(0, 0, 255), 1);
+					rectangle(h_frame_BGR, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), Scalar(0, 255, 255), 1);
 
 					if (k == table->relatedStates.size()-1) {
 						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 10);
