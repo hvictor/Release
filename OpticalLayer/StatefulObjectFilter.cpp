@@ -183,7 +183,6 @@ StateRelatedTable *StatefulObjectFilter::relateStateToTable(TrackedState *state)
 
 	if (stateTable == NULL) {
 		stateTable = new StateRelatedTable();
-		stateTable->stateTemporalLayers = 0;
 		stateTable->stateTableID = tables.size();
 		tables.push_back(stateTable);
 	}

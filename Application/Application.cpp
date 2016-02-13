@@ -173,7 +173,7 @@ void *frames_processor(void *)
 		// Compute mean motion centers (Disabled, possible correspondance precision loss)
 		//statefulObjectFilter->computeMeanMotionCenters();
 
-		//vector<StateRelatedTable *> trajectoryCandidates = statefulObjectFilter->getTrajectoryCandidateTables();
+		vector<StateRelatedTable *> t = statefulObjectFilter->getTrajectoryCandidateTables();
 
 		// If forcing RGB output
 		if (force_rgb_output) {
@@ -186,7 +186,7 @@ void *frames_processor(void *)
 
 			// Draw motion centers
 			for (int j = 0; j < statefulObjectFilter->getTables().size(); j++) {
-				StateRelatedTable *table = statefulObjectFilter->getTables()[j];
+				StateRelatedTable *table = (statefulObjectFilter->getTables())[j];
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
@@ -195,11 +195,13 @@ void *frames_processor(void *)
 					//line(h_frame_BGR, p, q, Scalar(0, 200, 255));
 					//rectangle(h_frame_BGR, Point(q.x - 4, q.y - 4), Point(q.x + 4, q.y + 4), Scalar(0, 200, 255), 1);
 
-					rectangle(h_frame_BGR, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), Scalar(0, 255, 255), 1);
+					rectangle(h_frame_BGR, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), Scalar(0, 0, 255), 1);
 
 					if (k == table->relatedStates.size()-1) {
-						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 10);
-						OverlayRenderer::getInstance()->renderTrackerState(h_frame_BGR, table, p);
+						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 8);
+						char id[30];
+						sprintf(id, "[%d]", table->stateTableID);
+						putText(h_frame_BGR, id, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.4, cvScalar(50, 205, 50), 1, CV_AA);
 					}
 				}
 			}
@@ -228,13 +230,11 @@ void *frames_processor(void *)
 				line(frame0_L, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
 			}
 
-			/*
-			for (int k = 0; k < trajectoryCandidates.size(); k++) {
-				FlowObject tmp = trajectoryCandidates[k]->relatedStates[trajectoryCandidates[k]->relatedStates.size()-1]->state;
+			for (int k = 0; k < t.size(); k++) {
+				FlowObject tmp = t[k]->relatedStates[t[k]->relatedStates.size()-1]->state;
 				circle(frame0_L, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
 				line(frame0_L, Point2f(tmp.x, tmp.y), Point2f(tmp.x-tmp.displacement_x*3, tmp.y-tmp.displacement_y*3), Scalar(0,255,0), 2);
 			}
-			*/
 
 			statefulObjectFilter->tick();
 
