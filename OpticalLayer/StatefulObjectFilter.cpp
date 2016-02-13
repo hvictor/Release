@@ -54,8 +54,6 @@ vector<StateRelatedTable *> StatefulObjectFilter::getTrajectoryCandidateTables()
 
 	for (vector<StateRelatedTable *>::iterator s = tables.begin(); s != tables.end(); ) {
 
-		c.push_back(*s);
-
 		if (suppressionNeeded(*s)) {
 			deleteTable(*s);
 			s = tables.erase(s);
