@@ -198,10 +198,8 @@ void *frames_processor(void *)
 					rectangle(h_frame_BGR, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), Scalar(0, 0, 255), 1);
 
 					if (k == table->relatedStates.size()-1) {
-						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 8);
-						char id[30];
-						sprintf(id, "[%d]", table->stateTableID);
-						putText(h_frame_BGR, id, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.4, cvScalar(50, 205, 50), 1, CV_AA);
+						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 10);
+						OverlayRenderer::getInstance()->renderTrackerState(h_frame_BGR, table, p);
 					}
 				}
 			}

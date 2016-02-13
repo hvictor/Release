@@ -26,11 +26,18 @@ OverlayRenderer::~OverlayRenderer() {
 
 void OverlayRenderer::renderTracker(Mat frame, Point p, int size)
 {
-	rectangle(frame, Point(p.x - size, p.y - size), Point(p.x + size, p.y + size), Scalar(0, 0, 255), 1);
+	rectangle(frame, Point(p.x - size, p.y - size), Point(p.x + size, p.y + size), OVERLAY_COLOR_GREEN, 1);
 	line(frame, Point(p.x, p.y - size), Point(p.x, p.y - (size-3)), Scalar(0, 0, 255), 1);
 	line(frame, Point(p.x, p.y + size), Point(p.x, p.y + (size-3)), Scalar(0, 0, 255), 1);
 	line(frame, Point(p.x - size, p.y), Point(p.x - (size-3), p.y), Scalar(0, 0, 255), 1);
 	line(frame, Point(p.x + (size-3), p.y), Point(p.x + size, p.y), Scalar(0, 0, 255), 1);
+}
+
+void OverlayRenderer::renderTrackerState(Mat frame, StateRelatedTable *table, Point p)
+{
+	char stateMessage[60];
+	sprintf(stateMessage, "[%d]", table->stateTableID);
+	putText(frame, stateMessage, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.4, OVERLAY_COLOR_GREEN, 1, CV_AA);
 }
 
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)
