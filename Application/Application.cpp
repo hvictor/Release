@@ -228,11 +228,13 @@ void *frames_processor(void *)
 				line(frame0_L, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
 			}
 
+			/*
 			for (int k = 0; k < trajectoryCandidates.size(); k++) {
 				FlowObject tmp = trajectoryCandidates[k]->relatedStates[trajectoryCandidates[k]->relatedStates.size()-1]->state;
 				circle(frame0_L, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
 				line(frame0_L, Point2f(tmp.x, tmp.y), Point2f(tmp.x-tmp.displacement_x*3, tmp.y-tmp.displacement_y*3), Scalar(0,255,0), 2);
 			}
+			*/
 
 			statefulObjectFilter->tick();
 
