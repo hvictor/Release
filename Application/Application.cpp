@@ -173,7 +173,7 @@ void *frames_processor(void *)
 		// Compute mean motion centers (Disabled, possible correspondance precision loss)
 		//statefulObjectFilter->computeMeanMotionCenters();
 
-		//vector<StateRelatedTable *> trajectoryCandidates = statefulObjectFilter->getTrajectoryCandidateTables();
+		vector<StateRelatedTable *> trajectoryCandidates = statefulObjectFilter->getTrajectoryCandidateTables();
 
 		// If forcing RGB output
 		if (force_rgb_output) {
