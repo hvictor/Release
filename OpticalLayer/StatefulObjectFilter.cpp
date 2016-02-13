@@ -54,12 +54,13 @@ vector<StateRelatedTable *> StatefulObjectFilter::getTrajectoryCandidateTables()
 
 	for (vector<StateRelatedTable *>::iterator s = tables.begin(); s != tables.end(); ) {
 
+		/*
 		if (suppressionNeeded(*s)) {
 			deleteTable(*s);
 			s = tables.erase(s);
 			continue;
 		}
-		else if ((*s)->stateTemporalLayers >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterTrajectoryMinStates) {
+		else */if ((*s)->stateTemporalLayers >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterTrajectoryMinStates) {
 			c.push_back(*s);
 		}
 
