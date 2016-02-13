@@ -6,7 +6,6 @@
  */
 
 #include "OverlayRenderer.h"
-#include "../OpticalLayer/StatefulObjectFilter.h"
 
 OverlayRenderer *OverlayRenderer::getInstance()
 {

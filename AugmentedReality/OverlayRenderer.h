@@ -11,6 +11,7 @@
 #include "../Common/opencv_headers.h"
 #include "../StaticModel/TennisField3D.h"
 #include "../OpticalLayer/TrajectoryRecognizer.h"
+#include "../OpticalLayer/StatefulObjectFilter.h"
 
 #define OVERLAY_COLOR_GREEN			Scalar(50, 205, 50)
 #define OVERLAY_COLOR_RED			Scalar(0, 0, 255)
