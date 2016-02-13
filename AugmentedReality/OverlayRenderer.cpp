@@ -24,6 +24,15 @@ OverlayRenderer::OverlayRenderer() {
 OverlayRenderer::~OverlayRenderer() {
 }
 
+void OverlayRenderer::renderTracker(Mat frame, Point p, int size)
+{
+	rectangle(frame, Point(p.x - size, p.y - size), Point(p.x + size, p.y + size), Scalar(0, 0, 255), 1);
+	line(frame, Point(p.x, p.y - size), Point(p.x, p.y - (size-3)), Scalar(0, 0, 255), 1);
+	line(frame, Point(p.x, p.y + size), Point(p.x, p.y + (size-3)), Scalar(0, 0, 255), 1);
+	line(frame, Point(p.x - size, p.y), Point(p.x - (size-3), p.y), Scalar(0, 0, 255), 1);
+	line(frame, Point(p.x + (size-3), p.y), Point(p.x + size, p.y), Scalar(0, 0, 255), 1);
+}
+
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)
 {
 	Vec2f image_coords0 = netPoints.at<Vec2f>(0, 0);
