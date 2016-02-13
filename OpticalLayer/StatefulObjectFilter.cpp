@@ -207,13 +207,6 @@ void StatefulObjectFilter::computeMeanMotionCenters()
 
 		double accum_displacementx = 0.0;
 		double accum_displacementy = 0.0;
-
-		double xaccum = 0.0;
-		double yaccum = 0.0;
-
-		double next_xaccum = 0.0;
-		double next_yaccum = 0.0;
-
 		double xmin = RAND_MAX;
 		double xmax = -RAND_MAX;
 		double ymin = RAND_MAX;
@@ -222,18 +215,10 @@ void StatefulObjectFilter::computeMeanMotionCenters()
 
 		for (vector<TrackedState *>::iterator is = (t->relatedStates.begin() + t->currentUpdateFirstIndex); is != t->relatedStates.end(); ) {
 
-			// TODO: NO XMIN E XMAX, MEDIA X, Y
-			// TODO: VETTORI: MEDIA --> Vettori con (differenza risp. media) > dev std ---> scartare
 			if ((double)(*is)->state.x < xmin) xmin = (double)(*is)->state.x;
 			if ((double)(*is)->state.y < ymin) ymin = (double)(*is)->state.y;
 			if ((double)(*is)->state.x > xmax) xmax = (double)(*is)->state.x;
 			if ((double)(*is)->state.y > ymax) ymax = (double)(*is)->state.y;
-
-			xaccum += (double)(*is)->state.x;
-			yaccum += (double)(*is)->state.y;
-
-			next_xaccum += (double)(*is)->state.nextPosition.x;
-			next_yaccum += (double)(*is)->state.nextPosition.y;
 
 			accum_displacementx += (*is)->state.displacement_x;
 			accum_displacementy += (*is)->state.displacement_y;
@@ -244,21 +229,11 @@ void StatefulObjectFilter::computeMeanMotionCenters()
 		accum_displacementx /= tot;
 		accum_displacementy /= tot;
 
-		xaccum /= tot;
-		yaccum /= tot;
-
-		next_xaccum /= tot;
-		next_yaccum /= tot;
-
 		FlowObject tmp;
 		tmp.displacement_x = accum_displacementx;
 		tmp.displacement_y = accum_displacementy;
-		tmp.x = xaccum;
-		tmp.y = yaccum;
-		tmp.currentPosition.x = tmp.x;
-		tmp.currentPosition.y = tmp.x;
-		tmp.nextPosition.x = next_xaccum;
-		tmp.nextPosition.y = next_yaccum;
+		tmp.x = xmin + (xmax - xmin) / 2;
+		tmp.y = ymin + (ymax - ymin) / 2;
 
 		t->relatedStates.push_back(makeTrackedState(tmp));
 
