@@ -13,6 +13,15 @@
 #include <opencv2/gpu/gpu.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 using namespace cv;
 using namespace cv::gpu;

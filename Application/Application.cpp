@@ -184,9 +184,8 @@ void *frames_processor(void *)
 			gpu::cvtColor(d_frame, d_frame_BGR, CV_GRAY2BGR);
 			d_frame_BGR.download(h_frame_BGR);
 
-			// Draw motion centers
-			for (int j = 0; j < statefulObjectFilter->getTables().size(); j++) {
-				StateRelatedTable *table = (statefulObjectFilter->getTables())[j];
+			for (int j = 0; j < t.size(); j++) {
+				StateRelatedTable *table = t[j];
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
@@ -201,14 +200,7 @@ void *frames_processor(void *)
 				}
 			}
 
-			/*
-			for (int k = 0; k < t.size(); k++) {
-				FlowObject tmp = t[k]->relatedStates[t[k]->relatedStates.size()-1]->state;
-				circle(h_frame_BGR, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
-				line(h_frame_BGR, Point2f(tmp.x, tmp.y), Point2f(tmp.x+tmp.displacement_x*3, tmp.y+tmp.displacement_y*3), Scalar(0,200,255), 1);
-			}
-			*/
-
+			// Advance SOF timer
 			statefulObjectFilter->tick();
 
 			drawRectAroundPlayers(h_frame_BGR, players);
