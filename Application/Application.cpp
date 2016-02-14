@@ -226,7 +226,8 @@ void *frames_processor(void *)
 
 			statefulObjectFilter->tick();
 
-			drawRectAroundPlayers(frame0_L, players);
+			// Render human shape recognition trackers
+			OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
 
 			memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
 		}
