@@ -7,12 +7,20 @@
 
 #include "TrajectoryReconstructor.h"
 
-TrajectoryReconstructor::TrajectoryReconstructor() {
-	// TODO Auto-generated constructor stub
-
+TrajectoryReconstructor::TrajectoryReconstructor()
+{
+	interpEngine = new InterpolationEngine();
 }
 
-TrajectoryReconstructor::~TrajectoryReconstructor() {
-	// TODO Auto-generated destructor stub
+TrajectoryReconstructor::~TrajectoryReconstructor()
+{
+	delete interpEngine;
+}
+
+CubicPolynomialCoeff TrajectoryReconstructor::convertToCubicPolynomial(StateRelatedTable *stateTable)
+{
+	CubicPolynomialCoeff c;
+
+	return interpEngine->interpolateCubicPolynomial(stateTable->relatedStates);
 }
 
