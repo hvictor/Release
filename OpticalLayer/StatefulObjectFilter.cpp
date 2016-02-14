@@ -40,7 +40,7 @@ void StatefulObjectFilter::deleteTable(StateRelatedTable *table)
 
 bool StatefulObjectFilter::suppressionNeeded(StateRelatedTable *t)
 {
-	return ((timer - t->updateTick) >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterIdleMaxTicks);
+	return (t->temporalLayers >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterIdleMaxTicks);
 }
 
 vector<StateRelatedTable *> StatefulObjectFilter::getTables()
@@ -183,12 +183,17 @@ StateRelatedTable *StatefulObjectFilter::relateStateToTable(TrackedState *state)
 
 	if (stateTable == NULL) {
 		stateTable = new StateRelatedTable();
+		stateTable->temporalLayers = 0;
 		stateTable->stateTableID = tables.size();
 		tables.push_back(stateTable);
 	}
 
 	if (stateTable->currentUpdateFirstIndex < 0) {
 		stateTable->currentUpdateFirstIndex = stateTable->relatedStates.size();
+	}
+
+	if (stateTable->updateTick < timer) {
+		stateTable->temporalLayers++;
 	}
 
 	stateTable->updateTick = timer;

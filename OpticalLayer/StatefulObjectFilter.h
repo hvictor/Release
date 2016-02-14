@@ -22,6 +22,7 @@ struct state_related_table
 {
 	int stateTableID;
 	int updateTick;
+	int temporalLayers;
 	vector<TrackedState *> relatedStates;
 
 	int currentUpdateFirstIndex;
