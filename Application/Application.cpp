@@ -203,7 +203,8 @@ void *frames_processor(void *)
 			// Advance SOF timer
 			statefulObjectFilter->tick();
 
-			drawRectAroundPlayers(h_frame_BGR, players);
+			// Render human shape recognition trackers
+			OverlayRenderer::getInstance()->renderHumanTrackers(h_frame_BGR, players);
 
 			memcpy(frame_data[0]->left_data, h_frame_BGR.data, width * height * 3 * sizeof(uint8_t));
 		}

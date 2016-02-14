@@ -40,6 +40,31 @@ void OverlayRenderer::renderTrackerState(Mat frame, StateRelatedTable *table, Po
 	putText(frame, stateMessage, Point(p.x-10, p.y-15), FONT_HERSHEY_SIMPLEX, 0.4, OVERLAY_COLOR_GREEN, 1, CV_AA);
 }
 
+void OverlayRenderer::renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures)
+{
+	for(unsigned i = 0; i < humanFigures.size(); i++) {
+		char buffer[60];
+		sprintf(buffer, "PLAYER %d", i);
+		cv::Rect r = humanFigures[i];
+
+		int len = r.width/4;
+
+		line(frame, r.tl(), Point(r.tl().x, r.tl().y + len), OVERLAY_COLOR_GREEN, 2);
+		line(frame, r.tl(), Point(r.tl().x + len, r.tl().y), OVERLAY_COLOR_GREEN, 2);
+
+		line(frame, Point(r.tl().x + r.width - len, r.tl().y), Point(r.tl().x + r.width, r.tl().y), OVERLAY_COLOR_GREEN, 2);
+		line(frame, Point(r.tl().x + r.width, r.tl().y), Point(r.tl().x + r.width, r.tl().y + len), OVERLAY_COLOR_GREEN, 2);
+
+		line(frame, r.br(), Point(r.br().x, r.tl().y - len), OVERLAY_COLOR_GREEN, 2);
+		line(frame, r.br(), Point(r.tl().x - len, r.br().y), OVERLAY_COLOR_GREEN, 2);
+
+		line(frame, Point(r.tl().x + len, r.br().y), Point(r.tl().x, r.br().y), OVERLAY_COLOR_GREEN, 2);
+		line(frame, Point(r.tl().x, r.br().y), Point(r.tl().x, r.br().y - len), OVERLAY_COLOR_GREEN, 2);
+
+		putText(frame, buffer, Point(r.tl().x, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 0.5, cvScalar(255, 0, 0), 1, CV_AA);
+	}
+}
+
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)
 {
 	Vec2f image_coords0 = netPoints.at<Vec2f>(0, 0);

@@ -28,6 +28,7 @@ public:
 	void renderArrow(Mat dst, Point S, Point P, Scalar predictionColor, double versorX, double versorY);
 	void renderTracker(Mat frame, Point p, int size);
 	void renderTrackerState(Mat frame, StateRelatedTable *table, Point p);
+	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);
 
 private:
 	OverlayRenderer();
