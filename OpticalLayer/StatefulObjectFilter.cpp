@@ -40,7 +40,7 @@ void StatefulObjectFilter::deleteTable(StateRelatedTable *table)
 
 bool StatefulObjectFilter::suppressionNeeded(StateRelatedTable *t)
 {
-	return (t->temporalLayers >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterIdleMaxTicks);
+	return ((timer - t->updateTick) >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterIdleMaxTicks);
 }
 
 vector<StateRelatedTable *> StatefulObjectFilter::getTables()
@@ -59,7 +59,8 @@ vector<StateRelatedTable *> StatefulObjectFilter::getTrajectoryCandidateTables()
 			s = tables.erase(s);
 			continue;
 		}
-		else if ((*s)->relatedStates.size() >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterTrajectoryMinStates) {
+		//else if ((*s)->relatedStates.size() >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterTrajectoryMinStates) {
+		else if ((*s)->temporalLayers >= Configuration::getInstance()->getOpticalLayerParameters().statefulObjectFilterTrajectoryMinStates) {
 			c.push_back(*s);
 		}
 
