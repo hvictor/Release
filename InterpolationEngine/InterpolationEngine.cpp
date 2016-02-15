@@ -78,7 +78,7 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 		}
 	}
 
-	gsl_multifit_linear_workspace *work = gsl_multifit_linear_alloc(n, 4);
+	gsl_multifit_linear_workspace *work = gsl_multifit_linear_alloc(n, 7);
 
 	gsl_multifit_linear(X, y, c, cov, &chisq, work);
 	gsl_multifit_linear_free(work);
