@@ -193,7 +193,7 @@ void *frames_processor(void *)
 				StateRelatedTable *table = t[j];
 
 				printf("[Tracker] :: Updating...\n");
-				//trajectoryTracker->update(table);
+				trajectoryTracker->update(table);
 				printf("[Tracker] :: Update OK\n");
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
