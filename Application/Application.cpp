@@ -593,7 +593,9 @@ int main(int argc, const char* argv[])
 	IRSensorAbstractionLayer *irSAL = 0;
 	DepthSensorTechnology depthTech;
 
+	// Instantiate objects
 	configuration = Configuration::getInstance();
+	trajectoryTracker = new TrajectoryTracker();
 
 	/*
 	configuration->setOperationalMode(VirtualStereoCamera, Tracking);

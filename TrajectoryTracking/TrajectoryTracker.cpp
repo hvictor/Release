@@ -19,11 +19,6 @@ TrajectoryTracker::~TrajectoryTracker()
 
 TrajectoryDescriptor *TrajectoryTracker::searchTrajectoryDescriptor(int ID)
 {
-	printf("Searching with ID %d\n", ID);
-	printf("TrackingTable address = %p\n", &trackingTable);
-	printf("God\n");
-	trackingTable.push_back(new TrajectoryDescriptor(999));
-	printf("Jesus\n");
 	printf("searchTrajectoryDescriptor: tracking table size = %d\n", trackingTable.size());
 	for (int i = 0; i < trackingTable.size(); i++) {
 		if (trackingTable[i]->getID() == ID) {
