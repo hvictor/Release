@@ -19,6 +19,7 @@ TrajectoryTracker::~TrajectoryTracker()
 
 TrajectoryDescriptor *TrajectoryTracker::searchTrajectoryDescriptor(int ID)
 {
+	printf("searchTrajectoryDescriptor: tracking table size = %d\n", trackingTable.size());
 	for (int i = 0; i < trackingTable.size(); i++) {
 		if (trackingTable[i]->getID() == ID) {
 			return trackingTable[i];
@@ -31,11 +32,9 @@ TrajectoryDescriptor *TrajectoryTracker::searchTrajectoryDescriptor(int ID)
 void TrajectoryTracker::update(StateRelatedTable *trajectoryCandidate)
 {
 	if (trajectoryCandidate == NULL) {
-		printf("TrajectoryTracker :: Null candidate\n");
 		return;
 	}
 
-	printf("TrajectoryTracker :: Update :: Searching Trajectory Descriptor ID=%d\n", trajectoryCandidate->stateTableID);
 	TrajectoryDescriptor *trajectoryDescriptor = searchTrajectoryDescriptor(trajectoryCandidate->stateTableID);
 
 	// Create new Trajectory Descriptor
