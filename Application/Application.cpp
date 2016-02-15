@@ -210,12 +210,10 @@ void *frames_processor(void *)
 			}
 
 			// Get Interpolated Trajectory Descriptors
-			/*
 			vector<TrajectoryDescriptor *> trajectoryDescriptors = trajectoryTracker->getCurrentTrackingState();
 			for (vector<TrajectoryDescriptor *>::iterator it = trajectoryDescriptors.begin(); it != trajectoryDescriptors.end(); it++) {
 				OverlayRenderer::getInstance()->renderInterpolatedTrajectory(h_frame_BGR, *it);
 			}
-			*/
 
 			// Advance SOF timer
 			statefulObjectFilter->tick();
