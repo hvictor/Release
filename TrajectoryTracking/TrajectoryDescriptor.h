@@ -14,6 +14,7 @@
 typedef struct
 {
 	CubicPolynomialCoeff coeffs;
+	HexaPolynomialCoeff hexa_coeffs;
 	double x_from;
 	double x_to;
 } TrajectorySection;
@@ -25,6 +26,7 @@ public:
 	int getID();
 	vector<TrajectorySection *> getTrajectorySections();
 	void update(CubicPolynomialCoeff coeffs, double xFrom, double xTo);
+	void update(HexaPolynomialCoeff coeffs, double xFrom, double xTo);
 
 private:
 	int ID;

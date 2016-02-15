@@ -24,3 +24,9 @@ CubicPolynomialCoeff TrajectoryReconstructor::convertToCubicPolynomial(StateRela
 	return interpEngine->interpolateCubicPolynomial(stateTable->relatedStates);
 }
 
+HexaPolynomialCoeff TrajectoryReconstructor::convertToHexaPolynomial(StateRelatedTable *stateTable)
+{
+	HexaPolynomialCoeff c;
+
+	return interpEngine->interpolateHexaPolynomial(stateTable->relatedStates);
+}

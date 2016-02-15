@@ -50,6 +50,30 @@ void TrajectoryDescriptor::update(CubicPolynomialCoeff coeffs, double xFrom, dou
 	optimize();
 }
 
+void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, double xTo)
+{
+	// Descriptor is empty
+	if (!trajectorySections.size()) {
+		TrajectorySection *s = new TrajectorySection();
+
+		s->hexa_coeffs = coeffs;
+		s->x_from = xFrom;
+		s->x_to = xTo;
+
+		trajectorySections.push_back(s);
+	}
+
+	// Update only last section
+	TrajectorySection *lastSection = trajectorySections[trajectorySections.size() - 1];
+	lastSection->coeffs = coeffs;
+	lastSection->x_from = xFrom;
+	lastSection->x_to = xTo;
+
+	// Optimize: the last trajectory section could be splitted into two more precisely
+	// approximating polynomials
+	optimize();
+}
+
 void TrajectoryDescriptor::optimize()
 {
 

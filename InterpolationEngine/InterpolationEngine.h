@@ -21,6 +21,18 @@ typedef struct
 	double c1;
 	double c2;
 	double c3;
+	double c4;
+	double c5;
+	double c6;
+} HexaPolynomialCoeff;
+
+// y = c0 + c1*x + c2*x^2 + c3*x^3
+typedef struct
+{
+	double c0;
+	double c1;
+	double c2;
+	double c3;
 } CubicPolynomialCoeff;
 
 // y = c0 + c1*x + c2*x^2
@@ -37,7 +49,7 @@ public:
 	virtual ~InterpolationEngine();
 	CubicPolynomialCoeff interpolateCubicPolynomial(vector<TrackedState *> trajectoryStates);
 	QuadraticPolynomialCoeff interpolateQuadraticPolynomial(vector<TrackedState *> trajectoryStates);
-
+	HexaPolynomialCoeff interpolateHexaPolynomial(vector<TrackedState *> trajectoryStates);
 };
 
 #endif /* INTERPOLATIONENGINE_H_ */

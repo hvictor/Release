@@ -30,7 +30,8 @@ public:
 	void renderTracker(Mat frame, Point p, int size);
 	void renderTrackerState(Mat frame, StateRelatedTable *table, Point p);
 	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);
-	void renderInterpolatedTrajectory(Mat frame, TrajectoryDescriptor *descriptor);
+	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);
+	void renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDescriptor *descriptor);
 
 private:
 	OverlayRenderer();

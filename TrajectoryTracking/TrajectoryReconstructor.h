@@ -17,6 +17,7 @@ public:
 	TrajectoryReconstructor();
 	virtual ~TrajectoryReconstructor();
 	CubicPolynomialCoeff convertToCubicPolynomial(StateRelatedTable *stateTable);
+	HexaPolynomialCoeff convertToHexaPolynomial(StateRelatedTable *stateTable);
 
 private:
 	InterpolationEngine *interpEngine;
