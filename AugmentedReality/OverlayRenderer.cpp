@@ -24,6 +24,32 @@ OverlayRenderer::OverlayRenderer() {
 OverlayRenderer::~OverlayRenderer() {
 }
 
+void OverlayRenderer::renderInterpolatedTrajectory(Mat frame, TrajectoryDescriptor *descriptor)
+{
+	Point pi, pj;
+	vector<TrajectorySection *> tSect = descriptor->getTrajectorySections();
+
+	for (int i = 0; i < tSect.size(); i++) {
+		CubicPolynomialCoeff C = tSect[i]->coeffs;
+		double x0 = tSect[i]->x_from;
+		double x1 = tSect[i]->x_to;
+
+		for (int x = x0; x <= x1; x++) {
+			double y = C.c0 + C.c1*x + C.c2*x*x + C.c3*x*x*x;
+
+			if (x == x0) {
+				pj = Point((int)x, (int)y);
+				continue;
+			}
+
+			pi = pj;
+			pj = Point((int)x, (int)y);
+
+			line(frame, pi, pj, OVERLAY_COLOR_YELLOW, 1);
+		}
+	}
+}
+
 void OverlayRenderer::renderTracker(Mat frame, Point p, int size)
 {
 	rectangle(frame, Point(p.x - size, p.y - size), Point(p.x + size, p.y + size), OVERLAY_COLOR_GREEN, 1);

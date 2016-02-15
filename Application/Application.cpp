@@ -47,6 +47,8 @@
 #include "../VirtualCameraDevice/StereoRecorder.h"
 #include "../VirtualCameraDevice/MonoRecorder.h"
 
+#include "../TrajectoryTracking/TrajectoryTracker.h"
+
 using namespace std;
 using namespace cv;
 using namespace cv::gpu;
@@ -98,6 +100,9 @@ Configuration *configuration;
 // Thread handles
 pthread_t frame_processor_thread;
 pthread_t frame_output_thread;
+
+// Trajectory Tracker
+TrajectoryTracker *trajectoryTracker;
 
 //
 // Frames Processor process
@@ -187,6 +192,8 @@ void *frames_processor(void *)
 			for (int j = 0; j < t.size(); j++) {
 				StateRelatedTable *table = t[j];
 
+				trajectoryTracker->update(table);
+
 				for (int k = 0; k < table->relatedStates.size(); k++) {
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
 
@@ -198,6 +205,12 @@ void *frames_processor(void *)
 						OverlayRenderer::getInstance()->renderTrackerState(h_frame_BGR, table, p);
 					}
 				}
+			}
+
+			// Get Interpolated Trajectory Descriptors
+			vector<TrajectoryDescriptor *> trajectoryDescriptors = trajectoryTracker->getCurrentTrackingState();
+			for (vector<TrajectoryDescriptor *>::iterator it = trajectoryDescriptors.begin(); it != trajectoryDescriptors.end(); it++) {
+				OverlayRenderer::getInstance()->renderInterpolatedTrajectory(h_frame_BGR, *it);
 			}
 
 			// Advance SOF timer
