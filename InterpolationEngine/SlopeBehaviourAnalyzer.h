@@ -14,6 +14,7 @@
 
 class SlopeBehaviourAnalyzer {
 public:
+	static SlopeBehaviourAnalyzer *getInstance();
 	SlopeBehaviourAnalyzer();
 	virtual ~SlopeBehaviourAnalyzer();
 	vector<int> quadraticGetQuickSlopeVariationIndexes(vector<TrackedState *> trackedStates);

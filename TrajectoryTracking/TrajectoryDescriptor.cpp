@@ -5,7 +5,8 @@
  *      Author: sled
  */
 
-#include "TrajectoryDescriptor.h"
+#include "TrajectoryDescriptor.h
+#include "../InterpolationEngine/SlopeBehaviourAnalyzer.h"
 
 TrajectoryDescriptor::TrajectoryDescriptor(int ID)
 {
@@ -76,5 +77,9 @@ void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, doub
 
 void TrajectoryDescriptor::optimize()
 {
+	// Get last trajectory section
+	TrajectorySection *lastSection = trajectorySections[trajectorySections.size() - 1];
+
+	SlopeBehaviourAnalyzer::getInstance()->getLocalMinima();
 
 }
