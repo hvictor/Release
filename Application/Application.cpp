@@ -197,7 +197,6 @@ void *frames_processor(void *)
 				printf("[Tracker] :: Update OK\n");
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
-					/*
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
 
 					if (k < table->relatedStates.size()-1) {
@@ -207,15 +206,16 @@ void *frames_processor(void *)
 						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 12);
 						OverlayRenderer::getInstance()->renderTrackerState(h_frame_BGR, table, p);
 					}
-					*/
 				}
 			}
 
 			// Get Interpolated Trajectory Descriptors
+			/*
 			vector<TrajectoryDescriptor *> trajectoryDescriptors = trajectoryTracker->getCurrentTrackingState();
 			for (vector<TrajectoryDescriptor *>::iterator it = trajectoryDescriptors.begin(); it != trajectoryDescriptors.end(); it++) {
 				OverlayRenderer::getInstance()->renderInterpolatedTrajectory(h_frame_BGR, *it);
 			}
+			*/
 
 			// Advance SOF timer
 			statefulObjectFilter->tick();
