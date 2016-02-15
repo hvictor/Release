@@ -193,10 +193,11 @@ void *frames_processor(void *)
 				StateRelatedTable *table = t[j];
 
 				printf("[Tracker] :: Updating...\n");
-				trajectoryTracker->update(table);
+				//trajectoryTracker->update(table);
 				printf("[Tracker] :: Update OK\n");
 
 				for (int k = 0; k < table->relatedStates.size(); k++) {
+					/*
 					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
 
 					if (k < table->relatedStates.size()-1) {
@@ -206,6 +207,7 @@ void *frames_processor(void *)
 						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 12);
 						OverlayRenderer::getInstance()->renderTrackerState(h_frame_BGR, table, p);
 					}
+					*/
 				}
 			}
 
