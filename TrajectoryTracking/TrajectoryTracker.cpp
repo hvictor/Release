@@ -30,10 +30,17 @@ TrajectoryDescriptor *TrajectoryTracker::searchTrajectoryDescriptor(int ID)
 
 void TrajectoryTracker::update(StateRelatedTable *trajectoryCandidate)
 {
+	if (trajectoryCandidate == NULL) {
+		printf("TrajectoryTracker :: Null candidate\n");
+		return;
+	}
+
+	printf("TrajectoryTracker :: Update :: Searching Trajectory Descriptor ID=%d\n", trajectoryCandidate->stateTableID);
 	TrajectoryDescriptor *trajectoryDescriptor = searchTrajectoryDescriptor(trajectoryCandidate->stateTableID);
 
 	// Create new Trajectory Descriptor
 	if (trajectoryDescriptor == NULL) {
+		printf("TrajectoryTracker :: Update :: Not found, creating new one\n");
 		trajectoryDescriptor = new TrajectoryDescriptor(trajectoryCandidate->stateTableID);
 		trackingTable.push_back(trajectoryDescriptor);
 	}
