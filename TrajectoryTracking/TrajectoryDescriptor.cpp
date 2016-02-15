@@ -65,7 +65,7 @@ void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, doub
 
 	// Update only last section
 	TrajectorySection *lastSection = trajectorySections[trajectorySections.size() - 1];
-	lastSection->coeffs = coeffs;
+	lastSection->hexa_coeffs = coeffs;
 	lastSection->x_from = xFrom;
 	lastSection->x_to = xTo;
 
