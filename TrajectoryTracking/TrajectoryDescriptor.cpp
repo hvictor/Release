@@ -92,9 +92,6 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 	}
 
 	for (int i = 0; i < localMinimaIndexes.size(); i++) {
-		if (trackedStates.size()-1 - localMinimaIndexes[i] + 1 < 3) {
-			continue;
-		}
 
 		// Set the current local minimum as the trajectory section's last point
 		lastSection->index_to = localMinimaIndexes[i];

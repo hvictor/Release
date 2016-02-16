@@ -33,6 +33,18 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 {
 	HexaPolynomialCoeff coeffs;
 
+	if (indexTo - indexFrom + 1 < 6) {
+		coeffs.c0 = 0;
+		coeffs.c1 = 0;
+		coeffs.c2 = 0;
+		coeffs.c3 = 0;
+		coeffs.c4 = 0;
+		coeffs.c5 = 0;
+		coeffs.c6 = 0;
+
+		return coeffs;
+	}
+
 	gsl_matrix *X, *cov;
 	gsl_vector *y, *w, *c;
 	double chisq;
@@ -114,6 +126,15 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<TrackedState *> trajectoryStates, int indexFrom, int indexTo)
 {
 	CubicPolynomialCoeff coeffs;
+
+	if (indexTo - indexFrom + 1 < 3) {
+		coeffs.c0 = 0;
+		coeffs.c1 = 0;
+		coeffs.c2 = 0;
+		coeffs.c3 = 0;
+
+		return coeffs;
+	}
 
 	gsl_matrix *X, *cov;
 	gsl_vector *y, *w, *c;

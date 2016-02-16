@@ -45,7 +45,9 @@ vector<int> SlopeBehaviourAnalyzer::computeLocalMinima(HexaPolynomialCoeff coeff
 		double second_differential = 2*coeffs.c2 + 6*coeffs.c3*x + 12*coeffs.c4*x*x + 20*coeffs.c5*x*x*x + 30*coeffs.c6*x*x*x*x;
 
 		// Local minima
+		printf("[index = %d] y' = %.4f, y'' = %.4f\n", i, first_differential, second_differential);
 		if ((fabsl(first_differential) <= eps) && (second_differential > eps)) {
+			printf("%d is a local minimum\n", i);
 			localMinima.push_back(i);
 		}
 	}
