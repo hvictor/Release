@@ -34,7 +34,7 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 	printf("InterpolationEngine::interpolateHexaPolynomial :: interp from %d to %d\n", indexFrom, indexTo);
 	HexaPolynomialCoeff coeffs;
 
-	if (indexTo - indexFrom + 1 < 6) {
+	if (indexTo - indexFrom + 1 < 7) {
 		coeffs.c0 = 0;
 		coeffs.c1 = 0;
 		coeffs.c2 = 0;
@@ -135,7 +135,7 @@ CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<Trac
 	CubicPolynomialCoeff coeffs;
 	printf("InterpolationEngine::interpolateCubicPolynomial :: interp from %d to %d\n", indexFrom, indexTo);
 
-	if (indexTo - indexFrom + 1 < 3) {
+	if (indexTo - indexFrom + 1 < 4) {
 		coeffs.c0 = 0;
 		coeffs.c1 = 0;
 		coeffs.c2 = 0;

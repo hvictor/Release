@@ -30,7 +30,7 @@ vector<int> SlopeBehaviourAnalyzer::computeLocalMinima(HexaPolynomialCoeff coeff
 {
 	vector<int> localMinima;
 
-	double eps = 0.1;
+	double eps = 0.001;
 
 	// y		= C0 + C1x + C2*x^2 + C3*x^3 + C4*x^4 + C5*x^5 + C6*x^6
 	// dy/dx	= C1 + 2*C2*x + 3*C3*x^2 + 4*C4*x^3 + 5*C5*x^4 + 6*C6*x^5
