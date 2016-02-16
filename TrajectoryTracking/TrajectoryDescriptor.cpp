@@ -78,7 +78,7 @@ void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, doub
 
 	// Optimize: the last trajectory section could be splitted into two more precisely
 	// approximating polynomials
-	optimize(trackedStates);
+	//optimize(trackedStates);
 }
 
 void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
