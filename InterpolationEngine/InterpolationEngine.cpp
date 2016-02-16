@@ -31,6 +31,7 @@ InterpolationEngine *InterpolationEngine::getInstance()
 
 HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<TrackedState *> trajectoryStates, int indexFrom, int indexTo)
 {
+	printf("InterpolationEngine::interpolateHexaPolynomial :: interp from %d to %d\n", indexFrom, indexTo);
 	HexaPolynomialCoeff coeffs;
 
 	if (indexTo - indexFrom + 1 < 6) {
@@ -126,6 +127,7 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<TrackedState *> trajectoryStates, int indexFrom, int indexTo)
 {
 	CubicPolynomialCoeff coeffs;
+	printf("InterpolationEngine::interpolateCubicPolynomial :: interp from %d to %d\n", indexFrom, indexTo);
 
 	if (indexTo - indexFrom + 1 < 3) {
 		coeffs.c0 = 0;
