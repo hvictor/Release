@@ -16,8 +16,8 @@ class TrajectoryReconstructor {
 public:
 	TrajectoryReconstructor();
 	virtual ~TrajectoryReconstructor();
-	CubicPolynomialCoeff convertToCubicPolynomial(StateRelatedTable *stateTable);
-	HexaPolynomialCoeff convertToHexaPolynomial(StateRelatedTable *stateTable);
+	CubicPolynomialCoeff convertToCubicPolynomial(StateRelatedTable *stateTable, int indexFrom, int indexTo);
+	HexaPolynomialCoeff convertToHexaPolynomial(StateRelatedTable *stateTable, int indexFrom, int indexTo);
 
 private:
 	InterpolationEngine *interpEngine;

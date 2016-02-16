@@ -43,11 +43,20 @@ void TrajectoryTracker::update(StateRelatedTable *trajectoryCandidate)
 	}
 
 	// Update the descriptor with the actual polynomial approximation
-	HexaPolynomialCoeff coeff = reconstructor->convertToHexaPolynomial(trajectoryCandidate);
+	int indexFrom = 0;
+	int indexTo = trajectoryCandidate->relatedStates.size()-1;
+
+	if (trajectoryDescriptor->getTrajectorySections().size() > 0) {
+		indexFrom = (trajectoryDescriptor->getTrajectorySections())[trajectoryDescriptor->getTrajectorySections().size()-1]->index_from;
+	}
+
+	HexaPolynomialCoeff coeff = reconstructor->convertToHexaPolynomial(trajectoryCandidate, indexFrom, indexTo);
 	double xFrom = std::min((double)trajectoryCandidate->relatedStates[0]->state.x, (double)trajectoryCandidate->relatedStates[trajectoryCandidate->relatedStates.size() - 1]->state.x);
 	double xTo = std::max((double)trajectoryCandidate->relatedStates[0]->state.x, (double)trajectoryCandidate->relatedStates[trajectoryCandidate->relatedStates.size() - 1]->state.x);
 
-	trajectoryDescriptor->update(coeff, xFrom, xTo);
+	bool reverse = (trajectoryCandidate->relatedStates[0]->state.x > trajectoryCandidate->relatedStates[trajectoryCandidate->relatedStates.size() - 1]->state.x);
+
+	trajectoryDescriptor->update(coeff, xFrom, xTo, 0, trajectoryCandidate->relatedStates.size() - 1, trajectoryCandidate->relatedStates, reverse);
 }
 
 vector<TrajectoryDescriptor *> TrajectoryTracker::getCurrentTrackingState()

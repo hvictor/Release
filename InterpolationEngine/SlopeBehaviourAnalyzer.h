@@ -11,13 +11,14 @@
 #include "../Configuration/Configuration.h"
 #include "../Common/opencv_headers.h"
 #include "../OpticalLayer/StatefulObjectFilter.h"
+#include "InterpolationEngine.h"
 
 class SlopeBehaviourAnalyzer {
 public:
 	static SlopeBehaviourAnalyzer *getInstance();
 	SlopeBehaviourAnalyzer();
 	virtual ~SlopeBehaviourAnalyzer();
-	vector<int> quadraticGetQuickSlopeVariationIndexes(vector<TrackedState *> trackedStates);
+	vector<int> computeLocalMinima(HexaPolynomialCoeff coeffs, vector<TrackedState *> trackedStates, int indexFrom, int indexTo);
 
 private:
 

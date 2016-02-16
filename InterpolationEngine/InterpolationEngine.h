@@ -45,11 +45,14 @@ typedef struct
 
 class InterpolationEngine {
 public:
-	InterpolationEngine();
+	static InterpolationEngine *getInstance();
 	virtual ~InterpolationEngine();
-	CubicPolynomialCoeff interpolateCubicPolynomial(vector<TrackedState *> trajectoryStates);
+	CubicPolynomialCoeff interpolateCubicPolynomial(vector<TrackedState *> trajectoryStates, int indexFrom, int indexTo);
 	QuadraticPolynomialCoeff interpolateQuadraticPolynomial(vector<TrackedState *> trajectoryStates);
-	HexaPolynomialCoeff interpolateHexaPolynomial(vector<TrackedState *> trajectoryStates);
+	HexaPolynomialCoeff interpolateHexaPolynomial(vector<TrackedState *> trajectoryStates, int indexFrom, int indexTo);
+
+private:
+	InterpolationEngine();
 };
 
 #endif /* INTERPOLATIONENGINE_H_ */

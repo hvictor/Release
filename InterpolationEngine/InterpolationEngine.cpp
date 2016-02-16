@@ -18,7 +18,18 @@ InterpolationEngine::~InterpolationEngine()
 
 }
 
-HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<TrackedState *> trajectoryStates)
+InterpolationEngine *InterpolationEngine::getInstance()
+{
+	static InterpolationEngine *instance = 0;
+
+	if (!instance) {
+		instance = new InterpolationEngine();
+	}
+
+	return instance;
+}
+
+HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<TrackedState *> trajectoryStates, int indexFrom, int indexTo)
 {
 	HexaPolynomialCoeff coeffs;
 
@@ -26,7 +37,7 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 	gsl_vector *y, *w, *c;
 	double chisq;
 
-	int n = trajectoryStates.size();
+	int n = indexTo - indexFrom + 1;//trajectoryStates.size();
 
 	X = gsl_matrix_alloc(n, 7);
 	y = gsl_vector_alloc(n);
@@ -44,7 +55,7 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 	}
 
 	if (!reverse) {
-		for (int u = 0; u < n; u++) {
+		for (int u = indexFrom; u <= indexTo; u++) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
@@ -61,7 +72,7 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 		}
 	}
 	else {
-		for (int u = n-1; u <= 0; u--) {
+		for (int u = indexTo; u <= indexFrom; u--) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
@@ -100,7 +111,7 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 	return coeffs;
 }
 
-CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<TrackedState *> trajectoryStates)
+CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<TrackedState *> trajectoryStates, int indexFrom, int indexTo)
 {
 	CubicPolynomialCoeff coeffs;
 
@@ -108,7 +119,7 @@ CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<Trac
 	gsl_vector *y, *w, *c;
 	double chisq;
 
-	int n = trajectoryStates.size();
+	int n = indexTo - indexFrom + 1;//trajectoryStates.size();
 
 	X = gsl_matrix_alloc(n, 4);
 	y = gsl_vector_alloc(n);
@@ -126,7 +137,7 @@ CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<Trac
 	}
 
 	if (!reverse) {
-		for (int u = 0; u < n; u++) {
+		for (int u = indexFrom; u <= indexTo; u++) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
@@ -140,7 +151,7 @@ CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<Trac
 		}
 	}
 	else {
-		for (int u = n-1; u <= 0; u--) {
+		for (int u = indexTo; u <= indexFrom; u--) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
