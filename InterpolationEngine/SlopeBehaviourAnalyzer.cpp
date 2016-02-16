@@ -15,6 +15,17 @@ SlopeBehaviourAnalyzer::~SlopeBehaviourAnalyzer()
 {
 }
 
+SlopeBehaviourAnalyzer *SlopeBehaviourAnalyzer::getInstance()
+{
+	static SlopeBehaviourAnalyzer *instance = 0;
+
+	if (!instance) {
+		instance = new SlopeBehaviourAnalyzer();
+	}
+
+	return instance;
+}
+
 vector<int> SlopeBehaviourAnalyzer::computeLocalMinima(HexaPolynomialCoeff coeffs, vector<TrackedState *> trackedStates, int indexFrom, int indexTo)
 {
 	vector<int> localMinima;

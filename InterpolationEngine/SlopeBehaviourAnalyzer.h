@@ -16,12 +16,11 @@
 class SlopeBehaviourAnalyzer {
 public:
 	static SlopeBehaviourAnalyzer *getInstance();
-	SlopeBehaviourAnalyzer();
 	virtual ~SlopeBehaviourAnalyzer();
 	vector<int> computeLocalMinima(HexaPolynomialCoeff coeffs, vector<TrackedState *> trackedStates, int indexFrom, int indexTo);
 
 private:
-
+	SlopeBehaviourAnalyzer();
 };
 
 #endif /* SLOPEBEHAVIOURANALYZER_H_ */
