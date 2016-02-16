@@ -68,37 +68,43 @@ HexaPolynomialCoeff InterpolationEngine::interpolateHexaPolynomial(vector<Tracke
 	}
 
 	if (!reverse) {
+		int i = 0;
 		for (int u = indexFrom; u <= indexTo; u++) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
 
-			gsl_matrix_set(X, u, 0, 1.0);
-			gsl_matrix_set(X, u, 1, xi);
-			gsl_matrix_set(X, u, 2, xi * xi);
-			gsl_matrix_set(X, u, 3, xi * xi * xi);
-			gsl_matrix_set(X, u, 4, xi * xi * xi * xi);
-			gsl_matrix_set(X, u, 5, xi * xi * xi * xi * xi);
-			gsl_matrix_set(X, u, 6, xi * xi * xi * xi * xi * xi);
+			gsl_matrix_set(X, i, 0, 1.0);
+			gsl_matrix_set(X, i, 1, xi);
+			gsl_matrix_set(X, i, 2, xi * xi);
+			gsl_matrix_set(X, i, 3, xi * xi * xi);
+			gsl_matrix_set(X, i, 4, xi * xi * xi * xi);
+			gsl_matrix_set(X, i, 5, xi * xi * xi * xi * xi);
+			gsl_matrix_set(X, i, 6, xi * xi * xi * xi * xi * xi);
 
-			gsl_vector_set(y, u, yi);
+			gsl_vector_set(y, i, yi);
+
+			i++;
 		}
 	}
 	else {
+		int i = 0;
 		for (int u = indexTo; u <= indexFrom; u--) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
 
-			gsl_matrix_set(X, u, 0, 1.0);
-			gsl_matrix_set(X, u, 1, xi);
-			gsl_matrix_set(X, u, 2, xi * xi);
-			gsl_matrix_set(X, u, 3, xi * xi * xi);
-			gsl_matrix_set(X, u, 4, xi * xi * xi * xi);
-			gsl_matrix_set(X, u, 5, xi * xi * xi * xi * xi);
-			gsl_matrix_set(X, u, 6, xi * xi * xi * xi * xi * xi);
+			gsl_matrix_set(X, i, 0, 1.0);
+			gsl_matrix_set(X, i, 1, xi);
+			gsl_matrix_set(X, i, 2, xi * xi);
+			gsl_matrix_set(X, i, 3, xi * xi * xi);
+			gsl_matrix_set(X, i, 4, xi * xi * xi * xi);
+			gsl_matrix_set(X, i, 5, xi * xi * xi * xi * xi);
+			gsl_matrix_set(X, i, 6, xi * xi * xi * xi * xi * xi);
 
-			gsl_vector_set(y, u, yi);
+			gsl_vector_set(y, i, yi);
+
+			i++;
 		}
 	}
 
@@ -160,31 +166,37 @@ CubicPolynomialCoeff InterpolationEngine::interpolateCubicPolynomial(vector<Trac
 	}
 
 	if (!reverse) {
+		int i = 0;
 		for (int u = indexFrom; u <= indexTo; u++) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
 
-			gsl_matrix_set(X, u, 0, 1.0);
-			gsl_matrix_set(X, u, 1, xi);
-			gsl_matrix_set(X, u, 2, xi * xi);
-			gsl_matrix_set(X, u, 3, xi * xi * xi);
+			gsl_matrix_set(X, i, 0, 1.0);
+			gsl_matrix_set(X, i, 1, xi);
+			gsl_matrix_set(X, i, 2, xi * xi);
+			gsl_matrix_set(X, i, 3, xi * xi * xi);
 
-			gsl_vector_set(y, u, yi);
+			gsl_vector_set(y, i, yi);
+
+			i++;
 		}
 	}
 	else {
+		int i = 0;
 		for (int u = indexTo; u <= indexFrom; u--) {
 			TrackedState *s = trajectoryStates[u];
 			double xi = (double)s->state.x;
 			double yi = (double)s->state.y;
 
-			gsl_matrix_set(X, u, 0, 1.0);
-			gsl_matrix_set(X, u, 1, xi);
-			gsl_matrix_set(X, u, 2, xi * xi);
-			gsl_matrix_set(X, u, 3, xi * xi * xi);
+			gsl_matrix_set(X, i, 0, 1.0);
+			gsl_matrix_set(X, i, 1, xi);
+			gsl_matrix_set(X, i, 2, xi * xi);
+			gsl_matrix_set(X, i, 3, xi * xi * xi);
 
-			gsl_vector_set(y, u, yi);
+			gsl_vector_set(y, i, yi);
+
+			i++;
 		}
 	}
 
