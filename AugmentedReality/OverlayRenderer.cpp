@@ -56,22 +56,43 @@ void OverlayRenderer::renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDesc
 	vector<TrajectorySection *> tSect = descriptor->getTrajectorySections();
 
 	for (int i = 0; i < tSect.size(); i++) {
-		HexaPolynomialCoeff C = tSect[i]->hexa_coeffs;
-		double x0 = tSect[i]->x_from;
-		double x1 = tSect[i]->x_to;
+		if (tSect[i]->optimized) {
+			CubicPolynomialCoeff C = tSect[i]->coeffs;
+			double x0 = tSect[i]->x_from;
+			double x1 = tSect[i]->x_to;
 
-		for (int x = x0; x <= x1; x++) {
-			double y = C.c0 + C.c1*x + C.c2*x*x + C.c3*x*x*x + C.c4*x*x*x*x + C.c5*x*x*x*x*x + C.c6*x*x*x*x*x*x;
+			for (int x = x0; x <= x1; x++) {
+				double y = C.c0 + C.c1*x + C.c2*x*x + C.c3*x*x*x;
 
-			if (x == x0) {
+				if (x == x0) {
+					pj = Point((int)x, (int)y);
+					continue;
+				}
+
+				pi = pj;
 				pj = Point((int)x, (int)y);
-				continue;
+
+				line(frame, pi, pj, OVERLAY_COLOR_RED, 1);
 			}
+		}
+		else {
+			HexaPolynomialCoeff C = tSect[i]->hexa_coeffs;
+			double x0 = tSect[i]->x_from;
+			double x1 = tSect[i]->x_to;
 
-			pi = pj;
-			pj = Point((int)x, (int)y);
+			for (int x = x0; x <= x1; x++) {
+				double y = C.c0 + C.c1*x + C.c2*x*x + C.c3*x*x*x + C.c4*x*x*x*x + C.c5*x*x*x*x*x + C.c6*x*x*x*x*x*x;
 
-			line(frame, pi, pj, OVERLAY_COLOR_YELLOW, 1);
+				if (x == x0) {
+					pj = Point((int)x, (int)y);
+					continue;
+				}
+
+				pi = pj;
+				pj = Point((int)x, (int)y);
+
+				line(frame, pi, pj, OVERLAY_COLOR_YELLOW, 1);
+			}
 		}
 	}
 }
