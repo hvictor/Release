@@ -47,15 +47,11 @@ vector<int> SlopeBehaviourAnalyzer::computeLocalMinima(HexaPolynomialCoeff coeff
 
 		// Local minima
 		if ((fabsl(first_differential) <= eps)) {// && (second_differential > eps)) {
-			printf("%d is a local minimum\n", i);
 			localMinima.push_back(i);
 
-			// !!!!!!!!!!!!!!!!!!!!!!
-
+			// EXPERIMENTAL:
+			// Accept only one local extrema (for real-time online tracking)
 			return localMinima;
-
-			// !!!!!!!!!!!!!!!!!!!!!!
-
 		}
 	}
 

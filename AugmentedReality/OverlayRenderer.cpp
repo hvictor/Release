@@ -55,6 +55,10 @@ void OverlayRenderer::renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDesc
 	Point pi, pj;
 	vector<TrajectorySection *> tSect = descriptor->getTrajectorySections();
 
+	if (descriptor->getID != 6) {
+		printf("Descriptor not 6, leaving rendering (DISABLE ME)\n");
+	}
+
 	for (int i = 0; i < tSect.size(); i++) {
 		if (tSect[i]->optimized) {
 			CubicPolynomialCoeff C = tSect[i]->coeffs;
