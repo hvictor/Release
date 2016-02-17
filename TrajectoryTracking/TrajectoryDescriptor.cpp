@@ -110,6 +110,7 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 		newSection->hexa_coeffs = lastSection->hexa_coeffs;
 		newSection->index_from = lastSection->index_to;
 		newSection->index_to = newSection->index_from; // Initialization
+		newSection->x_from = lastSection->x_to;
 		newSection->x_to = newSection->x_from; // Initialization
 		newSection->optimized = false;
 
