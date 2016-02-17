@@ -55,7 +55,7 @@ void OverlayRenderer::renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDesc
 	Point pi, pj;
 	vector<TrajectorySection *> tSect = descriptor->getTrajectorySections();
 
-	if (descriptor->getID != 6) {
+	if (descriptor->getID() != 6) {
 		printf("Descriptor not 6, leaving rendering (DISABLE ME)\n");
 	}
 
