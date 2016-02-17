@@ -61,8 +61,6 @@ void OverlayRenderer::renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDesc
 			double x0 = tSect[i]->x_from;
 			double x1 = tSect[i]->x_to;
 
-			printf("[OVERLAY: rendering polynomial from %g to %g\n", x0, x1);
-
 			for (int x = x0; x <= x1; x++) {
 				double y = C.c0 + C.c1*x + C.c2*x*x + C.c3*x*x*x;
 
@@ -73,16 +71,13 @@ void OverlayRenderer::renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDesc
 
 				pi = pj;
 				pj = Point((int)x, (int)y);
-
-				line(frame, pi, pj, OVERLAY_COLOR_RED, 1);
+				line(frame, pi, pj, OVERLAY_COLOR_ORANGE, 2);
 			}
 		}
 		else {
 			HexaPolynomialCoeff C = tSect[i]->hexa_coeffs;
 			double x0 = tSect[i]->x_from;
 			double x1 = tSect[i]->x_to;
-
-			printf("[OVERLAY: rendering polynomial from %g to %g\n", x0, x1);
 
 			for (int x = x0; x <= x1; x++) {
 				double y = C.c0 + C.c1*x + C.c2*x*x + C.c3*x*x*x + C.c4*x*x*x*x + C.c5*x*x*x*x*x + C.c6*x*x*x*x*x*x;

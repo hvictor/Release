@@ -55,8 +55,6 @@ void TrajectoryDescriptor::update(CubicPolynomialCoeff coeffs, double xFrom, dou
 
 void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, double xTo, int indexFrom, int indexTo, vector<TrackedState *> trackedStates, bool reverse)
 {
-	printf("[X FROM] %g\n", xFrom);
-
 	// Descriptor is empty
 	if (!trajectorySections.size()) {
 		TrajectorySection *s = new TrajectorySection();
@@ -79,8 +77,6 @@ void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, doub
 
 	lastSection->x_to = xTo;
 	lastSection->index_to = indexTo;
-
-	printf("TrajectoryDescriptor[%d] Updated: From %g to %g\n", ID, lastSection->x_from, lastSection->x_to);
 
 	// Optimize: the last trajectory section could be splitted into two more precisely
 	// approximating polynomials
@@ -123,8 +119,6 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 		// Update last section pointer
 		lastSection = trajectorySections[trajectorySections.size() - 1];
 	}
-
-
 }
 
 void TrajectoryDescriptor::approxTrajectorySectionCubic(TrajectorySection *s, vector<TrackedState *> trackedStates)
