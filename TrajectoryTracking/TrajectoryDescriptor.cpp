@@ -69,6 +69,8 @@ void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, doub
 		s->optimized = false;
 
 		trajectorySections.push_back(s);
+
+		return;
 	}
 
 	// Update only last section
@@ -77,6 +79,8 @@ void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, doub
 
 	lastSection->x_to = xTo;
 	lastSection->index_to = indexTo;
+
+	printf("TrajectoryDescriptor[%d] Updated: From %g to %g\n", ID, lastSection->x_from, lastSection->x_to);
 
 	// Optimize: the last trajectory section could be splitted into two more precisely
 	// approximating polynomials
