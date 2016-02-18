@@ -18,7 +18,7 @@ public:
 	static SlopeBehaviourAnalyzer *getInstance();
 	virtual ~SlopeBehaviourAnalyzer();
 	vector<int> computeLocalMinima(HexaPolynomialCoeff coeffs, vector<TrackedState *> trackedStates, int indexFrom, int indexTo);
-
+	int searchNearestLocalMinimumDiscrete(HexaPolynomialCoeff coeffs, vector<TrackedState *> trackedStates, int indexFrom, int indexTo);
 private:
 	SlopeBehaviourAnalyzer();
 };

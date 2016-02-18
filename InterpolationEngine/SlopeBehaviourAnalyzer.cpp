@@ -58,3 +58,41 @@ vector<int> SlopeBehaviourAnalyzer::computeLocalMinima(HexaPolynomialCoeff coeff
 	return localMinima;
 }
 
+int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoeff coeffs, vector<TrackedState *> trackedStates, int indexFrom, int indexTo)
+{
+	static double lastValue;
+	static double lastIndex;
+	static double firstPeakValue;
+	static bool firstPeakPassed = false;
+
+	for (int i = indexFrom; i <= indexTo; i++) {
+		double x = (double)trackedStates[i]->state.x;
+		double y = coeffs.c0 + coeffs.c1*x + coeffs.c2*x*x + coeffs.c3*x*x*x + coeffs.c4*x*x*x*x + coeffs.c5*x*x*x*x*x + coeffs.c6*x*x*x*x*x*x;
+
+		if (i == indexFrom) {
+			firstPeakValue = y;
+			continue;
+		}
+
+		if (y >= firstPeakValue) {
+			firstPeakValue = y;
+			continue;
+		}
+
+		if (!firstPeakPassed) {
+			lastValue = firstPeakValue;
+			firstPeakPassed = true;
+			continue;
+		}
+
+		if (y < lastValue) {
+			lastValue = y;
+			lastIndex = i;
+		}
+		else if (y > lastValue) {
+			return i + (i - lastIndex)/2;
+		}
+	}
+
+	return -1;
+}

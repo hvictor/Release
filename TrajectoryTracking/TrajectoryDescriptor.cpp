@@ -93,84 +93,92 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 {
 	// Get last trajectory section
 	TrajectorySection *lastSection = trajectorySections[trajectorySections.size() - 1];
+
+	/*
 	vector<int> localMinimaIndexes = SlopeBehaviourAnalyzer::getInstance()->computeLocalMinima(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
 
 	if (!localMinimaIndexes.size() || (lastSection->index_to - lastSection->index_from + 1) < 4) {
 		return;
 	}
+	*/
+	int i = SlopeBehaviourAnalyzer::getInstance()->searchNearestLocalMinimumDiscrete(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
 
-	for (int i = 0; i < localMinimaIndexes.size(); i++) {
+	if (i < 0) {
+		return;
+	}
 
-		// Set the current local minimum as the trajectory section's last point
-		lastSection->index_to = localMinimaIndexes[i];
-		lastSection->x_to = (double)trackedStates[localMinimaIndexes[i]]->state.x;
+	//for (int i = 0; i < localMinimaIndexes.size(); i++) {
 
-		HexaPolynomialCoeff lastHexaPolyCoeff = lastSection->hexa_coeffs;
-		int lastIndexFrom = lastSection->index_from;
-		int lastIndexTo = lastSection->index_to;
-		double lastXFrom = lastSection->x_from;
-		double lastXTo = lastSection->x_to;
+	// Set the current local minimum as the trajectory section's last point
+	lastSection->index_to = localMinimaIndexes[i];
+	lastSection->x_to = (double)trackedStates[localMinimaIndexes[i]]->state.x;
 
-		// If the last section is too short, aggregate it to the previous if any
-		if (lastSection->index_to - lastSection->index_from + 1 < 4) {
+	HexaPolynomialCoeff lastHexaPolyCoeff = lastSection->hexa_coeffs;
+	int lastIndexFrom = lastSection->index_from;
+	int lastIndexTo = lastSection->index_to;
+	double lastXFrom = lastSection->x_from;
+	double lastXTo = lastSection->x_to;
 
-			if (trajectorySections.size() > 1) {
-				// Extend the previous-last section to cover the last section's states
-				TrajectorySection *prevLastSection = trajectorySections[trajectorySections.size() - 2];
-				prevLastSection->index_to = lastSection->index_to;
+	// If the last section is too short, aggregate it to the previous if any
+	if (lastSection->index_to - lastSection->index_from + 1 < 4) {
 
-				// Re-interpolate the approximating cubic polynomial for the previous-last section, now covering the last section states
-				prevLastSection->coeffs = InterpolationEngine::getInstance()->interpolateCubicPolynomial(trackedStates, prevLastSection->index_from, prevLastSection->index_to);
+		if (trajectorySections.size() > 1) {
+			// Extend the previous-last section to cover the last section's states
+			TrajectorySection *prevLastSection = trajectorySections[trajectorySections.size() - 2];
+			prevLastSection->index_to = lastSection->index_to;
 
-			}
+			// Re-interpolate the approximating cubic polynomial for the previous-last section, now covering the last section states
+			prevLastSection->coeffs = InterpolationEngine::getInstance()->interpolateCubicPolynomial(trackedStates, prevLastSection->index_from, prevLastSection->index_to);
 
-			// Delete last section
-			trajectorySections.erase(trajectorySections.end() - 1);
-
-			// Update last section pointer
-			if (trajectorySections.size() > 0) {
-				lastSection = trajectorySections[trajectorySections.size() - 1]; // That is prevLastSection
-			}
-			else {
-				lastSection = 0;
-			}
 		}
 
-		// Create the next trajectory section consequent to splitting the last in two parts:
-		// - The optimized part, with a polynomial of order 3
-		// - The new part, with the original polynomial of order 6
-		TrajectorySection *newSection = new TrajectorySection();
-
-		// If the last section was the only one, and it was removed because too short,
-		// the new section replaces the just removed last section
-		if (!lastSection) {
-			newSection->hexa_coeffs = lastHexaPolyCoeff;
-			newSection->index_from = lastIndexFrom;
-			newSection->index_to = lastIndexTo;
-			newSection->x_from = lastXFrom;
-			newSection->x_to = lastXTo;
-
-			trajectorySections.push_back(newSection);
-		}
-		else {
-			newSection->hexa_coeffs = lastSection->hexa_coeffs;
-			newSection->index_from = lastSection->index_to;
-			newSection->index_to = newSection->index_from; // Initialization
-
-			newSection->x_from = lastSection->x_to;
-			newSection->x_to = newSection->x_from; // Initialization
-			newSection->optimized = false;
-
-			// Approximate the last trajectory section with a cubic polynomial
-			approxTrajectorySectionCubic(lastSection, trackedStates);
-
-			// Add the new section
-			trajectorySections.push_back(newSection);
-		}
+		// Delete last section
+		trajectorySections.erase(trajectorySections.end() - 1);
 
 		// Update last section pointer
-		lastSection = trajectorySections[trajectorySections.size() - 1];
+		if (trajectorySections.size() > 0) {
+			lastSection = trajectorySections[trajectorySections.size() - 1]; // That is prevLastSection
+		}
+		else {
+			lastSection = 0;
+		}
 	}
+
+	// Create the next trajectory section consequent to splitting the last in two parts:
+	// - The optimized part, with a polynomial of order 3
+	// - The new part, with the original polynomial of order 6
+	TrajectorySection *newSection = new TrajectorySection();
+
+	// If the last section was the only one, and it was removed because too short,
+	// the new section replaces the just removed last section
+	if (!lastSection) {
+		newSection->hexa_coeffs = lastHexaPolyCoeff;
+		newSection->index_from = lastIndexFrom;
+		newSection->index_to = lastIndexTo;
+		newSection->x_from = lastXFrom;
+		newSection->x_to = lastXTo;
+
+		trajectorySections.push_back(newSection);
+	}
+	else {
+		newSection->hexa_coeffs = lastSection->hexa_coeffs;
+		newSection->index_from = lastSection->index_to;
+		newSection->index_to = newSection->index_from; // Initialization
+
+		newSection->x_from = lastSection->x_to;
+		newSection->x_to = newSection->x_from; // Initialization
+		newSection->optimized = false;
+
+		// Approximate the last trajectory section with a cubic polynomial
+		approxTrajectorySectionCubic(lastSection, trackedStates);
+
+		// Add the new section
+		trajectorySections.push_back(newSection);
+	}
+
+	// Update last section pointer
+	lastSection = trajectorySections[trajectorySections.size() - 1];
+	//}
 }
 
 void TrajectoryDescriptor::approxTrajectorySectionCubic(TrajectorySection *s, vector<TrackedState *> trackedStates)
