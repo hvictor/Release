@@ -80,6 +80,12 @@ void TrajectoryDescriptor::update(HexaPolynomialCoeff coeffs, double xFrom, doub
 
 	// Optimize: the last trajectory section could be splitted into two more precisely
 	// approximating polynomials
+
+	// Do not optimize if the last section is described by less than 4 states
+	if (lastSection->index_to - lastSection->index_from + 1 < 4) {
+		return;
+	}
+
 	optimize(trackedStates);
 }
 
