@@ -79,7 +79,7 @@ void OverlayRenderer::renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDesc
 				line(frame, pi, pj, OVERLAY_COLOR_ORANGE, 2);
 
 				if (x == x0+1) {
-					rectangle(frame, Point((int)(x-6), (int)(y-6)), Point((int)(x+6), (int)(y+6)), OVERLAY_COLOR_YELLOW, 1);
+					rectangle(frame, Point((int)(x-6), (int)(y-6)), Point((int)(x+6), (int)(y+6)), OVERLAY_COLOR_YELLOW, 2);
 				}
 			}
 		}

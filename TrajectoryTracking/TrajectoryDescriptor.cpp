@@ -104,7 +104,7 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 		// - The new part, with the original polynomial of order 6
 		TrajectorySection *newSection = new TrajectorySection();
 		newSection->hexa_coeffs = lastSection->hexa_coeffs;
-		newSection->index_from = lastSection->index_to;
+		newSection->index_from = lastSection->index_to + 1;
 		newSection->index_to = newSection->index_from; // Initialization
 		newSection->x_from = lastSection->x_to;
 		newSection->x_to = newSection->x_from; // Initialization
