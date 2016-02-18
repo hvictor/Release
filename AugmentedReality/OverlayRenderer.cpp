@@ -83,7 +83,7 @@ void OverlayRenderer::renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDesc
 						rectangle(frame, Point((int)(x-6), (int)(y-6)), Point((int)(x+6), (int)(y+6)), OVERLAY_COLOR_RED, 2);
 						char stateMessage[60];
 						sprintf(stateMessage, "(%d-%d) = %d", tSect[i]->index_from, tSect[i]->index_to, tSect[i]->index_to - tSect[i]->index_from + 1);
-						putText(frame, stateMessage, Point(p.x, p.y+30), FONT_HERSHEY_SIMPLEX, 0.4, OVERLAY_COLOR_RED, 1, CV_AA);
+						putText(frame, stateMessage, Point(x, y+30), FONT_HERSHEY_SIMPLEX, 0.4, OVERLAY_COLOR_RED, 1, CV_AA);
 					}
 					else {
 						rectangle(frame, Point((int)(x-6), (int)(y-6)), Point((int)(x+6), (int)(y+6)), OVERLAY_COLOR_YELLOW, 1);
