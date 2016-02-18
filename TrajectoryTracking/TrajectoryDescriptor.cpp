@@ -93,13 +93,11 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 {
 	// Get last trajectory section
 	TrajectorySection *lastSection = trajectorySections[trajectorySections.size() - 1];
-
 	vector<int> localMinimaIndexes = SlopeBehaviourAnalyzer::getInstance()->computeLocalMinima(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
 
 	if (!localMinimaIndexes.size() || (lastSection->index_to - lastSection->index_from + 1) < 4) {
 		return;
 	}
-
 
 	for (int i = 0; i < localMinimaIndexes.size(); i++) {
 
@@ -115,8 +113,6 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 
 		// If the last section is too short, aggregate it to the previous if any
 		if (lastSection->index_to - lastSection->index_from + 1 < 4) {
-
-			printf("Case to-from < 4\n");
 
 			if (trajectorySections.size() > 1) {
 				// Extend the previous-last section to cover the last section's states
