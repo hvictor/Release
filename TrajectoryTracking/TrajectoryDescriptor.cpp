@@ -89,7 +89,7 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 	TrajectorySection *lastSection = trajectorySections[trajectorySections.size() - 1];
 	vector<int> localMinimaIndexes = SlopeBehaviourAnalyzer::getInstance()->computeLocalMinima(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
 
-	if (!localMinimaIndexes.size() || (lastSection->index_from - lastSection->index_to + 1) < 4) {
+	if (!localMinimaIndexes.size() || (lastSection->index_to - lastSection->index_from + 1) < 4) {
 		return;
 	}
 
