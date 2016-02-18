@@ -101,17 +101,21 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 		return;
 	}
 	*/
-	int i = SlopeBehaviourAnalyzer::getInstance()->searchNearestLocalMinimumDiscrete(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
+	int localMinIdx = SlopeBehaviourAnalyzer::getInstance()->searchNearestLocalMinimumDiscrete(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
 
-	if (i < 0) {
+	if (localMinIdx < 0) {
 		return;
 	}
 
 	//for (int i = 0; i < localMinimaIndexes.size(); i++) {
 
 	// Set the current local minimum as the trajectory section's last point
+	/*
 	lastSection->index_to = localMinimaIndexes[i];
 	lastSection->x_to = (double)trackedStates[localMinimaIndexes[i]]->state.x;
+	*/
+	lastSection->index_to = localMinIdx;
+	lastSection->x_to = (double)trackedStates[localMinIdx]->state.x;
 
 	HexaPolynomialCoeff lastHexaPolyCoeff = lastSection->hexa_coeffs;
 	int lastIndexFrom = lastSection->index_from;
