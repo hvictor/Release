@@ -81,7 +81,7 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 		if (descending && y > lastValue) {
 			confirmation++;
 
-			if (confirmation >= 2) {
+			if (confirmation > 2) {
 				return i;
 			}
 		}
