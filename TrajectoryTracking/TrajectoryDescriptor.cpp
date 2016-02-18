@@ -103,7 +103,7 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 	*/
 	int localMinIdx = SlopeBehaviourAnalyzer::getInstance()->searchNearestLocalMinimumDiscrete(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
 
-	if (localMinIdx < 0) {
+	if (localMinIdx < 0 || (lastSection->index_to - lastSection->index_from + 1) < 4) {
 		return;
 	}
 
