@@ -89,7 +89,7 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 	TrajectorySection *lastSection = trajectorySections[trajectorySections.size() - 1];
 	vector<int> localMinimaIndexes = SlopeBehaviourAnalyzer::getInstance()->computeLocalMinima(lastSection->hexa_coeffs, trackedStates, lastSection->index_from, lastSection->index_to);
 
-	if (!localMinimaIndexes.size()) {
+	if (!localMinimaIndexes.size() || (lastSection->x_to - lastSection->x_from + 1) < 4) {
 		return;
 	}
 
@@ -106,6 +106,7 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 		newSection->hexa_coeffs = lastSection->hexa_coeffs;
 		newSection->index_from = lastSection->index_to;
 		newSection->index_to = newSection->index_from; // Initialization
+
 		newSection->x_from = lastSection->x_to;
 		newSection->x_to = newSection->x_from; // Initialization
 		newSection->optimized = false;
