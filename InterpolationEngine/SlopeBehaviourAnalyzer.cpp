@@ -81,6 +81,7 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 		if (descending && y > lastValue) {
 			confirmation++;
 
+			// TODO: parameterize this
 			if (confirmation > 2) {
 				return i;
 			}
@@ -105,32 +106,6 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 		else if (y < lastValue) {
 			lastValue = y;
 		}
-
-		/*
-		if (i == indexFrom) {
-			firstPeakValue = y;
-			continue;
-		}
-
-		if (y >= firstPeakValue) {
-			firstPeakValue = y;
-			continue;
-		}
-
-		if (!firstPeakPassed) {
-			lastValue = firstPeakValue;
-			firstPeakPassed = true;
-			continue;
-		}
-
-		if (y < lastValue) {
-			lastValue = y;
-			lastIndex = i;
-		}
-		else if (y > lastValue) {
-			return lastIndex;//i + (i - lastIndex)/2;
-		}
-		*/
 	}
 
 	return -1;
