@@ -107,6 +107,8 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 		return;
 	}
 
+	printf("localMinIdx: %d, from=%d, to=%d\n", localMinIdx, lastSection->index_from, lastSection->index_to);
+
 	//for (int i = 0; i < localMinimaIndexes.size(); i++) {
 
 	// Set the current local minimum as the trajectory section's last point
@@ -125,6 +127,8 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 
 	// If the last section is too short, aggregate it to the previous if any
 	if (lastSection->index_to - lastSection->index_from + 1 < 4) {
+
+		printf("Case to-from < 4\n");
 
 		if (trajectorySections.size() > 1) {
 			// Extend the previous-last section to cover the last section's states
@@ -183,6 +187,8 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 	// Update last section pointer
 	lastSection = trajectorySections[trajectorySections.size() - 1];
 	//}
+
+	printf("Done\n");
 }
 
 void TrajectoryDescriptor::approxTrajectorySectionCubic(TrajectorySection *s, vector<TrackedState *> trackedStates)

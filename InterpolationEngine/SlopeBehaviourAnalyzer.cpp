@@ -90,7 +90,7 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 			lastIndex = i;
 		}
 		else if (y > lastValue) {
-			return i + (i - lastIndex)/2;
+			return lastIndex;//i + (i - lastIndex)/2;
 		}
 	}
 
