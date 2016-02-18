@@ -107,8 +107,6 @@ void TrajectoryDescriptor::optimize(vector<TrackedState *> trackedStates)
 		return;
 	}
 
-	printf("localMinIdx: %d, from=%d, to=%d\n", localMinIdx, lastSection->index_from, lastSection->index_to);
-
 	//for (int i = 0; i < localMinimaIndexes.size(); i++) {
 
 	// Set the current local minimum as the trajectory section's last point

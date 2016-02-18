@@ -67,6 +67,8 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 
 	static bool descending = false;
 
+	int confirmation = 0;
+
 	for (int i = indexFrom; i <= indexTo; i++) {
 		double x = (double)trackedStates[i]->state.x;
 		double y = coeffs.c0 + coeffs.c1*x + coeffs.c2*x*x + coeffs.c3*x*x*x + coeffs.c4*x*x*x*x + coeffs.c5*x*x*x*x*x + coeffs.c6*x*x*x*x*x*x;
@@ -77,7 +79,14 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 		}
 
 		if (descending && y > lastValue) {
-			return i;
+			confirmation++;
+
+			if (confirmation >= 2) {
+				return i;
+			}
+		}
+		else {
+			confirmation = 0;
 		}
 
 		// Hill-climbing
