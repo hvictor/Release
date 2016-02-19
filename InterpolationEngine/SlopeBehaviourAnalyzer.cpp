@@ -6,6 +6,11 @@
  */
 
 #include "SlopeBehaviourAnalyzer.h"
+#include <math.h>
+#include <stdlib.h>
+#include <algorithm>
+#include <vector>
+#include <math>
 
 SlopeBehaviourAnalyzer::SlopeBehaviourAnalyzer()
 {
@@ -47,7 +52,10 @@ vector<int> SlopeBehaviourAnalyzer::computeLocalMinima(HexaPolynomialCoeff coeff
 
 		// Local minima
 		if ((fabsl(first_differential) <= eps)) { //&& (second_differential < eps)) {
-			localMinima.push_back(i);
+
+			if (extremaType(coeffs, x, (double)trackedStates[indexFrom]->state.x, (double)trackedStates[indexTo]->state.x) == EXTREMA_TYPE_LOCAL_MIN) {
+				localMinima.push_back(i);
+			}
 
 			// EXPERIMENTAL:
 			// Accept only one local extrema (for real-time online tracking)
@@ -109,4 +117,54 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 	}
 
 	return -1;
+}
+
+int SlopeBehaviourAnalyzer::extremaType(HexaPolynomialCoeff coeffs, double x_extrema, double x_from, double x_to)
+{
+	double neigh = 20.0;
+
+	double diff_from = x_extrema - x_from + 1;
+	double diff_to = x_to - x_extrema + 1;
+
+	double votes_min = 0.0;
+	double votes_max = 0.0;
+
+	if (diff_to < neigh || diff_from < neigh) {
+		if (diff_from < diff_to)
+			neigh = diff_from;
+		else
+			neigh = diff_to;
+	}
+
+	// Symmetrical check
+	double x = x_extrema;
+	double y_extrema = coeffs.c0 + coeffs.c1*x + coeffs.c2*x*x + coeffs.c3*x*x*x + coeffs.c4*x*x*x*x + coeffs.c5*x*x*x*x*x + coeffs.c6*x*x*x*x*x*x;
+	double tot = neigh;
+
+	for (double k = 1.0; k <= neigh; k += 1.0) {
+		x = x_extrema - k;
+		double yL = coeffs.c0 + coeffs.c1*x + coeffs.c2*x*x + coeffs.c3*x*x*x + coeffs.c4*x*x*x*x + coeffs.c5*x*x*x*x*x + coeffs.c6*x*x*x*x*x*x;
+		x = x_extrema + k;
+		double yR = coeffs.c0 + coeffs.c1*x + coeffs.c2*x*x + coeffs.c3*x*x*x + coeffs.c4*x*x*x*x + coeffs.c5*x*x*x*x*x + coeffs.c6*x*x*x*x*x*x;
+
+		if (yL < y_extrema && yR < y_extrema) {
+			votes_min += 1.0;
+		}
+		else if (yL > y_extrema && yR > y_extrema) {
+			votes_max += 1.0;
+		}
+		else {
+			tot -= 1.0; // Measurement failed
+		}
+	}
+
+	double min_percent = votes_min/tot;
+	double max_percent = votes_max/tot;
+
+	if (min_percent >= max_percent) {
+		return EXTREMA_TYPE_LOCAL_MIN;
+	}
+	else {
+		return EXTREMA_TYPE_LOCAL_MAX;
+	}
 }
