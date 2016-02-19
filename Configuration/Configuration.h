@@ -88,6 +88,11 @@ typedef struct
 	OutputFrameType outputType;
 } FrameInfo;
 
+typedef struct
+{
+	double extremaNeighbourhoodSize;
+} InterpolationEngineParameters;
+
 class Configuration {
 public:
 
@@ -97,12 +102,14 @@ public:
 	void setOpticalLayerParameters(OpticalLayerParameters opticalLayerParams);
 	void setDUOStereoCameraHardwareParameters(DUOStereoCameraHardwareParameters duoParam);
 	void setFrameInfo(FrameInfo frameInfo);
+	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
 
 	// Get configuration components
 	FrameInfo getFrameInfo();
 	OperationalMode getOperationalMode();
 	OpticalLayerParameters getOpticalLayerParameters();
 	DUOStereoCameraHardwareParameters getDUOStereoCameraHardwareParameters();
+	InterpolationEngineParameters getInterpolationEngineParameters();
 
 	void writeConfigFile(string fileName);
 	void loadConfigFile(string fileName);
@@ -115,6 +122,7 @@ private:
 	OperationalMode operationalMode;
 	OpticalLayerParameters opticalLayerParameters;
 	DUOStereoCameraHardwareParameters duoHardwareParameters;
+	InterpolationEngineParameters interpolationEngineParameters;
 };
 
 #endif /* CONFIGURATION_H_ */

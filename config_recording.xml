@@ -18,4 +18,5 @@
 <StereoCameraDUO_Gain>100</StereoCameraDUO_Gain>
 <StereoCameraDUO_Exposure>100</StereoCameraDUO_Exposure>
 <StereoCameraDUO_Leds>75</StereoCameraDUO_Leds>
+<InterpolationEngine_ExtremaNeighbourhoodSize>5.0</InterpolationEngine_ExtremaNeighbourhoodSize>
 </opencv_storage>

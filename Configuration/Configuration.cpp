@@ -65,6 +65,16 @@ FrameInfo Configuration::getFrameInfo()
 	return frameInfo;
 }
 
+void Configuration::setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam)
+{
+	interpolationEngineParameters = interpEngineParam;
+}
+
+InterpolationEngineParameters Configuration::getInterpolationEngineParameters()
+{
+	return interpolationEngineParameters;
+}
+
 void Configuration::writeConfigFile(string fileName)
 {
 	FileStorage fs(".xml", FileStorage::WRITE + FileStorage::MEMORY);
@@ -94,6 +104,9 @@ void Configuration::writeConfigFile(string fileName)
 	fs << "StereoCameraDUO_Gain" << duoHardwareParameters.gain;
 	fs << "StereoCameraDUO_Exposure" << duoHardwareParameters.exposure;
 	fs << "StereoCameraDUO_Leds" << duoHardwareParameters.leds;
+
+	// Interpolation Engine
+	fs << "InterpolationEngine_ExtremaNeighbourhoodSize" << interpolationEngineParameters.extremaNeighbourhoodSize;
 
 	string buf = fs.releaseAndGetString();
 
@@ -145,6 +158,9 @@ void Configuration::loadConfigFile(string fileName)
 	fs["StereoCameraDUO_Gain"] >> duoHardwareParameters.gain;
 	fs["StereoCameraDUO_Exposure"] >> duoHardwareParameters.exposure;
 	fs["StereoCameraDUO_Leds"] >> duoHardwareParameters.leds;
+
+	// Interpolation Engine
+	fs["InterpolationEngine_ExtremaNeighbourhoodSize"] >> interpolationEngineParameters.extremaNeighbourhoodSize;
 }
 
 void Configuration::display()
@@ -174,4 +190,6 @@ void Configuration::display()
 	cout << "\tGain:\t\t" << duoHardwareParameters.gain << endl;
 	cout << "\tExposure:\t\t" << duoHardwareParameters.exposure << endl;
 	cout << "\tLeds:\t\t" << duoHardwareParameters.leds << endl;
+	cout << "[Interpolation Engine]" << endl;
+	cout << "\tExtrema Neighbourhood Size:\t" << interpolationEngineParameters.extremaNeighbourhoodSize << endl;
 }

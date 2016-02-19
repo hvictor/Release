@@ -6,6 +6,7 @@
  */
 
 #include "SlopeBehaviourAnalyzer.h"
+#include "../Configuration/Configuration.h"
 #include <math.h>
 #include <stdlib.h>
 #include <algorithm>
@@ -120,7 +121,7 @@ int SlopeBehaviourAnalyzer::searchNearestLocalMinimumDiscrete(HexaPolynomialCoef
 
 int SlopeBehaviourAnalyzer::extremaType(HexaPolynomialCoeff coeffs, double x_extrema, double x_from, double x_to)
 {
-	double neigh = 20.0;
+	double neigh = Configuration::getInstance()->getInterpolationEngineParameters().extremaNeighbourhoodSize;
 
 	double diff_from = x_extrema - x_from + 1;
 	double diff_to = x_to - x_extrema + 1;
