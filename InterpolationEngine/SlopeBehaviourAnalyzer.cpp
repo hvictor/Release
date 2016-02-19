@@ -123,6 +123,8 @@ int SlopeBehaviourAnalyzer::extremaType(HexaPolynomialCoeff coeffs, double x_ext
 {
 	double neigh = Configuration::getInstance()->getInterpolationEngineParameters().extremaNeighbourhoodSize;
 
+	printf("Neigh = %g\n", neigh);
+
 	double diff_from = x_extrema - x_from + 1;
 	double diff_to = x_to - x_extrema + 1;
 
@@ -134,6 +136,10 @@ int SlopeBehaviourAnalyzer::extremaType(HexaPolynomialCoeff coeffs, double x_ext
 			neigh = diff_from;
 		else
 			neigh = diff_to;
+	}
+
+	if (neigh <= 2) {
+		return EXTREMA_TYPE_ERROR;
 	}
 
 	// Symmetrical check

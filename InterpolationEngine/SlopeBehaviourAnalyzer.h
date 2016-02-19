@@ -13,6 +13,7 @@
 #include "../OpticalLayer/StatefulObjectFilter.h"
 #include "InterpolationEngine.h"
 
+#define EXTREMA_TYPE_ERROR			-1
 #define	EXTREMA_TYPE_LOCAL_MIN		0
 #define EXTREMA_TYPE_LOCAL_MAX		1
 
