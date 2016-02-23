@@ -1,0 +1,1240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>986</width>
+    <height>567</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>921</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Hardware</string>
+        </attribute>
+        <widget class="Line" name="line">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>240</y>
+           <width>921</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>111</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Camera Sensors</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>230</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>NVIDIA Jetson TK1</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_3">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>111</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Technology:</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>10</y>
+           <width>921</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_4">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Mode:</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButton">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>30</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Camera</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButton_2">
+         <property name="geometry">
+          <rect>
+           <x>230</x>
+           <y>30</y>
+           <width>81</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Infrared</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButton_3">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>50</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Mono</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButton_4">
+         <property name="geometry">
+          <rect>
+           <x>230</x>
+           <y>50</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Stereo</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Device:</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>87</y>
+           <width>181</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>ZED Stereo Camera</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DUO Stereo Camera</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Kinect IR Depth Sensor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Virtual Mono Camera</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Virtual Stereo Camera</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="Line" name="line_3">
+         <property name="geometry">
+          <rect>
+           <x>460</x>
+           <y>20</y>
+           <width>20</width>
+           <height>225</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>260</y>
+           <width>461</width>
+           <height>211</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <widget class="QSlider" name="horizontalSlider">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>20</y>
+            <width>141</width>
+            <height>19</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>19</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::NoTicks</enum>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>20</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>CPU Core 0:</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>20</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Active</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_13">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>40</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>CPU Core 1:</string>
+          </property>
+         </widget>
+         <widget class="QSlider" name="horizontalSlider_3">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>40</y>
+            <width>141</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>19</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::NoTicks</enum>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_14">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>60</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>CPU Core 2:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_15">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>80</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>CPU Core 3:</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_3">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>40</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Active</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_4">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>60</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Active</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_5">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>80</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Active</string>
+          </property>
+         </widget>
+         <widget class="QSlider" name="horizontalSlider_4">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>60</y>
+            <width>141</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>19</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QSlider" name="horizontalSlider_5">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>80</y>
+            <width>141</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>19</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_20">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>120</y>
+            <width>41</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>GPU:</string>
+          </property>
+         </widget>
+         <widget class="QSlider" name="horizontalSlider_6">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>120</y>
+            <width>141</width>
+            <height>19</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>14</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>184</y>
+            <width>151</width>
+            <height>27</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Maximal Performance</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>156</y>
+            <width>151</width>
+            <height>27</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Low Power</string>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdPeakCPU0">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>19</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdPeakCPU1">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>40</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdPeakCPU2">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>61</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdPeakCPU3">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>82</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_24">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>19</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>[MHz]</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_25">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>40</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>[MHz]</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_26">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>61</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>[MHz]</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_27">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>82</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>[MHz]</string>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdPeakGPU">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>120</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_28">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>120</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>[MHz]</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_4">
+          <property name="geometry">
+           <rect>
+            <x>280</x>
+            <y>184</y>
+            <width>151</width>
+            <height>27</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Start Application</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_5">
+          <property name="geometry">
+           <rect>
+            <x>280</x>
+            <y>157</y>
+            <width>151</width>
+            <height>27</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Start Calibrator</string>
+          </property>
+         </widget>
+         <zorder>horizontalSlider</zorder>
+         <zorder>label_9</zorder>
+         <zorder>label_10</zorder>
+         <zorder>checkBox</zorder>
+         <zorder>label_13</zorder>
+         <zorder>horizontalSlider_3</zorder>
+         <zorder>label_14</zorder>
+         <zorder>label_15</zorder>
+         <zorder>checkBox_3</zorder>
+         <zorder>checkBox_4</zorder>
+         <zorder>checkBox_5</zorder>
+         <zorder>horizontalSlider_4</zorder>
+         <zorder>horizontalSlider_5</zorder>
+         <zorder>label_20</zorder>
+         <zorder>horizontalSlider_6</zorder>
+         <zorder>pushButton</zorder>
+         <zorder>pushButton_2</zorder>
+         <zorder>lcdPeakCPU0</zorder>
+         <zorder>lcdPeakCPU1</zorder>
+         <zorder>lcdPeakCPU2</zorder>
+         <zorder>lcdPeakCPU3</zorder>
+         <zorder>label_24</zorder>
+         <zorder>label_25</zorder>
+         <zorder>label_26</zorder>
+         <zorder>label_27</zorder>
+         <zorder>lcdPeakGPU</zorder>
+         <zorder>label_28</zorder>
+         <zorder>pushButton_4</zorder>
+         <zorder>pushButton_5</zorder>
+        </widget>
+        <widget class="QLabel" name="label_10">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>252</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Performance Tuning</string>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="geometry">
+          <rect>
+           <x>480</x>
+           <y>260</y>
+           <width>461</width>
+           <height>211</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <widget class="QMdiArea" name="mdiArea">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>21</y>
+            <width>95</width>
+            <height>95</height>
+           </rect>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="background">
+           <brush brushstyle="NoBrush">
+            <color alpha="255">
+             <red>237</red>
+             <green>236</green>
+             <blue>235</blue>
+            </color>
+           </brush>
+          </property>
+         </widget>
+         <widget class="QProgressBar" name="progressBar">
+          <property name="geometry">
+           <rect>
+            <x>300</x>
+            <y>178</y>
+            <width>121</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="value">
+           <number>24</number>
+          </property>
+          <property name="textVisible">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_16">
+          <property name="geometry">
+           <rect>
+            <x>260</x>
+            <y>193</y>
+            <width>31</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Mem</string>
+          </property>
+         </widget>
+         <zorder>mdiArea</zorder>
+         <zorder>progressBar</zorder>
+         <zorder>label_12</zorder>
+         <zorder>mdiArea_5</zorder>
+         <zorder>mdiArea_5</zorder>
+         <zorder>label_16</zorder>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>480</x>
+           <y>252</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Diagnostics</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_4">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>360</y>
+           <width>431</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_12">
+         <property name="geometry">
+          <rect>
+           <x>740</x>
+           <y>440</y>
+           <width>31</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>GPU</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_5">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>600</y>
+           <width>421</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="Line" name="line_6">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>120</y>
+           <width>431</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_17">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>140</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Device Status:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_18">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>180</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Firmware/Library:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_19">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>140</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#32cd32;&quot;&gt;Online&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_21">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>160</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Platform Port:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_22">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>160</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>USB 3.0 Controller</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_23">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>180</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>DUO SDK v1.0.50.26</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="geometry">
+          <rect>
+           <x>350</x>
+           <y>140</y>
+           <width>91</width>
+           <height>55</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Test Device</string>
+         </property>
+        </widget>
+        <widget class="QProgressBar" name="progressBar_2">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>203</y>
+           <width>281</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="value">
+          <number>65</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_29">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>202</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Device Testing:</string>
+         </property>
+        </widget>
+        <widget class="DUOConfigWidget" name="deviceConfigurationWidget" native="true">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>479</x>
+           <y>70</y>
+           <width>421</width>
+           <height>171</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QFrame" name="frame">
+         <property name="geometry">
+          <rect>
+           <x>479</x>
+           <y>30</y>
+           <width>421</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>4</x>
+            <y>5</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Resolution:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_8">
+          <property name="geometry">
+           <rect>
+            <x>220</x>
+            <y>5</y>
+            <width>131</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Frame Type:</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_2">
+          <property name="geometry">
+           <rect>
+            <x>300</x>
+            <y>3</y>
+            <width>111</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>Grayscale</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RGB</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_2">
+          <property name="geometry">
+           <rect>
+            <x>137</x>
+            <y>3</y>
+            <width>51</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>800</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_7">
+          <property name="geometry">
+           <rect>
+            <x>129</x>
+            <y>7</y>
+            <width>16</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>x</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="geometry">
+           <rect>
+            <x>77</x>
+            <y>3</y>
+            <width>51</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>1280</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="Line" name="line_7">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>400</y>
+           <width>431</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Optical Layer</string>
+        </attribute>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QMdiArea" name="mdiArea_2">
+    <property name="geometry">
+     <rect>
+      <x>576</x>
+      <y>310</y>
+      <width>95</width>
+      <height>95</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="background">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>237</red>
+       <green>236</green>
+       <blue>235</blue>
+      </color>
+     </brush>
+    </property>
+   </widget>
+   <widget class="QMdiArea" name="mdiArea_3">
+    <property name="geometry">
+     <rect>
+      <x>482</x>
+      <y>404</y>
+      <width>95</width>
+      <height>95</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="background">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>237</red>
+       <green>236</green>
+       <blue>235</blue>
+      </color>
+     </brush>
+    </property>
+   </widget>
+   <widget class="QMdiArea" name="mdiArea_4">
+    <property name="geometry">
+     <rect>
+      <x>576</x>
+      <y>404</y>
+      <width>95</width>
+      <height>95</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="background">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>237</red>
+       <green>236</green>
+       <blue>235</blue>
+      </color>
+     </brush>
+    </property>
+   </widget>
+   <widget class="QMdiArea" name="mdiArea_5">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>310</y>
+      <width>161</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="background">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>237</red>
+       <green>236</green>
+       <blue>235</blue>
+      </color>
+     </brush>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>986</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>DUOConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>duoconfigwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
