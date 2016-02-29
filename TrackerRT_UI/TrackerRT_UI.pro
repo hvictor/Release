@@ -15,11 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     circularindicator.cpp \
-    duoconfigwidget.cpp
+    duoconfigwidget.cpp \
+    UICalibrationDisplay.cpp
 
 HEADERS  += mainwindow.h \
     circularindicator.h \
-    duoconfigwidget.h
+    duoconfigwidget.h \
+    UICalibrationDisplay.h
 
 FORMS    += mainwindow.ui \
-    duoconfigwidget.ui
+    duoconfigwidget.ui \
+    UICalibrationDisplay.ui

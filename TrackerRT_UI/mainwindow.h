@@ -20,6 +20,7 @@ private:
 
 private slots:
     void cpuCoreChanged(int value);
+    void startCalibrator();
 };
 
 #endif // MAINWINDOW_H

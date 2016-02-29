@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UICalibrationDisplay</class>
+ <widget class="QDialog" name="UICalibrationDisplay">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>878</width>
+    <height>599</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QMdiArea" name="mdiArea"/>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" rowspan="4">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Acquire Frame</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" rowspan="4">
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>Calibrate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="4">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>3D Ground Mapping</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4" rowspan="2">
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>[GPU] Segments: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QSlider" name="horizontalSlider">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QLCDNumber" name="lcdGain"/>
+      </item>
+      <item row="0" column="8" rowspan="4">
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Elapsed: ---- [ms]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7" rowspan="2">
+       <widget class="QLCDNumber" name="lcdGain_2"/>
+      </item>
+      <item row="2" column="3" colspan="2">
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="text">
+         <string>Network Reconstruction</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>[GPU] Distance: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="6">
+       <widget class="QSlider" name="horizontalSlider_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="9" rowspan="2">
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdGain</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>659</x>
+     <y>549</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>549</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdGain_2</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>651</x>
+     <y>568</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>571</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "circularindicator.h"
 #include <QMdiSubWindow>
+#include "UICalibrationDisplay.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -83,12 +84,18 @@ MainWindow::MainWindow(QWidget *parent) :
     subWindowGPU->setAttribute(Qt::WA_DeleteOnClose);
     ui->mdiArea_5->addSubWindow(subWindowGPU);
 
-
+    QObject::connect(ui->calibratorBtn, SIGNAL(clicked()), this, SLOT(startCalibrator()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::startCalibrator()
+{
+    UICalibrationDisplay *uiCalibratorDisplay = new UICalibrationDisplay();
+    uiCalibratorDisplay->show();
 }
 
 void MainWindow::cpuCoreChanged(int value)

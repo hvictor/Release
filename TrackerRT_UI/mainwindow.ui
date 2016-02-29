@@ -27,11 +27,11 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
-         <string>Hardware</string>
+         <string>Dashboard</string>
         </attribute>
         <widget class="Line" name="line">
          <property name="geometry">
@@ -617,7 +617,7 @@
            <string>Start Application</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="calibratorBtn">
           <property name="geometry">
            <rect>
             <x>280</x>
@@ -630,35 +630,6 @@
            <string>Start Calibrator</string>
           </property>
          </widget>
-         <zorder>horizontalSlider</zorder>
-         <zorder>label_9</zorder>
-         <zorder>label_10</zorder>
-         <zorder>checkBox</zorder>
-         <zorder>label_13</zorder>
-         <zorder>horizontalSlider_3</zorder>
-         <zorder>label_14</zorder>
-         <zorder>label_15</zorder>
-         <zorder>checkBox_3</zorder>
-         <zorder>checkBox_4</zorder>
-         <zorder>checkBox_5</zorder>
-         <zorder>horizontalSlider_4</zorder>
-         <zorder>horizontalSlider_5</zorder>
-         <zorder>label_20</zorder>
-         <zorder>horizontalSlider_6</zorder>
-         <zorder>pushButton</zorder>
-         <zorder>pushButton_2</zorder>
-         <zorder>lcdPeakCPU0</zorder>
-         <zorder>lcdPeakCPU1</zorder>
-         <zorder>lcdPeakCPU2</zorder>
-         <zorder>lcdPeakCPU3</zorder>
-         <zorder>label_24</zorder>
-         <zorder>label_25</zorder>
-         <zorder>label_26</zorder>
-         <zorder>label_27</zorder>
-         <zorder>lcdPeakGPU</zorder>
-         <zorder>label_28</zorder>
-         <zorder>pushButton_4</zorder>
-         <zorder>pushButton_5</zorder>
         </widget>
         <widget class="QLabel" name="label_10">
          <property name="geometry">
@@ -851,16 +822,6 @@
            </brush>
           </property>
          </widget>
-         <zorder>mdiArea</zorder>
-         <zorder>progressBar</zorder>
-         <zorder>label_12</zorder>
-         <zorder>mdiArea_5</zorder>
-         <zorder>mdiArea_5</zorder>
-         <zorder>label_16</zorder>
-         <zorder>mdiArea_2</zorder>
-         <zorder>mdiArea_4</zorder>
-         <zorder>mdiArea_3</zorder>
-         <zorder>mdiArea_5</zorder>
         </widget>
         <widget class="QLabel" name="label_11">
          <property name="geometry">
@@ -1200,7 +1161,7 @@
            <x>10</x>
            <y>70</y>
            <width>441</width>
-           <height>271</height>
+           <height>321</height>
           </rect>
          </property>
          <property name="frameShape">
@@ -1441,7 +1402,7 @@
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>160</y>
+            <y>170</y>
             <width>211</width>
             <height>20</height>
            </rect>
@@ -1460,7 +1421,7 @@
           <property name="geometry">
            <rect>
             <x>370</x>
-            <y>160</y>
+            <y>170</y>
             <width>48</width>
             <height>21</height>
            </rect>
@@ -1470,7 +1431,7 @@
           <property name="geometry">
            <rect>
             <x>420</x>
-            <y>160</y>
+            <y>170</y>
             <width>21</width>
             <height>20</height>
            </rect>
@@ -1562,6 +1523,208 @@
            </rect>
           </property>
          </widget>
+         <widget class="QLabel" name="label_46">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>230</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Trajectory Relational Factor:</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox">
+          <property name="geometry">
+           <rect>
+            <x>350</x>
+            <y>230</y>
+            <width>68</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_47">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>210</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Trajectory Idle-Lifetime:</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_9">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>210</y>
+            <width>48</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_48">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>190</y>
+            <width>221</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Farneback Flow Minimum Motion:</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+          <property name="geometry">
+           <rect>
+            <x>350</x>
+            <y>190</y>
+            <width>68</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_49">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>270</y>
+            <width>241</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Linear Low-Pass Filter x-coord:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_50">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>290</y>
+            <width>241</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Linear Low-Pass Filter y-coord:</string>
+          </property>
+         </widget>
+         <widget class="Line" name="line_10">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>250</y>
+            <width>421</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdTargetObjectEccentricty_2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>371</x>
+            <y>272</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QSlider" name="horizontalSlider_7">
+          <property name="geometry">
+           <rect>
+            <x>230</x>
+            <y>270</y>
+            <width>141</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdTargetObjectEccentricty_3">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>371</x>
+            <y>292</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QSlider" name="horizontalSlider_8">
+          <property name="geometry">
+           <rect>
+            <x>230</x>
+            <y>290</y>
+            <width>141</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </widget>
         <widget class="QFrame" name="frame_3">
          <property name="geometry">
@@ -1569,7 +1732,7 @@
            <x>460</x>
            <y>70</y>
            <width>441</width>
-           <height>271</height>
+           <height>321</height>
           </rect>
          </property>
          <property name="frameShape">
@@ -1578,6 +1741,164 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
+         <widget class="QLabel" name="label_51">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>241</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Lucas-Kanade Flow Minimum Motion:</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+          <property name="geometry">
+           <rect>
+            <x>350</x>
+            <y>10</y>
+            <width>68</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_52">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>261</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>SOF Directed Relational Factor x-coord:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_53">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>70</y>
+            <width>261</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>SOF Directed Relational Factor y-coord:</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+          <property name="geometry">
+           <rect>
+            <x>350</x>
+            <y>50</y>
+            <width>68</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+          <property name="geometry">
+           <rect>
+            <x>350</x>
+            <y>70</y>
+            <width>68</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_54">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>90</y>
+            <width>321</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>SOF Idle Trajectory Suppression Threshold Ticks:</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_10">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>90</y>
+            <width>48</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="Line" name="line_11">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>421</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_55">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>110</y>
+            <width>281</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>SOF Minimum Trajectory States:</string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_11">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>110</y>
+            <width>48</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
         </widget>
         <widget class="QLabel" name="label_30">
          <property name="geometry">
@@ -1656,6 +1977,11 @@
          <string>Dynamic Model</string>
         </attribute>
        </widget>
+       <widget class="QWidget" name="tab_5">
+        <attribute name="title">
+         <string>Overlay</string>
+        </attribute>
+       </widget>
        <widget class="QWidget" name="tab_3">
         <attribute name="title">
          <string>Memory Management</string>
@@ -1706,5 +2032,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdTargetObjectEccentricty</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>398</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
