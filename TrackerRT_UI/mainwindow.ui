@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Tracker RT</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -135,6 +135,9 @@
          <property name="text">
           <string>Camera</string>
          </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
         </widget>
         <widget class="QRadioButton" name="radioButton_2">
          <property name="geometry">
@@ -148,6 +151,9 @@
          <property name="text">
           <string>Infrared</string>
          </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
         </widget>
         <widget class="QRadioButton" name="radioButton_3">
          <property name="geometry">
@@ -161,6 +167,9 @@
          <property name="text">
           <string>Mono</string>
          </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup_2</string>
+         </attribute>
         </widget>
         <widget class="QRadioButton" name="radioButton_4">
          <property name="geometry">
@@ -174,12 +183,15 @@
          <property name="text">
           <string>Stereo</string>
          </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup_2</string>
+         </attribute>
         </widget>
         <widget class="QLabel" name="label_5">
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>90</y>
+           <y>80</y>
            <width>101</width>
            <height>16</height>
           </rect>
@@ -188,23 +200,23 @@
           <string>Device:</string>
          </property>
         </widget>
-        <widget class="QComboBox" name="comboBox">
+        <widget class="QComboBox" name="deviceComboBox">
          <property name="geometry">
           <rect>
            <x>130</x>
-           <y>87</y>
+           <y>70</y>
            <width>181</width>
            <height>25</height>
           </rect>
          </property>
          <item>
           <property name="text">
-           <string>ZED Stereo Camera</string>
+           <string>DUO Stereo Camera</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>DUO Stereo Camera</string>
+           <string>ZED Stereo Camera</string>
           </property>
          </item>
          <item>
@@ -604,7 +616,7 @@
            <string>[MHz]</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="startApplicationBtn">
           <property name="geometry">
            <rect>
             <x>280</x>
@@ -1055,7 +1067,7 @@
           <property name="geometry">
            <rect>
             <x>4</x>
-            <y>5</y>
+            <y>7</y>
             <width>91</width>
             <height>16</height>
            </rect>
@@ -1067,28 +1079,28 @@
          <widget class="QLabel" name="label_8">
           <property name="geometry">
            <rect>
-            <x>220</x>
-            <y>5</y>
-            <width>131</width>
+            <x>180</x>
+            <y>7</y>
+            <width>21</width>
             <height>16</height>
            </rect>
           </property>
           <property name="text">
-           <string>Frame Type:</string>
+           <string>In:</string>
           </property>
          </widget>
-         <widget class="QComboBox" name="comboBox_2">
+         <widget class="QComboBox" name="inputFrameTypeComboBox">
           <property name="geometry">
            <rect>
-            <x>300</x>
+            <x>200</x>
             <y>3</y>
-            <width>111</width>
+            <width>61</width>
             <height>25</height>
            </rect>
           </property>
           <item>
            <property name="text">
-            <string>Grayscale</string>
+            <string>Grey</string>
            </property>
           </item>
           <item>
@@ -1097,12 +1109,12 @@
            </property>
           </item>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="frameHeightEdit">
           <property name="geometry">
            <rect>
-            <x>137</x>
+            <x>130</x>
             <y>3</y>
-            <width>51</width>
+            <width>41</width>
             <height>25</height>
            </rect>
           </property>
@@ -1113,7 +1125,7 @@
          <widget class="QLabel" name="label_7">
           <property name="geometry">
            <rect>
-            <x>129</x>
+            <x>120</x>
             <y>7</y>
             <width>16</width>
             <height>16</height>
@@ -1123,18 +1135,51 @@
            <string>x</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="frameWidthEdit">
           <property name="geometry">
            <rect>
             <x>77</x>
             <y>3</y>
-            <width>51</width>
+            <width>41</width>
             <height>25</height>
            </rect>
           </property>
           <property name="text">
            <string>1280</string>
           </property>
+         </widget>
+         <widget class="QLabel" name="label_56">
+          <property name="geometry">
+           <rect>
+            <x>270</x>
+            <y>7</y>
+            <width>41</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Out:</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="outputFrameTypeComboBox">
+          <property name="geometry">
+           <rect>
+            <x>300</x>
+            <y>3</y>
+            <width>111</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>Immuted</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Force RGB</string>
+           </property>
+          </item>
          </widget>
         </widget>
         <widget class="Line" name="line_7">
@@ -1150,6 +1195,52 @@
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
+        <widget class="QComboBox" name="processingModeComboBox">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>100</y>
+           <width>181</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>Tracking</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Recording</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="label_33">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>103</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Processing Mode:</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="recordToBtn">
+         <property name="geometry">
+          <rect>
+           <x>321</x>
+           <y>100</y>
+           <width>121</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Record To...</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
@@ -1159,7 +1250,7 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>70</y>
+           <y>50</y>
            <width>441</width>
            <height>321</height>
           </rect>
@@ -1367,6 +1458,12 @@
             <width>51</width>
             <height>18</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: black; color: lightgreen;</string>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
           </property>
          </widget>
          <widget class="QLabel" name="label_40">
@@ -1673,6 +1770,12 @@
             <height>18</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: black; color: lightgreen;</string>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
+          </property>
          </widget>
          <widget class="QSlider" name="horizontalSlider_7">
           <property name="geometry">
@@ -1705,6 +1808,12 @@
             <height>18</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: black; color: lightgreen;</string>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
+          </property>
          </widget>
          <widget class="QSlider" name="horizontalSlider_8">
           <property name="geometry">
@@ -1730,7 +1839,7 @@
          <property name="geometry">
           <rect>
            <x>460</x>
-           <y>70</y>
+           <y>50</y>
            <width>441</width>
            <height>321</height>
           </rect>
@@ -1904,7 +2013,7 @@
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>62</y>
+           <y>42</y>
            <width>131</width>
            <height>16</height>
           </rect>
@@ -1920,7 +2029,7 @@
          <property name="geometry">
           <rect>
            <x>470</x>
-           <y>61</y>
+           <y>42</y>
            <width>131</width>
            <height>16</height>
           </rect>
@@ -2041,13 +2150,49 @@
    <hints>
     <hint type="sourcelabel">
      <x>310</x>
-     <y>221</y>
+     <y>201</y>
     </hint>
     <hint type="destinationlabel">
      <x>398</x>
-     <y>221</y>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_7</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdTargetObjectEccentricty_2</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>375</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>403</x>
+     <y>383</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_8</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdTargetObjectEccentricty_3</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>337</x>
+     <y>406</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>403</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+ </buttongroups>
 </ui>

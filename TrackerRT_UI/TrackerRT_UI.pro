@@ -16,12 +16,19 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     circularindicator.cpp \
     duoconfigwidget.cpp \
-    UICalibrationDisplay.cpp
+    UICalibrationDisplay.cpp \
+    UIController.cpp \
+    UIModel.cpp \
+    Configuration.cpp
 
 HEADERS  += mainwindow.h \
     circularindicator.h \
     duoconfigwidget.h \
-    UICalibrationDisplay.h
+    UICalibrationDisplay.h \
+    UIController.h \
+    UIModel.h \
+    Configuration.h \
+    configs.h
 
 FORMS    += mainwindow.ui \
     duoconfigwidget.ui \

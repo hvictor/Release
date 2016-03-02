@@ -2,13 +2,20 @@
 #include "ui_mainwindow.h"
 #include "circularindicator.h"
 #include <QMdiSubWindow>
+#include <QFileDialog>
+#include <QTreeView>
+#include <QDebug>
 #include "UICalibrationDisplay.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    uiModel = UIModel::getInstance();
+
     ui->setupUi(this);
+
+    ui->recordToBtn->setVisible(false);
 
     ui->lcdPeakCPU0->setSegmentStyle(QLCDNumber::Flat);
     ui->lcdPeakCPU0->setStyleSheet("background-color: black; color: lightgreen;");
@@ -85,6 +92,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mdiArea_5->addSubWindow(subWindowGPU);
 
     QObject::connect(ui->calibratorBtn, SIGNAL(clicked()), this, SLOT(startCalibrator()));
+
+    // Processing Mode
+    QObject::connect(ui->processingModeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setProcessingMode(int)));
+    QObject::connect(ui->processingModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateViewProcessingMode(int)));
+
+    // Input Device
+    QObject::connect(ui->deviceComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setInputDevice(int)));
+
+    // Frame Info
+    QObject::connect(ui->inputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameChannels(int)));
+    QObject::connect(ui->outputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameOutputType(int)));
+    QObject::connect(ui->deviceComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setInputDevice(int)));
+    QObject::connect(ui->frameWidthEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameWidth(QString)));
+    QObject::connect(ui->frameHeightEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameHeight(QString)));
+
+    QObject::connect(ui->recordToBtn, SIGNAL(clicked(bool)), this, SLOT(chooseRecordDirectory()));
+    QObject::connect(ui->startApplicationBtn, SIGNAL(clicked(bool)), this, SLOT(startApplication()));
 }
 
 MainWindow::~MainWindow()
@@ -113,4 +137,28 @@ void MainWindow::cpuCoreChanged(int value)
     else if (sender == ui->horizontalSlider_6)
         this->ui->lcdPeakGPU->display(CircularIndicator::gpu_freq[value]);
         //this->ui->labelPeakGPU->setText(QString("Peak ") + QString::number(CircularIndicator::gpu_freq[value]) + " [MHz]");
+}
+
+void MainWindow::updateViewProcessingMode(int processingMode)
+{
+    if (processingMode == 0) {
+        ui->recordToBtn->setVisible(false);
+    }
+
+    else {
+        ui->recordToBtn->setVisible(true);
+    }
+}
+
+void MainWindow::chooseRecordDirectory()
+{
+    QFileDialog *dialog = new QFileDialog();
+    dialog->setFileMode(QFileDialog::Directory);
+    dialog->setOption(QFileDialog::ShowDirsOnly);
+    dialog->show();
+}
+
+void MainWindow::startApplication()
+{
+    uiModel->apply();
 }

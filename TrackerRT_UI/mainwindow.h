@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <UIModel.h>
 
 namespace Ui {
 class MainWindow;
@@ -17,10 +18,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    UIModel *uiModel;
 
-private slots:
+public slots:
     void cpuCoreChanged(int value);
     void startCalibrator();
+    void chooseRecordDirectory();
+    void updateViewProcessingMode(int processingMode);
+    void startApplication();
 };
 
 #endif // MAINWINDOW_H

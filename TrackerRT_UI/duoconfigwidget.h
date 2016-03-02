@@ -2,6 +2,7 @@
 #define DUOCONFIGWIDGET_H
 
 #include <QWidget>
+#include <UIModel.h>
 
 namespace Ui {
 class DUOConfigWidget;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::DUOConfigWidget *ui;
+    UIModel *uiModel;
 };
 
 #endif // DUOCONFIGWIDGET_H
