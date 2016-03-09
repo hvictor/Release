@@ -7,6 +7,8 @@
 #include <QDebug>
 #include "UICalibrationDisplay.h"
 
+extern void run();
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -161,4 +163,5 @@ void MainWindow::chooseRecordDirectory()
 void MainWindow::startApplication()
 {
     uiModel->apply();
+    run();
 }
