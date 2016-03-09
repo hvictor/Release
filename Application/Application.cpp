@@ -584,7 +584,7 @@ void startIrApplication(IRSensorAbstractionLayer *irSAL, Configuration *config)
 //
 // Application Entry Point
 //
-int main(int argc, const char* argv[])
+void run()
 {
 	StereoSensorAbstractionLayer *stereoSAL = 0;
 	IRSensorAbstractionLayer *irSAL = 0;
@@ -595,20 +595,13 @@ int main(int argc, const char* argv[])
 	trajectoryTracker = new TrajectoryTracker();
 
 	/*
-	configuration->setOperationalMode(VirtualStereoCamera, Tracking);
-	OpticalLayerParameters opticalLayerParam;
-	opticalLayerParam.linearLowPassFilterX = 0.93;
-	opticalLayerParam.linearLowPassFilterY = 0.99;
-	configuration->setOpticalLayerParameters(opticalLayerParam);
-	configuration->writeConfigFile("config.xml");
-	*/
-
 	if (argc > 2) {
 		if (!strcmp(argv[1], "-c") || !strcmp(argv[1], "--config")) {
 			printf("Loading configuration file %s...\n", argv[2]);
 			configuration->loadConfigFile(argv[2]);
 		}
 	}
+	*/
 
 	configuration->display();
 
@@ -654,8 +647,6 @@ int main(int argc, const char* argv[])
 		startIrApplication(irSAL, configuration);
 		break;
 	}
-
-	return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////
