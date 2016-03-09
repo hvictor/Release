@@ -18,17 +18,14 @@ SOURCES += main.cpp\
     duoconfigwidget.cpp \
     UICalibrationDisplay.cpp \
     UIController.cpp \
-    UIModel.cpp \
-    Configuration.cpp
+    UIModel.cpp
 
 HEADERS  += mainwindow.h \
     circularindicator.h \
     duoconfigwidget.h \
     UICalibrationDisplay.h \
     UIController.h \
-    UIModel.h \
-    Configuration.h \
-    configs.h
+    UIModel.h
 
 FORMS    += mainwindow.ui \
     duoconfigwidget.ui \

@@ -1,7 +1,7 @@
 #ifndef UIMODEL_H
 #define UIMODEL_H
 
-#include "Configuration.h"
+#include "../Configuration/Configuration.h"
 #include <QString>
 #include <QObject>
 
