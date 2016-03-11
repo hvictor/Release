@@ -9,6 +9,9 @@
 #define ZEDSTEREOSENSORDRIVER_H_
 
 #include "StereoSensorAbstractionLayer.h"
+#include <zed/Camera.hpp>
+
+using namespace sl;
 
 typedef struct
 {
@@ -28,6 +31,7 @@ public:
 
 private:
 	ZEDCameraProperties *zedProperties;
+	zed::Camera* zed;
 };
 
 #endif /* ZEDSTEREOSENSORDRIVER_H_ */

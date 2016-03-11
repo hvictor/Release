@@ -8,8 +8,8 @@
 #include "ZEDStereoSensorDriver.h"
 
 ZEDStereoSensorDriver::ZEDStereoSensorDriver() {
-	frameSize.width = 1280;
-	frameSize.height = 720;
+	frameSize.width = 640;
+	frameSize.height = 480;
 
 	zedProperties = new ZEDCameraProperties();
 }
@@ -21,7 +21,8 @@ ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
 // Open ZED camera sensor
 bool ZEDStereoSensorDriver::openCamera()
 {
-	// TODO: Not yet implemented
+	zed::Camera* zed = new sl::zed::Camera(zed::VGA, 30);
+	zed->init(zed::MODE::PERFORMANCE, 0, false);
 
 	return true;
 }
@@ -44,11 +45,12 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 
 	// TODO: Not yet implemented
-	//ZEDFrame pFrameData = GetZEDFrame();
+	zed->grab(sl::zed::SENSING_MODE::FULL);
 
 	frame.channels = 4;
 	frame.bytesLength = frameSize.width * frameSize.height * frame.channels * sizeof(uint8_t);
-
+	frame.leftData = (uint8_t *)zed->retrieveImage(sl::zed::SIDE::LEFT).data;
+	frame.rightData = (uint8_t *)zed->retrieveImage(sl::zed::SIDE::RIGHT).data;
 
 	return frame;
 }

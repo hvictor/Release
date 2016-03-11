@@ -287,7 +287,11 @@ void *frames_outpt(void *)
 
 			Mat frameL, frameR;
 
-			if (channels == 1 && !force_rgb_output) {
+			if (channels == 4) {
+				frameL = Mat(Size(width, height), CV_8UC4, frame_data->left_data);
+				frameR = Mat(Size(width, height), CV_8UC4, frame_data->right_data);
+			}
+			else if (channels == 1 && !force_rgb_output) {
 				frameL = Mat(Size(width, height), CV_8UC1, frame_data->left_data);
 				frameR = Mat(Size(width, height), CV_8UC1, frame_data->right_data);
 			}
@@ -296,7 +300,9 @@ void *frames_outpt(void *)
 				frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
 			}
 
-			stereoRecorder->record(frameL, frameR);
+			imshow("Left", frameL);
+			imshow("Right", frameR);
+			//stereoRecorder->record(frameL, frameR);
 
 			// Free fast memory
 			fast_mem_pool_release_memory(frame_data);
