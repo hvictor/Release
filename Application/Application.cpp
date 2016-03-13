@@ -914,7 +914,7 @@ static void processFlow(Mat frame_L, Mat frame_R, uint16_t frameTime, const char
 				v.z = tmp.val[2];
 
 				// Discard upon invalid data
-				if (isinf(v.x) || isinf(v.y) || isinf(v.z) || isnan(v.x) || isnan(v.y) || isnan(v.z) || v.z >= 10000.0) {
+				if (std::isinf(v.x) || std::isinf(v.y) || std::isinf(v.z) || std::isnan(v.x) || std::isnan(v.y) || std::isnan(v.z) || v.z >= 10000.0) {
 					continue;
 				}
 
@@ -937,7 +937,7 @@ static void processFlow(Mat frame_L, Mat frame_R, uint16_t frameTime, const char
 				v.y = tmp.val[1];
 				v.z = tmp.val[2];
 
-				if (isinf(v.x) || isinf(v.y) || isinf(v.z) || isnan(v.x) || isnan(v.y) || isnan(v.z) || v.z >= 10000.0) {
+				if (std::isinf(v.x) || std::isinf(v.y) || std::isinf(v.z) || std::isnan(v.x) || std::isnan(v.y) || std::isnan(v.z) || v.z >= 10000.0) {
 					continue;
 				}
 			}

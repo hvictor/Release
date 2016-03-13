@@ -698,10 +698,10 @@ void DynamicModel3D_RecalcTrajectoryMechanicalState(Vector3D v, bool impacted, u
 	// Invalid z position
 	if (v.z >= 10000.0) return;
 
-	if (isnan(v.x) || isnan(v.y) || isnan(v.z))
+	if (std::isnan(v.x) || std::isnan(v.y) || std::isnan(v.z))
 		return;
 
-	if (isinf(v.x) || isinf(v.y) || isinf(v.z))
+	if (std::isinf(v.x) || std::isinf(v.y) || std::isinf(v.z))
 		return;
 
 	// First set the correct measurement unit scale
