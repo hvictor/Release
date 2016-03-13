@@ -23,7 +23,7 @@ bool ZEDStereoSensorDriver::openCamera()
 {
 	zed::Camera* zed = new sl::zed::Camera(zed::VGA, 30);
 
-	if (zed->init(zed::MODE::PERFORMANCE, 0, true) != SUCCESS) {
+	if (zed->init(zed::MODE::PERFORMANCE, 0, true) != zed::SUCCESS) {
 		printf("ZED init error\n");
 	}
 
