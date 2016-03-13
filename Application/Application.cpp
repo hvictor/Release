@@ -609,6 +609,7 @@ void run()
 	}
 	*/
 
+	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
 	configuration->display();
 
 	// Initialize fast memory pool
