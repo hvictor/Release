@@ -492,7 +492,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		return;
 	}
 
-	if (config->getOperationalMode().inputDevice == StereoCameraDUO) {
+	if (config->getOperationalMode().inputDevice == StereoCameraDUO || config->getOperationalMode().inputDevice == StereoCameraZED) {
 
 		stereoSAL->openCamera();
 
