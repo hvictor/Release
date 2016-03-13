@@ -12,6 +12,7 @@ ZEDStereoSensorDriver::ZEDStereoSensorDriver() {
 	frameSize.height = 480;
 
 	zedProperties = new ZEDCameraProperties();
+	this->zed = new sl::zed::Camera(zed::VGA, 30);
 }
 
 ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
@@ -21,8 +22,6 @@ ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
 // Open ZED camera sensor
 bool ZEDStereoSensorDriver::openCamera()
 {
-	this->zed = new sl::zed::Camera(zed::VGA, 30);
-
 	if (zed->init(zed::MODE::PERFORMANCE, 0, true) != zed::SUCCESS) {
 		printf("ZED init error\n");
 	}
@@ -47,8 +46,9 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 {
 	StereoFrame frame;
 
-	printf("Grabbing...\n");
-	zed->grab(zed::SENSING_MODE::FULL);
+	printf("Grabbing Frame from ZED camera...\n");
+
+	this->zed->grab(zed::SENSING_MODE::FULL);
 
 	printf("Grabbed OK\n");
 
