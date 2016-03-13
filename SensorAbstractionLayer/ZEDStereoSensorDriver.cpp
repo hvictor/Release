@@ -57,7 +57,9 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	printf("Assigning data\n");
 
-	Mat L, R;
+	Mat L(480, 640, CV_8UC4);
+	Mat R(480, 640, CV_8UC4);
+
 	slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::LEFT)).copyTo(L);
 	slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::RIGHT)).copyTo(R);
 
