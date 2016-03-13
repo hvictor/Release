@@ -281,7 +281,10 @@ void *frames_outpt(void *)
 			char buffer[300];
 			FrameData *frame_data;
 
+			printf("Porco\n");
+
 			if (array_spinlock_queue_pull(&outputFramesQueue, (void **)&frame_data) < 0) {
+				printf("Gesu\n");
 				continue;
 			}
 
@@ -300,6 +303,7 @@ void *frames_outpt(void *)
 				frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
 			}
 
+			printf("Dio\n");
 			imshow("Left", frameL);
 			imshow("Right", frameR);
 			waitKey(1);
