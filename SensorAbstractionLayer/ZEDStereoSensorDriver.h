@@ -10,6 +10,7 @@
 
 #include "StereoSensorAbstractionLayer.h"
 #include <zed/Camera.hpp>
+#include <zed/utils/GlobalDefine.hpp>
 
 using namespace sl;
 
