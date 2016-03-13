@@ -309,9 +309,10 @@ void *frames_outpt(void *)
 				frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
 			}
 
-			printf("Dio\n");
 			imshow("Left", frameL);
+			waitKey(1);
 			imshow("Right", frameR);
+			waitKey(1);
 
 			//stereoRecorder->record(frameL, frameR);
 
