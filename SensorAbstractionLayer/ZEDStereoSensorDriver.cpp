@@ -63,8 +63,9 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	imshow("L", L);
 	waitKey(1);
-	//frame.leftData = (uint8_t *)(zed->retrieveImage(sl::zed::SIDE::LEFT)).data;
-	//frame.rightData = (uint8_t *)(zed->retrieveImage(sl::zed::SIDE::RIGHT)).data;
+
+	frame.leftData = (uint8_t *)L.data;
+	frame.rightData = (uint8_t *)R.data;
 
 
 
