@@ -510,25 +510,33 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		printf("Stereo Application :: Input Device: Stereo camera (ZED)\n");
 
 		while (1) {
-			nanotimer_rt_start(&s);
+			//nanotimer_rt_start(&s);
 
 			StereoFrameSize frameSize = stereoSAL->getStereoFrameSize();
+
+			printf("STEREO: stereo frame size: %dx%d\n", frameSize.width, frameSize.height);
+
 			StereoFrame stereoFrame = stereoSAL->fetchStereoFrame();
+
+			printf("Fetching memory...\n");
 
 			// Allocate fast memory
 			FrameData *frameData = fast_mem_pool_fetch_memory();
 
 			if (frameData == NULL) continue;
 
+			printf("Frame data bytes is OK\n");
+
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
 			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
 
 			// Enqueue stereo pair data in processing / output queue
+			printf("Pushing in output queue [camera -> outputQueue]\n");
 			array_spinlock_queue_push(queue, (void *)frameData);
 
-			nanotimer_rt_stop(&t);
 
-			rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
+			//nanotimer_rt_stop(&t);
+			//rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
 		}
 	}
 	else if (config->getOperationalMode().inputDevice == StereoCameraVirtual)
