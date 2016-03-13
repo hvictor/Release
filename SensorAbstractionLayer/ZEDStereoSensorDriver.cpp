@@ -57,8 +57,16 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	printf("Assigning data\n");
 
-	frame.leftData = (uint8_t *)(zed->retrieveImage(sl::zed::SIDE::LEFT)).data;
-	frame.rightData = (uint8_t *)(zed->retrieveImage(sl::zed::SIDE::RIGHT)).data;
+	Mat L, R;
+	slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::LEFT)).copyTo(L);
+	slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::RIGHT)).copyTo(R);
+
+	imshow("L", L);
+	waitKey(1);
+	//frame.leftData = (uint8_t *)(zed->retrieveImage(sl::zed::SIDE::LEFT)).data;
+	//frame.rightData = (uint8_t *)(zed->retrieveImage(sl::zed::SIDE::RIGHT)).data;
+
+
 
 	return frame;
 }
