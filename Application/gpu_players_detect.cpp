@@ -19,7 +19,7 @@ std::vector<Rect> detectPlayers(Mat& frame0)
 	gpu::GpuMat src_gpu(frame0);
 	gpu::GpuMat d_grayscale;
 
-	if (src_gpu.channels() == 3) {
+	if (src_gpu.channels() >= 3) {
 		gpu::cvtColor(src_gpu, d_grayscale, CV_RGB2GRAY);
 	}
 	else if (src_gpu.channels() == 1) {

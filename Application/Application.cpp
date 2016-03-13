@@ -165,6 +165,15 @@ void *frames_processor(void *)
 			frame0_R = Mat(Size(width, height), CV_8UC3, frame_data[0]->right_data);
 			frame1_R = Mat(Size(width, height), CV_8UC3, frame_data[1]->right_data);
 		}
+		else if (channels == 4) {
+			// Left data
+			frame0_L = Mat(Size(width, height), CV_8UC4, frame_data[0]->left_data);
+			frame1_L = Mat(Size(width, height), CV_8UC4, frame_data[1]->left_data);
+
+			// Right data
+			frame0_R = Mat(Size(width, height), CV_8UC4, frame_data[0]->right_data);
+			frame1_R = Mat(Size(width, height), CV_8UC4, frame_data[1]->right_data);
+		}
 
 		players = detectPlayers(frame0_L);
 
@@ -501,7 +510,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 		stereoSAL->openCamera();
 
-		printf("Stereo Application :: Input Device: Stereo camera (DUO)\n");
+		printf("Stereo Application :: Input Device: Stereo camera (ZED)\n");
 
 		while (1) {
 			nanotimer_rt_start(&s);
@@ -620,7 +629,7 @@ void run()
 	// Initialize fast memory pool
 	printf("Initializing fast memory pool...\n");
 	if (configuration->getFrameInfo().outputType == ForcedRGB) {
-		fast_mem_pool_init(configuration->getFrameInfo().width, configuration->getFrameInfo().height, 3);
+		fast_mem_pool_init(configuration->getFrameInfo().width, configuration->getFrameInfo().height, configuration->getFrameInfo().channels);
 	}
 	else {
 		fast_mem_pool_init(configuration->getFrameInfo().width, configuration->getFrameInfo().height, configuration->getFrameInfo().channels);
