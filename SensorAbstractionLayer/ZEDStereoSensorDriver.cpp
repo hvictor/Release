@@ -46,19 +46,10 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 {
 	StereoFrame frame;
 
-	printf("Grabbing Frame from ZED camera...\n");
-
 	this->zed->grab(zed::SENSING_MODE::FULL);
-
-	printf("Grabbed OK\n");
 
 	frame.channels = 4;
 	frame.bytesLength = frameSize.width * frameSize.height * frame.channels * sizeof(uint8_t);
-
-	printf("Assigning data\n");
-
-	Mat L(480, 640, CV_8UC4);
-	Mat R(480, 640, CV_8UC4);
 
 	//slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::LEFT)).copyTo(L);
 	//slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::RIGHT)).copyTo(R);
