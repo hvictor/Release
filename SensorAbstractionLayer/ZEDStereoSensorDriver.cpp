@@ -60,15 +60,11 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	Mat L(480, 640, CV_8UC4);
 	Mat R(480, 640, CV_8UC4);
 
-	slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::LEFT)).copyTo(L);
-	slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::RIGHT)).copyTo(R);
+	//slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::LEFT)).copyTo(L);
+	//slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::RIGHT)).copyTo(R);
 
-	imshow("L", L);
-	waitKey(1);
-
-	frame.leftData = (uint8_t *)L.data;
-	frame.rightData = (uint8_t *)R.data;
-
+	frame.leftData = (uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
+	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 
 
 	return frame;
