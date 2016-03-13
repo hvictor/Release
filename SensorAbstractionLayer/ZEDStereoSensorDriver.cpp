@@ -22,7 +22,10 @@ ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
 bool ZEDStereoSensorDriver::openCamera()
 {
 	zed::Camera* zed = new sl::zed::Camera(zed::VGA, 30);
-	zed->init(zed::MODE::PERFORMANCE, 0, false);
+
+	if (zed->init(zed::MODE::PERFORMANCE, 0, true) != SUCCESS) {
+		printf("ZED init error\n");
+	}
 
 	return true;
 }
@@ -45,7 +48,10 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 
 	// TODO: Not yet implemented
-	zed->grab(sl::zed::SENSING_MODE::FULL);
+	if (!zed->grab(sl::zed::SENSING_MODE::FULL)) {
+		printf("ZED error\n");
+		exit(0);
+	}
 
 	frame.channels = 4;
 	frame.bytesLength = frameSize.width * frameSize.height * frame.channels * sizeof(uint8_t);
