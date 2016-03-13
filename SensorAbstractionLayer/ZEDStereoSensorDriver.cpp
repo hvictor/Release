@@ -47,14 +47,18 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 {
 	StereoFrame frame;
 
-	// TODO: Not yet implemented
+	printf("Grabbing...\n");
 	if (!zed->grab(sl::zed::SENSING_MODE::FULL)) {
 		printf("ZED error\n");
 		exit(0);
 	}
+	printf("Grabbed OK\n");
 
 	frame.channels = 4;
 	frame.bytesLength = frameSize.width * frameSize.height * frame.channels * sizeof(uint8_t);
+
+	printf("Assigning data\n");
+
 	frame.leftData = (uint8_t *)zed->retrieveImage(sl::zed::SIDE::LEFT).data;
 	frame.rightData = (uint8_t *)zed->retrieveImage(sl::zed::SIDE::RIGHT).data;
 
