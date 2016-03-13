@@ -6,7 +6,7 @@
 #define FRAME_WIDTH						320
 
 // Fast memory configuration
-#define FAST_MEM_POOL_FRAMES_MAX		20
+#define FAST_MEM_POOL_FRAMES_MAX		400
 
 //
 // Data Association configuration

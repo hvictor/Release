@@ -312,7 +312,7 @@ void *frames_outpt(void *)
 			printf("Dio\n");
 			imshow("Left", frameL);
 			imshow("Right", frameR);
-			waitKey(1);
+
 			//stereoRecorder->record(frameL, frameR);
 
 			// Free fast memory
