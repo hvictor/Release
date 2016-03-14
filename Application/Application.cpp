@@ -49,6 +49,11 @@
 
 #include "../TrajectoryTracking/TrajectoryTracker.h"
 
+#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "/home/ubuntu/opencv-2.4.10/modules/core/include/opencv2/core/opengl_interop.hpp"
+
 using namespace std;
 using namespace cv;
 using namespace cv::gpu;
@@ -73,6 +78,16 @@ typedef struct
 	GpuMat *gpu_frame0;
 	GpuMat *gpu_frame1;
 } ParallelOpticalFlowData;
+
+// OpenGL rendering data
+struct DrawData
+{
+    ogl::Arrays arr;
+    ogl::Texture2D tex;
+    ogl::Buffer indices;
+};
+
+struct DrawData data;
 
 // Destination GPU memory containing optical flow displacement information
 GpuMat d_flowx_L, d_flowy_L;
@@ -103,6 +118,15 @@ pthread_t frame_output_thread;
 
 // Trajectory Tracker
 TrajectoryTracker *trajectoryTracker;
+
+void renderScene(void* userdata)
+{
+    DrawData* data = static_cast<DrawData*>(userdata);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    ogl::render(data->arr, data->indices, ogl::TRIANGLES);
+}
 
 //
 // Frames Processor process
@@ -309,10 +333,18 @@ void *frames_outpt(void *)
 				frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
 			}
 
+			/*
 			imshow("Left", frameL);
 			waitKey(1);
 			imshow("Right", frameR);
 			waitKey(1);
+			*/
+			data.tex.copyFrom(frameL);
+
+			glEnable(GL_TEXTURE_2D);
+			data.tex.bind();
+			setOpenGlDrawCallback("L", renderScene, &data);
+			updateWindow("L");
 
 			//stereoRecorder->record(frameL, frameR);
 
@@ -600,10 +632,49 @@ void startIrApplication(IRSensorAbstractionLayer *irSAL, Configuration *config)
 }
 
 //
+// OpenGL setup
+//
+void setup_opengl()
+{
+	glutInit(&argc, argv);
+
+	Mat_<Vec2f> vertex(1, 4);
+	vertex << Vec2f(-1, 1), Vec2f(-1, -1), Vec2f(1, -1), Vec2f(1, 1);
+
+	Mat_<Vec2f> texCoords(1, 4);
+	texCoords << Vec2f(0, 0), Vec2f(0, 1), Vec2f(1, 1), Vec2f(1, 0);
+
+	Mat_<int> indices(1, 6);
+	indices << 0, 1, 2, 2, 3, 0;
+
+	data.arr.setVertexArray(vertex);
+	data.arr.setTexCoordArray(texCoords);
+	data.indices.copyFrom(indices);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//gluPerspective(45.0, (double)WIDTH / (double)HEIGHT, 0.1, 100.0);
+
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+	//gluLookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexEnvi(GL_TEXTURE_2D, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	glDisable(GL_CULL_FACE);
+
+	namedWindow("L", CV_WINDOW_OPENGL);
+	resizeWindow("L", 640, 480);
+}
+
+//
 // Application Entry Point
 //
-void run()
+void run(int argc, char *argv[])
 {
+	setup_opengl();
+
 	StereoSensorAbstractionLayer *stereoSAL = 0;
 	IRSensorAbstractionLayer *irSAL = 0;
 	DepthSensorTechnology depthTech;

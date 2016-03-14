@@ -7,7 +7,9 @@
 #include <QDebug>
 #include "UICalibrationDisplay.h"
 
-extern void run();
+extern int _argc;
+extern char *_argv[];
+extern void run(int argc, char *argv[]);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -163,5 +165,5 @@ void MainWindow::chooseRecordDirectory()
 void MainWindow::startApplication()
 {
     uiModel->apply();
-    run();
+    run(_argc, _argv);
 }
