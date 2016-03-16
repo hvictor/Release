@@ -333,20 +333,7 @@ void *frames_outpt(void *)
 				frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
 			}
 
-			/*
-			imshow("Left", frameL);
-			waitKey(1);
-			imshow("Right", frameR);
-			waitKey(1);
-			*/
-			data.tex.copyFrom(frameL);
-
-			glEnable(GL_TEXTURE_2D);
-			data.tex.bind();
-			setOpenGlDrawCallback("L", renderScene, &data);
-			updateWindow("L");
-
-			//stereoRecorder->record(frameL, frameR);
+			stereoRecorder->record(frameL, frameR);
 
 			// Free fast memory
 			fast_mem_pool_release_memory(frame_data);
@@ -512,8 +499,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 	printf("Stereo Application :: Frame processor thread running\n");
 
 	// Start frame output thread
+	/*
 	pthread_create(&frame_output_thread, 0, frames_outpt, 0);
 	printf("Stereo Application :: Frame output thread running\n");
+	*/
 
 	struct timespec s;
 	struct timespec t;
@@ -705,10 +694,8 @@ void setup_opengl()
 //
 // Application Entry Point
 //
-void run(int argc, char *argv[])
+void run()
 {
-	setup_opengl();
-
 	StereoSensorAbstractionLayer *stereoSAL = 0;
 	IRSensorAbstractionLayer *irSAL = 0;
 	DepthSensorTechnology depthTech;
