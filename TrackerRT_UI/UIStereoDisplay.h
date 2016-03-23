@@ -1,22 +1,29 @@
 #ifndef UISTEREODISPLAY_H
 #define UISTEREODISPLAY_H
 
-#include <QDialog>
+#include <QWidget>
+#include <QGridLayout>
+#include <QTimer>
+#include "GLWidget.h"
 
 namespace Ui {
 class UIStereoDisplay;
 }
 
-class UIStereoDisplay : public QDialog
+class UIStereoDisplay : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit UIStereoDisplay(QWidget *parent = 0);
+    UIStereoDisplay();
     ~UIStereoDisplay();
 
 private:
     Ui::UIStereoDisplay *ui;
+    GLWidget *glWidget;
+
+private slots:
+    void renderStereoRawData();
 };
 
 #endif // UISTEREODISPLAY_H

@@ -4,10 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT += opengl
+QT += core gui opengl
 
-LIBS += -lglut -lGLU -lpthread
+LIBS += -lpthread
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,7 +22,7 @@ SOURCES += main.cpp\
     UIController.cpp \
     UIModel.cpp \
     UIStereoDisplay.cpp \
-    UIOpenGLFrameRenderer.cpp
+    GLWidget.cpp
 
 HEADERS  += mainwindow.h \
     circularindicator.h \
@@ -32,10 +31,8 @@ HEADERS  += mainwindow.h \
     UIController.h \
     UIModel.h \
     UIStereoDisplay.h \
-    UIOpenGLFrameRenderer.h
+    GLWidget.h
 
 FORMS    += mainwindow.ui \
     duoconfigwidget.ui \
     UICalibrationDisplay.ui \
-    UIStereoDisplay.ui \
-    UIOpenGLFrameRenderer.ui

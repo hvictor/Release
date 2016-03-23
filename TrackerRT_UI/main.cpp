@@ -2,32 +2,33 @@
 #include <QApplication>
 #include <QSlider>
 #include <circularindicator.h>
-#include <UIOpenGLFrameRenderer.h>
 #include <pthread.h>
+#include "UIStereoDisplay.h"
+
+#include <QtGui/QGuiApplication>
+#include <window.h>
+
+#include <QtCore/qmath.h>
 
 extern void run();
-
+/*
 void *run_proc(void *args)
 {
     run();
     return NULL;
 }
+*/
 
 pthread_t runHdl;
 
 int main(int argc, char *argv[])
 {
-    pthread_create(&runHdl, 0, run_proc, 0);
+    //pthread_create(&runHdl, 0, run_proc, 0);
 
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
-    UIOpenGLFrameRenderer uiGLFrameRenderer;
-    uiGLFrameRenderer.show();
+    UIStereoDisplay stereoDisplay;
+    stereoDisplay.show();
 
-    return a.exec();
-
-    //MainWindow w;
-    //w.show();
-
-    //return a.exec();
+    return app.exec();
 }
