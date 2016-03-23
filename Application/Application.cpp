@@ -107,7 +107,8 @@ TrajectoryRecognizer *trajectoryRecognizer_R;
 
 // Fast concurrent spinlock queues
 static SpinlockQueue inputFramesQueue;
-static SpinlockQueue outputFramesQueue;
+SpinlockQueue outputFramesQueue;
+SpinlockQueue *outputFramesQueueExternPtr;
 
 // Configuration
 Configuration *configuration;
@@ -633,15 +634,6 @@ void run()
 	configuration = Configuration::getInstance();
 	trajectoryTracker = new TrajectoryTracker();
 
-	/*
-	if (argc > 2) {
-		if (!strcmp(argv[1], "-c") || !strcmp(argv[1], "--config")) {
-			printf("Loading configuration file %s...\n", argv[2]);
-			configuration->loadConfigFile(argv[2]);
-		}
-	}
-	*/
-
 	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
 	configuration->display();
 
@@ -659,6 +651,7 @@ void run()
 	printf("Initializing I/O Frame queues...\n");
 	array_spinlock_queue_init(&inputFramesQueue);
 	array_spinlock_queue_init(&outputFramesQueue);
+	outputFramesQueueExternPtr = &outputFramesQueue;
 	printf("I/O Frame queues initialized.\n");
 
 	// Operating Mode check
