@@ -109,6 +109,7 @@ TrajectoryRecognizer *trajectoryRecognizer_R;
 static SpinlockQueue inputFramesQueue;
 SpinlockQueue outputFramesQueue;
 SpinlockQueue *outputFramesQueueExternPtr;
+volatile bool systemReady = false;
 
 // Configuration
 Configuration *configuration;
@@ -549,6 +550,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			// Enqueue stereo pair data in processing / output queue
 			array_spinlock_queue_push(queue, (void *)frameData);
 
+			if (!systemReady) {
+				systemReady = true;
+			}
+
 
 			//nanotimer_rt_stop(&t);
 			//rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
@@ -626,6 +631,8 @@ void startIrApplication(IRSensorAbstractionLayer *irSAL, Configuration *config)
 //
 void run()
 {
+	systemReady = false;
+
 	StereoSensorAbstractionLayer *stereoSAL = 0;
 	IRSensorAbstractionLayer *irSAL = 0;
 	DepthSensorTechnology depthTech;
