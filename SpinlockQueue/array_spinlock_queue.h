@@ -1,4 +1,4 @@
-#ifndef __A_SPLINLOCK_QUEUE_H
+#ifndef __A_SPINLOCK_QUEUE_H
 #define __A_SPINLOCK_QUEUE_H
 
 #include "../FastMemory/fast_mem_pool.h"
