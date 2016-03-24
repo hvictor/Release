@@ -648,7 +648,7 @@ FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL)
 {
 	FrameData frameData;
 
-	StereoFrame sFrame = stereoSAL->getStereoFrameSize();
+	StereoFrame sFrame = stereoSAL->fetchStereoFrame();
 
 	frameData.left_data = sFrame.leftData;
 	frameData.right_data = sFrame.rightData;
