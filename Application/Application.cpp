@@ -544,8 +544,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			if (frameData == NULL) continue;
 
-			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
-			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
+			//memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
+			//memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
+			frameData->left_data = stereoFrame.leftData;
+			frameData->right_data = stereoFrame.rightData;
 
 			// Enqueue stereo pair data in processing / output queue
 			array_spinlock_queue_push(queue, (void *)frameData);
