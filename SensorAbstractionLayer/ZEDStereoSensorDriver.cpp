@@ -22,7 +22,7 @@ ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
 // Open ZED camera sensor
 bool ZEDStereoSensorDriver::openCamera()
 {
-	if (zed->init(zed::MODE::PERFORMANCE, 0, true) != zed::SUCCESS) {
+	if (zed->init(zed::MODE::PERFORMANCE, 0, true, true) != zed::SUCCESS) {
 		printf("ZED init error\n");
 	}
 
