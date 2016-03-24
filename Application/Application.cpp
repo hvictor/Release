@@ -544,10 +544,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			if (frameData == NULL) continue;
 
-			//memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
-			//memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
-			frameData->left_data = stereoFrame.leftData;
-			frameData->right_data = stereoFrame.rightData;
+			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
+			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
+			//frameData->left_data = stereoFrame.leftData;
+			//frameData->right_data = stereoFrame.rightData;
 
 			// Enqueue stereo pair data in processing / output queue
 			array_spinlock_queue_push(queue, (void *)frameData);
@@ -626,6 +626,34 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 void startIrApplication(IRSensorAbstractionLayer *irSAL, Configuration *config)
 {
 	// TODO: importare, on hold
+}
+
+//
+// Direct Init
+//
+void directInit(StereoSensorAbstractionLayer **stereoSAL)
+{
+	systemReady = false;
+
+	*stereoSAL = new ZEDStereoSensorDriver();
+	(*stereoSAL)->openCamera();
+
+	systemReady = true;
+}
+
+//
+// Direct Fetch RAW Stereo Data from the ZED Camera Sensor
+//
+FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL)
+{
+	FrameData frameData;
+
+	StereoFrame sFrame = stereoSAL->getStereoFrameSize();
+
+	frameData.left_data = sFrame.leftData;
+	frameData.right_data = sFrame.rightData;
+
+	return frameData;
 }
 
 //
