@@ -556,7 +556,6 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				systemReady = true;
 			}
 
-
 			//nanotimer_rt_stop(&t);
 			//rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
 		}

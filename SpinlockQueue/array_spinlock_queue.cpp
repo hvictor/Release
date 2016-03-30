@@ -6,7 +6,11 @@
 #include <pthread.h>
 #include <string.h>
 #include <errno.h>
+#include <semaphore.h>
 #include "array_spinlock_queue.h"
+
+static sem_t empty;
+static sem_t full;
 
 void array_spinlock_queue_init(SpinlockQueue *q)
 {
@@ -15,6 +19,9 @@ void array_spinlock_queue_init(SpinlockQueue *q)
 	q->tail = q->a;
 
 	pthread_spin_init(&q->spin, 0);
+
+	sem_init(&empty, 0, 0);
+	sem_init(&full, 0, 0);
 }
 
 int array_spinlock_queue_push(SpinlockQueue *q, void *data)
@@ -23,7 +30,10 @@ int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 
 	if (q->count >= QUEUE_MAX) {
 		pthread_spin_unlock(&q->spin);
-		return -1;
+
+		sem_wait(&full);
+
+		//return -1;
 	}
 
 	q->tail->data = data;
@@ -37,6 +47,10 @@ int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 	
 	q->count++;
 
+	if (q->count == 1) {
+		sem_post(&empty);
+	}
+
 	pthread_spin_unlock(&q->spin);
 
 	return 0;
@@ -48,7 +62,10 @@ int array_spinlock_queue_pull(SpinlockQueue *q, void **data_dest)
 
 	if (!q->count) {
 		pthread_spin_unlock(&q->spin);
-		return -1;
+
+		sem_wait(&empty);
+
+		//return -1;
 	}
 
 	*data_dest = q->head->data;
@@ -61,6 +78,10 @@ int array_spinlock_queue_pull(SpinlockQueue *q, void **data_dest)
 	}
 
 	q->count--;
+
+	if (q->count == (QUEUE_MAX - 1)) {
+		sem_post(&full);
+	}
 
 	pthread_spin_unlock(&q->spin);
 	
