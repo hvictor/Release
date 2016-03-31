@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     //directInit(&sSAL);
 
     while (!systemReady) {
-        usleep(1000);
+        usleep(10);
     }
 
     QApplication app(argc, argv);

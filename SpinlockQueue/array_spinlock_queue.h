@@ -2,6 +2,7 @@
 #define __A_SPINLOCK_QUEUE_H
 
 #include "../FastMemory/fast_mem_pool.h"
+#include <semaphore.h>
 
 #define QUEUE_MAX 400
 
@@ -13,8 +14,10 @@ struct node
 typedef struct
 {
 	pthread_spinlock_t spin;
+	sem_t empty;
+	sem_t full;
 
-	int count;
+	volatile int count;
 	struct node *head;
 	struct node *tail;
 

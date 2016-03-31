@@ -45,8 +45,11 @@ ZEDCameraProperties *ZEDStereoSensorDriver::getZEDCameraProperties()
 StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 {
 	StereoFrame frame;
+	frame.bytesLength = 0;
 
-	this->zed->grab(zed::SENSING_MODE::FULL);
+	if (this->zed->grab(zed::SENSING_MODE::RAW)) {
+		return frame;
+	}
 
 	frame.channels = 4;
 	frame.bytesLength = frameSize.width * frameSize.height * frame.channels * sizeof(uint8_t);

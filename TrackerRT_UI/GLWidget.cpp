@@ -132,11 +132,28 @@ void GLWidget::makeObject()
     };
 
     // Fetch STEREO Frame Data from Output Queue
+/////////////
+/*
+	static int measure_counter = 0;
+	static double queue_count_mean = 0;
+
+	queue_count_mean += (double)outputFramesQueueExternPtr->count;
+
+	if (++measure_counter == 100) {
+		queue_count_mean /= measure_counter;
+		measure_counter = 0;
+		printf("[queue avg] current size: %.4f frames\n", queue_count_mean);
+		queue_count_mean = 0;
+	}
+*/
+///////////
+
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
         return;
     }
 
-    //DIRECT: FrameData fData = directFetchRawStereoData(sSAL);
+    //DIRECT: 
+    //FrameData fData = directFetchRawStereoData(sSAL);
 
     if (setup) {
         QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
@@ -145,7 +162,7 @@ void GLWidget::makeObject()
         texture = new QOpenGLTexture(glImage);
 
 // ---------------------------------------------------
-// WITHOUT NEW        texture->setData(glImage);
+//        texture->setData(glImage);
 // ---------------------------------------------------
         return;
     }

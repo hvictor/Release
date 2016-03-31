@@ -6,11 +6,7 @@
 #include <pthread.h>
 #include <string.h>
 #include <errno.h>
-#include <semaphore.h>
 #include "array_spinlock_queue.h"
-
-static sem_t empty;
-static sem_t full;
 
 void array_spinlock_queue_init(SpinlockQueue *q)
 {
@@ -20,21 +16,24 @@ void array_spinlock_queue_init(SpinlockQueue *q)
 
 	pthread_spin_init(&q->spin, 0);
 
-	sem_init(&empty, 0, 0);
-	sem_init(&full, 0, 0);
+	sem_init(&q->empty, 0, 0);
+	sem_init(&q->full, 0, 1);
 }
 
 int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 {
-	pthread_spin_lock(&q->spin);
+	sem_wait(&q->full);
 
+	pthread_spin_lock(&q->spin);
+	/*
 	if (q->count >= QUEUE_MAX) {
 		pthread_spin_unlock(&q->spin);
 
-		sem_wait(&full);
+		sem_wait(&q->full);
 
-		//return -1;
+		pthread_spin_lock(&q->spin);
 	}
+	*/
 
 	q->tail->data = data;
 	
@@ -47,9 +46,10 @@ int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 	
 	q->count++;
 
-	if (q->count == 1) {
-		sem_post(&empty);
-	}
+//	if (q->count == 1) {
+	sem_post(&q->empty);
+	//printf("Unlocked empty semaphore, count = %d\n", q->count);
+//	}
 
 	pthread_spin_unlock(&q->spin);
 
@@ -58,16 +58,24 @@ int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 
 int array_spinlock_queue_pull(SpinlockQueue *q, void **data_dest)
 {
+	sem_wait(&q->empty);
+
 	pthread_spin_lock(&q->spin);
 
+/*
 	if (!q->count) {
 		pthread_spin_unlock(&q->spin);
 
-		sem_wait(&empty);
+		printf("waiting sem empty...\n");
+		sem_wait(&q->empty);
+		printf("sem empty gained, count = %d\n", q->count);
 
-		//return -1;
+		//return -1
+		pthread_spin_lock(&q->spin);
 	}
+*/
 
+	//printf("Assigning (q->head->data = %p to *data_dest (%p)\n", q->head->data, *data_dest);
 	*data_dest = q->head->data;
 
 	if (q->head == &(q->a[QUEUE_MAX-1])) {
@@ -78,11 +86,13 @@ int array_spinlock_queue_pull(SpinlockQueue *q, void **data_dest)
 	}
 
 	q->count--;
+//	printf("PULL: data pull ok, count = %d\n", q->count);
 
-	if (q->count == (QUEUE_MAX - 1)) {
-		sem_post(&full);
-	}
+//	if (q->count == (QUEUE_MAX - 1)) {
+	sem_post(&q->full);
+//	}
 
+//	printf("unlocking and leaving\n");
 	pthread_spin_unlock(&q->spin);
 	
 	return 0;
