@@ -13,7 +13,6 @@
 
 static pthread_spinlock_t mem_spin;
 static sem_t sem_empty;
-static sem_t sem_full;
 static int frame_buffer_size;
 
 volatile int mem_count;
@@ -44,8 +43,7 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 	mem_head = *mem;
 	mem_tail = *mem;
 
-	sem_init(&sem_empty, 0, 1);
-	sem_init(&sem_full, 0, 1);
+	sem_init(&sem_empty, 0, frame_buffer_size);
 }
 
 FrameData *fast_mem_pool_fetch_memory(void)
@@ -66,7 +64,6 @@ FrameData *fast_mem_pool_fetch_memory(void)
 	}
 
 	mem_count--;
-	sem_post(&sem_full);
 
 	pthread_spin_unlock(&mem_spin);
 
