@@ -61,17 +61,21 @@ FrameData *fast_mem_pool_fetch_memory(void)
 	ret = mem_head;
 
 	if (mem_head == mem[frame_buffer_size-1]) {
+		printf("setting mem_head = mem[0]\n");
 		mem_head = mem[0];
+		printf("OK: setting mem_head = mem[0]\n");
 	}
 	else {
+		printf("setting mem_head++\n");
 		mem_head++;
+		printf("OK setting mem_head++\n");
 	}
 
 	mem_count--;
 
 	pthread_spin_unlock(&mem_spin);
 
-	printf("Returning ret = %p", ret);
+	printf("Returning ret = %p\n", ret);
 
 	return ret;
 }
