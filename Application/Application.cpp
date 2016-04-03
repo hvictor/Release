@@ -548,6 +548,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			FrameData *frameData = fast_mem_pool_fetch_memory();
 
 			if (frameData == NULL) {
+				printf("Gesuuuuu\n");
 				usleep(1000);
 				continue;
 			}

@@ -10,100 +10,85 @@
 #include <pthread.h>
 
 
-static FrameData **mem;
-
-static int used = 0;
+static pthread_spinlock_t spin;
+static sem_t empty;
+static sem_t full;
 static int frame_buffer_size;
-static pthread_spinlock_t spinlock;
-volatile int last_free_index = 0;
+
+volatile int count;
+static FrameData *head;
+static FrameData *tail;
+static FrameData *mem;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 {
 	frame_buffer_size = Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize;
-	pthread_spin_init(&spinlock, 0);
+	pthread_spin_init(&spin, 0);
 
-	used = 0;
-	last_free_index = 0;
-
-	mem = (FrameData **)malloc(frame_buffer_size * sizeof(FrameData *));
+	mem = (FrameData *)malloc(frame_buffer_size * sizeof(FrameData));
 
 	for (int i = 0 ; i < frame_buffer_size; i++) {
-		mem[i] = (FrameData *)malloc(sizeof(FrameData));
-		mem[i]->left_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
+		mem[i].left_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
 
 		if (Configuration::getInstance()->getOperationalMode().inputDevice != MonoCameraVirtual) {
-			mem[i]->right_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
+			mem[i].right_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
 		}
 
-		mem[i]->index = i;
-		mem[i]->free = 1;
+		mem[i].index = i;
+		mem[i].free = 1;
 	}
+
+	count = 0;
+	head = mem;
+	tail = mem;
+
+	sem_init(&empty, 0, 0);
+	sem_init(&full, 0, 1);
 }
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
-	FrameData *pFrameData = NULL;
+	FrameData *ret;
 
-	pthread_spin_lock(&spinlock);
+	sem_wait(&empty);
 
-	if (used == frame_buffer_size) {
-		pthread_spin_unlock(&spinlock);
-		printf("Noooooo\n");
-		return NULL;
+	pthread_spin_lock(&spin);
+
+	ret = head;
+
+	if (head == mem[frame_buffer_size-1]) {
+		head = mem[0];
+	}
+	else {
+		head++;
 	}
 
-	if (last_free_index < 0)
-	{
-		return NULL;
-	}
+	count--;
+	sem_post(&full);
 
-	pFrameData = mem[last_free_index];
+	pthread_spin_unlock(&spin);
 
-	last_free_index++;
-
-	if (last_free_index >= frame_buffer_size) {
-		for (int i = 0; i < frame_buffer_size; i++) {
-			if (mem[i]->free) {
-				last_free_index = i;
-				break;
-			}
-		}
-	}
-
-	// STABLE version:
-	/*
-	for (int i = 0; i < FAST_MEM_POOL_FRAMES_MAX; i++) {
-		if (mem[i]->free) {
-			pFrameData = mem[i];
-			break;
-		}
-	}
-	*/
-
-	pFrameData->free = 0;
-	used++;
-
-	pthread_spin_unlock(&spinlock);
-
-	return pFrameData;
+	return ret;
 }
 
 void fast_mem_pool_release_memory(FrameData *pFrameData)
 {
-	pthread_spin_lock(&spinlock);
+	sem_wait(&full);
 
-	// Memory not cleaned up for performance reasons: it will anyway be overwritten by the next frame data allocated
-	mem[pFrameData->index]->free = 1;
+	pthread_spin_lock(&spin);
 
-	// If index < (used - 1): last_free_index = index
-	if (pFrameData->index < (used - 1)) {
-		last_free_index = pFrameData->index;
+	*tail = *pFrameData;
+
+	if (tail == mem[frame_buffer_size-1]) {
+		tail = mem[0];
 	}
 	else {
-		last_free_index = (used - 1);
+		tail++;
 	}
 
-	used--;
+	count++;
 
-	pthread_spin_unlock(&spinlock);
+	sem_post(&empty);
+
+	pthread_spin_unlock(&spin);
 }
