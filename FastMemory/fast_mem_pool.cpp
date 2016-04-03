@@ -10,21 +10,24 @@
 #include <pthread.h>
 
 
-static FrameData *mem[FAST_MEM_POOL_FRAMES_MAX];
+static FrameData **mem;
 
 static int used = 0;
-
+static int frame_buffer_size;
 static pthread_spinlock_t spinlock;
 volatile int last_free_index = 0;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 {
+	frame_buffer_size = Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize;
 	pthread_spin_init(&spinlock, 0);
 
 	used = 0;
 	last_free_index = 0;
 
-	for (int i = 0 ; i < FAST_MEM_POOL_FRAMES_MAX; i++) {
+	mem = (FrameData **)malloc(frame_buffer_size * sizeof(FrameData *));
+
+	for (int i = 0 ; i < frame_buffer_size; i++) {
 		mem[i] = (FrameData *)malloc(sizeof(FrameData));
 		mem[i]->left_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
 
@@ -43,7 +46,7 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 	pthread_spin_lock(&spinlock);
 
-	if (used == FAST_MEM_POOL_FRAMES_MAX) {
+	if (used == frame_buffer_size) {
 		pthread_spin_unlock(&spinlock);
 		return NULL;
 	}
@@ -57,8 +60,8 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 	last_free_index++;
 
-	if (last_free_index >= FAST_MEM_POOL_FRAMES_MAX) {
-		for (int i = 0; i < FAST_MEM_POOL_FRAMES_MAX; i++) {
+	if (last_free_index >= frame_buffer_size) {
+		for (int i = 0; i < frame_buffer_size; i++) {
 			if (mem[i]->free) {
 				last_free_index = i;
 				break;

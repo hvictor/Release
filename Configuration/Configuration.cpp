@@ -90,6 +90,7 @@ void Configuration::writeConfigFile(string fileName)
 	fs << "OperationalMode_ProcessingMode" << operationalMode.processingMode;
 
 	// Optical Layer
+	fs << "OpticalLayer_FrameBufferSize" << opticalLayerParameters.frameBufferSize;
 	fs << "OpticalLayer_LinearLowPassFilterX" << opticalLayerParameters.linearLowPassFilterX;
 	fs << "OpticalLayer_LinearLowPassFilterY" << opticalLayerParameters.linearLowPassFilterY;
 	fs << "OpticalLayer_LucasKanadeOpticalFlowMinMotion" << opticalLayerParameters.lucasKanadeOpticalFlowMinMotion;
@@ -142,6 +143,7 @@ void Configuration::loadConfigFile(string fileName)
 	operationalMode.processingMode = static_cast<ProcessingMode>(iTmp);
 
 	// Optical Layer
+	fs["OpticalLayer_FrameBufferSize"] >> opticalLayerParameters.frameBufferSize;
 	fs["OpticalLayer_LinearLowPassFilterX"] >> dTmp;
 	opticalLayerParameters.linearLowPassFilterX = dTmp;
 	fs["OpticalLayer_LinearLowPassFilterY"] >> dTmp;
@@ -178,6 +180,7 @@ void Configuration::display()
 	cout << "\tInput Device:\t\t" << operationalMode.inputDevice << endl;
 	cout << "\tProcessing Mode:\t\t" << operationalMode.processingMode << endl;
 	cout << "[Optical Layer]" << endl;
+	cout << "\tFrame Buffer Size:\t\t" << opticalLayerParameters.frameBufferSize << endl;
 	cout << "\tLinear Low-Pass Filter X:\t\t" << opticalLayerParameters.linearLowPassFilterX << endl;
 	cout << "\tLinear Low-Pass Filter Y:\t\t" << opticalLayerParameters.linearLowPassFilterY << endl;
 	cout << "\tOpticalLayer_StatefulObjectFilterRelatedMaxDiffSphereX:\t" << opticalLayerParameters.statefulObjectFilterRelatedMaxDiffSphereX << endl;

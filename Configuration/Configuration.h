@@ -58,6 +58,9 @@ typedef struct
 
 typedef struct
 {
+	// Frame buffer size
+	int frameBufferSize;
+
 	// Linear Low-Pass filter parameters
 	double linearLowPassFilterX;
 	double linearLowPassFilterY;

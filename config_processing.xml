@@ -6,6 +6,7 @@
 <Frame_OutputType>1</Frame_OutputType>
 <OperationalMode_InputDevice>3</OperationalMode_InputDevice>
 <OperationalMode_ProcessingMode>1</OperationalMode_ProcessingMode>
+<OpticalLayer_FrameBufferSize>10</OpticalLayer_FrameBufferSize>
 <OpticalLayer_LinearLowPassFilterX>9.3000000000000005e-01</OpticalLayer_LinearLowPassFilterX>
 <OpticalLayer_LinearLowPassFilterY>9.8999999999999999e-01</OpticalLayer_LinearLowPassFilterY>
 <OpticalLayer_LucasKanadeOpticalFlowMinMotion>1.0</OpticalLayer_LucasKanadeOpticalFlowMinMotion>
