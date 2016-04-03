@@ -48,6 +48,7 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 	if (used == frame_buffer_size) {
 		pthread_spin_unlock(&spinlock);
+		printf("Noooooo\n");
 		return NULL;
 	}
 
