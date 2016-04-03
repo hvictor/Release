@@ -158,6 +158,8 @@ void GLWidget::makeObject()
     if (setup) {
         QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
 
+        fast_mem_pool_release_memory(frame_data);
+
         delete texture;
         texture = new QOpenGLTexture(glImage);
 
@@ -190,4 +192,6 @@ void GLWidget::makeObject()
     vbo.create();
     vbo.bind();
     vbo.allocate(vertData.constData(), vertData.count() * sizeof(GLfloat));
+
+    fast_mem_pool_release_memory(frame_data);
 }

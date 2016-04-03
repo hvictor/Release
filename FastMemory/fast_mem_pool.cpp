@@ -40,38 +40,28 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 	mem_tail = mem;
 
 	sem_init(&sem_empty, 0, frame_buffer_size);
-
-	printf("Fast memory init ok\n");
 }
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
 	FrameData *ret;
 
-	printf("gaining sem_empty...\n");
 	sem_wait(&sem_empty);
-	printf("gaining sem_empty OK\n");
 
 	pthread_spin_lock(&mem_spin);
 
 	ret = mem_head;
 
 	if (mem_head == &(mem[frame_buffer_size-1])) {
-		printf("setting mem_head = mem[0]\n");
 		mem_head = &(mem[0]);
-		printf("OK: setting mem_head = mem[0]\n");
 	}
 	else {
-		printf("setting mem_head++\n");
 		mem_head++;
-		printf("OK setting mem_head++\n");
 	}
 
 	mem_count--;
 
 	pthread_spin_unlock(&mem_spin);
-
-	printf("Returning ret = %p\n", ret);
 
 	return ret;
 }
@@ -80,9 +70,8 @@ void fast_mem_pool_release_memory(FrameData *pFrameData)
 {
 	pthread_spin_lock(&mem_spin);
 
-	printf("pushing mem...\n");
 	*mem_tail = *pFrameData;
-	printf("mem pushed\n");
+
 
 	if (mem_tail == &(mem[frame_buffer_size-1])) {
 		mem_tail = &(mem[0]);
@@ -93,9 +82,7 @@ void fast_mem_pool_release_memory(FrameData *pFrameData)
 
 	mem_count++;
 
-	printf("posting sem empty...\n");
 	sem_post(&sem_empty);
-	printf("post sem empty ok\n");
 
 	pthread_spin_unlock(&mem_spin);
 }
