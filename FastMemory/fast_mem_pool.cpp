@@ -28,7 +28,6 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 	mem = (FrameData *)malloc(frame_buffer_size * sizeof(FrameData));
 
 	for (int i = 0 ; i < frame_buffer_size; i++) {
-		mem[i] = (FrameData *)malloc(sizeof(FrameData));
 		mem[i].left_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
 
 		if (Configuration::getInstance()->getOperationalMode().inputDevice != MonoCameraVirtual) {
