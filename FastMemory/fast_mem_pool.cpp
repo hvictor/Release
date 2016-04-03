@@ -44,13 +44,17 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 	mem_tail = *mem;
 
 	sem_init(&sem_empty, 0, frame_buffer_size);
+
+	printf("Fast memory init ok\n");
 }
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
 	FrameData *ret;
 
+	printf("gaining sem_empty...\n");
 	sem_wait(&sem_empty);
+	printf("gaining sem_empty OK\n");
 
 	pthread_spin_lock(&mem_spin);
 
