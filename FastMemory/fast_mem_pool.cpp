@@ -8,6 +8,7 @@
 #include "fast_mem_pool.h"
 #include "../Configuration/Configuration.h"
 #include <pthread.h>
+#include <semaphore.h>
 
 
 static pthread_spinlock_t spin;
@@ -18,24 +19,25 @@ static int frame_buffer_size;
 volatile int count;
 static FrameData *head;
 static FrameData *tail;
-static FrameData *mem;
+static FrameData **mem;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 {
 	frame_buffer_size = Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize;
 	pthread_spin_init(&spin, 0);
 
-	mem = (FrameData *)malloc(frame_buffer_size * sizeof(FrameData));
+	mem = (FrameData **)malloc(frame_buffer_size * sizeof(FrameData *));
 
 	for (int i = 0 ; i < frame_buffer_size; i++) {
-		mem[i].left_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
+		mem[i] = (FrameData *)malloc(sizeof(FrameData));
+		mem[i]->left_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
 
 		if (Configuration::getInstance()->getOperationalMode().inputDevice != MonoCameraVirtual) {
-			mem[i].right_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
+			mem[i]->right_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
 		}
 
-		mem[i].index = i;
-		mem[i].free = 1;
+		mem[i]->index = i;
+		mem[i]->free = 1;
 	}
 
 	count = 0;
