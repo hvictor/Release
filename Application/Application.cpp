@@ -547,7 +547,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			// Allocate fast memory
 			FrameData *frameData = fast_mem_pool_fetch_memory();
 
-			if (frameData == NULL) continue;
+			if (frameData == NULL) {
+				usleep(1000);
+				continue;
+			}
 
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
 			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
