@@ -11,20 +11,20 @@
 #include <semaphore.h>
 
 
-static pthread_spinlock_t spin;
-static sem_t empty;
-static sem_t full;
+static pthread_spinlock_t mem_spin;
+static sem_t sem_empty;
+static sem_t sem_full;
 static int frame_buffer_size;
 
-static volatile int count;
-static FrameData *head;
-static FrameData *tail;
+volatile int mem_count;
+static FrameData *mem_head;
+static FrameData *mem_tail;
 static FrameData **mem;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 {
 	frame_buffer_size = Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize;
-	pthread_spin_init(&spin, 0);
+	pthread_spin_init(&mem_spin, 0);
 
 	mem = (FrameData **)malloc(frame_buffer_size * sizeof(FrameData *));
 
@@ -40,35 +40,35 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 		mem[i]->free = 1;
 	}
 
-	count = 0;
-	head = *mem;
-	tail = *mem;
+	mem_count = 0;
+	mem_head = *mem;
+	mem_tail = *mem;
 
-	sem_init(&empty, 0, 0);
-	sem_init(&full, 0, 1);
+	sem_init(&sem_empty, 0, 0);
+	sem_init(&sem_full, 0, 1);
 }
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
 	FrameData *ret;
 
-	sem_wait(&empty);
+	sem_wait(&sem_empty);
 
-	pthread_spin_lock(&spin);
+	pthread_spin_lock(&mem_spin);
 
-	ret = head;
+	ret = mem_head;
 
-	if (head == mem[frame_buffer_size-1]) {
-		head = mem[0];
+	if (mem_head == mem[frame_buffer_size-1]) {
+		mem_head = mem[0];
 	}
 	else {
-		head++;
+		mem_head++;
 	}
 
-	count--;
-	sem_post(&full);
+	mem_count--;
+	sem_post(&sem_full);
 
-	pthread_spin_unlock(&spin);
+	pthread_spin_unlock(&mem_spin);
 
 	return ret;
 }
@@ -76,23 +76,23 @@ FrameData *fast_mem_pool_fetch_memory(void)
 void fast_mem_pool_release_memory(FrameData *pFrameData)
 {
 	printf("fast_mem_pool: trying push (release)...\n");
-	sem_wait(&full);
+	sem_wait(&sem_full);
 	printf("fast_mem_pool: OK push (release)!\n");
 
-	pthread_spin_lock(&spin);
+	pthread_spin_lock(&mem_spin);
 
-	*tail = *pFrameData;
+	*mem_tail = *pFrameData;
 
-	if (tail == mem[frame_buffer_size-1]) {
-		tail = mem[0];
+	if (mem_tail == mem[frame_buffer_size-1]) {
+		mem_tail = mem[0];
 	}
 	else {
-		tail++;
+		mem_tail++;
 	}
 
-	count++;
+	mem_count++;
 
-	sem_post(&empty);
+	sem_post(&sem_empty);
 
-	pthread_spin_unlock(&spin);
+	pthread_spin_unlock(&mem_spin);
 }
