@@ -71,6 +71,8 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 	pthread_spin_unlock(&mem_spin);
 
+	printf("Returning ret = %p", ret);
+
 	return ret;
 }
 
@@ -78,7 +80,9 @@ void fast_mem_pool_release_memory(FrameData *pFrameData)
 {
 	pthread_spin_lock(&mem_spin);
 
+	printf("pushing mem...\n");
 	*mem_tail = *pFrameData;
+	printf("mem pushed\n");
 
 	if (mem_tail == mem[frame_buffer_size-1]) {
 		mem_tail = mem[0];
@@ -89,7 +93,9 @@ void fast_mem_pool_release_memory(FrameData *pFrameData)
 
 	mem_count++;
 
+	printf("posting sem empty...\n");
 	sem_post(&sem_empty);
+	printf("post sem empty ok\n");
 
 	pthread_spin_unlock(&mem_spin);
 }
