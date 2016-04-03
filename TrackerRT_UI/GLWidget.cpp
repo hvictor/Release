@@ -160,11 +160,11 @@ void GLWidget::makeObject()
 
         fast_mem_pool_release_memory(frame_data);
 
-        //delete texture;
-        //texture = new QOpenGLTexture(glImage);
+        delete texture;
+        texture = new QOpenGLTexture(glImage);
 
 // ---------------------------------------------------
-        texture->setData(glImage);
+//        texture->setData(glImage);
 // ---------------------------------------------------
         return;
     }
