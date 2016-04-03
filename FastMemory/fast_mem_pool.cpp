@@ -16,7 +16,7 @@ static sem_t empty;
 static sem_t full;
 static int frame_buffer_size;
 
-volatile int count;
+static volatile int count;
 static FrameData *head;
 static FrameData *tail;
 static FrameData **mem;
@@ -41,8 +41,8 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 	}
 
 	count = 0;
-	head = mem;
-	tail = mem;
+	head = *mem;
+	tail = *mem;
 
 	sem_init(&empty, 0, 0);
 	sem_init(&full, 0, 1);
