@@ -3,7 +3,7 @@
 #include <QOpenGLTexture>
 #include <QOpenGLPixelTransferOptions>
 #include <iostream>
-
+#define QT_NO_DEBUG_OUTPUT
 bool jesus;
 extern SpinlockQueue *outputFramesQueueExternPtr;
 
@@ -160,11 +160,11 @@ void GLWidget::makeObject()
 
         fast_mem_pool_release_memory(frame_data);
 
-        delete texture;
-        texture = new QOpenGLTexture(glImage);
+        //delete texture;
+        //texture = new QOpenGLTexture(glImage);
 
 // ---------------------------------------------------
-//        texture->setData(glImage);
+        texture->setData(glImage);
 // ---------------------------------------------------
         return;
     }
