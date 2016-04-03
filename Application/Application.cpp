@@ -548,13 +548,14 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			FrameData *frameData = fast_mem_pool_fetch_memory();
 
 			if (frameData == NULL) {
-				printf("Gesuuuuu\n");
 				usleep(1000);
 				continue;
 			}
 
+			printf("Copying data...\n");
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
 			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
+			printf("Data copied...\n");
 			//frameData->left_data = stereoFrame.leftData;
 			//frameData->right_data = stereoFrame.rightData;
 
