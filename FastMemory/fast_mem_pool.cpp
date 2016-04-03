@@ -73,7 +73,9 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 void fast_mem_pool_release_memory(FrameData *pFrameData)
 {
+	printf("fast_mem_pool: trying push (release)...\n");
 	sem_wait(&full);
+	printf("fast_mem_pool: OK push (release)!\n");
 
 	pthread_spin_lock(&spin);
 
