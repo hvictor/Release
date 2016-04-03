@@ -44,7 +44,7 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 	mem_head = *mem;
 	mem_tail = *mem;
 
-	sem_init(&sem_empty, 0, 0);
+	sem_init(&sem_empty, 0, 1);
 	sem_init(&sem_full, 0, 1);
 }
 
@@ -75,10 +75,6 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 void fast_mem_pool_release_memory(FrameData *pFrameData)
 {
-	printf("fast_mem_pool: trying push (release)...\n");
-	sem_wait(&sem_full);
-	printf("fast_mem_pool: OK push (release)!\n");
-
 	pthread_spin_lock(&mem_spin);
 
 	*mem_tail = *pFrameData;
