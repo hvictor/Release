@@ -552,7 +552,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				continue;
 			}
 
-			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
+			memcpy(frameData->left_data, stereoFrame.leftData, 640*480*sizeof(uchar));//stereoFrame.bytesLength);
 			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
 			//frameData->left_data = stereoFrame.leftData;
 			//frameData->right_data = stereoFrame.rightData;

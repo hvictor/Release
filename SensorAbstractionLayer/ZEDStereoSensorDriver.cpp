@@ -47,7 +47,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 	frame.bytesLength = 0;
 
-	if (this->zed->grab(zed::SENSING_MODE::RAW, false, false)) {
+	if (this->zed->grab(zed::SENSING_MODE::RAW, true, true)) {
 		return frame;
 	}
 
@@ -57,7 +57,9 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	//slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::LEFT)).copyTo(L);
 	//slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::RIGHT)).copyTo(R);
 
-	frame.leftData = (uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
+
+	//frame.leftData = (uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
+	frame.leftData = (uint8_t *)(zed->normalizeMeasure(sl::zed::MEASURE::DEPTH)).data;
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 
 

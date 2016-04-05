@@ -156,7 +156,7 @@ void GLWidget::makeObject()
     //FrameData fData = directFetchRawStereoData(sSAL);
 
     if (setup) {
-        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_Grayscale8);
 
         fast_mem_pool_release_memory(frame_data);
 
@@ -172,7 +172,7 @@ void GLWidget::makeObject()
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_Grayscale8);
 
         texture = new QOpenGLTexture(glImage);
     }
