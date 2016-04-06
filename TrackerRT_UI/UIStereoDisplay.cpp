@@ -26,8 +26,8 @@ UIStereoDisplay::UIStereoDisplay()
     glWidgetR->setClearColor(clearColor);
     glWidgetR->renderStereoRawData();
 
-    mainLayout->addWidget(glWidget, 0, 0);
-    mainLayout->addWidget(glWidget, 1, 0);
+    mainLayout->addWidget(glWidgetL, 0, 0);
+    mainLayout->addWidget(glWidgetR, 1, 0);
     setLayout(mainLayout);
 
     QTimer *timer = new QTimer(this);
