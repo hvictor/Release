@@ -8,7 +8,7 @@
 #include "../FastMemory/fast_mem_pool.h"
 #include "../SpinlockQueue/array_spinlock_queue.h"
 
-extern FrameData *pRenderFrameData;
+extern FrameData **pRenderFrameData;
 
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent),
@@ -130,7 +130,7 @@ void GLWidget::makeObject()
     //FrameData fData = directFetchRawStereoData(sSAL);
 
     if (setup) {
-        QImage glImage((const uchar *)pRenderFrameData->left_data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage((const uchar *)(*pRenderFrameData)->left_data, 640, 480, QImage::Format_RGBA8888);
 
         delete texture;
         texture = new QOpenGLTexture(glImage);
@@ -144,7 +144,7 @@ void GLWidget::makeObject()
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        QImage glImage((const uchar *)pRenderFrameData->left_data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage((const uchar *)(*pRenderFrameData)->left_data, 640, 480, QImage::Format_RGBA8888);
 
         texture = new QOpenGLTexture(glImage);
     }

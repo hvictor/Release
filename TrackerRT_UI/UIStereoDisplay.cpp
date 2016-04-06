@@ -9,7 +9,7 @@ extern SpinlockQueue *outputFramesQueueExternPtr;
 extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL);
 extern StereoSensorAbstractionLayer *sSAL;
 
-FrameData *pRenderFrameData;
+FrameData **pRenderFrameData;
 
 UIStereoDisplay::UIStereoDisplay()
 {
@@ -41,14 +41,14 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&pRenderFrameData) < 0) {
+    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
     }
 
     glWidgetL->renderStereoRawData();
     glWidgetR->renderStereoRawData();
 
-    fast_mem_pool_release_memory(pRenderFrameData);
+    fast_mem_pool_release_memory(*pRenderFrameData);
 }
 
 UIStereoDisplay::~UIStereoDisplay()
