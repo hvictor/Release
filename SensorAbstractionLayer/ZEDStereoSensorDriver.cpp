@@ -22,7 +22,7 @@ ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
 // Open ZED camera sensor
 bool ZEDStereoSensorDriver::openCamera()
 {
-	if (zed->init(zed::MODE::QUALITY, 0, true, true) != zed::SUCCESS) {
+	if (zed->init(zed::MODE::PERFORMANCE, 0, true, true) != zed::SUCCESS) {
 		printf("ZED init error\n");
 	}
 
@@ -47,7 +47,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 	frame.bytesLength = 0;
 
-	if (this->zed->grab(zed::SENSING_MODE::FULL, true, true)) {
+	if (this->zed->grab(zed::SENSING_MODE::RAW, true, true)) {
 		return frame;
 	}
 
