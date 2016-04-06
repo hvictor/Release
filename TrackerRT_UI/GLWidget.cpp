@@ -4,14 +4,11 @@
 #include <QOpenGLPixelTransferOptions>
 #include <iostream>
 #define QT_NO_DEBUG_OUTPUT
-bool jesus;
-extern SpinlockQueue *outputFramesQueueExternPtr;
 
-//
-// Direct Fetch RAW Stereo Data from the ZED Camera Sensor
-//
-extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL);
-extern StereoSensorAbstractionLayer *sSAL;
+#include "../FastMemory/fast_mem_pool.h"
+#include "../SpinlockQueue/array_spinlock_queue.h"
+
+extern FrameData *pRenderFrameData;
 
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent),
@@ -123,42 +120,17 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::makeObject()
 {
-    FrameData *frame_data;
-
     static int setup = 0;
     static const int coords[4][3] =
     {
         { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 }
     };
 
-    // Fetch STEREO Frame Data from Output Queue
-/////////////
-/*
-	static int measure_counter = 0;
-	static double queue_count_mean = 0;
-
-	queue_count_mean += (double)outputFramesQueueExternPtr->count;
-
-	if (++measure_counter == 100) {
-		queue_count_mean /= measure_counter;
-		measure_counter = 0;
-		printf("[queue avg] current size: %.4f frames\n", queue_count_mean);
-		queue_count_mean = 0;
-	}
-*/
-///////////
-
-    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
-        return;
-    }
-
     //DIRECT: 
     //FrameData fData = directFetchRawStereoData(sSAL);
 
     if (setup) {
-        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
-
-        fast_mem_pool_release_memory(frame_data);
+        QImage glImage((const uchar *)pRenderFrameData->left_data, 640, 480, QImage::Format_RGBA8888);
 
         delete texture;
         texture = new QOpenGLTexture(glImage);
@@ -172,7 +144,7 @@ void GLWidget::makeObject()
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage((const uchar *)pRenderFrameData->left_data, 640, 480, QImage::Format_RGBA8888);
 
         texture = new QOpenGLTexture(glImage);
     }
@@ -192,6 +164,4 @@ void GLWidget::makeObject()
     vbo.create();
     vbo.bind();
     vbo.allocate(vertData.constData(), vertData.count() * sizeof(GLfloat));
-
-    fast_mem_pool_release_memory(frame_data);
 }

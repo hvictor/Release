@@ -1,6 +1,14 @@
 #include "UIStereoDisplay.h"
 #include "ui_UIStereoDisplay.h"
 
+extern SpinlockQueue *outputFramesQueueExternPtr;
+
+//
+// Direct Fetch RAW Stereo Data from the ZED Camera Sensor
+//
+extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL);
+extern StereoSensorAbstractionLayer *sSAL;
+
 UIStereoDisplay::UIStereoDisplay()
 {
     QGridLayout *mainLayout = new QGridLayout;
@@ -10,11 +18,16 @@ UIStereoDisplay::UIStereoDisplay()
                       / (0 * 0 - 1),
                       255, 63);
 
-    glWidget = new GLWidget;
-    glWidget->setClearColor(clearColor);
-    glWidget->renderStereoRawData();
+    glWidgetL = new GLWidget;
+    glWidgetL->setClearColor(clearColor);
+    glWidgetL->renderStereoRawData();
+
+    glWidgetR = new GLWidget;
+    glWidgetR->setClearColor(clearColor);
+    glWidgetR->renderStereoRawData();
 
     mainLayout->addWidget(glWidget, 0, 0);
+    mainLayout->addWidget(glWidget, 1, 0);
     setLayout(mainLayout);
 
     QTimer *timer = new QTimer(this);
@@ -26,7 +39,14 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    glWidget->renderStereoRawData();
+    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&pRenderFrameData) < 0) {
+        return;
+    }
+
+    glWidgetL->renderStereoRawData();
+    glWidgetR->renderStereoRawData();
+
+    fast_mem_pool_release_memory(pRenderFrameData);
 }
 
 UIStereoDisplay::~UIStereoDisplay()
