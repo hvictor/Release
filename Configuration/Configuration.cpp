@@ -7,6 +7,9 @@
 
 #include "Configuration.h"
 
+#include <zed/Camera.hpp>
+#include <zed/utils/GlobalDefine.hpp>
+
 Configuration *Configuration::getInstance()
 {
 	static Configuration *instance = 0;

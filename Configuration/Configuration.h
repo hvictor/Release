@@ -17,9 +17,6 @@
 #include <time.h>
 #include <string>
 
-#include <zed/Camera.hpp>
-#include <zed/utils/GlobalDefine.hpp>
-
 using namespace std;
 using namespace cv;
 using namespace sl;
