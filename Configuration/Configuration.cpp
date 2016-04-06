@@ -60,6 +60,16 @@ void Configuration::setDUOStereoCameraHardwareParameters(DUOStereoCameraHardware
 	duoHardwareParameters = duoParam;
 }
 
+ZEDStereoCameraHardwareParameters Configuration::getZEDStereoCameraHardwareParameters()
+{
+	return zedHardwareParameters;
+}
+
+void Configuration::setZEDStereoCameraHardwareParameters(ZEDStereoCameraHardwareParameters zedParam)
+{
+	zedHardwareParameters = zedParam;
+}
+
 void Configuration::setFrameInfo(FrameInfo frameInfo)
 {
 	this->frameInfo = frameInfo;
