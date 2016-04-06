@@ -47,7 +47,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 	frame.bytesLength = 0;
 
-	if (this->zed->grab(zed::SENSING_MODE::RAW, true, true)) {
+	if (this->zed->grab(zed::SENSING_MODE::FULL, true, true)) {
 		return frame;
 	}
 
