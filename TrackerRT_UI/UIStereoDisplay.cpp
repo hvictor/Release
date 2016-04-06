@@ -9,6 +9,8 @@ extern SpinlockQueue *outputFramesQueueExternPtr;
 extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL);
 extern StereoSensorAbstractionLayer *sSAL;
 
+FrameData *pRenderFrameData;
+
 UIStereoDisplay::UIStereoDisplay()
 {
     QGridLayout *mainLayout = new QGridLayout;

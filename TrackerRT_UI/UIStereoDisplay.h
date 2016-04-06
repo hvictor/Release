@@ -10,8 +10,6 @@
 #include "../SpinlockQueue/array_spinlock_queue.h"
 #include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
 
-FrameData *pRenderFrameData;
-
 namespace Ui {
 class UIStereoDisplay;
 }
