@@ -184,7 +184,7 @@ void Configuration::loadConfigFile(string fileName)
 		break;
 
 	default:
-		zedHardwareParameters.performanceMode = zed::MODE::PERFORMANCE;
+		zedHardwareParameters.performanceModeIntValue = zed::MODE::PERFORMANCE;
 		break;
 
 	}
@@ -195,14 +195,14 @@ void Configuration::loadConfigFile(string fileName)
 		switch (zedHardwareParameters.sensingMode)
 		{
 		case RawSensing:
-			zedHardwareParameters.sensingMode = zed::SENSING_MODE::RAW;
+			zedHardwareParameters.sensingModeIntValue = zed::SENSING_MODE::RAW;
 			break;
 		case FullSensing:
-			zedHardwareParameters.sensingMode = zed::SENSING_MODE::FULL;
+			zedHardwareParameters.sensingModeIntValue = zed::SENSING_MODE::FULL;
 			break;
 
 		default:
-			zedHardwareParameters.sensingMode = zed::SENSING_MODE::RAW;
+			zedHardwareParameters.sensingModeIntValue = zed::SENSING_MODE::RAW;
 			break;
 
 		}
