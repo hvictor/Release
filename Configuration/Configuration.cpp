@@ -10,6 +10,8 @@
 #include <zed/Camera.hpp>
 #include <zed/utils/GlobalDefine.hpp>
 
+using namespace sl;
+
 Configuration *Configuration::getInstance()
 {
 	static Configuration *instance = 0;
