@@ -10,6 +10,8 @@
 #include "../SpinlockQueue/array_spinlock_queue.h"
 #include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
 
+FrameData *pRenderFrameData;
+
 namespace Ui {
 class UIStereoDisplay;
 }
@@ -26,7 +28,7 @@ private:
     Ui::UIStereoDisplay *ui;
     GLWidget *glWidgetL;
     GLWidget *glWidgetR;
-    FrameData *pRenderFrameData;
+
 
 private slots:
     void renderStereoRawData();
