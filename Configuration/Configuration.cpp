@@ -173,41 +173,8 @@ void Configuration::loadConfigFile(string fileName)
 	// ZED Stereo Camera
 	fs["StereoCameraZED_PerformanceMode"] >> iTmp;
 	zedHardwareParameters.performanceMode = static_cast<ZEDPerformanceMode>(iTmp);
-
-	switch (zedHardwareParameters.performanceMode)
-	{
-	case HighPerformance:
-		zedHardwareParameters.performanceModeIntValue = zed::MODE::PERFORMANCE;
-		break;
-	case QualityAcquisition:
-		zedHardwareParameters.performanceModeIntValue = zed::MODE::QUALITY;
-		break;
-
-	default:
-		zedHardwareParameters.performanceModeIntValue = zed::MODE::PERFORMANCE;
-		break;
-
-	}
-
 	fs["StereoCameraZED_SensingMode"] >> iTmp;
-		zedHardwareParameters.sensingMode = static_cast<ZEDSensingMode>(iTmp);
-
-		switch (zedHardwareParameters.sensingMode)
-		{
-		case RawSensing:
-			zedHardwareParameters.sensingModeIntValue = zed::SENSING_MODE::RAW;
-			break;
-		case FullSensing:
-			zedHardwareParameters.sensingModeIntValue = zed::SENSING_MODE::FULL;
-			break;
-
-		default:
-			zedHardwareParameters.sensingModeIntValue = zed::SENSING_MODE::RAW;
-			break;
-
-		}
-
-	fs["StereoCameraZED_SensingMode"] >> duoHardwareParameters.exposure;
+	zedHardwareParameters.sensingMode = static_cast<ZEDSensingMode>(iTmp);
 
 	// Interpolation Engine
 	fs["InterpolationEngine_ExtremaNeighbourhoodSize"] >> interpolationEngineParameters.extremaNeighbourhoodSize;

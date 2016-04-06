@@ -13,7 +13,38 @@ ZEDStereoSensorDriver::ZEDStereoSensorDriver() {
 
 	zedProperties = new ZEDCameraProperties();
 	this->zed = new sl::zed::Camera(zed::VGA, 30);
-	sensingMode = Configuration::getInstance()->getZEDStereoCameraHardwareParameters().sensingModeIntValue;
+
+	ZEDStereoCameraHardwareParameters zedParam = Configuration::getInstance()->getZEDStereoCameraHardwareParameters();
+
+	switch (zedParam.performanceMode)
+	{
+	case HighPerformance:
+		performanceMode = zed::MODE::PERFORMANCE;
+		break;
+	case QualityAcquisition:
+		performanceMode = zed::MODE::QUALITY;
+		break;
+
+	default:
+		performanceMode = zed::MODE::PERFORMANCE;
+		break;
+
+	}
+
+	switch (zedParam.sensingMode)
+	{
+	case RawSensing:
+		sensingMode = zed::SENSING_MODE::RAW;
+		break;
+	case FullSensing:
+		sensingMode = zed::SENSING_MODE::FULL;
+		break;
+
+	default:
+		sensingMode = zed::SENSING_MODE::RAW;
+		break;
+
+	}
 }
 
 ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
@@ -23,7 +54,7 @@ ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
 // Open ZED camera sensor
 bool ZEDStereoSensorDriver::openCamera()
 {
-	if (zed->init(Configuration::getInstance()->getZEDStereoCameraHardwareParameters().performanceModeIntValue, 0, true, true) != zed::SUCCESS) {
+	if (zed->init(performanceMode, 0, true, true) != zed::SUCCESS) {
 		printf("ZED init error\n");
 	}
 

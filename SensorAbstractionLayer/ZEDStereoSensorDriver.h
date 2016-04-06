@@ -33,7 +33,8 @@ public:
 private:
 	ZEDCameraProperties *zedProperties;
 	zed::Camera* zed;
-	int sensingMode;
+	zed::MODE performanceMode;
+	zed::SENSING_MODE sensingMode;
 };
 
 #endif /* ZEDSTEREOSENSORDRIVER_H_ */
