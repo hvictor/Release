@@ -106,6 +106,10 @@ void Configuration::writeConfigFile(string fileName)
 	fs << "StereoCameraDUO_Exposure" << duoHardwareParameters.exposure;
 	fs << "StereoCameraDUO_Leds" << duoHardwareParameters.leds;
 
+	// ZED Stereo Camera
+	fs << "StereoCameraZED_PerformanceMode" << zedHardwareParameters.performanceMode;
+	fs << "StereoCameraZED_SensingMode" << zedHardwareParameters.sensingMode;
+
 	// Interpolation Engine
 	fs << "InterpolationEngine_ExtremaNeighbourhoodSize" << interpolationEngineParameters.extremaNeighbourhoodSize;
 
@@ -161,6 +165,45 @@ void Configuration::loadConfigFile(string fileName)
 	fs["StereoCameraDUO_Exposure"] >> duoHardwareParameters.exposure;
 	fs["StereoCameraDUO_Leds"] >> duoHardwareParameters.leds;
 
+	// ZED Stereo Camera
+	fs["StereoCameraZED_PerformanceMode"] >> iTmp;
+	zedHardwareParameters.performanceMode = static_cast<ZEDPerformanceMode>(iTmp);
+
+	switch (zedHardwareParameters.performanceMode)
+	{
+	case HighPerformance:
+		zedHardwareParameters.performanceModeIntValue = zed::MODE::PERFORMANCE;
+		break;
+	case QualityAcquisition:
+		zedHardwareParameters.performanceModeIntValue = zed::MODE::QUALITY;
+		break;
+
+	default:
+		zedHardwareParameters.performanceMode = zed::MODE::PERFORMANCE;
+		break;
+
+	}
+
+	fs["StereoCameraZED_SensingMode"] >> iTmp;
+		zedHardwareParameters.sensingMode = static_cast<ZEDSensingMode>(iTmp);
+
+		switch (zedHardwareParameters.sensingMode)
+		{
+		case RawSensing:
+			zedHardwareParameters.sensingMode = zed::SENSING_MODE::RAW;
+			break;
+		case FullSensing:
+			zedHardwareParameters.sensingMode = zed::SENSING_MODE::FULL;
+			break;
+
+		default:
+			zedHardwareParameters.sensingMode = zed::SENSING_MODE::RAW;
+			break;
+
+		}
+
+	fs["StereoCameraZED_SensingMode"] >> duoHardwareParameters.exposure;
+
 	// Interpolation Engine
 	fs["InterpolationEngine_ExtremaNeighbourhoodSize"] >> interpolationEngineParameters.extremaNeighbourhoodSize;
 }
@@ -193,6 +236,9 @@ void Configuration::display()
 	cout << "\tGain:\t\t" << duoHardwareParameters.gain << endl;
 	cout << "\tExposure:\t\t" << duoHardwareParameters.exposure << endl;
 	cout << "\tLeds:\t\t" << duoHardwareParameters.leds << endl;
+	cout << "[ZED Stereo Camera]" << endl;
+	cout << "\tPerformance Mode:\t\t" << zedHardwareParameters.performanceMode << endl;
+	cout << "\tSensing Mode:\t\t" << zedHardwareParameters.sensingMode << endl;
 	cout << "[Interpolation Engine]" << endl;
 	cout << "\tExtrema Neighbourhood Size:\t" << interpolationEngineParameters.extremaNeighbourhoodSize << endl;
 }

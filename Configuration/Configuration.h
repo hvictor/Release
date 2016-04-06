@@ -17,8 +17,12 @@
 #include <time.h>
 #include <string>
 
+#include <zed/Camera.hpp>
+#include <zed/utils/GlobalDefine.hpp>
+
 using namespace std;
 using namespace cv;
+using namespace sl;
 
 enum DepthSensorTechnology
 {
@@ -45,6 +49,18 @@ enum OutputFrameType
 {
 	Immuted,				// The output frame is of the same type as the input
 	ForcedRGB				// Force RGB output frames for Overlay visual effects
+};
+
+enum ZEDPerformanceMode
+{
+	HighPerformance,
+	QualityAcquisition
+};
+
+enum ZEDSensingMode
+{
+	RawSensing,
+	FullSensing
 };
 
 typedef struct
@@ -85,6 +101,15 @@ typedef struct
 
 typedef struct
 {
+	ZEDPerformanceMode performanceMode;
+	ZEDSensingMode sensingMode;
+
+	int performanceModeIntValue;
+	int sensingModeIntValue;
+} ZEDStereoCameraHardwareParameters;
+
+typedef struct
+{
 	int width;
 	int height;
 	int channels;
@@ -104,14 +129,17 @@ public:
 	void setOperationalMode(InputSensorDevice inputDevice, ProcessingMode processingMode);
 	void setOpticalLayerParameters(OpticalLayerParameters opticalLayerParams);
 	void setDUOStereoCameraHardwareParameters(DUOStereoCameraHardwareParameters duoParam);
+	void setZEDStereoCameraHardwareParameters(ZEDStereoCameraHardwareParameters zedParam);
 	void setFrameInfo(FrameInfo frameInfo);
 	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
+
 
 	// Get configuration components
 	FrameInfo getFrameInfo();
 	OperationalMode getOperationalMode();
 	OpticalLayerParameters getOpticalLayerParameters();
 	DUOStereoCameraHardwareParameters getDUOStereoCameraHardwareParameters();
+	ZEDStereoCameraHardwareParameters getZEDStereoCameraHardwareParameters();
 	InterpolationEngineParameters getInterpolationEngineParameters();
 
 	void writeConfigFile(string fileName);
@@ -125,6 +153,7 @@ private:
 	OperationalMode operationalMode;
 	OpticalLayerParameters opticalLayerParameters;
 	DUOStereoCameraHardwareParameters duoHardwareParameters;
+	ZEDStereoCameraHardwareParameters zedHardwareParameters;
 	InterpolationEngineParameters interpolationEngineParameters;
 };
 
