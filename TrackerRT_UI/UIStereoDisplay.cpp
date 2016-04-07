@@ -39,8 +39,9 @@ UIStereoDisplay::UIStereoDisplay()
    // mainLayout->addWidget(glWidgetR, 1, 0);
     setLayout(mainLayout);
 
-    printf("...\n");
+    printf("creating timer\n");
     QTimer *timer = new QTimer(this);
+    printf("timer created");
     connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
     timer->start(1);
 
