@@ -26,14 +26,12 @@ UIStereoDisplay::UIStereoDisplay()
                       255, 63);
 
     printf("Mona\n");
-    glWidgetL = new GLWidget;
+    glWidgetL = new GLWidget();
     glWidgetL->setClearColor(clearColor);
-    glWidgetL->renderStereoRawData();
 
     printf("Jesus\n");
-    glWidgetR = new GLWidget;
+    glWidgetR = new GLWidget();
     glWidgetR->setClearColor(clearColor);
-    glWidgetR->renderStereoRawData();
 
     printf("Plutarco\n");
     mainLayout->addWidget(glWidgetL, 0, 0);
