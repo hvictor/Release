@@ -50,6 +50,7 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
+    /*
     printf("Sto gran\n");
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
@@ -60,6 +61,7 @@ void UIStereoDisplay::renderStereoRawData()
     //glWidgetR->renderStereoRawData();
 
     fast_mem_pool_release_memory(*pRenderFrameData);
+    */
 }
 
 UIStereoDisplay::~UIStereoDisplay()
