@@ -129,6 +129,7 @@ void GLWidget::makeObject()
     //DIRECT: 
     //FrameData fData = directFetchRawStereoData(sSAL);
 
+    printf("Bela fica\n");
     if (setup) {
         QImage glImage((const uchar *)(*pRenderFrameData)->left_data, 640, 480, QImage::Format_RGBA8888);
 
@@ -143,6 +144,7 @@ void GLWidget::makeObject()
 
     if (!setup) { setup = 1; }
 
+    printf("Bela fica\n");
     for (int j = 0; j < 1; ++j) {
         QImage glImage((const uchar *)(*pRenderFrameData)->left_data, 640, 480, QImage::Format_RGBA8888);
 
