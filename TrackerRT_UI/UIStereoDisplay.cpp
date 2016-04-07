@@ -15,6 +15,7 @@ FrameData **pRenderFrameData;
 
 UIStereoDisplay::UIStereoDisplay()
 {
+    printf("Portofino\n");
     QGridLayout *mainLayout = new QGridLayout;
 
     pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
@@ -24,21 +25,26 @@ UIStereoDisplay::UIStereoDisplay()
                       / (0 * 0 - 1),
                       255, 63);
 
+    printf("Mona\n");
     glWidgetL = new GLWidget;
     glWidgetL->setClearColor(clearColor);
     glWidgetL->renderStereoRawData();
 
+    printf("Jesus\n");
     glWidgetR = new GLWidget;
     glWidgetR->setClearColor(clearColor);
     glWidgetR->renderStereoRawData();
 
+    printf("Plutarco\n");
     mainLayout->addWidget(glWidgetL, 0, 0);
     mainLayout->addWidget(glWidgetR, 1, 0);
     setLayout(mainLayout);
 
+    printf("...\n");
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
     timer->start(1);
+    printf("Monaaaaa\n");
 
     setWindowTitle(tr("[STEREO]"));
 }
