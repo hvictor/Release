@@ -36,7 +36,7 @@ UIStereoDisplay::UIStereoDisplay()
     printf("R OK\n");
 
     mainLayout->addWidget(glWidgetL, 0, 0);
-    mainLayout->addWidget(glWidgetR, 1, 0);
+   // mainLayout->addWidget(glWidgetR, 1, 0);
     setLayout(mainLayout);
 
     printf("...\n");

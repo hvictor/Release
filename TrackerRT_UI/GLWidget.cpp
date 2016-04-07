@@ -15,7 +15,9 @@ GLWidget::GLWidget(QWidget *parent)
       clearColor(Qt::black),
       program(0)
 {
+    printf("PORCO\n");
     memset(texture, 0, sizeof(QOpenGLTexture));
+    printf("OCROP\n");
 }
 
 GLWidget::~GLWidget()
@@ -45,7 +47,7 @@ void GLWidget::renderStereoRawData()
 void GLWidget::setClearColor(const QColor &color)
 {
     clearColor = color;
-    update();
+    //update();
 }
 
 void GLWidget::initializeGL()
@@ -129,7 +131,6 @@ void GLWidget::makeObject()
     //DIRECT: 
     //FrameData fData = directFetchRawStereoData(sSAL);
 
-    printf("Bela fica\n");
     if (setup) {
         QImage glImage((const uchar *)(*pRenderFrameData)->left_data, 640, 480, QImage::Format_RGBA8888);
 
@@ -144,7 +145,6 @@ void GLWidget::makeObject()
 
     if (!setup) { setup = 1; }
 
-    printf("Bela fica\n");
     for (int j = 0; j < 1; ++j) {
         QImage glImage((const uchar *)(*pRenderFrameData)->left_data, 640, 480, QImage::Format_RGBA8888);
 
