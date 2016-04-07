@@ -10,10 +10,10 @@ UIStereoDisplay::UIStereoDisplay()
                       / (0 * 0 - 1),
                       255, 63);
 
-    glWidget = new GLWidget;
+    glWidget = new GLWidget('L');
     glWidget->setClearColor(clearColor);
 
-    glWidgetR = new GLWidget;
+    glWidgetR = new GLWidget('R');
     //glWidgetR->setClearColor(clearColor);
     //glWidgetR->renderStereoRawData();
 
@@ -22,7 +22,7 @@ UIStereoDisplay::UIStereoDisplay()
     setLayout(mainLayout);
 
     QTimer *timer = new QTimer(this);
-    //connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
+    connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
     timer->start(1);
 
     setWindowTitle(tr("[STEREO]"));
@@ -31,7 +31,7 @@ UIStereoDisplay::UIStereoDisplay()
 void UIStereoDisplay::renderStereoRawData()
 {
     glWidget->renderStereoRawData();
-    //glWidgetR->renderStereoRawData();
+    glWidgetR->renderStereoRawData();
 }
 
 UIStereoDisplay::~UIStereoDisplay()

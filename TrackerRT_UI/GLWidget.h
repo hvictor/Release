@@ -17,7 +17,7 @@ class GLWidget : public QGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    explicit GLWidget(QWidget *parent = 0);
+    explicit GLWidget(char side, QWidget *parent = 0);
     ~GLWidget();
 
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
@@ -35,6 +35,7 @@ protected:
 
 private:
     void makeObject();
+    char _side;
 
     QColor clearColor;
     QPoint lastPos;

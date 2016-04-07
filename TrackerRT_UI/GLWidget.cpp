@@ -13,10 +13,11 @@ extern SpinlockQueue *outputFramesQueueExternPtr;
 extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL);
 extern StereoSensorAbstractionLayer *sSAL;
 
-GLWidget::GLWidget(QWidget *parent)
+GLWidget::GLWidget(char side, QWidget *parent)
     : QGLWidget(parent),
       clearColor(Qt::black),
-      program(0)
+      program(0),
+      _side(side)
 {
     //memset(texture, 0, sizeof(QOpenGLTexture));
 }
@@ -123,6 +124,9 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::makeObject()
 {
+    if (side == 'R')
+        return;
+
     FrameData *frame_data;
 
     static int setup = 0;
