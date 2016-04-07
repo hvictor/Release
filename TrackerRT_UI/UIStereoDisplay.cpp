@@ -22,7 +22,7 @@ UIStereoDisplay::UIStereoDisplay()
     setLayout(mainLayout);
 
     QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
+    //connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
     timer->start(1);
 
     setWindowTitle(tr("[STEREO]"));

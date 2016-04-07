@@ -18,7 +18,7 @@ GLWidget::GLWidget(QWidget *parent)
       clearColor(Qt::black),
       program(0)
 {
-    memset(texture, 0, sizeof(QOpenGLTexture));
+    //memset(texture, 0, sizeof(QOpenGLTexture));
 }
 
 GLWidget::~GLWidget()
