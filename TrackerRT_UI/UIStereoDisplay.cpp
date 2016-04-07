@@ -25,23 +25,18 @@ UIStereoDisplay::UIStereoDisplay()
                       255, 63);
 
     printf("Creating L...\n");
-    glWidgetL = new GLWidget();
-    glWidgetL->setClearColor(clearColor);
+    //glWidgetL = new GLWidget();
+    //glWidgetL->setClearColor(clearColor);
     printf("Creating L OK\n");
 
-    printf("NOT Creating R...\n");
     //glWidgetR = new GLWidget();
-    printf("NOT Creating R OK, setting color...\n");
     //glWidgetR->setClearColor(clearColor);
-    printf("R NOT OK\n");
 
-    mainLayout->addWidget(glWidgetL, 0, 0);
+    //mainLayout->addWidget(glWidgetL, 0, 0);
    // mainLayout->addWidget(glWidgetR, 1, 0);
     setLayout(mainLayout);
 
-    printf("creating timer\n");
     QTimer *timer = new QTimer(this);
-    printf("timer created");
     connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
     timer->start(1);
 
