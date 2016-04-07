@@ -31,12 +31,8 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    static int a = 0;
-
-    if ((a++)%1 == 0)
-        glWidget->renderStereoRawData();
-    else
-        glWidgetR->renderStereoRawData();
+    glWidget->renderStereoRawData();
+    //glWidgetR->renderStereoRawData();
 }
 
 UIStereoDisplay::~UIStereoDisplay()
