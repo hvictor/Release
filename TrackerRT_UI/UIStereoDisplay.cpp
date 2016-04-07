@@ -18,7 +18,7 @@ UIStereoDisplay::UIStereoDisplay()
     //glWidgetR->renderStereoRawData();
 
     mainLayout->addWidget(glWidget, 0, 0);
-    //mainLayout->addWidget(glWidgetR, 0, 1);
+    mainLayout->addWidget(glWidgetR, 0, 1);
     setLayout(mainLayout);
 
     QTimer *timer = new QTimer(this);
