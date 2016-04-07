@@ -15,9 +15,7 @@ GLWidget::GLWidget(QWidget *parent)
       clearColor(Qt::black),
       program(0)
 {
-    printf("PORCO\n");
-    memset(texture, 0, sizeof(QOpenGLTexture));
-    printf("OCROP\n");
+    //memset(texture, 0, sizeof(QOpenGLTexture));
 }
 
 GLWidget::~GLWidget()
