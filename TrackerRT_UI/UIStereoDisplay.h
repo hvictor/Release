@@ -21,6 +21,7 @@ public:
 private:
     Ui::UIStereoDisplay *ui;
     GLWidget *glWidget;
+    GLWidget *glWidgetR;
 
 private slots:
     void renderStereoRawData();
