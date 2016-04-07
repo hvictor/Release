@@ -13,7 +13,7 @@ UIStereoDisplay::UIStereoDisplay()
     glWidget = new GLWidget;
     glWidget->setClearColor(clearColor);
 
-    //glWidgetR = new GLWidget;
+    glWidgetR = new GLWidget;
     //glWidgetR->setClearColor(clearColor);
     //glWidgetR->renderStereoRawData();
 
