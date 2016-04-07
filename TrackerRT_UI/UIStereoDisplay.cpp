@@ -17,7 +17,7 @@ UIStereoDisplay::UIStereoDisplay()
 {
     QGridLayout *mainLayout = new QGridLayout;
 
-    pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
+    //pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
 
     QColor clearColor;
     clearColor.setHsv(((0 * 0) + 0) * 255
@@ -51,9 +51,9 @@ UIStereoDisplay::UIStereoDisplay()
 void UIStereoDisplay::renderStereoRawData()
 {
     printf("Sto gran\n");
-    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
-        return;
-    }
+    //if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
+    //    return;
+    //}
     printf("Cazzo\n");
 
     glWidgetL->renderStereoRawData();
