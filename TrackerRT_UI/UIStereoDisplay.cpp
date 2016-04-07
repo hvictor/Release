@@ -25,14 +25,14 @@ UIStereoDisplay::UIStereoDisplay()
                       255, 63);
 
     printf("Creating L...\n");
-    //glWidgetL = new GLWidget();
+    glWidgetL = new GLWidget();
     //glWidgetL->setClearColor(clearColor);
     printf("Creating L OK\n");
 
     //glWidgetR = new GLWidget();
     //glWidgetR->setClearColor(clearColor);
 
-    //mainLayout->addWidget(glWidgetL, 0, 0);
+    mainLayout->addWidget(glWidgetL, 0, 0);
    // mainLayout->addWidget(glWidgetR, 1, 0);
     setLayout(mainLayout);
 

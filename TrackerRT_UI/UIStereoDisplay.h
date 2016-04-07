@@ -25,7 +25,7 @@ public:
 private:
     Ui::UIStereoDisplay *ui;
     GLWidget *glWidgetL;
-    GLWidget *glWidgetR;
+    //GLWidget *glWidgetR;
 
 
 private slots:
