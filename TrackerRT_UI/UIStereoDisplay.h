@@ -6,10 +6,6 @@
 #include <QTimer>
 #include "GLWidget.h"
 
-#include "../FastMemory/fast_mem_pool.h"
-#include "../SpinlockQueue/array_spinlock_queue.h"
-#include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
-
 namespace Ui {
 class UIStereoDisplay;
 }
@@ -24,9 +20,7 @@ public:
 
 private:
     Ui::UIStereoDisplay *ui;
-    GLWidget *glWidgetL;
-    //GLWidget *glWidgetR;
-
+    GLWidget *glWidget;
 
 private slots:
     void renderStereoRawData();
