@@ -1,5 +1,7 @@
 #include "UIStereoDisplay.h"
 #include "ui_UIStereoDisplay.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 extern SpinlockQueue *outputFramesQueueExternPtr;
 
@@ -43,9 +45,11 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
+    printf("Sto gran\n");
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
     }
+    printf("Cazzo\n");
 
     glWidgetL->renderStereoRawData();
     glWidgetR->renderStereoRawData();
