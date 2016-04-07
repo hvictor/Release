@@ -17,7 +17,7 @@ UIStereoDisplay::UIStereoDisplay()
 {
     QGridLayout *mainLayout = new QGridLayout;
 
-    //pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
+    pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
 
     QColor clearColor;
     clearColor.setHsv(((0 * 0) + 0) * 255
@@ -29,11 +29,11 @@ UIStereoDisplay::UIStereoDisplay()
     glWidgetL->setClearColor(clearColor);
     printf("Creating L OK\n");
 
-    printf("Creating R...\n");
-    glWidgetR = new GLWidget();
-    printf("Creating R OK, setting color...\n");
-    glWidgetR->setClearColor(clearColor);
-    printf("R OK\n");
+    printf("NOT Creating R...\n");
+    //glWidgetR = new GLWidget();
+    printf("NOT Creating R OK, setting color...\n");
+    //glWidgetR->setClearColor(clearColor);
+    printf("R NOT OK\n");
 
     mainLayout->addWidget(glWidgetL, 0, 0);
    // mainLayout->addWidget(glWidgetR, 1, 0);
@@ -51,13 +51,13 @@ UIStereoDisplay::UIStereoDisplay()
 void UIStereoDisplay::renderStereoRawData()
 {
     printf("Sto gran\n");
-    //if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
-    //    return;
-    //}
+    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
+        return;
+    }
     printf("Cazzo\n");
 
     glWidgetL->renderStereoRawData();
-    glWidgetR->renderStereoRawData();
+    //glWidgetR->renderStereoRawData();
 
     fast_mem_pool_release_memory(*pRenderFrameData);
 }
