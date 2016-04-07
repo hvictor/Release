@@ -124,7 +124,7 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::makeObject()
 {
-    if (side == 'R')
+    if (_side == 'R')
         return;
 
     FrameData *frame_data;
