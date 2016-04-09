@@ -128,29 +128,30 @@ void GLWidget::makeObject()
     {
         { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 }
     };
-/*
+
     const uchar *u8data;
+
+    printf("[%c] loading data...\n", _side);
 
     if (_side == 'L')
     {
-        u8data = (const uchar *)(*pRenderFrameData)->left_data;
+        u8data = (const uchar *)((*pRenderFrameData)->left_data);
     }
     else if (_side == 'R')
     {
-        u8data = (const uchar *)(*pRenderFrameData)->right_data;
-    }
-*/
-
-    printf("[%c] pull\n", _side);
-
-    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
-        return;
+        u8data = (const uchar *)((*pRenderFrameData)->right_data);
     }
 
-    printf("[%c] ok pull\n", _side);
+    printf("[%c] data loaded\n", _side);
+
+    //if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
+    //    return;
+    //}
+
+    //printf("[%c] ok pull\n", _side);
 
     if (setup) {
-        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage(u8data, 640, 480, QImage::Format_RGBA8888);
 
         delete texture;
         texture = new QOpenGLTexture(glImage);
@@ -159,15 +160,13 @@ void GLWidget::makeObject()
 //        texture->setData(glImage);
 // ---------------------------------------------------
 
-        printf("[%c] rel mem\n", _side);
-        fast_mem_pool_release_memory(frame_data);
         return;
     }
 
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage(u8data, 640, 480, QImage::Format_RGBA8888);
 
         texture = new QOpenGLTexture(glImage);
     }
@@ -189,6 +188,5 @@ void GLWidget::makeObject()
     vbo.bind();
     vbo.allocate(vertData.constData(), vertData.count() * sizeof(GLfloat));
 
-    printf("[%c] rel mem...\n", _side);
     fast_mem_pool_release_memory(frame_data);
 }
