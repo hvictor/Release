@@ -56,7 +56,9 @@ void GLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
+    printf("Calling Makeobject for %c\n", _side);
     makeObject();
+    printf("OK Makeobject for %c\n", _side);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
