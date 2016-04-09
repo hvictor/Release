@@ -19,6 +19,7 @@ GLWidget::GLWidget(char side, QWidget *parent)
       program(0),
       _side(side)
 {
+    texture = 0;
     //memset(texture, 0, sizeof(QOpenGLTexture));
 }
 
@@ -131,7 +132,7 @@ void GLWidget::paintGL()
     program->setAttributeBuffer(PROGRAM_VERTEX_ATTRIBUTE, GL_FLOAT, 0, 3, 5 * sizeof(GLfloat));
     program->setAttributeBuffer(PROGRAM_TEXCOORD_ATTRIBUTE, GL_FLOAT, 3 * sizeof(GLfloat), 2, 5 * sizeof(GLfloat));
 
-    printf("[%c] paintGL: binding\n", _side);
+    printf("[%c] paintGL: binding, texture = %p\n", _side, texture);
     texture->bind();
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     printf("[%c] paintGL: OK binding\n", _side);
