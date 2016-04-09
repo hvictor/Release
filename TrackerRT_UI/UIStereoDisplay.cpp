@@ -1,9 +1,16 @@
 #include "UIStereoDisplay.h"
 #include "ui_UIStereoDisplay.h"
 
+#include "../FastMemory/fast_mem_pool.h"
+#include "../SpinlockQueue/array_spinlock_queue.h"
+
+extern SpinlockQueue *outputFramesQueueExternPtr;
+FrameData **pRenderFrameData;
+
 UIStereoDisplay::UIStereoDisplay()
 {
     QGridLayout *mainLayout = new QGridLayout;
+    pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
 
     QColor clearColor;
     clearColor.setHsv(((0 * 0) + 0) * 255
@@ -30,11 +37,18 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
+    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
+        return;
+    }
+
     glWidget->renderStereoRawData();
-    //glWidgetR->renderStereoRawData();
+    glWidgetR->renderStereoRawData();
+
+    fast_mem_pool_release_memory(*pRenderFrameData);
 }
 
 UIStereoDisplay::~UIStereoDisplay()
 {
     delete ui;
+    free(pRenderFrameData);
 }
