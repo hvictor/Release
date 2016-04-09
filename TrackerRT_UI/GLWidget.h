@@ -36,11 +36,12 @@ protected:
 private:
     void makeObject();
     char _side;
+    int idx;
 
     QColor clearColor;
     QPoint lastPos;
 
-    QOpenGLTexture *texture;
+    QOpenGLTexture *texture[2];
     QOpenGLShaderProgram *program;
     QOpenGLBuffer vbo;
 };

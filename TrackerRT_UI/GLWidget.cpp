@@ -19,8 +19,12 @@ GLWidget::GLWidget(char side, QWidget *parent)
       program(0),
       _side(side)
 {
-    texture = 0;
-    //memset(texture, 0, sizeof(QOpenGLTexture));
+    if (_side == 'L')
+        idx = 0;
+    else
+        idx = 1;
+
+    memset(texture, 0, 2*sizeof(QOpenGLTexture *));
 }
 
 GLWidget::~GLWidget()
@@ -132,8 +136,8 @@ void GLWidget::paintGL()
     program->setAttributeBuffer(PROGRAM_VERTEX_ATTRIBUTE, GL_FLOAT, 0, 3, 5 * sizeof(GLfloat));
     program->setAttributeBuffer(PROGRAM_TEXCOORD_ATTRIBUTE, GL_FLOAT, 3 * sizeof(GLfloat), 2, 5 * sizeof(GLfloat));
 
-    printf("[%c] paintGL: binding, texture = %p\n", _side, texture);
-    texture->bind();
+    printf("[%c] paintGL: binding, texture = %p\n", _side, texture[idx]);
+    texture[idx]->bind();
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     printf("[%c] paintGL: OK binding\n", _side);
 }
@@ -183,8 +187,8 @@ void GLWidget::makeObject()
 
         fast_mem_pool_release_memory(frame_data);
 
-        delete texture;
-        texture = new QOpenGLTexture(glImage);
+        delete texture[idx];
+        texture[idx] = new QOpenGLTexture(glImage);
 
 // ---------------------------------------------------
 //        texture->setData(glImage);
@@ -198,7 +202,7 @@ void GLWidget::makeObject()
     for (int j = 0; j < 1; ++j) {
         QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
 
-        texture = new QOpenGLTexture(glImage);
+        texture[idx] = new QOpenGLTexture(glImage);
     }
     printf("[%c] makeObject: OK Texturing\n", _side);
 
