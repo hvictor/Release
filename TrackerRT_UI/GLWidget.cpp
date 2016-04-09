@@ -21,6 +21,7 @@ GLWidget::GLWidget(char side, QWidget *parent)
       _side(side)
 {
     setup = 0;
+    u8data = 0;
 }
 
 GLWidget::~GLWidget()
@@ -42,8 +43,9 @@ QSize GLWidget::sizeHint() const
     return QSize(640, 480);
 }
 
-void GLWidget::renderStereoRawData()
+void GLWidget::renderStereoRawData(const uchar *u8data)
 {
+    this->u8data = u8data;
     update();
 }
 
@@ -123,35 +125,18 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::makeObject()
 {
-    FrameData *frame_data;
+    if (u8data == 0) return;
+
+    //FrameData *frame_data;
     static const int coords[4][3] =
     {
         { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 }
     };
 
-    const uchar *u8data;
-
-    printf("[%c] loading data...\n", _side);
-
-    if (_side == 'L')
-    {
-        u8data = (const uchar *)((*pRenderFrameData)->left_data);
-    }
-    else if (_side == 'R')
-    {
-        u8data = (const uchar *)((*pRenderFrameData)->right_data);
-    }
-
-    printf("[%c] data loaded\n", _side);
-
-    //if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
-    //    return;
-    //}
-
-    //printf("[%c] ok pull\n", _side);
-
     if (setup) {
-        QImage glImage(u8data, 640, 480, QImage::Format_RGBA8888);
+        printf("[%c] creating OpenGL image...\n", _side);
+        QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
+        printf("[%c] OK creating OpenGL image...\n", _side);
 
         delete texture;
         texture = new QOpenGLTexture(glImage);
@@ -166,7 +151,9 @@ void GLWidget::makeObject()
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        QImage glImage(u8data, 640, 480, QImage::Format_RGBA8888);
+        printf("[%c] creating OpenGL image...\n", _side);
+        QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
+        printf("[%c] OK creating OpenGL image...\n", _side);
 
         texture = new QOpenGLTexture(glImage);
     }
@@ -187,6 +174,4 @@ void GLWidget::makeObject()
     vbo.create();
     vbo.bind();
     vbo.allocate(vertData.constData(), vertData.count() * sizeof(GLfloat));
-
-    fast_mem_pool_release_memory(frame_data);
 }

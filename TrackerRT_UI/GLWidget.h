@@ -22,7 +22,7 @@ public:
 
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;
-    void renderStereoRawData();
+    void renderStereoRawData(const uchar *u8data);
     void setClearColor(const QColor &color);
 
 signals:
@@ -38,6 +38,7 @@ private:
     char _side;
     int idx;
     int setup;
+    const uchar *u8data;
 
     QColor clearColor;
     QPoint lastPos;
