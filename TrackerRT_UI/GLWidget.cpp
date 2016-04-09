@@ -138,7 +138,9 @@ void GLWidget::paintGL()
 
     printf("[%c] paintGL: binding, texture[%d] = %p\n", _side, idx, texture[idx]);
     //texture[idx]->bind();
+    printf("[%c] Drawing triangle fan\n", _side);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    printf("[%c] OK Drawing triangle fan\n", _side);
     printf("[%c] paintGL: OK binding\n", _side);
 }
 void GLWidget::resizeGL(int width, int height)
