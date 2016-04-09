@@ -137,9 +137,6 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::makeObject()
 {
-    if (_side == 'R')
-        return;
-
     FrameData *frame_data;
 
     static int setup = 0;
@@ -165,9 +162,11 @@ void GLWidget::makeObject()
 */
 ///////////
 
+    printf("[%c] makeObject: Queue pull\n", _side);
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
         return;
     }
+    printf("[%c] makeObject: OK Queue pull, Texturing...\n", _side);
 
     //DIRECT:
     //FrameData fData = directFetchRawStereoData(sSAL);
@@ -183,6 +182,7 @@ void GLWidget::makeObject()
 // ---------------------------------------------------
 //        texture->setData(glImage);
 // ---------------------------------------------------
+        printf("[%c] makeObject: OK Texturing\n", _side);
         return;
     }
 
@@ -193,6 +193,8 @@ void GLWidget::makeObject()
 
         texture = new QOpenGLTexture(glImage);
     }
+    printf("[%c] makeObject: OK Texturing\n", _side);
+
 
     QVector<GLfloat> vertData;
     for (int j = 0; j < 4; ++j) {
