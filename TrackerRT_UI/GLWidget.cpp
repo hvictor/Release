@@ -126,27 +126,7 @@ void GLWidget::makeObject()
     {
         { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 }
     };
-
-    // Fetch STEREO Frame Data from Output Queue
-/////////////
 /*
-    static int measure_counter = 0;
-    static double queue_count_mean = 0;
-
-    queue_count_mean += (double)outputFramesQueueExternPtr->count;
-
-    if (++measure_counter == 100) {
-        queue_count_mean /= measure_counter;
-        measure_counter = 0;
-        printf("[queue avg] current size: %.4f frames\n", queue_count_mean);
-        queue_count_mean = 0;
-    }
-*/
-///////////
-
-    //DIRECT:
-    //FrameData fData = directFetchRawStereoData(sSAL);
-
     const uchar *u8data;
 
     if (_side == 'L')
@@ -157,9 +137,13 @@ void GLWidget::makeObject()
     {
         u8data = (const uchar *)(*pRenderFrameData)->right_data;
     }
+*/
+    if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
+        return;
+    }
 
     if (setup) {
-        QImage glImage(u8data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
 
         delete texture;
         texture = new QOpenGLTexture(glImage);
@@ -173,7 +157,7 @@ void GLWidget::makeObject()
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        QImage glImage(u8data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
 
         texture = new QOpenGLTexture(glImage);
     }
