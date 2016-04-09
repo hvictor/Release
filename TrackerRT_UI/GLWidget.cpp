@@ -137,9 +137,9 @@ void GLWidget::paintGL()
     program->setAttributeBuffer(PROGRAM_TEXCOORD_ATTRIBUTE, GL_FLOAT, 3 * sizeof(GLfloat), 2, 5 * sizeof(GLfloat));
 
     printf("[%c] paintGL: binding, texture[%d] = %p\n", _side, idx, texture[idx]);
-    //texture[idx]->bind();
-    printf("[%c] Drawing triangle fan\n", _side);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    texture[idx]->bind();
+    printf("[%c] NOT Drawing triangle fan\n", _side);
+    //glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     printf("[%c] OK Drawing triangle fan\n", _side);
     printf("[%c] paintGL: OK binding\n", _side);
 }
