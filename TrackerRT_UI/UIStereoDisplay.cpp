@@ -23,9 +23,13 @@ UIStereoDisplay::UIStereoDisplay()
     //glWidgetR->setClearColor(clearColor);
     //glWidgetR->renderStereoRawData();
 
+    printf("Widgets created\n");
+
     mainLayout->addWidget(glWidget, 0, 0);
     mainLayout->addWidget(glWidgetR, 0, 1);
     setLayout(mainLayout);
+
+    printf("layout ok\n");
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
@@ -41,6 +45,7 @@ void UIStereoDisplay::renderStereoRawData()
         return;
     }
     */
+    printf("rendering\n");
 
     glWidget->renderStereoRawData();
     //glWidgetR->renderStereoRawData();

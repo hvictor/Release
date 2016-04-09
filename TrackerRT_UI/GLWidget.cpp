@@ -138,9 +138,14 @@ void GLWidget::makeObject()
         u8data = (const uchar *)(*pRenderFrameData)->right_data;
     }
 */
+
+    printf("[%c] pull\n", _side);
+
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
         return;
     }
+
+    printf("[%c] ok pull\n", _side);
 
     if (setup) {
         QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
@@ -151,6 +156,9 @@ void GLWidget::makeObject()
 // ---------------------------------------------------
 //        texture->setData(glImage);
 // ---------------------------------------------------
+
+        printf("[%c] rel mem\n", _side);
+        fast_mem_pool_release_memory(frame_data);
         return;
     }
 
@@ -178,4 +186,7 @@ void GLWidget::makeObject()
     vbo.create();
     vbo.bind();
     vbo.allocate(vertData.constData(), vertData.count() * sizeof(GLfloat));
+
+    printf("[%c] rel mem...\n", _side);
+    fast_mem_pool_release_memory(frame_data);
 }
