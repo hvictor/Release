@@ -97,14 +97,10 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
-    printf("[%c] paintGL: Calling makeObject\n", _side);
     makeObject();
-    printf("[%c] paintGL: OK makeObject, Clearing color...\n", _side);
 
     glClearColor(clearColor.redF(), clearColor.greenF(), clearColor.blueF(), clearColor.alphaF());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    printf("[%c] paintGL: OK clearing color\n", _side);
 
     QMatrix4x4 m;
     m.ortho(-1.0, 1.0, 1.0, -1.0, 0.0, 10.0);
