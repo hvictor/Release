@@ -31,7 +31,7 @@ UIStereoDisplay::UIStereoDisplay()
 void UIStereoDisplay::renderStereoRawData()
 {
     glWidget->renderStereoRawData();
-    glWidgetR->renderStereoRawData();
+    //glWidgetR->renderStereoRawData();
 }
 
 UIStereoDisplay::~UIStereoDisplay()
