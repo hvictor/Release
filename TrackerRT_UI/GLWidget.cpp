@@ -116,12 +116,8 @@ void GLWidget::paintGL()
     program->setAttributeBuffer(PROGRAM_VERTEX_ATTRIBUTE, GL_FLOAT, 0, 3, 5 * sizeof(GLfloat));
     program->setAttributeBuffer(PROGRAM_TEXCOORD_ATTRIBUTE, GL_FLOAT, 3 * sizeof(GLfloat), 2, 5 * sizeof(GLfloat));
 
-    printf("[%c] paintGL: binding, texture = %p\n", _side, texture);
     texture->bind();
-    printf("[%c] NOT Drawing triangle fan\n", _side);
-    if (_side == 'R') glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    printf("[%c] OK Drawing triangle fan\n", _side);
-    printf("[%c] paintGL: OK binding\n", _side);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 void GLWidget::resizeGL(int width, int height)
 {
