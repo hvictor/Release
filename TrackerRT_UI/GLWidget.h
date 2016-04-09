@@ -12,8 +12,6 @@
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 QT_FORWARD_DECLARE_CLASS(QOpenGLTexture)
 
-extern SpinlockQueue *outputFramesQueueExternPtr;
-
 class GLWidget : public QGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT

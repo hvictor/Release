@@ -9,6 +9,8 @@ FrameData **pRenderFrameData;
 
 UIStereoDisplay::UIStereoDisplay()
 {
+    pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
+
     QGridLayout *mainLayout = new QGridLayout;
 
     QColor clearColor;
@@ -40,12 +42,10 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    /*
+    printf("Pulling (external)\n");
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
     }
-    */
-    printf("rendering\n");
 
     glWidget->renderStereoRawData();
     //glWidgetR->renderStereoRawData();

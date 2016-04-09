@@ -12,6 +12,8 @@ extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSA
 extern StereoSensorAbstractionLayer *sSAL;
 extern FrameData **pRenderFrameData;
 
+extern SpinlockQueue *outputFramesQueueExternPtr;
+
 GLWidget::GLWidget(char side, QWidget *parent)
     : QGLWidget(parent),
       clearColor(Qt::black),
