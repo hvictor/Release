@@ -66,6 +66,8 @@ void GLWidget::initializeGL()
 #define PROGRAM_VERTEX_ATTRIBUTE 0
 #define PROGRAM_TEXCOORD_ATTRIBUTE 1
 
+    printf("[%c] Compiling vertex shader...\n", _side);
+
     QOpenGLShader *vshader = new QOpenGLShader(QOpenGLShader::Vertex, this);
     const char *vsrc =
         "attribute highp vec4 vertex;\n"
@@ -79,6 +81,9 @@ void GLWidget::initializeGL()
         "}\n";
     vshader->compileSourceCode(vsrc);
 
+    printf("[%c] OK: Compiling vertex shader...\n", _side);
+    printf("[%c] Compiling fragment shader...\n", _side);
+
     QOpenGLShader *fshader = new QOpenGLShader(QOpenGLShader::Fragment, this);
     const char *fsrc =
         "uniform sampler2D texture;\n"
@@ -89,6 +94,8 @@ void GLWidget::initializeGL()
         "}\n";
     fshader->compileSourceCode(fsrc);
 
+    printf("[%c] OK: Compiling fragment shader...\n", _side);
+
     program = new QOpenGLShaderProgram;
     program->addShader(vshader);
     program->addShader(fshader);
@@ -96,8 +103,12 @@ void GLWidget::initializeGL()
     program->bindAttributeLocation("texCoord", PROGRAM_TEXCOORD_ATTRIBUTE);
     program->link();
 
+    printf("[%c] Shader program linked\n", _side);
+
     program->bind();
     program->setUniformValue("texture", 0);
+
+    printf("[%c] Makeobject Complete\n", _side);
 }
 
 void GLWidget::paintGL()
