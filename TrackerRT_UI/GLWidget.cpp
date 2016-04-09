@@ -19,6 +19,7 @@ GLWidget::GLWidget(char side, QWidget *parent)
       program(0),
       _side(side)
 {
+    setup = 0;
 }
 
 GLWidget::~GLWidget()
@@ -130,8 +131,6 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::makeObject()
 {
     FrameData *frame_data;
-
-    static int setup = 0;
     static const int coords[4][3] =
     {
         { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 }

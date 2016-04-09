@@ -37,6 +37,7 @@ private:
     void makeObject();
     char _side;
     int idx;
+    int setup;
 
     QColor clearColor;
     QPoint lastPos;
