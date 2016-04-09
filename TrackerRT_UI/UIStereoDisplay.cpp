@@ -48,7 +48,7 @@ void UIStereoDisplay::renderStereoRawData()
     }
 
     glWidget->renderStereoRawData((const uchar *)((*pRenderFrameData)->left_data));
-    //glWidgetR->renderStereoRawData();
+    glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->left_data));
 
     printf("Releasing (external)");
     fast_mem_pool_release_memory(*pRenderFrameData);
