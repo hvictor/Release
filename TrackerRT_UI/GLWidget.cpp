@@ -19,12 +19,6 @@ GLWidget::GLWidget(char side, QWidget *parent)
       program(0),
       _side(side)
 {
-    if (_side == 'L')
-        idx = 0;
-    else
-        idx = 1;
-
-    memset(texture, 0, 2*sizeof(QOpenGLTexture *));
 }
 
 GLWidget::~GLWidget()
@@ -60,18 +54,13 @@ void GLWidget::setClearColor(const QColor &color)
 void GLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-
-    printf("Calling Makeobject for %c\n", _side);
     makeObject();
-    printf("OK Makeobject for %c\n", _side);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
 #define PROGRAM_VERTEX_ATTRIBUTE 0
 #define PROGRAM_TEXCOORD_ATTRIBUTE 1
-
-    printf("[%c] Compiling vertex shader...\n", _side);
 
     QOpenGLShader *vshader = new QOpenGLShader(QOpenGLShader::Vertex, this);
     const char *vsrc =
@@ -86,9 +75,6 @@ void GLWidget::initializeGL()
         "}\n";
     vshader->compileSourceCode(vsrc);
 
-    printf("[%c] OK: Compiling vertex shader...\n", _side);
-    printf("[%c] Compiling fragment shader...\n", _side);
-
     QOpenGLShader *fshader = new QOpenGLShader(QOpenGLShader::Fragment, this);
     const char *fsrc =
         "uniform sampler2D texture;\n"
@@ -99,21 +85,14 @@ void GLWidget::initializeGL()
         "}\n";
     fshader->compileSourceCode(fsrc);
 
-    printf("[%c] OK: Compiling fragment shader...\n", _side);
-
     program = new QOpenGLShaderProgram;
     program->addShader(vshader);
     program->addShader(fshader);
     program->bindAttributeLocation("vertex", PROGRAM_VERTEX_ATTRIBUTE);
     program->bindAttributeLocation("texCoord", PROGRAM_TEXCOORD_ATTRIBUTE);
     program->link();
-
-    printf("[%c] Shader program linked\n", _side);
-
     program->bind();
     program->setUniformValue("texture", 0);
-
-    printf("[%c] Makeobject Complete\n", _side);
 }
 
 void GLWidget::paintGL()
@@ -136,10 +115,10 @@ void GLWidget::paintGL()
     program->setAttributeBuffer(PROGRAM_VERTEX_ATTRIBUTE, GL_FLOAT, 0, 3, 5 * sizeof(GLfloat));
     program->setAttributeBuffer(PROGRAM_TEXCOORD_ATTRIBUTE, GL_FLOAT, 3 * sizeof(GLfloat), 2, 5 * sizeof(GLfloat));
 
-    printf("[%c] paintGL: binding, texture[%d] = %p\n", _side, idx, texture[idx]);
-    texture[idx]->bind();
+    printf("[%c] paintGL: binding, texture = %p\n", _side, texture);
+    texture->bind();
     printf("[%c] NOT Drawing triangle fan\n", _side);
-    //glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    if (_side == 'R') glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     printf("[%c] OK Drawing triangle fan\n", _side);
     printf("[%c] paintGL: OK binding\n", _side);
 }
@@ -175,11 +154,9 @@ void GLWidget::makeObject()
 */
 ///////////
 
-    printf("[%c] makeObject: Queue pull\n", _side);
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)&frame_data) < 0) {
         return;
     }
-    printf("[%c] makeObject: OK Queue pull, Texturing...\n", _side);
 
     //DIRECT:
     //FrameData fData = directFetchRawStereoData(sSAL);
@@ -189,13 +166,12 @@ void GLWidget::makeObject()
 
         fast_mem_pool_release_memory(frame_data);
 
-        delete texture[idx];
-        texture[idx] = new QOpenGLTexture(glImage);
+        delete texture;
+        texture = new QOpenGLTexture(glImage);
 
 // ---------------------------------------------------
 //        texture->setData(glImage);
 // ---------------------------------------------------
-        printf("[%c] makeObject: OK Texturing\n", _side);
         return;
     }
 
@@ -204,9 +180,8 @@ void GLWidget::makeObject()
     for (int j = 0; j < 1; ++j) {
         QImage glImage((const uchar *)frame_data->left_data, 640, 480, QImage::Format_RGBA8888);
 
-        texture[idx] = new QOpenGLTexture(glImage);
+        texture = new QOpenGLTexture(glImage);
     }
-    printf("[%c] makeObject: OK Texturing\n", _side);
 
 
     QVector<GLfloat> vertData;
@@ -225,7 +200,5 @@ void GLWidget::makeObject()
     vbo.bind();
     vbo.allocate(vertData.constData(), vertData.count() * sizeof(GLfloat));
 
-    printf("[%c] Releasing memory...\n", _side);
     fast_mem_pool_release_memory(frame_data);
-    printf("[%c] OK Memory released\n", _side);
 }
