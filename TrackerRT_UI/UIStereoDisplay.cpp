@@ -42,15 +42,13 @@ UIStereoDisplay::UIStereoDisplay()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    printf("Pulling (external)\n");
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
     }
 
     glWidget->renderStereoRawData((const uchar *)((*pRenderFrameData)->left_data));
-    glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->left_data));
+    glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->right_data));
 
-    printf("Releasing (external)");
     fast_mem_pool_release_memory(*pRenderFrameData);
 }
 
