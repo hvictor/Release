@@ -134,9 +134,7 @@ void GLWidget::makeObject()
     };
 
     if (setup) {
-        printf("[%c] creating OpenGL image...\n", _side);
         QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
-        printf("[%c] OK creating OpenGL image...\n", _side);
 
         delete texture;
         texture = new QOpenGLTexture(glImage);
@@ -151,9 +149,7 @@ void GLWidget::makeObject()
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        printf("[%c] creating OpenGL image...\n", _side);
         QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
-        printf("[%c] OK creating OpenGL image...\n", _side);
 
         texture = new QOpenGLTexture(glImage);
     }
