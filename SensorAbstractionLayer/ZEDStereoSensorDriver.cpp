@@ -79,7 +79,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 	frame.bytesLength = 0;
 
-	if (this->zed->grab(sensingMode, false, false)) {
+	if (this->zed->grab(sensingMode, true, true)) {
 		return frame;
 	}
 
@@ -89,6 +89,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.leftData = (uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 
+	zed::Mat depth = zed->retrieveMeasure(sl::zed::MEASURE::DEPTH);
+	cout << "depth channels: " << depth.channels << endl;
 	// DEPTH:
 	//cv::Mat tmp8u = zed::slMat2cvMat(zed->normalizeMeasure(sl::zed::MEASURE::DEPTH));
 	//frame.leftData = (uint8_t *)(tmp8u.data);
