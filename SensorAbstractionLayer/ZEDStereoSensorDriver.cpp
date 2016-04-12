@@ -105,12 +105,15 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.depthData = 0;
 
 	if (frameCounter == depthFrameInterleave) {
-		printf("Computing Depth\n");
+		printf("Depth Computed, frameCounter = %d\n", frameCounter);
 
 		frame.depthData = (uint8_t *)zed->retrieveMeasure(sl::zed::MEASURE::DEPTH).data;
 		computeDepth = false;
 		computeDisparity = false;
 		frameCounter = 0;
+	}
+	else {
+		printf("Not computing depth, frameCounter = %d\n", frameCounter);
 	}
 
 	// DEPTH:
