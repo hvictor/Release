@@ -86,7 +86,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 	frame.bytesLength = 0;
 
-	depthFrameInterleave++;
+	frameCounter++;
 
 	if (frameCounter == depthFrameInterleave) {
 		computeDepth = true;
