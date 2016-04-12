@@ -6,7 +6,7 @@
 <Frame_OutputType>0</Frame_OutputType>
 <OperationalMode_InputDevice>1</OperationalMode_InputDevice>
 <OperationalMode_ProcessingMode>0</OperationalMode_ProcessingMode>
-<OpticalLayer_FrameBufferSize>30</OpticalLayer_FrameBufferSize>
+<OpticalLayer_FrameBufferSize>60</OpticalLayer_FrameBufferSize>
 <OpticalLayer_LinearLowPassFilterX>9.3000000000000005e-01</OpticalLayer_LinearLowPassFilterX>
 <OpticalLayer_LinearLowPassFilterY>9.8999999999999999e-01</OpticalLayer_LinearLowPassFilterY>
 <OpticalLayer_LucasKanadeOpticalFlowMinMotion>4.0</OpticalLayer_LucasKanadeOpticalFlowMinMotion>
@@ -18,6 +18,9 @@
 <OpticalLayer_StatefulObjectFilterTrajectoryMinStates>4</OpticalLayer_StatefulObjectFilterTrajectoryMinStates>
 <StereoCameraDUO_Gain>100</StereoCameraDUO_Gain>
 <StereoCameraDUO_Exposure>100</StereoCameraDUO_Exposure>
+<StereoCameraZED_PerformanceMode>0</StereoCameraZED_PerformanceMode>
+<StereoCameraZED_SensingMode>0</StereoCameraZED_SensingMode>
+<StereoCameraZED_DepthFrameInterleave>10</StereoCameraZED_DepthFrameInterleave>
 <StereoCameraDUO_Leds>75</StereoCameraDUO_Leds>
 <InterpolationEngine_ExtremaNeighbourhoodSize>5.0</InterpolationEngine_ExtremaNeighbourhoodSize>
 </opencv_storage>

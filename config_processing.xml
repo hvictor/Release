@@ -19,5 +19,8 @@
 <StereoCameraDUO_Gain>90</StereoCameraDUO_Gain>
 <StereoCameraDUO_Exposure>90</StereoCameraDUO_Exposure>
 <StereoCameraDUO_Leds>50</StereoCameraDUO_Leds>
+<StereoCameraZED_PerformanceMode>0</StereoCameraZED_PerformanceMode>
+<StereoCameraZED_SensingMode>0</StereoCameraZED_SensingMode>
+<StereoCameraZED_DepthFrameInterleave>10</StereoCameraZED_DepthFrameInterleave>
 <InterpolationEngine_ExtremaNeighbourhoodSize>40.0</InterpolationEngine_ExtremaNeighbourhoodSize>
 </opencv_storage>

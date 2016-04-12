@@ -18,6 +18,7 @@ typedef struct
 {
 	uint8_t *left_data;
 	uint8_t *right_data;
+	uint8_t *depth_data;
 	int index;
 	int free;
 } FrameData;

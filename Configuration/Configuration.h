@@ -102,6 +102,8 @@ typedef struct
 
 	int performanceModeIntValue;
 	int sensingModeIntValue;
+
+	int depthFrameInterleave;
 } ZEDStereoCameraHardwareParameters;
 
 typedef struct

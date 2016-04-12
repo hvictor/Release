@@ -35,6 +35,11 @@ private:
 	zed::Camera* zed;
 	zed::MODE performanceMode;
 	zed::SENSING_MODE sensingMode;
+
+	bool computeDisparity;
+	bool computeDepth;
+	int frameCounter;
+	int depthFrameInterleave;
 };
 
 #endif /* ZEDSTEREOSENSORDRIVER_H_ */

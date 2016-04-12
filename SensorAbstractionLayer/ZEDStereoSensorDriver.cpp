@@ -7,14 +7,21 @@
 
 #include "ZEDStereoSensorDriver.h"
 
-ZEDStereoSensorDriver::ZEDStereoSensorDriver() {
+ZEDStereoSensorDriver::ZEDStereoSensorDriver()
+{
 	frameSize.width = 640;
 	frameSize.height = 480;
+
+	computeDepth = false;
+	computeDisparity = false;
+	frameCounter = 0;
 
 	zedProperties = new ZEDCameraProperties();
 	this->zed = new sl::zed::Camera(zed::VGA, 30);
 
 	ZEDStereoCameraHardwareParameters zedParam = Configuration::getInstance()->getZEDStereoCameraHardwareParameters();
+
+	depthFrameInterleave = zedParam.depthFrameInterleave;
 
 	switch (zedParam.performanceMode)
 	{
@@ -79,7 +86,12 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	StereoFrame frame;
 	frame.bytesLength = 0;
 
-	if (this->zed->grab(sensingMode, true, true)) {
+	if (frameCounter == depthFrameInterleave) {
+		computeDepth = true;
+		computeDisparity = true;
+	}
+
+	if (this->zed->grab(sensingMode, computeDisparity, computeDepth)) {
 		return frame;
 	}
 
@@ -88,12 +100,21 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	frame.leftData = (uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
+	frame.depthData = 0;
 
-	zed::Mat depth = zed->retrieveMeasure(sl::zed::MEASURE::DEPTH);
-	cout << "depth channels: " << depth.channels << endl;
+	if (frameCounter == depthFrameInterleave) {
+		printf("Computing Depth\n");
+
+		frame.depthData = (uint8_t *)zed->retrieveMeasure(sl::zed::MEASURE::DEPTH).data;
+		computeDepth = false;
+		computeDisparity = false;
+		frameCounter = 0;
+	}
+
 	// DEPTH:
 	//cv::Mat tmp8u = zed::slMat2cvMat(zed->normalizeMeasure(sl::zed::MEASURE::DEPTH));
 	//frame.leftData = (uint8_t *)(tmp8u.data);
+
 
 
 	return frame;

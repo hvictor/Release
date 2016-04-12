@@ -124,6 +124,7 @@ void Configuration::writeConfigFile(string fileName)
 	// ZED Stereo Camera
 	fs << "StereoCameraZED_PerformanceMode" << zedHardwareParameters.performanceMode;
 	fs << "StereoCameraZED_SensingMode" << zedHardwareParameters.sensingMode;
+	fs << "StereoCameraZED_DepthFrameInterleave" << zedHardwareParameters.depthFrameInterleave;
 
 	// Interpolation Engine
 	fs << "InterpolationEngine_ExtremaNeighbourhoodSize" << interpolationEngineParameters.extremaNeighbourhoodSize;
@@ -185,6 +186,7 @@ void Configuration::loadConfigFile(string fileName)
 	zedHardwareParameters.performanceMode = static_cast<ZEDPerformanceMode>(iTmp);
 	fs["StereoCameraZED_SensingMode"] >> iTmp;
 	zedHardwareParameters.sensingMode = static_cast<ZEDSensingMode>(iTmp);
+	fs["StereoCameraZED_DepthFrameInterleave"] >> zedHardwareParameters.depthFrameInterleave;
 
 	// Interpolation Engine
 	fs["InterpolationEngine_ExtremaNeighbourhoodSize"] >> interpolationEngineParameters.extremaNeighbourhoodSize;
@@ -221,6 +223,7 @@ void Configuration::display()
 	cout << "[ZED Stereo Camera]" << endl;
 	cout << "\tPerformance Mode:\t\t" << zedHardwareParameters.performanceMode << endl;
 	cout << "\tSensing Mode:\t\t" << zedHardwareParameters.sensingMode << endl;
+	cout << "\tDepth Frame Interleave:\t\t" << zedHardwareParameters.depthFrameInterleave << endl;
 	cout << "[Interpolation Engine]" << endl;
 	cout << "\tExtrema Neighbourhood Size:\t" << interpolationEngineParameters.extremaNeighbourhoodSize << endl;
 }

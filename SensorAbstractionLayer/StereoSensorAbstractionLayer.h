@@ -17,6 +17,7 @@ typedef struct
 {
 	uint8_t *leftData;
 	uint8_t *rightData;
+	uint8_t *depthData;
 	int bytesLength;
 	int channels;
 } StereoFrame;
