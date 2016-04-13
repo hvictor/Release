@@ -109,6 +109,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
 		zed::Mat xyz = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
 		xyz.info();
+		printf("XYZ channels: %d\n", xyz.channels);
 		computeDepth = false;
 		computeDisparity = false;
 	}
