@@ -44,7 +44,7 @@ void UIStereoDisplay::renderStereoRawData()
     glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->right_data));
 
     if ((*pRenderFrameData)->depth_data_avail) {
-
+        printf("[UI] Depth: %d mm\n", ((*pRenderFrameData)->depth_data)[640*(480/2) + 640/2]);
     }
 
 
