@@ -106,7 +106,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.depthData = 0;
 
 	if (computeDepth) {
-		frame.depthData = (uint8_t *)zed->retrieveMeasure(sl::zed::MEASURE::DEPTH).data;
+		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
+		printf("[Driver] Depth Data is at %p\n", frame.depthData);
 		computeDepth = false;
 		computeDisparity = false;
 	}
