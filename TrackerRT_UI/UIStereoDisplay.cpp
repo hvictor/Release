@@ -44,7 +44,15 @@ void UIStereoDisplay::renderStereoRawData()
     glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->right_data));
 
     if ((*pRenderFrameData)->depth_data_avail) {
-        printf("[Depth]  Frame center measures an object at: %d [m]\n", (int)((*pRenderFrameData)->depth_data)[640 * (480/2) + 640/2]);
+        uint8_t *a = (*pRenderFrameData)->depth_data;
+        for (int y = 0; y < 480; y++) {
+            for (int x = 0; x < 640; x++) {
+                if (a[y*640 + x] != 0) {
+                    printf("[%d, %d] = %d m\n", x, y, a[y*640 + x]);
+                }
+            }
+        }
+        printf("[Depth]  Frame center measures an object at: %d [m]\n", (int)((*pRenderFrameData)->depth_data)[800]);
     }
 
 
