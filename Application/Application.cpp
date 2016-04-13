@@ -557,7 +557,6 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			if (stereoFrame.depthData != 0) {
 				frameData->depth_data_avail = true;
-				printf("[Depth Copy] Copying Depth Data (%d x %d) from %p to %p\n", frameSize.width, frameSize.height, stereoFrame.depthData, frameData->depth_data);
 				memcpy(frameData->depth_data, stereoFrame.depthData, 10);//frameSize.width * frameSize.height * sizeof(uint8_t));
 			}
 			else {
