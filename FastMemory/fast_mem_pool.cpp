@@ -36,6 +36,8 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 			mem[i].depth_data = (uint8_t *)malloc(frame_width * frame_height * sizeof(uint8_t));
 			printf("Depth memory allocated: %p\n", mem[i].depth_data);
 		}
+
+		mem[i].depth_data_avail = false;
 	}
 
 	mem_count = 0;
