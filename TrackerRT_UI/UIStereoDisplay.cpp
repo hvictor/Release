@@ -19,19 +19,13 @@ UIStereoDisplay::UIStereoDisplay()
                       255, 63);
 
     glWidget = new GLWidget('L');
-    glWidget->setClearColor(clearColor);
+    //glWidget->setClearColor(clearColor);
 
     glWidgetR = new GLWidget('R');
-    //glWidgetR->setClearColor(clearColor);
-    //glWidgetR->renderStereoRawData();
-
-    printf("Widgets created\n");
 
     mainLayout->addWidget(glWidget, 0, 0);
     mainLayout->addWidget(glWidgetR, 0, 1);
     setLayout(mainLayout);
-
-    printf("layout ok\n");
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
@@ -48,6 +42,10 @@ void UIStereoDisplay::renderStereoRawData()
 
     glWidget->renderStereoRawData((const uchar *)((*pRenderFrameData)->left_data));
     glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->right_data));
+
+    if ((*pRenderFrameData)->depth_data != 0) {
+        printf("[Depth]  Frame center measures an object at: %d [m]", (*pRenderFrameData)->depth_data[640 * (480/2) + 640/2]);
+    }
 
     fast_mem_pool_release_memory(*pRenderFrameData);
 }
