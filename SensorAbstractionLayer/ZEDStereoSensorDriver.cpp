@@ -117,7 +117,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		float x = xyz[640*(480/2) + 640/2 + 0];
 		float y = xyz[640*(480/2) + 640/2 + 1];
 		float z = xyz[640*(480/2) + 640/2 + 2];
-		cout << "X=%.2f, Y=%.2f Z=%.2f\n", x, y, z);
+		printf("X=%.2f, Y=%.2f Z=%.2f\n", x, y, z);
 
 		computeDepth = false;
 		computeDisparity = false;
