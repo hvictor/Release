@@ -110,9 +110,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		zed::Mat xyz = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
 		uchar3 val = xyz.getValue(100, 100);
 		uint8_t d = frame.depthData[640*100 + 100];
-		printf("[x,y,z] = %d,%d,%d -- %d,%d,%d,%d   z=%d\n", val.c1, val.c2, val.c3,
-				xyz.data[640*100 + 100 + 0], xyz.data[640*100 + 100 + 1], xyz.data[640*100 + 100 + 2], xyz.data[640*100 + 100 + 3],
-				d);
+		printf("[x,y,z]=[%d,%d,%d] z=%d\n", val.c1, val.c2, val.c3,	d);
 		computeDepth = false;
 		computeDisparity = false;
 	}
