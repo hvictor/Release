@@ -106,21 +106,17 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.depthData = 0;
 
 	if (computeDepth) {
+		/*
 		zed::Mat confidence = zed->retrieveMeasure(sl::zed::MEASURE::CONFIDENCE);
 		cout << "confidence: channels: " << confidence.channels << ", type: " << confidence.data_type << endl;
+		*/
+
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
+
 		zed::Mat xyz = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
-		cout << "xyz: channels: " << xyz.channels << ", type: " << xyz.data_type << endl;
-		uchar3 val = xyz.getValue(100, 100);
-		uint8_t d = frame.depthData[640*100 + 100];
-		printf("[x,y,z]=[%d,%d,%d] z=%d conf=\n", val.c1, val.c2, val.c3,	d);
-		uint8_t d = frame.depthData[640*103 + 103];
-		printf("[x,y,z]=[%d,%d,%d] z=%d conf=\n", val.c1, val.c2, val.c3,	d);
-		uint8_t d = frame.depthData[640*106 + 106];
-		printf("[x,y,z]=[%d,%d,%d] z=%d conf=\n", val.c1, val.c2, val.c3,	d);
-		uint8_t d = frame.depthData[640*110 + 110];
-		printf("[x,y,z]=[%d,%d,%d] z=%d conf=\n", val.c1, val.c2, val.c3,	d);
-		printf("--------------------\n");
+		float3 val = xyz.getValue(640/2, 480/2);
+		cout << "X=%.2f, Y=%.2f Z=%.2f\n", val.f1, val.f2, val.f3);
+
 		computeDepth = false;
 		computeDisparity = false;
 	}
