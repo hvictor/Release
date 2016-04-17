@@ -108,7 +108,17 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.leftData[640*(480/2) + 640/2 + 0] = 255;
 	frame.leftData[640*(480/2) + 640/2 + 1] = 0;
 	frame.leftData[640*(480/2) + 640/2 + 2] = 0;
-	frame.leftData[640*(480/2) + 640/2 + 3] = 0;
+	frame.leftData[640*(480/2) + 640/2 + 3] = 255;
+
+	frame.leftData[640*(480/2) + 640/2 + 4] = 255;
+	frame.leftData[640*(480/2) + 640/2 + 5] = 0;
+	frame.leftData[640*(480/2) + 640/2 + 6] = 0;
+	frame.leftData[640*(480/2) + 640/2 + 7] = 255;
+
+	frame.leftData[640*(480/2) + 640/2 + 8] = 255;
+	frame.leftData[640*(480/2) + 640/2 + 9] = 0;
+	frame.leftData[640*(480/2) + 640/2 + 10] = 0;
+	frame.leftData[640*(480/2) + 640/2 + 11] = 255;
 
 	if (computeDepth) {
 		/*
