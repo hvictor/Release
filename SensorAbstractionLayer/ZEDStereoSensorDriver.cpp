@@ -104,7 +104,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	cv::Mat cv_img = zed::slMat2cvMat(zed->retrieveImage(zed::SIDE::LEFT));
 	rectangle(cv_img, Point(640/2-4, 480/2-4), Point(640/2+4, 480/2+4), Scalar(255, 0, 0), 1);
 
-	//frame.leftData = cv_img.data;//(uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
+	frame.leftData = cv_img.data;//(uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 	frame.depthData = 0;
 
@@ -118,11 +118,16 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
 
-		float *xyz = (float *)zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
+		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
+		sl::float3 f = xyzMat.getValue(640/2, 480/2);
+		float *xyz = (float *)xyzMat.data;//zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
 		float x = xyz[640*(480/2) + 640/2 + 0];
 		float y = xyz[640*(480/2) + 640/2 + 1];
 		float z = xyz[640*(480/2) + 640/2 + 2];
 		printf("X=%.2f, Y=%.2f Z=%.2f\n", x, y, z);
+		printf("X=%.2f, Y=%.2f Z=%.2f\n", f.f1, f.f2, f.f3);
+		printf("======\n");
+
 
 		computeDepth = false;
 		computeDisparity = false;
