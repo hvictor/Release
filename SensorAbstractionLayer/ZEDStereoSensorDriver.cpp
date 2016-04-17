@@ -105,6 +105,11 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 	frame.depthData = 0;
 
+	frame.leftData[640*(480/2) + 640/2 + 0] = 255;
+	frame.leftData[640*(480/2) + 640/2 + 1] = 0;
+	frame.leftData[640*(480/2) + 640/2 + 2] = 0;
+	frame.leftData[640*(480/2) + 640/2 + 3] = 0;
+
 	if (computeDepth) {
 		/*
 		zed::Mat confidence = zed->retrieveMeasure(sl::zed::MEASURE::CONFIDENCE);
