@@ -101,24 +101,14 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.channels = 4;
 	frame.bytesLength = frameSize.width * frameSize.height * frame.channels * sizeof(uint8_t);
 
-	frame.leftData = (uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
+	cv::Mat cv_img = zed::slMat2cvMat(zed->retrieveImage(zed::SIDE::LEFT));
+	rectangle(cv_img, Point(640/2-4, 480/2-4), Point(640/2+4, 480/2+4), Scalar(255, 0, 0), 1);
+
+	frame.leftData = cv_img.data;//(uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 	frame.depthData = 0;
 
-	frame.leftData[640*(480/2) + 640/2 + 0] = 255;
-	frame.leftData[640*(480/2) + 640/2 + 1] = 0;
-	frame.leftData[640*(480/2) + 640/2 + 2] = 0;
-	frame.leftData[640*(480/2) + 640/2 + 3] = 255;
 
-	frame.leftData[640*(480/2) + 640/2 + 4] = 255;
-	frame.leftData[640*(480/2) + 640/2 + 5] = 0;
-	frame.leftData[640*(480/2) + 640/2 + 6] = 0;
-	frame.leftData[640*(480/2) + 640/2 + 7] = 255;
-
-	frame.leftData[640*(480/2) + 640/2 + 8] = 255;
-	frame.leftData[640*(480/2) + 640/2 + 9] = 0;
-	frame.leftData[640*(480/2) + 640/2 + 10] = 0;
-	frame.leftData[640*(480/2) + 640/2 + 11] = 255;
 
 	if (computeDepth) {
 		/*
