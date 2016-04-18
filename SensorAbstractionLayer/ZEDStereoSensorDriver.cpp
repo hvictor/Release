@@ -125,12 +125,12 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		float x = xyz[step*(240) + 100 + 0];
 		float y = xyz[step*(240) + 100 + 1];
 		float z = xyz[step*(240) + 100 + 2];
-		printf("[step=%d] X=%.2f, Y=%.2f Z=%.2f\n", step, x, y, z);
+		//printf("[step=%d] X=%.2f, Y=%.2f Z=%.2f\n", step, x, y, z);
 		x = xyz[step*(240) + 500 + 0];
 		y = xyz[step*(240) + 500 + 1];
 		z = xyz[step*(240) + 500 + 2];
-		printf("[step=%d] X=%.2f, Y=%.2f Z=%.2f\n", step, x, y, z);
-		printf("======\n");
+		//printf("[step=%d] X=%.2f, Y=%.2f Z=%.2f\n", step, x, y, z);
+		//printf("======\n");
 
 
 		computeDepth = false;
