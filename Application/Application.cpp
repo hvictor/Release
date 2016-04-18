@@ -555,6 +555,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
 			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
 
+			Mat cv_img(Size(frameSize.width, frameSize.width), CV_8UC4, frameData->left_data);
+			rectangle(cv_img, Point(100-8, 240-8), Point(100+8, 240+8), Scalar(255, 0, 0), 2);
+			rectangle(cv_img, Point(500-8, 240-8), Point(500+8, 240+8), Scalar(255, 0, 0), 2);
+
+
 			if (stereoFrame.depthData != 0) {
 				frameData->depth_data_avail = true;
 				memcpy(frameData->depth_data, stereoFrame.depthData, frameSize.width * frameSize.height * sizeof(uint8_t));

@@ -100,12 +100,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	frame.channels = 4;
 	frame.bytesLength = frameSize.width * frameSize.height * frame.channels * sizeof(uint8_t);
-
-	cv::Mat cv_img = zed::slMat2cvMat(zed->retrieveImage(zed::SIDE::LEFT));
-	rectangle(cv_img, Point(100-4, 240-4), Point(100+4, 240+4), Scalar(255, 0, 0), 1);
-	rectangle(cv_img, Point(500-4, 240-4), Point(500+4, 240+4), Scalar(255, 0, 0), 1);
-
-	frame.leftData = cv_img.data;//(uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
+	frame.leftData = (uint8_t *)(zed->retrieveImage(zed::SIDE::LEFT)).data;
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 	frame.depthData = 0;
 
