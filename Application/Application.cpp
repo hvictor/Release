@@ -202,7 +202,10 @@ void *frames_processor(void *)
 		}
 
 		players = detectPlayers(frame0_L);
+		// Move away from here
+		OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
 
+		/*
 		// Compute CUDA Lucas-Kanade sparse Optical Flow
 		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
 
@@ -280,6 +283,7 @@ void *frames_processor(void *)
 
 			memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
 		}
+		*/
 
 		// Enqueue output frame data
 		array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
