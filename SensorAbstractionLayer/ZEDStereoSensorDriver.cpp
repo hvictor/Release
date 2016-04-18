@@ -118,15 +118,17 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		*/
 
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
+		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
+		int step = xyzMat.step;
 
-		float *xyz = (float *)zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
-		float x = xyz[640*(240) + 100 + 0];
-		float y = xyz[640*(240) + 100 + 1];
-		float z = xyz[640*(240) + 100 + 2];
+		float *xyz = (float *)xyzMat.data;//zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
+		float x = xyz[step*(240) + 100 + 0];
+		float y = xyz[step*(240) + 100 + 1];
+		float z = xyz[step*(240) + 100 + 2];
 		printf("X=%.2f, Y=%.2f Z=%.2f\n", x, y, z);
-		x = xyz[640*(240) + 500 + 0];
-		y = xyz[640*(240) + 500 + 1];
-		z = xyz[640*(240) + 500 + 2];
+		x = xyz[step*(240) + 500 + 0];
+		y = xyz[step*(240) + 500 + 1];
+		z = xyz[step*(240) + 500 + 2];
 		printf("X=%.2f, Y=%.2f Z=%.2f\n", x, y, z);
 		printf("======\n");
 
