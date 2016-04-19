@@ -109,6 +109,7 @@ TrajectoryRecognizer *trajectoryRecognizer_R;
 static SpinlockQueue inputFramesQueue;
 SpinlockQueue outputFramesQueue;
 SpinlockQueue *outputFramesQueueExternPtr;
+StereoSensorAbstractionLayer *stereoSALExternPtr;
 volatile bool systemReady = false;
 
 // Configuration
@@ -736,10 +737,12 @@ void run()
 	case StereoCameraDUO:
 		stereoSAL = new DUOStereoSensorDriver(configuration->getDUOStereoCameraHardwareParameters());
 		depthTech = Stereo;
+		stereoSALExternPtr = stereoSAL;
 		break;
 	case StereoCameraZED:
 		stereoSAL = new ZEDStereoSensorDriver();
 		depthTech = Stereo;
+		stereoSALExternPtr = stereoSAL;
 		break;
 	case IrCameraKinect:
 		irSAL = new KinectIRSensorDriver();

@@ -14,7 +14,7 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     ui->lcdGPUSegments->setSegmentStyle(QLCDNumber::Flat);
     ui->lcdGPUSegments->setStyleSheet("background-color: black; color: lightgreen;");
 
-    ui->mdiArea->setBackground(QImage("/home/sled/master/final/TrackerRT_UI/TrackerRT_UI/img.jpg"));
+    QObject::connect(ui->btnAcquireFrame, SIGNAL(clicked()), ui->monoDisplay, SLOT(render()));
 }
 
 UICalibrationDisplay::~UICalibrationDisplay()

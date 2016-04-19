@@ -17,7 +17,6 @@ public:
 
 private:
     Ui::UICalibrationDisplay *ui;
-    QPixmap pixmap;
 };
 
 #endif // UICALIBRATIONDISPLAY_H

@@ -40,8 +40,10 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    UIStereoDisplay stereoDisplay;
-    stereoDisplay.show();
+    MainWindow w;
+    w.show();
+    //UIStereoDisplay stereoDisplay;
+    //stereoDisplay.show();
 
     return app.exec();
 }
