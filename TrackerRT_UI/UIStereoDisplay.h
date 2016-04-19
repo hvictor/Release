@@ -15,7 +15,7 @@ class UIStereoDisplay : public QWidget
     Q_OBJECT
 
 public:
-    UIStereoDisplay();
+    UIStereoDisplay(QDialog *parent = 0);
     ~UIStereoDisplay();
 
 private:

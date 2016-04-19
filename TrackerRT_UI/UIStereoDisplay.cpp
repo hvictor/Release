@@ -7,7 +7,7 @@
 extern SpinlockQueue *outputFramesQueueExternPtr;
 FrameData **pRenderFrameData;
 
-UIStereoDisplay::UIStereoDisplay()
+UIStereoDisplay::UIStereoDisplay(QDialog *parent)
 {
     pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
 
