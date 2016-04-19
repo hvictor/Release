@@ -137,7 +137,7 @@ void GLWidget::makeObject()
         QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
 
         delete texture;
-        texture = new QOpenGLTexture(glImage);
+        texture = new QOpenGLTexture(glImage.mirrored());
 
 // ---------------------------------------------------
 //        texture->setData(glImage);
@@ -151,7 +151,7 @@ void GLWidget::makeObject()
     for (int j = 0; j < 1; ++j) {
         QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
 
-        texture = new QOpenGLTexture(glImage);
+        texture = new QOpenGLTexture(glImage.mirrored());
     }
 
 
