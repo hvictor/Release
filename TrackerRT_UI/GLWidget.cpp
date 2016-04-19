@@ -5,13 +5,7 @@
 #include <iostream>
 #define QT_NO_DEBUG_OUTPUT
 
-//
-// Direct Fetch RAW Stereo Data from the ZED Camera Sensor
-//
-extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL);
-extern StereoSensorAbstractionLayer *sSAL;
 extern FrameData **pRenderFrameData;
-
 extern SpinlockQueue *outputFramesQueueExternPtr;
 
 GLWidget::GLWidget(char side, QWidget *parent)

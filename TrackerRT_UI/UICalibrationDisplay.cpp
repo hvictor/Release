@@ -3,8 +3,7 @@
 
 UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::UICalibrationDisplay),
-    pixmap("img.jpg")
+    ui(new Ui::UICalibrationDisplay)
 {
     ui->setupUi(this);
 
