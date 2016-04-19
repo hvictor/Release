@@ -201,11 +201,11 @@ void *frames_processor(void *)
 			frame1_R = Mat(Size(width, height), CV_8UC4, frame_data[1]->right_data);
 		}
 
-		players = detectPlayers(frame0_L);
+		//players = detectPlayers(frame0_L);
 		// Move away from here
 		OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
 
-		/*
+
 		// Compute CUDA Lucas-Kanade sparse Optical Flow
 		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
 
@@ -283,7 +283,7 @@ void *frames_processor(void *)
 
 			memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
 		}
-		*/
+
 
 		// Enqueue output frame data
 		array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
@@ -558,10 +558,6 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
 			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
-
-			Mat cv_img(Size(frameSize.width, frameSize.width), CV_8UC4, frameData->left_data);
-			rectangle(cv_img, Point(100-8, 240-8), Point(100+8, 240+8), Scalar(255, 0, 0), 2);
-			rectangle(cv_img, Point(500-8, 240-8), Point(500+8, 240+8), Scalar(255, 0, 0), 2);
 
 
 			if (stereoFrame.depthData != 0) {
