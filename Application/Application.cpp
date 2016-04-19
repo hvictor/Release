@@ -202,9 +202,6 @@ void *frames_processor(void *)
 		}
 
 		//players = detectPlayers(frame0_L);
-		// Move away from here
-		OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
-
 
 		// Compute CUDA Lucas-Kanade sparse Optical Flow
 		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
@@ -262,18 +259,39 @@ void *frames_processor(void *)
 		}
 		// Using immuted original Frame Type
 		else {
-			printf("[Debug] Immuted output Frame Type\n");
-
+			/*
 			for (int j = 0; j < flowObjects.size(); j++) {
 				Point2f p(flowObjects[j].x, flowObjects[j].y);
 				rectangle(frame0_L, Point2f(p.x - 4, p.y - 4), Point2f(p.x + 4, p.y + 4), Scalar(0, 0, 255), 1);
 				line(frame0_L, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
 			}
+			*/
 
+			/*
 			for (int k = 0; k < t.size(); k++) {
 				FlowObject tmp = t[k]->relatedStates[t[k]->relatedStates.size()-1]->state;
 				circle(frame0_L, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
 				line(frame0_L, Point2f(tmp.x, tmp.y), Point2f(tmp.x-tmp.displacement_x*3, tmp.y-tmp.displacement_y*3), Scalar(0,255,0), 2);
+			}
+			*/
+
+			for (int j = 0; j < t.size(); j++) {
+				StateRelatedTable *table = t[j];
+
+				// Update trajectory tracker
+				trajectoryTracker->update(table);
+
+				for (int k = 0; k < table->relatedStates.size(); k++) {
+					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
+
+					if (k < table->relatedStates.size()-1) {
+						rectangle(frame0_L, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), OVERLAY_COLOR_RED, 1);
+					}
+					else {
+						OverlayRenderer::getInstance()->renderTracker(frame0_L, p, 12);
+						OverlayRenderer::getInstance()->renderTrackerState(frame0_L, table, p);
+					}
+				}
 			}
 
 			statefulObjectFilter->tick();
