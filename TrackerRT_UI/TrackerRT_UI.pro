@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     UIController.cpp \
     UIModel.cpp \
     UIStereoDisplay.cpp \
-    GLWidget.cpp
+    GLWidget.cpp \
+    UIMonoDisplay.cpp
 
 HEADERS  += mainwindow.h \
     circularindicator.h \
@@ -31,8 +32,11 @@ HEADERS  += mainwindow.h \
     UIController.h \
     UIModel.h \
     UIStereoDisplay.h \
-    GLWidget.h
+    GLWidget.h \
+    UIMonoDisplay.h
 
 FORMS    += mainwindow.ui \
     duoconfigwidget.ui \
     UICalibrationDisplay.ui \
+    UIStereoDisplay.ui \
+    UIMonoDisplay.ui

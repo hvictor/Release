@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>859</width>
-    <height>579</height>
+    <height>578</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,14 +26,14 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="btnAcquireFrame">
           <property name="text">
            <string>Acquire Frame</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="btnCalibrate">
           <property name="text">
            <string>Calibrate</string>
           </property>
@@ -129,23 +129,24 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QProgressBar" name="progressBar_2">
-          <property name="value">
-           <number>0</number>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>
     </widget>
    </item>
    <item row="0" column="0">
-    <widget class="QMdiArea" name="mdiArea"/>
+    <widget class="UIMonoDisplay" name="monoDisplay" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>UIMonoDisplay</class>
+   <extends>QWidget</extends>
+   <header location="global">UIMonoDisplay.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
