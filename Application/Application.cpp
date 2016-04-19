@@ -154,6 +154,7 @@ void *frames_processor(void *)
 
 		// Fetch new frame data from fast concurrent input queue
 		if (array_spinlock_queue_pull(&inputFramesQueue, (void **)&fd) < 0) {
+			usleep(10);
 			continue;
 		}
 
@@ -168,7 +169,6 @@ void *frames_processor(void *)
 		//
 		// Process frame pair
 		//
-		printf("Frames processor :: Processing...\n");
 
 		Mat frame0_L, frame0_R;
 		Mat frame1_L, frame1_R;

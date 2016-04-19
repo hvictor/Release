@@ -130,19 +130,19 @@ void OverlayRenderer::renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigur
 
 		int len = r.width/4;
 
-		line(frame, r.tl(), Point(r.tl().x, r.tl().y + len), OVERLAY_COLOR_GREEN, 1);
-		line(frame, r.tl(), Point(r.tl().x + len, r.tl().y), OVERLAY_COLOR_GREEN, 1);
+		line(frame, r.tl(), Point(r.tl().x, r.tl().y + len), OVERLAY_COLOR_GREEN, 2);
+		line(frame, r.tl(), Point(r.tl().x + len, r.tl().y), OVERLAY_COLOR_GREEN, 2);
 
-		line(frame, Point(r.tl().x + r.width - len, r.tl().y), Point(r.tl().x + r.width, r.tl().y), OVERLAY_COLOR_GREEN, 1);
-		line(frame, Point(r.tl().x + r.width, r.tl().y), Point(r.tl().x + r.width, r.tl().y + len), OVERLAY_COLOR_GREEN, 1);
+		line(frame, Point(r.tl().x + r.width - len, r.tl().y), Point(r.tl().x + r.width, r.tl().y), OVERLAY_COLOR_GREEN, 2);
+		line(frame, Point(r.tl().x + r.width, r.tl().y), Point(r.tl().x + r.width, r.tl().y + len), OVERLAY_COLOR_GREEN, 2);
 
-		line(frame, r.br(), Point(r.br().x, r.br().y - len), OVERLAY_COLOR_GREEN, 1);
-		line(frame, r.br(), Point(r.br().x - len, r.br().y), OVERLAY_COLOR_GREEN, 1);
+		line(frame, r.br(), Point(r.br().x, r.br().y - len), OVERLAY_COLOR_GREEN, 2);
+		line(frame, r.br(), Point(r.br().x - len, r.br().y), OVERLAY_COLOR_GREEN, 2);
 
 		line(frame, Point(r.tl().x + len, r.br().y), Point(r.tl().x, r.br().y), OVERLAY_COLOR_GREEN, 1);
 		line(frame, Point(r.tl().x, r.br().y), Point(r.tl().x, r.br().y - len), OVERLAY_COLOR_GREEN, 1);
 
-		putText(frame, buffer, Point(r.tl().x, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 0.5, OVERLAY_COLOR_GREEN, 1, CV_AA);
+		putText(frame, buffer, Point(r.tl().x, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN, 2, CV_AA);
 	}
 }
 
