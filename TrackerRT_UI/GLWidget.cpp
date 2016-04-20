@@ -51,9 +51,25 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+    QPoint dst = event->pos();
     rubberBand->hide();
     // determine selection, for example using QRect::intersects()
     // and QRect::contains().
+
+    int left = std::min(origin.x, dst.x);
+    int top = std::min(origin.y, dst.y);
+    int width = abs(origin.x - dst.x);
+    int height = abs(origin.y - dst.y);
+
+    QRect selectionArea(left, top, width, height);
+
+    QPalette palette;
+    palette.setBrush(QPalette::Foreground, QBrush(Qt::red));
+    palette.setBrush(QPalette::Base, QBrush(Qt::red));
+    QRubberBand *r = new QRubberBand(QRubberBand::Rectangle, this);
+    r->setPalette(palette);
+    r->setGeometry(selectionArea);
+    r->show();
 }
 
 QSize GLWidget::minimumSizeHint() const
