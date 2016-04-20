@@ -56,10 +56,10 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     // determine selection, for example using QRect::intersects()
     // and QRect::contains().
 
-    int left = std::min(origin.x, dst.x);
-    int top = std::min(origin.y, dst.y);
-    int width = abs(origin.x - dst.x);
-    int height = abs(origin.y - dst.y);
+    int left = std::min(origin.x(), dst.x());
+    int top = std::min(origin.y(), dst.y());
+    int width = abs(origin.x() - dst.x());
+    int height = abs(origin.y() - dst.y());
 
     QRect selectionArea(left, top, width, height);
 
