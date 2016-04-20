@@ -27,6 +27,27 @@ GLWidget::~GLWidget()
     doneCurrent();
 }
 
+void GLWidget::mousePressEvent(QMouseEvent *event)
+{
+    origin = event->pos();
+    if (!rubberBand)
+        rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+    rubberBand->setGeometry(QRect(origin, QSize()));
+    rubberBand->show();
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
+}
+
+void GLWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    rubberBand->hide();
+    // determine selection, for example using QRect::intersects()
+    // and QRect::contains().
+}
+
 QSize GLWidget::minimumSizeHint() const
 {
     return QSize(640, 480);

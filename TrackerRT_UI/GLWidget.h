@@ -4,6 +4,7 @@
 #include <QtOpenGL/QGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
+#include <QRubberBand>
 
 #include "../FastMemory/fast_mem_pool.h"
 #include "../SpinlockQueue/array_spinlock_queue.h"
@@ -32,6 +33,9 @@ protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;
     void resizeGL(int width, int height) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
     void makeObject();
@@ -46,6 +50,7 @@ private:
     QOpenGLTexture *texture;
     QOpenGLShaderProgram *program;
     QOpenGLBuffer vbo;
+    QRubberBand *rubberBand;
 };
 
 #endif
