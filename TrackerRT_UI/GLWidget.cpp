@@ -121,6 +121,8 @@ void GLWidget::makeObject()
 {
     if (u8data == 0) return;
 
+    printf("Rendering data...\n");
+
     //FrameData *frame_data;
     static const int coords[4][3] =
     {

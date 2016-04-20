@@ -14,7 +14,7 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     ui->lcdGPUSegments->setStyleSheet("background-color: black; color: lightgreen;");
 
     QObject::connect(ui->btnAcquireFrame, SIGNAL(clicked()), ui->widget, SLOT(fetch()));
-    ui->widget->init(false, true);
+    ui->widget->init(true, false);
 }
 
 UICalibrationDisplay::~UICalibrationDisplay()
