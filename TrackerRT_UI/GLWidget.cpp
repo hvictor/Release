@@ -16,6 +16,7 @@ GLWidget::GLWidget(char side, QWidget *parent)
 {
     setup = 0;
     u8data = 0;
+    rubberBand = 0;
 }
 
 GLWidget::~GLWidget()
