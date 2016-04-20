@@ -33,22 +33,31 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
 
 void UIStereoDisplay::init(bool stereo, bool autoFetch)
 {
+    printf("UIStereoDisplay :: init():\n");
     _stereo = stereo;
     _autoFetch = autoFetch;
 
+    printf("UIStereoDisplay :: stereo = %d, autoFetch=%d:\n", _stereo, _autoFetch);
+
+    printf("Adding widget to layout\n");
     mainLayout->addWidget(glWidget, 0, 0);
 
     if (_stereo) {
         mainLayout->addWidget(glWidgetR, 0, 1);
     }
 
+    printf("OK, setting layout\n");
+
     setLayout(mainLayout);
+
+    printf("OK, starting timer if auto fetch\n");
 
     if (_autoFetch) {
         QTimer *timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
         timer->start(1);
     }
+    printf("init ok\n");
 }
 
 void UIStereoDisplay::fetch()
