@@ -28,6 +28,7 @@ private:
     GLWidget *glWidgetR;
     bool _stereo;
     bool _autoFetch;
+    QGridLayout *mainLayout;
 
 private slots:
     void renderStereoRawData();

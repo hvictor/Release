@@ -17,7 +17,7 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
 {
     pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
 
-    QGridLayout *mainLayout = new QGridLayout;
+    mainLayout = new QGridLayout;
 
     QColor clearColor;
     clearColor.setHsv(((0 * 0) + 0) * 255
