@@ -36,9 +36,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         QPalette palette;
         palette.setBrush(QPalette::Foreground, QBrush(Qt::green));
         palette.setBrush(QPalette::Base, QBrush(Qt::yellow));
-
-        rubberBand->setPalette(palette);
         rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+        rubberBand->setPalette(palette);
     }
 
     rubberBand->setGeometry(QRect(origin, QSize()));
