@@ -45,6 +45,7 @@ private:
     int setup;
     const uchar *u8data;
 
+    QPoint origin;
     QColor clearColor;
     QPoint lastPos;
 
