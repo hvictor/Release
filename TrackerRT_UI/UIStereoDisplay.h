@@ -17,11 +17,17 @@ class UIStereoDisplay : public QWidget
 public:
     UIStereoDisplay(QDialog *parent = 0);
     ~UIStereoDisplay();
+    void init(bool stereo, bool autoFetch);
+
+public slots:
+    void fetch();
 
 private:
     Ui::UIStereoDisplay *ui;
     GLWidget *glWidget;
     GLWidget *glWidgetR;
+    bool _stereo;
+    bool _autoFetch;
 
 private slots:
     void renderStereoRawData();

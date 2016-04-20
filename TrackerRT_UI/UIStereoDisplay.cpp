@@ -4,10 +4,16 @@
 #include "../FastMemory/fast_mem_pool.h"
 #include "../SpinlockQueue/array_spinlock_queue.h"
 
+extern StereoSensorAbstractionLayer *stereoSALExternPtr;
 extern SpinlockQueue *outputFramesQueueExternPtr;
 FrameData **pRenderFrameData;
 
-UIStereoDisplay::UIStereoDisplay(QDialog *parent)
+// Direct Fetch RAW Stereo Data from the ZED Camera Sensor
+extern FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL);
+
+UIStereoDisplay::UIStereoDisplay(QDialog *parent):
+    _stereo(true),
+    _autoFetch(true)
 {
     pRenderFrameData = (FrameData **)malloc(sizeof(FrameData *));
 
@@ -20,18 +26,40 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent)
 
     glWidget = new GLWidget('L');
     //glWidget->setClearColor(clearColor);
-
     glWidgetR = new GLWidget('R');
 
+    setWindowTitle(tr("[STEREO]"));
+}
+
+void UIStereoDisplay::init(bool stereo, bool autoFetch)
+{
+    _stereo = stereo;
+    _autoFetch = autoFetch;
+
     mainLayout->addWidget(glWidget, 0, 0);
-    mainLayout->addWidget(glWidgetR, 0, 1);
+
+    if (_stereo) {
+        mainLayout->addWidget(glWidgetR, 0, 1);
+    }
+
     setLayout(mainLayout);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
-    timer->start(1);
+    if (_autoFetch) {
+        QTimer *timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
+        timer->start(1);
+    }
+}
 
-    setWindowTitle(tr("[STEREO]"));
+void UIStereoDisplay::fetch()
+{
+    FrameData frame_data = directFetchRawStereoData(stereoSALExternPtr);
+
+    glWidget->renderStereoRawData((const uchar *)(frame_data.left_data));
+
+    if (_stereo) {
+        glWidgetR->renderStereoRawData((const uchar *)(frame_data.right_data));
+    }
 }
 
 void UIStereoDisplay::renderStereoRawData()
@@ -41,7 +69,10 @@ void UIStereoDisplay::renderStereoRawData()
     }
 
     glWidget->renderStereoRawData((const uchar *)((*pRenderFrameData)->left_data));
-    glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->right_data));
+
+    if (_stereo) {
+        glWidgetR->renderStereoRawData((const uchar *)((*pRenderFrameData)->right_data));
+    }
 
     fast_mem_pool_release_memory(*pRenderFrameData);
 }
