@@ -20,13 +20,21 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
     mainLayout = new QGridLayout;
 
     QColor clearColor;
+    clearColor.setRed(0);
+    clearColor.setGreen(0);
+    clearColor.setBlue(0);
+    clearColor.setAlpha(255);
+    /*
     clearColor.setHsv(((0 * 0) + 0) * 255
                       / (0 * 0 - 1),
                       255, 63);
+    */
 
     glWidget = new GLWidget('L');
-    //glWidget->setClearColor(clearColor);
     glWidgetR = new GLWidget('R');
+
+    glWidget->setClearColor(clearColor);
+    glWidgetR->setClearColor(clearColor);
 
     setWindowTitle(tr("[STEREO]"));
 }
