@@ -95,6 +95,9 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
+    if (u8data == 0)
+        return;
+
     makeObject();
 
     glClearColor(clearColor.redF(), clearColor.greenF(), clearColor.blueF(), clearColor.alphaF());
@@ -120,8 +123,6 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::makeObject()
 {
     if (u8data == 0) return;
-
-    printf("Rendering data...\n");
 
     //FrameData *frame_data;
     static const int coords[4][3] =
