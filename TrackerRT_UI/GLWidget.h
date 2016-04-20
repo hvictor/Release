@@ -5,6 +5,7 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
 #include <QRubberBand>
+#include <QMouseEvent>
 
 #include "../FastMemory/fast_mem_pool.h"
 #include "../SpinlockQueue/array_spinlock_queue.h"
