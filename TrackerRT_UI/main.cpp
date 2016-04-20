@@ -15,12 +15,10 @@
 
 extern void run();
 extern volatile bool systemReady;
-StereoSensorAbstractionLayer *sSAL;
+extern StereoSensorAbstractionLayer *stereoSALExternPtr;
 
-//
 // Direct Init
-//
-//extern void directInit(StereoSensorAbstractionLayer **stereoSAL);
+extern void directInit(StereoSensorAbstractionLayer **stereoSAL);
 
 void *run_proc(void *args)
 {
@@ -33,18 +31,20 @@ pthread_t runHdl;
 
 int main(int argc, char *argv[])
 {
+    /*
     pthread_create(&runHdl, 0, run_proc, 0);
-    //directInit(&sSAL);
-
 
     while (!systemReady) {
         usleep(10);
     }
+    */
 
+    directInit(&stereoSALExternPtr);
     QApplication app(argc, argv);
 
     MainWindow w;
     w.show();
+
     //UIStereoDisplay stereoDisplay;
     //stereoDisplay.show();
 
