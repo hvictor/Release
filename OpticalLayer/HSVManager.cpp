@@ -32,7 +32,10 @@ HSVRange HSVManager::getHSVRange(const uint8_t *data, int image_width, int image
 	unsigned int Hmax = 0, Smax = 0, Vmax = 0;
 	HSVRange range;
 
-	Mat frame(Size(image_width, image_height), CV_8UC4, data);
+	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
+	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
+
+	Mat frame(Size(image_width, image_height), CV_8UC4, _data);
 	Mat roi = frame(Range(y, y + roi_height), Range(x, x + roi_width));
 
 	Mat hsv_roi;
@@ -121,7 +124,10 @@ Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 
 Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
 {
-	Mat frame(Size(image_width, image_height), CV_8UC4, data);
+	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
+	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
+
+	Mat frame(Size(image_width, image_height), CV_8UC4, _data);
 	Mat filtered(frame.size(), CV_8UC1);
 	Mat filtered_rgba(frame.size, CV_8UC4);
 
