@@ -26,7 +26,7 @@ HSVManager *HSVManager::getInstance()
 	return instance;
 }
 
-HSVRange HSVManager::getHSVRange(uint8_t *data, int image_width, int image_height, int x, int y, int roi_width, int roi_height)
+HSVRange HSVManager::getHSVRange(const uint8_t *data, int image_width, int image_height, int x, int y, int roi_width, int roi_height)
 {
 	unsigned int Hmin = 255, Smin = 255, Vmin = 255;
 	unsigned int Hmax = 0, Smax = 0, Vmax = 0;
@@ -119,7 +119,7 @@ Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 	return filtered_rgba;
 }
 
-Mat HSVManager::filterHSVRange(uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
+Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
 {
 	Mat frame(Size(image_width, image_height), CV_8UC4, data);
 	Mat filtered(frame.size(), CV_8UC1);
