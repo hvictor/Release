@@ -3,6 +3,7 @@
 #include <QOpenGLTexture>
 #include <QOpenGLPixelTransferOptions>
 #include <iostream>
+#include "../OpticalLayer/HSVManager.h"
 #define QT_NO_DEBUG_OUTPUT
 
 extern FrameData **pRenderFrameData;
@@ -61,6 +62,11 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     int width = abs(origin.x() - dst.x());
     int height = abs(origin.y() - dst.y());
 
+    HSVRange hsv_range = HSVManager::getInstance()->getHSVRange(u8data, 640, 480, left, top, width, height);
+    memcpy(u8data, HSVManager::getInstance()->filterHSVRange(u8data, 640, 648, hsv_range).data);
+
+    update();
+    /*
     QRect selectionArea(left, top, width, height);
 
     QPalette palette;
@@ -70,6 +76,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     r->setPalette(palette);
     r->setGeometry(selectionArea);
     r->show();
+    */
 }
 
 QSize GLWidget::minimumSizeHint() const
