@@ -114,7 +114,7 @@ HSVRange HSVManager::getHSVRange(Mat roi)
 Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 {
 	Mat filtered(frame.size(), CV_8UC1);
-	Mat filtered_rgba(frame.size, CV_8UC4);
+	Mat filtered_rgba(Size(frame.size().width, frame.size().height), CV_8UC4);
 
 	inRange(frame, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
@@ -128,8 +128,8 @@ Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_h
 	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
 
 	Mat frame(Size(image_width, image_height), CV_8UC4, _data);
-	Mat filtered(frame.size(), CV_8UC1);
-	Mat filtered_rgba(frame.size, CV_8UC4);
+	Mat filtered(Size(image_width, image_height), CV_8UC1);
+	Mat filtered_rgba(Size(image_width, image_height), CV_8UC4);
 
 	inRange(frame, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
