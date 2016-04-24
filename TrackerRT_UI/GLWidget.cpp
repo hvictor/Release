@@ -68,7 +68,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     printf("GLWidget :: mouseReleaseEvent :: Assigning data...\n");
 
 
-    uint8_t *thresh_data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 648, hsv_range).data;
+    uint8_t *thresh_data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 480, hsv_range).data;
 
 
     printf("GLWidget :: Updating\n");
