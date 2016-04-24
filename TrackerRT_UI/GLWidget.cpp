@@ -68,11 +68,10 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     this->u8data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 648, hsv_range).data;
 
-    printf("GLWidget :: mouseReleaseEvent :: Data assigned, updating\n");
+    printf("GLWidget :: mouseReleaseEvent :: Data assigned, NOT updating\n");
 
-    update();
+    //update();
 
-    usleep(1000000000);
     printf("GLWidget :: mouseReleaseEvent :: Updated\n");
     /*
     QRect selectionArea(left, top, width, height);
