@@ -72,6 +72,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     update();
 
+    usleep(1000000000);
     printf("GLWidget :: mouseReleaseEvent :: Updated\n");
     /*
     QRect selectionArea(left, top, width, height);
