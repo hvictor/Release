@@ -32,8 +32,12 @@ HSVRange HSVManager::getHSVRange(const uint8_t *data, int image_width, int image
 	unsigned int Hmax = 0, Smax = 0, Vmax = 0;
 	HSVRange range;
 
+	printf("getHSVRange :: copying data...\n");
+
 	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
 	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
+
+	printf("getHSVRange :: OK copying data\n");
 
 	Mat frame(Size(image_width, image_height), CV_8UC4, _data);
 	Mat roi = frame(Range(y, y + roi_height), Range(x, x + roi_width));
@@ -41,8 +45,12 @@ HSVRange HSVManager::getHSVRange(const uint8_t *data, int image_width, int image
 	Mat hsv_roi;
 	Mat roi_rgb;
 
+	printf("getHSVRange :: ROI formed\n");
+
 	cvtColor(roi, roi_rgb, CV_RGBA2RGB);
 	cvtColor(roi_rgb, hsv_roi, CV_RGB2HSV);
+
+	printf("getHSVRange :: ROI converted to HSV\n");
 
 	for (int i = 0; i < hsv_roi.rows; i++) {
 		for (int j = 0; j < hsv_roi.cols; j++) {
@@ -67,6 +75,8 @@ HSVRange HSVManager::getHSVRange(const uint8_t *data, int image_width, int image
 	range.Hmax = Hmax;
 	range.Smax = Smax;
 	range.Vmax = Vmax;
+
+	printf("getHSVRange :: returning range\n");
 
 	return range;
 }
@@ -124,15 +134,23 @@ Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 
 Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
 {
+	printf("filterHSVRange :: copying data\n");
+
 	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
 	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
+
+	printf("filterHSVRange :: data copied\n");
 
 	Mat frame(Size(image_width, image_height), CV_8UC4, _data);
 	Mat filtered(Size(image_width, image_height), CV_8UC1);
 	Mat filtered_rgba(Size(image_width, image_height), CV_8UC4);
 
+	printf("filterHSVRange :: thresholding...\n");
+
 	inRange(frame, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
+
+	printf("filterHSVRange :: returning\n");
 
 	return filtered_rgba;
 }
