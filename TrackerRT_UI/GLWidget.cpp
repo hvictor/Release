@@ -63,9 +63,16 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     int height = abs(origin.y() - dst.y());
 
     HSVRange hsv_range = HSVManager::getInstance()->getHSVRange((const uint8_t *)u8data, 640, 480, left, top, width, height);
-    u8data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 648, hsv_range).data;
+
+    printf("GLWidget :: mouseReleaseEvent :: Assigning data...\n");
+
+    this->u8data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 648, hsv_range).data;
+
+    printf("GLWidget :: mouseReleaseEvent :: Data assigned, updating\n");
 
     update();
+
+    printf("GLWidget :: mouseReleaseEvent :: Updated\n");
     /*
     QRect selectionArea(left, top, width, height);
 
