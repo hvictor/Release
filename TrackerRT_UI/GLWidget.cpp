@@ -52,6 +52,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+
     QPoint dst = event->pos();
     rubberBand->hide();
     // determine selection, for example using QRect::intersects()
@@ -62,6 +63,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     int width = abs(origin.x() - dst.x());
     int height = abs(origin.y() - dst.y());
 
+    /*
     HSVRange hsv_range = HSVManager::getInstance()->getHSVRange((const uint8_t *)u8data, 640, 480, left, top, width, height);
 
     printf("GLWidget :: mouseReleaseEvent :: Assigning data...\n");
@@ -70,10 +72,11 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     printf("GLWidget :: mouseReleaseEvent :: Data assigned, NOT updating\n");
 
-    //update();
+    update();
+    */
 
-    printf("GLWidget :: mouseReleaseEvent :: Updated\n");
     /*
+     *     printf("GLWidget :: mouseReleaseEvent :: Updated\n");
     QRect selectionArea(left, top, width, height);
 
     QPalette palette;
