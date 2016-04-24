@@ -150,7 +150,10 @@ Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_h
 	inRange(frame, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
 
-	printf("filterHSVRange :: returning\n");
+	printf("filterHSVRange :: returning and showing\n");
+	imshow("Porco", filtered_rgba);
+	waitKey(20000);
+	usleep(1000000);
 
 	return filtered_rgba;
 }
