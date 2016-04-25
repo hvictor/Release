@@ -44,7 +44,6 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         palette.setBrush(QPalette::Base, QBrush(Qt::yellow));
         rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
         rubberBand->setPalette(palette);
-        rubberBand->setStyle(Qt::DashLine);
     }
 
     rubberBand->setGeometry(QRect(origin, QSize()));
