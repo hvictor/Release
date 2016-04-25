@@ -32,7 +32,6 @@ public:
 
 signals:
     void clicked();
-    void clacked();
     void transmitTargetHSVRange(HSVRange targetHSVRange);
     void transmitFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
 
