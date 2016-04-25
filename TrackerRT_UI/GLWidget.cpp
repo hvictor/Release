@@ -97,7 +97,7 @@ QSize GLWidget::sizeHint() const
     return QSize(640, 480);
 }
 
-void GLWidget::renderStereoRawData(const uchar *u8data)
+void GLWidget::renderStereoRawData(uchar *u8data)
 {
     this->u8data = u8data;
     update();
