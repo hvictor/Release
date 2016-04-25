@@ -121,6 +121,7 @@ HSVRange HSVManager::getHSVRange(Mat roi)
 	return range;
 }
 
+/*
 Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 {
 	Mat filtered(frame.size(), CV_8UC1);
@@ -131,17 +132,18 @@ Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 
 	return filtered_rgba;
 }
+*/
 
-uint8_t *HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
+void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, const uint8_t **output_data)
 {
 	printf("filterHSVRange :: copying data\n");
 
-	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
-	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
+	//uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
+	//memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
 
 	printf("filterHSVRange :: data copied\n");
 
-	Mat frame_RGBA(Size(image_width, image_height), CV_8UC4, _data);
+	Mat frame_RGBA(Size(image_width, image_height), CV_8UC4, data);
 	Mat frame_RGB(Size(image_width, image_height), CV_8UC3);
 	Mat filtered(Size(image_width, image_height), CV_8UC1);
 	Mat filtered_rgba(Size(image_width, image_height), CV_8UC4);
@@ -156,13 +158,13 @@ uint8_t *HSVManager::filterHSVRange(const uint8_t *data, int image_width, int im
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
 
 	printf("filterHSVRange :: returning and showing\n");
-	imshow("PORCAZZO", filtered_rgba);
+	imshow("GESU", filtered_rgba);
 	waitKey(2000);
 
 	printf("Returning u8 data\n");
 
-	memcpy(_data, filtered_rgba.data, image_width * image_height * sizeof(uint8_t));
+	//memcpy(_data, filtered_rgba.data, image_width * image_height * sizeof(uint8_t));
 
-	return _data;
+	*output_data = (uint8_t *)filtered_rgba.data;
 }
 

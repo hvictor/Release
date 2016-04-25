@@ -68,10 +68,10 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     printf("Using range: %d %d %d - %d %d %d\n", hsv_range.Hmin, hsv_range.Smin, hsv_range.Vmin,
            hsv_range.Hmax, hsv_range.Smax, hsv_range.Vmax);
 
-    printf("FETCHING UDATA\n");
-    uint8_t *data_ptr = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 480, hsv_range);
+    printf("FETCHING CONST UDATA\n");
+    HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 480, hsv_range, &thresh_data);
     printf("COPYING UDATA\n");
-    memcpy((uint8_t *)(&(u8data[0])), data_ptr, 640 * 480 * sizeof(uint8_t));
+    this->u8data = thresh_data;
     printf("UDATA ASSIGNED\n");
 
     //update();

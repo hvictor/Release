@@ -44,6 +44,7 @@ private:
     int idx;
     int setup;
     const uchar *u8data;
+    const uint8_t *thresh_data;
 
     QPoint origin;
     QColor clearColor;
