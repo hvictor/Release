@@ -69,7 +69,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
            hsv_range.Hmax, hsv_range.Smax, hsv_range.Vmax);
     this->u8data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 480, hsv_range).data;
 
-    update();
+    //update();
 
     /*
      *     printf("GLWidget :: mouseReleaseEvent :: Updated\n");
