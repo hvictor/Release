@@ -15,7 +15,7 @@
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 QT_FORWARD_DECLARE_CLASS(QOpenGLTexture)
 
-class GLWidget : public QObject, public QGLWidget, protected QOpenGLFunctions
+class GLWidget : public QGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 
@@ -32,6 +32,7 @@ public:
 
 signals:
     void clicked();
+    void clacked();
     void transmitTargetHSVRange(HSVRange targetHSVRange);
     void transmitFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
 

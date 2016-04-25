@@ -87,9 +87,11 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     update();
 
     if (calib_tgt)
-        emit transmitTargetHSVRange(hsv_range);
+        emit clacked();
+        //emit transmitTargetHSVRange(hsv_range);
     else if (calib_field)
-        emit transmitFieldMarkersHSVRange(hsv_range);
+        emit clacked();
+        //emit transmitFieldMarkersHSVRange(hsv_range);
 
     calib_tgt = false;
     calib_field = false;
