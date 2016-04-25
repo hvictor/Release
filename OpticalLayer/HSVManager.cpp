@@ -132,7 +132,7 @@ Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 	return filtered_rgba;
 }
 
-Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
+uint8_t *HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
 {
 	printf("filterHSVRange :: copying data\n");
 
@@ -156,9 +156,10 @@ Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_h
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
 
 	printf("filterHSVRange :: returning and showing\n");
-	imshow("MAIALONE", filtered_rgba);
+	imshow("PORCAZZO", filtered_rgba);
 	waitKey(2000);
 
+	printf("Returning u8 data\n");
 
 	return filtered_rgba;
 }
