@@ -157,13 +157,9 @@ void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_
 	inRange(frame_HSV, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
 
-	printf("filterHSVRange :: returning and showing\n");
-	imshow("GESU", filtered_rgba);
-	waitKey(2000);
+	printf("filterHSVRange :: COPYING OUTPUT DATA\n");
 
-	printf("Returning u8 data\n");
-
-	memcpy(output_data, filtered_rgba.data, image_width * image_height * sizeof(uint8_t));
+	memcpy(output_data, filtered_rgba.data, image_width * image_height * 4 * sizeof(uint8_t));
 
 	free(_data);
 }
