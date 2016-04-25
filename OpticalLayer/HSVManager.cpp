@@ -156,9 +156,9 @@ Mat HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_h
 	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
 
 	printf("filterHSVRange :: returning and showing\n");
-	imshow("MAIALE", filtered);
-	waitKey(20000);
-	usleep(1000000);
+	imshow("MAIALONE", filtered_rgba);
+	waitKey(2000);
+
 
 	return filtered_rgba;
 }
