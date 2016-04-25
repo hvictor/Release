@@ -67,7 +67,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     printf("Using range: %d %d %d - %d %d %d\n", hsv_range.Hmin, hsv_range.Smin, hsv_range.Vmin,
            hsv_range.Hmax, hsv_range.Smax, hsv_range.Vmax);
-    this->data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 480, hsv_range).data;
+    this->u8data = HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 480, hsv_range).data;
 
     printf("GLWidget :: YEAH\n");
 
