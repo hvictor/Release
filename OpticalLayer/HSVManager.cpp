@@ -161,6 +161,8 @@ uint8_t *HSVManager::filterHSVRange(const uint8_t *data, int image_width, int im
 
 	printf("Returning u8 data\n");
 
-	return filtered_rgba;
+	memcpy(_data, filtered_rgba.data, image_width * image_height * sizeof(uint8_t));
+
+	return _data;
 }
 
