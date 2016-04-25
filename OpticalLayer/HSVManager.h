@@ -8,7 +8,6 @@
 #ifndef HSVMANAGER_H_
 #define HSVMANAGER_H_
 
-#include "../Configuration/Configuration.h"
 #include "../Common/opencv_headers.h"
 
 using namespace std;
