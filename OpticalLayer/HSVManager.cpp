@@ -134,7 +134,7 @@ Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
 }
 */
 
-void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, const uint8_t **output_data)
+void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data)
 {
 	printf("filterHSVRange :: copying data\n");
 
@@ -163,10 +163,8 @@ void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_
 
 	printf("Returning u8 data\n");
 
-	//memcpy(_data, filtered_rgba.data, image_width * image_height * sizeof(uint8_t));
+	memcpy(output_data, filtered_rgba.data, image_width * image_height * sizeof(uint8_t));
 
 	free(_data);
-
-	*output_data = (uint8_t *)filtered_rgba.data;
 }
 

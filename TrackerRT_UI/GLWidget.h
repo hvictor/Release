@@ -43,8 +43,7 @@ private:
     char _side;
     int idx;
     int setup;
-    const uchar *u8data;
-    const uint8_t *thresh_data;
+    uchar *u8data;
 
     QPoint origin;
     QColor clearColor;

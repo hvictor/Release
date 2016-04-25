@@ -68,9 +68,8 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
     printf("Using range: %d %d %d - %d %d %d\n", hsv_range.Hmin, hsv_range.Smin, hsv_range.Vmin,
            hsv_range.Hmax, hsv_range.Smax, hsv_range.Vmax);
 
-    HSVManager::getInstance()->filterHSVRange((const uint8_t *)u8data, 640, 480, hsv_range, &thresh_data);
-    this->u8data = thresh_data;
-    printf("UDATAAAAAAAAAAAAAAAAAAAAAA ASSIGNED\n");
+    HSVManager::getInstance()->filterHSVRange(u8data, 640, 480, hsv_range, u8data);
+    printf("UDATA!!! ASSIGNED\n");
 
     update();
 
@@ -192,7 +191,7 @@ void GLWidget::makeObject()
     };
 
     if (setup) {
-        QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage(const_cast<uchar *>(this->u8data), 640, 480, QImage::Format_RGBA8888);
 
         delete texture;
         texture = new QOpenGLTexture(glImage.mirrored());
@@ -207,7 +206,7 @@ void GLWidget::makeObject()
     if (!setup) { setup = 1; }
 
     for (int j = 0; j < 1; ++j) {
-        QImage glImage(this->u8data, 640, 480, QImage::Format_RGBA8888);
+        QImage glImage(const_cast<uchar *>(this->u8data), 640, 480, QImage::Format_RGBA8888);
 
         texture = new QOpenGLTexture(glImage.mirrored());
     }

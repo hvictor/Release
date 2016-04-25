@@ -27,7 +27,7 @@ public:
 	HSVRange getHSVRange(Mat roi);
 	HSVRange getHSVRange(const uint8_t *data, int image_width, int image_height, int x, int y, int roi_width, int roi_height);
 	//Mat filterHSVRange(Mat frame, HSVRange hsvRange);
-	void filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, const uint8_t **output_data);
+	void filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data);
 	static HSVManager *getInstance();
 private:
 	HSVManager();
