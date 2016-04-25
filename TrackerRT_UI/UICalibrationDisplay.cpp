@@ -21,7 +21,7 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     QObject::connect(ui->btnCalibField, SIGNAL(clicked()), ui->widget, SLOT(calibrateField()));
 
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitFieldMarkersHSVRange(HSVRange)), this, SLOT(receiveFieldMarkersHSVRange(HSVRange)));
-    QObject::connect(ui->widget->glWidget, SIGNAL(transmitTargetHSVRange(HSVRange)), this, SLOT(receiveTargetHSVRange(HSVRange));
+    QObject::connect(ui->widget->glWidget, SIGNAL(transmitTargetHSVRange(HSVRange)), this, SLOT(receiveTargetHSVRange(HSVRange)));
 }
 
 UICalibrationDisplay::~UICalibrationDisplay()
