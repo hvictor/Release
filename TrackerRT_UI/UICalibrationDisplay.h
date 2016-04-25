@@ -2,6 +2,7 @@
 #define UICALIBRATIONDISPLAY_H
 
 #include <QDialog>
+#include "../OpticalLayer/HSVManager.h"
 
 namespace Ui {
 class UICalibrationDisplay;
@@ -15,8 +16,14 @@ public:
     explicit UICalibrationDisplay(QWidget *parent = 0);
     ~UICalibrationDisplay();
 
+public slots:
+    void receiveTargetHSVRange(HSVRange targetHSVRange);
+    void receiveFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
+
 private:
     Ui::UICalibrationDisplay *ui;
+    HSVRange tgt_hsv_range;
+    HSVRange field_markers_hsv_range;
 };
 
 #endif // UICALIBRATIONDISPLAY_H

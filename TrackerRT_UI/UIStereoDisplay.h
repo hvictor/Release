@@ -18,14 +18,16 @@ public:
     UIStereoDisplay(QDialog *parent = 0);
     ~UIStereoDisplay();
     void init(bool stereo, bool autoFetch);
+    GLWidget *glWidget;
+    GLWidget *glWidgetR;
 
 public slots:
     void fetch();
+    void calibrateTarget();
+    void calibrateField();
 
 private:
     Ui::UIStereoDisplay *ui;
-    GLWidget *glWidget;
-    GLWidget *glWidgetR;
     bool _stereo;
     bool _autoFetch;
     QGridLayout *mainLayout;

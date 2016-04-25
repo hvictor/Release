@@ -26,9 +26,13 @@ public:
     QSize sizeHint() const Q_DECL_OVERRIDE;
     void renderStereoRawData(uchar *u8data);
     void setClearColor(const QColor &color);
+    void activateTargetCalibration();
+    void activateFieldCalibration();
 
 signals:
     void clicked();
+    void transmitTargetHSVRange(HSVRange targetHSVRange);
+    void transmitFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -53,6 +57,9 @@ private:
     QOpenGLShaderProgram *program;
     QOpenGLBuffer vbo;
     QRubberBand *rubberBand;
+
+    bool calib_tgt;
+    bool calib_field;
 };
 
 #endif

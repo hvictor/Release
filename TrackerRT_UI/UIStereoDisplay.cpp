@@ -68,6 +68,16 @@ void UIStereoDisplay::init(bool stereo, bool autoFetch)
     printf("init ok\n");
 }
 
+void UIStereoDisplay::calibrateTarget()
+{
+    glWidget->activateTargetCalibration();
+}
+
+void UIStereoDisplay::calibrateField()
+{
+    glWidget->activateFieldCalibration();
+}
+
 void UIStereoDisplay::fetch()
 {
     FrameData frame_data = directFetchRawStereoData(stereoSALExternPtr);

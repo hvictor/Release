@@ -16,6 +16,7 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <time.h>
 #include <string>
+#include "../OpticalLayer/HSVManager.h"
 
 using namespace std;
 using namespace cv;
@@ -119,6 +120,12 @@ typedef struct
 	double extremaNeighbourhoodSize;
 } InterpolationEngineParameters;
 
+typedef struct
+{
+	HSVRange targetHSVRange;
+	HSVRange fieldMarkersHSVRange;
+} CalibrationData;
+
 class Configuration {
 public:
 
@@ -131,6 +138,9 @@ public:
 	void setFrameInfo(FrameInfo frameInfo);
 	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
 
+
+	// Public properties
+	CalibrationData calibrationData;
 
 	// Get configuration components
 	FrameInfo getFrameInfo();

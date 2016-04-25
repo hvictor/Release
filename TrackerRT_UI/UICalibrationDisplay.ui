@@ -33,14 +33,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnCalibrate">
+         <widget class="QPushButton" name="btnCalibTgt">
           <property name="text">
            <string>Calibrate Target</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="btnCalibField">
           <property name="text">
            <string>Calibrate Field</string>
           </property>
