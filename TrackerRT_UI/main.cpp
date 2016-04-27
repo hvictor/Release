@@ -19,6 +19,13 @@ extern StereoSensorAbstractionLayer *stereoSALExternPtr;
 
 pthread_t runHdl;
 
+void *run_proc(void *args)
+{
+    run();
+
+    return NULL;
+}
+
 // Direct Init
 extern void directInit(StereoSensorAbstractionLayer **stereoSAL);
 
