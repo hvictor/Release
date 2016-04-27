@@ -54,19 +54,14 @@ void UIStereoDisplay::init(bool stereo, bool autoFetch)
         mainLayout->addWidget(glWidgetR, 0, 1);
     }
 
-    printf("OK, setting layout\n");
-
     setLayout(mainLayout);
 
-    printf("OK, starting timer if auto fetch\n");
-
     if (_autoFetch) {
-        printf("YES, starting timer\n");
+        printf("SterepDisplay :: outputFramesQueueExternPtr = %p\n", outputFramesQueueExternPtr);
         QTimer *timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
         timer->start(1);
     }
-    printf("init ok\n");
 }
 
 void UIStereoDisplay::calibrateTarget()
@@ -92,7 +87,9 @@ void UIStereoDisplay::fetch()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    printf("StereoDisplay :: Pulling from queue\n");
+    printf("StereoDisplay :: Pulling from STOCAZZO queue\n");
+
+    /*
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
     }
@@ -105,6 +102,7 @@ void UIStereoDisplay::renderStereoRawData()
     }
 
     fast_mem_pool_release_memory(*pRenderFrameData);
+    */
 }
 
 UIStereoDisplay::~UIStereoDisplay()

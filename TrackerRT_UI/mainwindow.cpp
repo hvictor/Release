@@ -122,6 +122,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->recordToBtn, SIGNAL(clicked(bool)), this, SLOT(chooseRecordDirectory()));
     QObject::connect(ui->startApplicationBtn, SIGNAL(clicked(bool)), this, SLOT(startApplication()));
+
+    stereoDisplay = new UIStereoDisplay();
 }
 
 MainWindow::~MainWindow()
@@ -179,7 +181,7 @@ void MainWindow::startApplication()
         usleep(10);
     }
 
-    UIStereoDisplay *stereoDisplay = new UIStereoDisplay();
-    stereoDisplay->init(false, false);
+    printf("Starting Application...\n");
+    stereoDisplay->init(false, true);
     stereoDisplay->show();
 }

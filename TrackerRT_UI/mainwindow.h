@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <UIModel.h>
+#include "UIStereoDisplay.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,7 @@ public:
 private:
     Ui::MainWindow *ui;
     UIModel *uiModel;
+    UIStereoDisplay *stereoDisplay;
 
 public slots:
     void cpuCoreChanged(int value);
