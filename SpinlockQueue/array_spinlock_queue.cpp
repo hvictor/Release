@@ -7,6 +7,7 @@
 #include <string.h>
 #include <errno.h>
 #include "array_spinlock_queue.h"
+#include "../Configuration/Configuration.h"
 
 void array_spinlock_queue_init(SpinlockQueue *q)
 {
