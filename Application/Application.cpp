@@ -314,6 +314,7 @@ void *frames_processor(void *)
 
 		// Enqueue output frame data
 		array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
+		printf("Streaming output...\n");
 
 		// Left-shift frame data in the local buffer, create space for new data
 		frame_data[0] = frame_data[1];

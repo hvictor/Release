@@ -181,7 +181,5 @@ void MainWindow::startApplication()
 
     UIStereoDisplay *stereoDisplay = new UIStereoDisplay();
     stereoDisplay->init(false, false);
-    printf("Showing...\n");
     stereoDisplay->show();
-    printf("Showing...OK\n");
 }
