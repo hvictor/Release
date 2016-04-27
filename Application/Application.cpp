@@ -209,10 +209,10 @@ void *frames_processor(void *)
 		}
 
 		//players = detectPlayers(frame0_L);
-		printf("HSV...\n");
-		frame0_L = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
-		frame1_L = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
-		printf("HSV performed\n");
+		//printf("HSV...\n");
+		//frame0_L = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
+		//frame1_L = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
+		//printf("HSV performed\n");
 
 		// Compute CUDA Lucas-Kanade sparse Optical Flow
 		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
@@ -315,8 +315,9 @@ void *frames_processor(void *)
 
 
 		// Enqueue output frame data
+		printf("Streaming to output queue...\n");
 		array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
-		printf("Streaming stocazzo...\n");
+		printf("Stream OK\n");
 
 		// Left-shift frame data in the local buffer, create space for new data
 		frame_data[0] = frame_data[1];
