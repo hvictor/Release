@@ -32,7 +32,7 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 
 		if (Configuration::getInstance()->getOperationalMode().inputDevice != MonoCameraVirtual) {
 			mem[i].right_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
-			printf("!!! NOT !!! Allocating Depth memory...\n");
+			printf("!!! NOT !!! Allocating Depth memory (%d of %d)...\n", i, frame_buffer_size);
 			//mem[i].depth_data = (uint8_t *)malloc(frame_width * frame_height * sizeof(uint8_t));
 			//printf("Depth memory allocated: %p\n", mem[i].depth_data);
 		}

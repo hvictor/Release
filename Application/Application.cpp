@@ -754,6 +754,7 @@ void run(bool init_camera)
 			stereoSAL = new ZEDStereoSensorDriver();
 		}
 		else {
+			printf("ZED Camera already initialized in calibration phase.\n");
 			stereoSAL = stereoSALExternPtr;
 		}
 		depthTech = Stereo;
