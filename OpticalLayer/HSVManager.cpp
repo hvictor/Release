@@ -132,7 +132,7 @@ Mat HSVManager::filterHSVRange_8UC1(Mat frame_RGBA, HSVRange hsvRange, int x, in
 	if (y + height >= frame_RGBA.size().height)
 		h = frame_RGBA.size().height - y;
 
-	Mat roi_RGBA = frame_RGBA(Range(y, y + h - 1), Range(x, x + w - 1));
+	Mat roi_RGBA = frame_RGBA(Range(y, y + h), Range(x, x + w));
 	Mat roi_RGB(Size(w, h), CV_8UC3);
 	Mat roi_HSV;
 	Mat filtered(Size(w, h), CV_8UC1);
@@ -156,7 +156,7 @@ Mat HSVManager::filterHSVRange_8UC4(Mat frame_RGBA, HSVRange hsvRange, int x, in
 	if (y + height >= frame_RGBA.size().height)
 		h = frame_RGBA.size().height - y;
 
-	Mat roi_RGBA = frame_RGBA(Range(y, y + h - 1), Range(x, x + w - 1));
+	Mat roi_RGBA = frame_RGBA(Range(y, y + h), Range(x, x + w));
 	Mat roi_RGB(Size(w, h), CV_8UC3);
 	Mat roi_HSV;
 	Mat filtered(Size(w, h), CV_8UC1);
