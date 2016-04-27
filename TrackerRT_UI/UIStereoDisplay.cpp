@@ -87,11 +87,11 @@ void UIStereoDisplay::fetch()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    /*
+    printf("StereoDisplay :: Pulling\n");
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
+        printf("StereoDisplay :: Pulling FAILED\n");
         return;
     }
-    printf("StereoDisplay :: Pulled\n");
 
     glWidget->renderStereoRawData((uchar *)((*pRenderFrameData)->left_data));
 
@@ -100,7 +100,6 @@ void UIStereoDisplay::renderStereoRawData()
     }
 
     fast_mem_pool_release_memory(*pRenderFrameData);
-    */
 }
 
 UIStereoDisplay::~UIStereoDisplay()
