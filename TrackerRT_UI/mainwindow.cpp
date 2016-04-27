@@ -179,7 +179,9 @@ void MainWindow::startApplication()
         usleep(10);
     }
 
-    UIStereoDisplay stereoDisplay;
-    stereoDisplay.init(false, false);
-    stereoDisplay.show();
+    UIStereoDisplay *stereoDisplay = new UIStereoDisplay();
+    stereoDisplay->init(false, false);
+    printf("Showing...\n");
+    stereoDisplay->show();
+    printf("Showing...OK\n");
 }
