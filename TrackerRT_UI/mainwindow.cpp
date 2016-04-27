@@ -14,7 +14,7 @@ extern volatile bool systemReady;
 
 void *run_proc(void *args)
 {
-    run(false);
+    run(true);
     return NULL;
 }
 
