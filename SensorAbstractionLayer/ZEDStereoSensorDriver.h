@@ -26,6 +26,7 @@ public:
 	virtual ~ZEDStereoSensorDriver();
 
 	bool openCamera();
+	bool isOpen();
 	bool closeCamera();
 	StereoFrame fetchStereoFrame();
 	ZEDCameraProperties *getZEDCameraProperties();

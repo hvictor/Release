@@ -559,7 +559,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 	if (config->getOperationalMode().inputDevice == StereoCameraDUO || config->getOperationalMode().inputDevice == StereoCameraZED) {
 
-		stereoSAL->openCamera();
+		if (!stereoSAL->isOpen()) {
+			stereoSAL->openCamera();
+		}
 
 		printf("Stereo Application :: Input Device: Stereo camera (ZED)\n");
 

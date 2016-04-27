@@ -34,11 +34,13 @@ public:
 	virtual ~StereoSensorAbstractionLayer();
 	virtual bool openCamera() = 0;
 	virtual bool closeCamera() = 0;
+	virtual bool isOpen() = 0;
 	virtual StereoFrame fetchStereoFrame() = 0;
 	StereoFrameSize getStereoFrameSize();
 
 protected:
 	StereoFrameSize frameSize;
+	bool camera_open;
 };
 
 #endif /* STEREOSENSORABSTRACTIONLAYER_H_ */
