@@ -214,7 +214,7 @@ void *frames_processor(void *)
 		Mat filtered0 = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
 		Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
 
-		//printf("Copying %d * %d * %d * sizeof(uint8_t) bytes from image of size: %d x %d\n", width, height, channels, filtered0.size().width, filtered0.size().height);
+		printf("Copying %d * %d * %d * sizeof(uint8_t) bytes from image of size: %d x %d\n", width, height, channels, filtered0.size().width, filtered0.size().height);
 
 		memcpy(frame_data[0]->left_data, filtered0.data, width * height * channels * sizeof(uint8_t));
 		memcpy(frame_data[1]->left_data, filtered1.data, width * height * channels * sizeof(uint8_t));
@@ -315,7 +315,8 @@ void *frames_processor(void *)
 			// Render human shape recognition trackers
 			OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
 
-			memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
+			printf("Enable me\n");
+			//memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
 		}
 
 
