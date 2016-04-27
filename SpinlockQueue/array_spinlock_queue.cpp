@@ -22,7 +22,9 @@ void array_spinlock_queue_init(SpinlockQueue *q)
 
 int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 {
+	printf("queue: waiting sem\n");
 	sem_wait(&q->full);
+	printf("queue: got sem\n");
 
 	pthread_spin_lock(&q->spin);
 	/*
