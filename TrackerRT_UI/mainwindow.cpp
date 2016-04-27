@@ -184,4 +184,6 @@ void MainWindow::startApplication()
     printf("Starting Application...\n");
     stereoDisplay->init(false, true);
     stereoDisplay->show();
+
+    pthread_join(runHdl, 0);
 }
