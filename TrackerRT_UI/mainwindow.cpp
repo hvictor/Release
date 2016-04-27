@@ -179,7 +179,7 @@ void MainWindow::startApplication()
         usleep(10);
     }
 
-    UIStereoDisplay stereoDisplay;
-    stereoDisplay.init(true, true);
-    stereoDisplay.show();
+    //UIStereoDisplay stereoDisplay;
+    //stereoDisplay.init(true, true);
+    //stereoDisplay.show();
 }
