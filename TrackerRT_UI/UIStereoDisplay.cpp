@@ -82,11 +82,7 @@ void UIStereoDisplay::fetch()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    printf("StereoDisplay :: outputFramesQueueExternPtr = %p\n", outputFramesQueueExternPtr);
-
-    /*
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
-        printf("StereoDisplay :: Pulling FAILED\n");
         return;
     }
 
@@ -97,7 +93,6 @@ void UIStereoDisplay::renderStereoRawData()
     }
 
     fast_mem_pool_release_memory(*pRenderFrameData);
-    */
 }
 
 UIStereoDisplay::~UIStereoDisplay()
