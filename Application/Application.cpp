@@ -317,9 +317,7 @@ void *frames_processor(void *)
 
 
 		// Enqueue output frame data
-		printf("Streaming to output queue...\n");
 		array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
-		printf("Stream OK\n");
 
 		// Left-shift frame data in the local buffer, create space for new data
 		frame_data[0] = frame_data[1];
@@ -776,8 +774,8 @@ void run()
 
 	// Wait for UI to complete calibration
 	while (!systemCalibrated) {
-		usleep(10000);
-		printf("Waiting for the system to be calibrated...\n");
+		usleep(100000);
+		printf("SYSTEM :: Waiting for calibration parameters.\n");
 	}
 
 	switch (depthTech)
