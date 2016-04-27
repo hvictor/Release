@@ -17,14 +17,12 @@ void array_spinlock_queue_init(SpinlockQueue *q)
 	pthread_spin_init(&q->spin, 0);
 
 	sem_init(&q->empty, 0, 0);
-	sem_init(&q->full, 0, 1);
+	sem_init(&q->full, 0, Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize);
 }
 
 int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 {
-	printf("queue: waiting sem\n");
 	sem_wait(&q->full);
-	printf("queue: got sem\n");
 
 	pthread_spin_lock(&q->spin);
 	/*

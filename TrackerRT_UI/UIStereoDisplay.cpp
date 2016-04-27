@@ -41,13 +41,9 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
 
 void UIStereoDisplay::init(bool stereo, bool autoFetch)
 {
-    printf("UIStereoDisplay :: init():\n");
     _stereo = stereo;
     _autoFetch = autoFetch;
 
-    printf("UIStereoDisplay :: stereo = %d, autoFetch=%d:\n", _stereo, _autoFetch);
-
-    printf("Adding widget to layout\n");
     mainLayout->addWidget(glWidget, 0, 0);
 
     if (_stereo) {
@@ -57,7 +53,6 @@ void UIStereoDisplay::init(bool stereo, bool autoFetch)
     setLayout(mainLayout);
 
     if (_autoFetch) {
-        printf("SterepDisplay :: outputFramesQueueExternPtr = %p\n", outputFramesQueueExternPtr);
         QTimer *timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
         timer->start(1);
@@ -87,7 +82,9 @@ void UIStereoDisplay::fetch()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    printf("StereoDisplay :: Pulling\n");
+    printf("StereoDisplay :: outputFramesQueueExternPtr = %p\n", outputFramesQueueExternPtr);
+
+    /*
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         printf("StereoDisplay :: Pulling FAILED\n");
         return;
@@ -100,6 +97,7 @@ void UIStereoDisplay::renderStereoRawData()
     }
 
     fast_mem_pool_release_memory(*pRenderFrameData);
+    */
 }
 
 UIStereoDisplay::~UIStereoDisplay()
