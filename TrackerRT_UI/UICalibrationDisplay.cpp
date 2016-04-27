@@ -34,6 +34,9 @@ void UICalibrationDisplay::receiveTargetHSVRange(HSVRange targetHSVRange)
     printf("UICalibrationDisplay :: TGT CALIBRATED\n");
 
     Configuration::getInstance()->calibrationData.targetHSVRange = targetHSVRange;
+
+    printf("Display :: Using filter: %d %d %d - %d %d %d\n", targetHSVRange.Hmin, targetHSVRange.Smin, targetHSVRange.Vmin,
+                    targetHSVRange.Hmax, targetHSVRange.Smax, targetHSVRange.Vmax);
 }
 
 void UICalibrationDisplay::receiveFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange)
