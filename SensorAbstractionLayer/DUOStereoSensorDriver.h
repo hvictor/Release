@@ -24,6 +24,7 @@ public:
 
 	bool openCamera();
 	bool closeCamera();
+	bool isOpen();
 	StereoFrame fetchStereoFrame();
 	DUOCameraProperties *getDUOCameraProperties();
 

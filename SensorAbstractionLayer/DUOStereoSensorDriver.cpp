@@ -23,13 +23,24 @@ DUOStereoSensorDriver::~DUOStereoSensorDriver() {
 	delete duoProperties;
 }
 
+bool DUOStereoSensorDriver::isOpen()
+{
+
+}
+
 // Open DUO camera sensor
 bool DUOStereoSensorDriver::openCamera()
 {
+	if (camera_open)
+		return true;
+
 	if(!OpenDUOCamera(frameSize.width, frameSize.height, 30))
 	{
+		camera_open = false;
 		return false;
 	}
+
+	camera_open = true;
 
 	// Set exposure and LED brightness
 	SetGain(duoProperties->gain);
