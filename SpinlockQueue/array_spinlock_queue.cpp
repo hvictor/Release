@@ -18,7 +18,7 @@ void array_spinlock_queue_init(SpinlockQueue *q)
 	pthread_spin_init(&q->spin, 0);
 
 	sem_init(&q->empty, 0, 0);
-	sem_init(&q->full, 0, Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize);
+	sem_init(&q->full, 0, 1);//Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize
 }
 
 int array_spinlock_queue_push(SpinlockQueue *q, void *data)
