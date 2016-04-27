@@ -768,6 +768,12 @@ void run()
 		systemReady = true;
 	}
 
+	if (Configuration::getInstance()->getOperationalMode().inputDevice == StereoCameraDUO || Configuration::getInstance()->getOperationalMode().inputDevice == StereoCameraZED) {
+		if (!stereoSAL->isOpen()) {
+			stereoSAL->openCamera();
+		}
+	}
+
 	// Wait for UI to complete calibration
 	while (!systemCalibrated) {
 		usleep(10000);
