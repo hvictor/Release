@@ -16,6 +16,8 @@ ZEDStereoSensorDriver::ZEDStereoSensorDriver()
 	computeDisparity = false;
 	frameCounter = 0;
 
+	camera_open = false;
+
 	zedProperties = new ZEDCameraProperties();
 	this->zed = new sl::zed::Camera(zed::VGA, 30);
 
@@ -61,6 +63,9 @@ ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
 // Open ZED camera sensor
 bool ZEDStereoSensorDriver::openCamera()
 {
+	if (camera_open)
+		return true;
+
 	if (zed->init(performanceMode, 0, true, false, false) != zed::SUCCESS) {
 		printf("ZED init error\n");
 		camera_open = false;
