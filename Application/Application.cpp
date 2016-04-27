@@ -214,6 +214,9 @@ void *frames_processor(void *)
 		Mat filtered0 = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
 		Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
 
+		imshow("A", filtered0);
+		waitKey(20);
+
 		printf("Copying %d * %d * %d * sizeof(uint8_t) bytes from image of size: %d x %d\n", width, height, channels, filtered0.size().width, filtered0.size().height);
 
 		memcpy(frame_data[0]->left_data, filtered0.data, width * height * channels * sizeof(uint8_t));
