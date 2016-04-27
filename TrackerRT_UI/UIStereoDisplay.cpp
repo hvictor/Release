@@ -61,6 +61,7 @@ void UIStereoDisplay::init(bool stereo, bool autoFetch)
     printf("OK, starting timer if auto fetch\n");
 
     if (_autoFetch) {
+        printf("YES, starting timer\n");
         QTimer *timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
         timer->start(1);
@@ -91,9 +92,11 @@ void UIStereoDisplay::fetch()
 
 void UIStereoDisplay::renderStereoRawData()
 {
+    printf("StereoDisplay :: Pulling from queue\n");
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
     }
+    printf("StereoDisplay :: Pulled\n");
 
     glWidget->renderStereoRawData((uchar *)((*pRenderFrameData)->left_data));
 
