@@ -180,6 +180,6 @@ void MainWindow::startApplication()
     }
 
     UIStereoDisplay stereoDisplay;
-    stereoDisplay.init(false, true);
+    stereoDisplay.init(false, false);
     stereoDisplay.show();
 }
