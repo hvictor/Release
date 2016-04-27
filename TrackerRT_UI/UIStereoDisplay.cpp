@@ -87,8 +87,6 @@ void UIStereoDisplay::fetch()
 
 void UIStereoDisplay::renderStereoRawData()
 {
-    printf("StereoDisplay :: Pulling from STOCAZZO queue\n");
-
     /*
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
