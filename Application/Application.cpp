@@ -216,6 +216,8 @@ void *frames_processor(void *)
 
 		printf("Copying %d * %d * %d * sizeof(uint8_t) bytes from image of size: %d x %d\n", width, height, channels, filtered0.size().width, filtered0.size().height);
 
+		imshow("CV HSV", filtered0); waitKey(1);
+
 		memcpy(frame_data[0]->left_data, filtered0.data, width * height * channels * sizeof(uint8_t));
 		memcpy(frame_data[1]->left_data, filtered1.data, width * height * channels * sizeof(uint8_t));
 
