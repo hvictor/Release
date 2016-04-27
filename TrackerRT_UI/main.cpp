@@ -12,22 +12,26 @@
 #include "../SpinlockQueue/array_spinlock_queue.h"
 #include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
 
+extern void run();
+extern volatile bool systemReady;
+volatile bool systemCalibrated;
 extern StereoSensorAbstractionLayer *stereoSALExternPtr;
+
+pthread_t runHdl;
 
 // Direct Init
 extern void directInit(StereoSensorAbstractionLayer **stereoSAL);
 
 int main(int argc, char *argv[])
 {
-    /*
+    systemCalibrated = false;
+
     pthread_create(&runHdl, 0, run_proc, 0);
 
     while (!systemReady) {
         usleep(10);
     }
-    */
 
-    directInit(&stereoSALExternPtr);
     QApplication app(argc, argv);
 
     MainWindow w;

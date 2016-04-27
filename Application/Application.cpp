@@ -60,6 +60,8 @@ using namespace std;
 using namespace cv;
 using namespace cv::gpu;
 
+extern volatile bool systemCalibrated;
+
 // DUO Frame dimensions
 #define WIDTH	320
 #define HEIGHT	240
@@ -606,10 +608,6 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			// Enqueue stereo pair data in processing / output queue
 			array_spinlock_queue_push(queue, (void *)frameData);
 
-			if (!systemReady) {
-				systemReady = true;
-			}
-
 			//nanotimer_rt_stop(&t);
 			//rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
 			usleep(10);
@@ -713,7 +711,7 @@ FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL)
 //
 // Application Entry Point
 //
-void run(bool init_camera)
+void run()
 {
 	systemReady = false;
 
@@ -755,13 +753,7 @@ void run(bool init_camera)
 		stereoSALExternPtr = stereoSAL;
 		break;
 	case StereoCameraZED:
-		if (init_camera) {
-			stereoSAL = new ZEDStereoSensorDriver();
-		}
-		else {
-			printf("ZED Camera already initialized in calibration phase.\n");
-			stereoSAL = stereoSALExternPtr;
-		}
+		stereoSAL = new ZEDStereoSensorDriver();
 		depthTech = Stereo;
 		stereoSALExternPtr = stereoSAL;
 		break;
@@ -769,6 +761,17 @@ void run(bool init_camera)
 		irSAL = new KinectIRSensorDriver();
 		depthTech = IR;
 		break;
+	}
+
+	// Signal that the system hardware is ready
+	if (!systemReady) {
+		systemReady = true;
+	}
+
+	// Wait for UI to complete calibration
+	while (!systemCalibrated) {
+		usleep(10000);
+		printf("Waiting for the system to be calibrated...\n");
 	}
 
 	switch (depthTech)

@@ -9,16 +9,7 @@
 #include "UIStereoDisplay.h"
 #include "UICalibrationDisplay.h"
 
-extern void run(bool init_camera);
-extern volatile bool systemReady;
-
-void *run_proc(void *args)
-{
-    run(true);
-    return NULL;
-}
-
-pthread_t runHdl;
+extern volatile bool systemCalibrated;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -175,15 +166,7 @@ void MainWindow::chooseRecordDirectory()
 
 void MainWindow::startApplication()
 {
-    pthread_create(&runHdl, 0, run_proc, 0);
-
-    while (!systemReady) {
-        usleep(10);
-    }
-
-    printf("Starting Application...\n");
+    systemCalibrated = true;
     stereoDisplay->init(false, true);
     stereoDisplay->show();
-
-    pthread_join(runHdl, 0);
 }
