@@ -5,11 +5,20 @@
 #include <QFileDialog>
 #include <QTreeView>
 #include <QDebug>
+#include <pthread.h>
+#include "UIStereoDisplay.h"
 #include "UICalibrationDisplay.h"
 
-extern int _argc;
-extern char *_argv[];
-extern void run();
+extern void run(bool init_camera);
+extern volatile bool systemReady;
+
+void *run_proc(void *args)
+{
+    run(false);
+    return NULL;
+}
+
+pthread_t runHdl;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -164,6 +173,12 @@ void MainWindow::chooseRecordDirectory()
 
 void MainWindow::startApplication()
 {
-    //uiModel->apply();
-    //run(_argc, _argv);
+    pthread_create(&runHdl, 0, run_proc, 0);
+
+    while (!systemReady) {
+        usleep(10);
+    }
+
+    UIStereoDisplay stereoDisplay;
+    stereoDisplay.show();
 }

@@ -121,18 +121,56 @@ HSVRange HSVManager::getHSVRange(Mat roi)
 	return range;
 }
 
-/*
-Mat HSVManager::filterHSVRange(Mat frame, HSVRange hsvRange)
+Mat HSVManager::filterHSVRange_8UC1(Mat frame_RGBA, HSVRange hsvRange, int x, int y, int width, int height)
 {
-	Mat filtered(frame.size(), CV_8UC1);
-	Mat filtered_rgba(Size(frame.size().width, frame.size().height), CV_8UC4);
+	int w = width;
+	int h = height;
 
-	inRange(frame, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
-	cvtColor(filtered, filtered_rgba, CV_GRAY2RGBA);
+	if (x + width >= frame_RGBA.size().width)
+		w = frame_RGBA.size().width - x;
 
-	return filtered_rgba;
+	if (y + height >= frame_RGBA.size().height)
+		h = frame_RGBA.size().height - y;
+
+	Mat roi_RGBA = frame_RGBA(Range(y, y + h - 1), Range(x, x + w - 1));
+	Mat roi_RGB(Size(w, h), CV_8UC3);
+	Mat roi_HSV;
+	Mat filtered(Size(w, h), CV_8UC1);
+
+	cvtColor(roi_RGBA, roi_RGB, CV_RGBA2RGB);
+	cvtColor(roi_RGB, roi_HSV, CV_RGB2HSV);
+
+	inRange(roi_HSV, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
+
+	return filtered;
 }
-*/
+
+Mat HSVManager::filterHSVRange_8UC4(Mat frame_RGBA, HSVRange hsvRange, int x, int y, int width, int height)
+{
+	int w = width;
+	int h = height;
+
+	if (x + width >= frame_RGBA.size().width)
+		w = frame_RGBA.size().width - x;
+
+	if (y + height >= frame_RGBA.size().height)
+		h = frame_RGBA.size().height - y;
+
+	Mat roi_RGBA = frame_RGBA(Range(y, y + h - 1), Range(x, x + w - 1));
+	Mat roi_RGB(Size(w, h), CV_8UC3);
+	Mat roi_HSV;
+	Mat filtered(Size(w, h), CV_8UC1);
+	Mat filtered_RGBA(Size(w, h), CV_8UC4);
+
+	cvtColor(roi_RGBA, roi_RGB, CV_RGBA2RGB);
+	cvtColor(roi_RGB, roi_HSV, CV_RGB2HSV);
+
+	inRange(roi_HSV, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
+
+	cvtColor(filtered, filtered_RGBA, CV_GRAY2RGBA);
+
+	return filtered_RGBA;
+}
 
 void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data)
 {

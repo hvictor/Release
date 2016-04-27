@@ -31,10 +31,12 @@
 #include "../StereoVision/StereoVision.h"
 #include "../AugmentedReality/OverlayRenderer.h"
 #include "../StaticModel/TennisFieldStaticModel.h"
-#include "../OpticalLayer/pyrlk_optical_flow.h"
 
+#include "../OpticalLayer/pyrlk_optical_flow.h"
 #include "../OpticalLayer/FlowProcessor.h"
 #include "../OpticalLayer/StatefulObjectFilter.h"
+#include "../OpticalLayer/HSVManager.h"
+
 #include "../Calibration/TennisFieldCalibrator.h"
 #include "../Calibration/IntersectionPointsDetector.h"
 #include "../Configuration/Configuration.h"
@@ -122,6 +124,9 @@ pthread_t frame_output_thread;
 // Trajectory Tracker
 TrajectoryTracker *trajectoryTracker;
 
+// HSV Manager
+HSVManager *hsvManager;
+
 void renderScene(void* userdata)
 {
     DrawData* data = static_cast<DrawData*>(userdata);
@@ -139,6 +144,7 @@ void *frames_processor(void *)
 	int bufp = 0;
 	FrameData *frame_data[2];
 	StatefulObjectFilter *statefulObjectFilter = new StatefulObjectFilter();
+	HSVRange hsvRangeTGT = Configuration::getInstance()->calibrationData.targetHSVRange;
 
 	if (configuration->getOperationalMode().processingMode == Record) {
 		printf("Stereo Application :: Frames Processor :: Leaving\n");
@@ -203,6 +209,7 @@ void *frames_processor(void *)
 		}
 
 		//players = detectPlayers(frame0_L);
+		frame0_L = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
 
 		// Compute CUDA Lucas-Kanade sparse Optical Flow
 		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
@@ -699,7 +706,7 @@ FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL)
 //
 // Application Entry Point
 //
-void run()
+void run(bool init_camera)
 {
 	systemReady = false;
 
@@ -709,6 +716,7 @@ void run()
 
 	// Instantiate objects
 	configuration = Configuration::getInstance();
+	hsvManager = HSVManager::getInstance();
 	trajectoryTracker = new TrajectoryTracker();
 
 	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
@@ -740,7 +748,12 @@ void run()
 		stereoSALExternPtr = stereoSAL;
 		break;
 	case StereoCameraZED:
-		stereoSAL = new ZEDStereoSensorDriver();
+		if (init_camera) {
+			stereoSAL = new ZEDStereoSensorDriver();
+		}
+		else {
+			stereoSAL = stereoSALExternPtr;
+		}
 		depthTech = Stereo;
 		stereoSALExternPtr = stereoSAL;
 		break;

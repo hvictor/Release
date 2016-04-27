@@ -12,22 +12,10 @@
 #include "../SpinlockQueue/array_spinlock_queue.h"
 #include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
 
-
-extern void run();
-extern volatile bool systemReady;
 extern StereoSensorAbstractionLayer *stereoSALExternPtr;
 
 // Direct Init
 extern void directInit(StereoSensorAbstractionLayer **stereoSAL);
-
-void *run_proc(void *args)
-{
-    run();
-    return NULL;
-}
-
-
-pthread_t runHdl;
 
 int main(int argc, char *argv[])
 {
