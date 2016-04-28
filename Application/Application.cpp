@@ -316,7 +316,7 @@ void *frames_processor(void *)
 			// Render human shape recognition trackers
 			OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
 
-			printf("Enable me\n");
+			// ENABLE ME
 			//memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
 		}
 
