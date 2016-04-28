@@ -213,8 +213,7 @@ void *frames_processor(void *)
 		//players = detectPlayers(frame0_L);
 		//Mat filtered0 = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
 		//Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
-		printf("Using filter: %d %d %d - %d %d %d\n", hsvRangeTGT.Hmin, hsvRangeTGT.Smin, hsvRangeTGT.Vmin,
-				hsvRangeTGT.Hmax, hsvRangeTGT.Smax, hsvRangeTGT.Vmax);
+
 		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
 		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
 
