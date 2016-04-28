@@ -215,7 +215,7 @@ void *frames_processor(void *)
 		//Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
 		printf("Using filter: %d %d %d - %d %d %d\n", hsvRangeTGT.Hmin, hsvRangeTGT.Smin, hsvRangeTGT.Vmin,
 				hsvRangeTGT.Hmax, hsvRangeTGT.Smax, hsvRangeTGT.Vmax);
-		hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
+		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
 		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
 
 		//memcpy(frame_data[0]->left_data, filtered0.data, width * height * channels * sizeof(uint8_t));
