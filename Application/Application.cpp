@@ -163,6 +163,10 @@ void *frames_processor(void *)
 	int channels = Configuration::getInstance()->getFrameInfo().channels;
 	bool force_rgb_output = (Configuration::getInstance()->getFrameInfo().outputType == ForcedRGB);
 
+	// U8 buffers
+	uint8_t *buf_8UC1_0 = (uint8_t *)malloc(width * height * sizeof(uint8_t));
+	//uint8_t *buf_8UC1_1 = (uint8_t *)malloc(width * height * sizeof(uint8_t));
+
 	while (1) {
 		FrameData *fd;
 
@@ -220,7 +224,7 @@ void *frames_processor(void *)
 		//Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
 
 		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
-		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
+		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
 
 		///////////////////////////////////////////////////////////////////////////////
 		//
@@ -333,11 +337,14 @@ void *frames_processor(void *)
 
 			statefulObjectFilter->tick();
 
+			pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
+			circle(frame0_L, Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row), 4, Scalar(0, 0, 255), 1);
+
 			// Render human shape recognition trackers
 			//OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
 
 			// ENABLE ME
-			//memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
+			memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
 		}
 
 
@@ -347,6 +354,9 @@ void *frames_processor(void *)
 		// Left-shift frame data in the local buffer, create space for new data
 		frame_data[0] = frame_data[1];
 	}
+
+	free(buf_8UC1_0);
+	//free(buf_8UC1_1);
 
 	return NULL;
 }
