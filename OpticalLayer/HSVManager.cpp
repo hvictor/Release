@@ -205,3 +205,24 @@ void HSVManager::filterHSVRange_out_8UC1(const uint8_t *data, int image_width, i
 
 	free(_data);
 }
+
+Mat HSVManager::filterHSVRange_out_Mat8UC1(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange)
+{
+	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
+	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
+
+	Mat frame_RGBA(Size(image_width, image_height), CV_8UC4, _data);
+	Mat frame_RGB(Size(image_width, image_height), CV_8UC3);
+	Mat filtered(Size(image_width, image_height), CV_8UC1);
+	Mat filtered_rgba(Size(image_width, image_height), CV_8UC4);
+	Mat frame_HSV;
+
+	cvtColor(frame_RGBA, frame_RGB, CV_RGBA2RGB);
+	cvtColor(frame_RGB, frame_HSV, CV_RGB2HSV);
+
+	inRange(frame_HSV, Scalar(hsvRange.Hmin, hsvRange.Smin, hsvRange.Vmin), Scalar(hsvRange.Hmax, hsvRange.Smax, hsvRange.Vmax), filtered);
+
+	free(_data);
+
+	return filtered;
+}

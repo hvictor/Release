@@ -12,8 +12,10 @@
 #include <math.h>
 #include <unistd.h>
 #include <stdint.h>
+#include "../Common/opencv_headers.h"
 
 using namespace std;
+using namespace cv;
 
 typedef struct
 {
@@ -27,6 +29,7 @@ public:
 	TargetPredator();
 	virtual ~TargetPredator();
 	pred_scan_t engage_8UC1(uint8_t *data, int width, int height);
+	pred_scan_t engage_Mat8UC1(Mat f_8UC1, int width, int height);
 };
 
 #endif /* TARGETPREDATOR_H_ */
