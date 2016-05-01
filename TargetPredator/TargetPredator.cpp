@@ -31,12 +31,12 @@ pred_scan_t TargetPredator::engage_8UC1(uint8_t *data, int width, int height)
 
 		bool scan = false;
 		int scan_len = 0;
-		int xl, xr;
+		int xl = 0, xr = 0;
 
 		uint8_t *offset_buf = data + (width * i) * sizeof(uint8_t);
 
 		for (int j = 0; j < width; j++) {
-			if (offset_buf[j] == 255) {
+			if (offset_buf[j] == 127) {
 				if (scan) {
 					scan_len++;
 				}
