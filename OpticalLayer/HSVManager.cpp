@@ -184,7 +184,7 @@ void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_
 	free(_data);
 }
 
-void filterHSVRange_out_8UC1(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data)
+void HSVManager::filterHSVRange_out_8UC1(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data)
 {
 	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
 	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
