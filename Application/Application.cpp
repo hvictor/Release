@@ -51,6 +51,8 @@
 
 #include "../TrajectoryTracking/TrajectoryTracker.h"
 
+#include "../TargetPredator/TargetPredator.h"
+
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -114,6 +116,7 @@ static SpinlockQueue inputFramesQueue;
 SpinlockQueue outputFramesQueue;
 SpinlockQueue *outputFramesQueueExternPtr;
 StereoSensorAbstractionLayer *stereoSALExternPtr;
+
 volatile bool systemReady = false;
 
 // Configuration
@@ -128,6 +131,8 @@ TrajectoryTracker *trajectoryTracker;
 
 // HSV Manager
 HSVManager *hsvManager;
+
+TargetPredator *tgtPredator;
 
 void renderScene(void* userdata)
 {
@@ -217,23 +222,36 @@ void *frames_processor(void *)
 		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
 		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
 
-		//memcpy(frame_data[0]->left_data, filtered0.data, width * height * channels * sizeof(uint8_t));
-		//memcpy(frame_data[1]->left_data, filtered1.data, width * height * channels * sizeof(uint8_t));
-
+		///////////////////////////////////////////////////////////////////////////////
+		//
 		// Compute CUDA Lucas-Kanade sparse Optical Flow
-		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
+		//
+		///////////////////////////////////////////////////////////////////////////////
 
-		for (int j = 0; j < flowObjects.size(); j++) {
-			StateRelatedTable *stateTable = statefulObjectFilter->updateFilterState(flowObjects[j]);
-		}
+//		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
+//
+//		for (int j = 0; j < flowObjects.size(); j++) {
+//			StateRelatedTable *stateTable = statefulObjectFilter->updateFilterState(flowObjects[j]);
+//		}
 
+		///////////////////////////////////////////////////////////////////////////////
+		//
 		// Compute mean motion centers (Disabled, possible correspondance precision loss)
+		//
+		///////////////////////////////////////////////////////////////////////////////
+
 		//statefulObjectFilter->computeMeanMotionCenters();
 
+		///////////////////////////////////////////////////////////////////////////////
+		//
+		// Get candidate tables
+		//
+		///////////////////////////////////////////////////////////////////////////////
 		vector<StateRelatedTable *> t = statefulObjectFilter->getTrajectoryCandidateTables();
 
 		// If forcing RGB output
 		if (force_rgb_output) {
+			/*
 			printf("[Debug] RGB Forced output Frame Type\n");
 			GpuMat d_frame(frame0_L);
 			GpuMat d_frame_BGR;
@@ -273,10 +291,12 @@ void *frames_processor(void *)
 			OverlayRenderer::getInstance()->renderHumanTrackers(h_frame_BGR, players);
 
 			memcpy(frame_data[0]->left_data, h_frame_BGR.data, width * height * 3 * sizeof(uint8_t));
+
+			*/
 		}
 		// Using immuted original Frame Type
 		else {
-			/*
+			/* UNUSED
 			for (int j = 0; j < flowObjects.size(); j++) {
 				Point2f p(flowObjects[j].x, flowObjects[j].y);
 				rectangle(frame0_L, Point2f(p.x - 4, p.y - 4), Point2f(p.x + 4, p.y + 4), Scalar(0, 0, 255), 1);
@@ -284,7 +304,7 @@ void *frames_processor(void *)
 			}
 			*/
 
-			/*
+			/* UNUSED
 			for (int k = 0; k < t.size(); k++) {
 				FlowObject tmp = t[k]->relatedStates[t[k]->relatedStates.size()-1]->state;
 				circle(frame0_L, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
@@ -314,7 +334,7 @@ void *frames_processor(void *)
 			statefulObjectFilter->tick();
 
 			// Render human shape recognition trackers
-			OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
+			//OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
 
 			// ENABLE ME
 			//memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
@@ -726,6 +746,7 @@ void run()
 	configuration = Configuration::getInstance();
 	hsvManager = HSVManager::getInstance();
 	trajectoryTracker = new TrajectoryTracker();
+	tgtPredator = new TargetPredator();
 
 	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
 	configuration->display();
