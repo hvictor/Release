@@ -20,7 +20,7 @@ TargetPredator::~TargetPredator() {
 pred_scan_t TargetPredator::engage_Mat8UC1(Mat f_8UC1, int width, int height)
 {
 	pred_scan_t engage_data;
-	int scan_xl, scan_xr;
+	int scan_xl = 0, scan_xr = 0;
 	int scan_len_max = 0;
 	int row_scan_max = 0;
 
@@ -36,7 +36,6 @@ pred_scan_t TargetPredator::engage_Mat8UC1(Mat f_8UC1, int width, int height)
 
 		for (int j = 0; j < width; j++) {
 			if (f_8UC1.at<uint8_t>(j, i) > 0) {
-				printf("MECOJONI (%d)\n", f_8UC1.at<uint8_t>(j, i));
 				if (scan) {
 					scan_len++;
 				}
@@ -49,14 +48,14 @@ pred_scan_t TargetPredator::engage_Mat8UC1(Mat f_8UC1, int width, int height)
 				if (scan) {
 					scan = false;
 					xr = j - 1;
-				}
-			}
 
-			if (scan_len > scan_len_max) {
-				scan_len_max = scan_len;
-				row_scan_max = i;
-				scan_xl = xl;
-				scan_xr = xr;
+					if (scan_len > scan_len_max) {
+						scan_len_max = scan_len;
+						row_scan_max = i;
+						scan_xl = xl;
+						scan_xr = xr;
+					}
+				}
 			}
 		}
 	}
