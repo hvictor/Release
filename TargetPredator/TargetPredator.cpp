@@ -61,5 +61,9 @@ pred_scan_t TargetPredator::engage_8UC1(uint8_t *data, int width, int height)
 		}
 	}
 
+	engage_data.row = row_scan_max;
+	engage_data.xl = scan_xl;
+	engage_data.xr = scan_xr;
+
 	return engage_data;
 }
