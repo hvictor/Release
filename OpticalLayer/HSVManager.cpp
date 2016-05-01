@@ -164,10 +164,10 @@ Mat HSVManager::filterHSVRange_8UC4(Mat frame_RGBA, HSVRange hsvRange, int x, in
 
 void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data)
 {
-	//uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
-	//memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
+	uint8_t *_data = (uint8_t *)malloc(image_width * image_height * 4 * sizeof(uint8_t));
+	memcpy(_data, data, image_width * image_height * 4 * sizeof(uint8_t));
 
-	Mat frame_RGBA(Size(image_width, image_height), CV_8UC4, data);//_data);
+	Mat frame_RGBA(Size(image_width, image_height), CV_8UC4, _data);
 	Mat frame_RGB(Size(image_width, image_height), CV_8UC3);
 	Mat filtered(Size(image_width, image_height), CV_8UC1);
 	Mat filtered_rgba(Size(image_width, image_height), CV_8UC4);
@@ -182,6 +182,6 @@ void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_
 	//memcpy(output_data, filtered_rgba.data, image_width * image_height * 4 * sizeof(uint8_t));
 	memcpy(output_data, filtered.data, image_width * image_height * sizeof(uint8_t));
 
-	//free(_data);
+	free(_data);
 }
 
