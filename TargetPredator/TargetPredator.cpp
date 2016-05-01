@@ -23,6 +23,10 @@ pred_scan_t TargetPredator::engage_8UC1(uint8_t *data, int width, int height)
 	int scan_len_max = 0;
 	int row_scan_max = 0;
 
+	engage_data.row = 0;
+	engage_data.xl = 0;
+	engage_data.xr = 0;
+
 	for (int i = 0; i < height; i++) {
 
 		bool scan = false;

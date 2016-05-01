@@ -224,6 +224,7 @@ void *frames_processor(void *)
 		//Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
 
 		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
+		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
 		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
 
 		///////////////////////////////////////////////////////////////////////////////
@@ -339,6 +340,7 @@ void *frames_processor(void *)
 
 			pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
 			circle(frame0_L, Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row), 4, Scalar(0, 0, 255), 1);
+			cout << "Predator: " << Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row) << endl;
 
 			// Render human shape recognition trackers
 			//OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);

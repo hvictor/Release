@@ -28,6 +28,7 @@ public:
 	Mat filterHSVRange_8UC1(Mat frame_RGBA, HSVRange hsvRange, int x, int y, int width, int height);
 	Mat filterHSVRange_8UC4(Mat frame_RGBA, HSVRange hsvRange, int x, int y, int width, int height);
 	void filterHSVRange(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data);
+	void filterHSVRange_out_8UC1(const uint8_t *data, int image_width, int image_height, HSVRange hsvRange, uint8_t *output_data);
 	static HSVManager *getInstance();
 private:
 	HSVManager();
