@@ -8,6 +8,13 @@
 #ifndef TARGETPREDATOR_H_
 #define TARGETPREDATOR_H_
 
+#include <stdlib.h>
+#include <math.h>
+#include <unistd.h>
+#include <stdint.h>
+
+using namespace std;
+
 typedef struct
 {
 	int row;
