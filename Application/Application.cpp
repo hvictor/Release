@@ -225,7 +225,7 @@ void *frames_processor(void *)
 		//Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
 
 		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
-		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
+		//hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
 		//hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
 		f_8UC1_0 = hsvManager->filterHSVRange_out_Mat8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT);
 
