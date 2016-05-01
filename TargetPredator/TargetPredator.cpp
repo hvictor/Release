@@ -89,7 +89,7 @@ pred_scan_t TargetPredator::engage_8UC1(uint8_t *data, int width, int height)
 
 		for (int j = 0; j < width; j++) {
 			if (offset_buf[j] > 0) {
-				printf("MECOJONI (%d)\n", offset_buf[j]);
+				printf("== buf == (%d)\n", offset_buf[j]);
 				if (scan) {
 					scan_len++;
 				}
