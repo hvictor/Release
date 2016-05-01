@@ -182,6 +182,6 @@ void HSVManager::filterHSVRange(const uint8_t *data, int image_width, int image_
 	//memcpy(output_data, filtered_rgba.data, image_width * image_height * 4 * sizeof(uint8_t));
 	memcpy(output_data, filtered.data, image_width * image_height * sizeof(uint8_t));
 
-	free(_data);
+	//free(_data);
 }
 
