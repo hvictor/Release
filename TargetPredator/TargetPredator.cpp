@@ -154,15 +154,15 @@ pred_scan_t TargetPredator::engage_8UC4(uint8_t *data, int width, int height)
 				if (scan) {
 					scan = false;
 					xr = j;
+
+					if (scan_len > scan_len_max) {
+						scan_len_max = scan_len;
+						row_scan_max = i;
+						scan_xl = xl;
+						scan_xr = xr;
+					}
 				}
 			}
-		}
-
-		if (scan_len > scan_len_max) {
-			scan_len_max = scan_len;
-			row_scan_max = i;
-			scan_xl = xl;
-			scan_xr = xr;
 		}
 	}
 
