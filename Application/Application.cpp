@@ -226,8 +226,14 @@ void *frames_processor(void *)
 
 		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
 		hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
-		hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
+		//hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
 		//f_8UC1_0 = hsvManager->filterHSVRange_out_Mat8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT);
+
+		pred_scan_t engage_data = tgtPredator->engage_8UC4(frame_data[1]->left_data, width, height);
+		//pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
+		//pred_scan_t engage_data = tgtPredator->engage_Mat8UC1(f_8UC1_0, width, height);
+		circle(frame0_L, Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row), 4, Scalar(0, 0, 255), 1);
+		cout << "PRED: " << Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row) << endl;
 
 		///////////////////////////////////////////////////////////////////////////////
 		//
@@ -339,11 +345,6 @@ void *frames_processor(void *)
 			}
 
 			statefulObjectFilter->tick();
-
-			pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
-			//pred_scan_t engage_data = tgtPredator->engage_Mat8UC1(f_8UC1_0, width, height);
-			circle(frame0_L, Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row), 4, Scalar(0, 0, 255), 1);
-			cout << "Predator: " << Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row) << endl;
 
 			// Render human shape recognition trackers
 			//OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
