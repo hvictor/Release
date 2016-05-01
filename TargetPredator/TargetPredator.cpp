@@ -6,6 +6,7 @@
  */
 
 #include "TargetPredator.h"
+#include <stdio.h>
 
 TargetPredator::TargetPredator() {
 	// TODO Auto-generated constructor stub
