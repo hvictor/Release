@@ -167,7 +167,7 @@ void OverlayRenderer::renderTargetTracker(Mat frame, Point center)
 		line(frame, Point(r.tl().x + len, r.br().y), Point(r.tl().x, r.br().y), OVERLAY_COLOR_BLUE_RGBA, 2);
 		line(frame, Point(r.tl().x, r.br().y), Point(r.tl().x, r.br().y - len), OVERLAY_COLOR_BLUE_RGBA, 2);
 
-		putText(frame, buffer, Point(r.tl().x, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
+		putText(frame, buffer, Point(r.tl().x - 60, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
 }
 
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)
