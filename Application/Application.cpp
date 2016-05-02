@@ -232,8 +232,9 @@ void *frames_processor(void *)
 		//pred_scan_t engage_data = tgtPredator->engage_8UC4(frame_data[1]->left_data, width, height);
 		pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
 		//pred_scan_t engage_data = tgtPredator->engage_Mat8UC1(f_8UC1_0, width, height);
-		circle(frame0_L, Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row), 8, Scalar(255, 0, 0, 0), 2);
-		cout << "[Predator] Engaged: " << Point(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row) << endl;
+		Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
+		OverlayRenderer::getInstance()->renderTargetTracker(frame0_L, targetPosition);
+
 
 		///////////////////////////////////////////////////////////////////////////////
 		//

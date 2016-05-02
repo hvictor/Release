@@ -31,6 +31,7 @@ public:
 	void renderTracker(Mat frame, Point p, int size);
 	void renderTrackerState(Mat frame, StateRelatedTable *table, Point p);
 	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);
+	void renderTargetTracker(Mat frame, Point center);
 	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);
 	void renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDescriptor *descriptor);
 
