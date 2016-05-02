@@ -151,23 +151,23 @@ void OverlayRenderer::renderTargetTracker(Mat frame, Point center)
 		char buffer[60];
 		strcpy(buffer, "TARGET");
 
-		Rect r(center.x-10, center.y-10, 20, 20);
+		Rect r(center.x-10, center.y-10, 30, 30);
 
 		int len = r.width/4;
 
-		line(frame, r.tl(), Point(r.tl().x, r.tl().y + len), OVERLAY_COLOR_RED, 1);
-		line(frame, r.tl(), Point(r.tl().x + len, r.tl().y), OVERLAY_COLOR_RED, 1);
+		line(frame, r.tl(), Point(r.tl().x, r.tl().y + len), OVERLAY_COLOR_BLUE_RGBA, 2);
+		line(frame, r.tl(), Point(r.tl().x + len, r.tl().y), OVERLAY_COLOR_BLUE_RGBA, 2);
 
-		line(frame, Point(r.tl().x + r.width - len, r.tl().y), Point(r.tl().x + r.width, r.tl().y), OVERLAY_COLOR_RED, 1);
-		line(frame, Point(r.tl().x + r.width, r.tl().y), Point(r.tl().x + r.width, r.tl().y + len), OVERLAY_COLOR_RED, 1);
+		line(frame, Point(r.tl().x + r.width - len, r.tl().y), Point(r.tl().x + r.width, r.tl().y), OVERLAY_COLOR_BLUE_RGBA, 2);
+		line(frame, Point(r.tl().x + r.width, r.tl().y), Point(r.tl().x + r.width, r.tl().y + len), OVERLAY_COLOR_BLUE_RGBA, 2);
 
-		line(frame, r.br(), Point(r.br().x, r.br().y - len), OVERLAY_COLOR_RED, 1);
-		line(frame, r.br(), Point(r.br().x - len, r.br().y), OVERLAY_COLOR_RED, 1);
+		line(frame, r.br(), Point(r.br().x, r.br().y - len), OVERLAY_COLOR_BLUE_RGBA, 2);
+		line(frame, r.br(), Point(r.br().x - len, r.br().y), OVERLAY_COLOR_BLUE_RGBA, 2);
 
-		line(frame, Point(r.tl().x + len, r.br().y), Point(r.tl().x, r.br().y), OVERLAY_COLOR_RED, 1);
-		line(frame, Point(r.tl().x, r.br().y), Point(r.tl().x, r.br().y - len), OVERLAY_COLOR_RED, 1);
+		line(frame, Point(r.tl().x + len, r.br().y), Point(r.tl().x, r.br().y), OVERLAY_COLOR_BLUE_RGBA, 2);
+		line(frame, Point(r.tl().x, r.br().y), Point(r.tl().x, r.br().y - len), OVERLAY_COLOR_BLUE_RGBA, 2);
 
-		putText(frame, buffer, Point(r.tl().x, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 0.6, OVERLAY_COLOR_RED, 1, CV_AA);
+		putText(frame, buffer, Point(r.tl().x, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
 }
 
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)
