@@ -200,13 +200,10 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 		double Vy = (y1 - y0);
 
 		for (int k = 0; k < interp; k++) {
-			int cx = (double)x0 + (double)((Vx * k) / interp);
-			int cy = (double)y0 + (double)((Vy * k) / interp);
-			rectangle(frame, Point(cx - 4, cy - 4), Point(cx + 4, cy + 4), color, 1);
+			double cx = (double)x0 + ((double)(Vx * k) / (double)interp);
+			double cy = (double)y0 + ((double)(Vy * k) / (double)interp);
+			rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
 		}
-
-		if (color[3] >= 30)
-			color[3] -= 30;
 
 		i++;
 	}
