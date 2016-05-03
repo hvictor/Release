@@ -178,7 +178,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 	Scalar color = OVERLAY_COLOR_BLUE_RGBA;
 
-	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); it += 2)
+	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); )
 	{
 		if (i >= 30)
 			break;
@@ -186,11 +186,20 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 		list<pred_state_t>::iterator jt = it + 1;
 		int interp = 4;
 
-		int Vx = (jt->x - it->x);
-		int Vy = (jt->y - it->y);
+		int x0 = it->x;
+		int y0 = it->y;
+
+		it++;
+
+		int x1 = it->x;
+		int y1 = it->y;
+
+		int Vx = (x1 - x0);
+		int Vy = (y1 - y0);
+
 		for (int k = 0; k <= 4; k++) {
-			int cx = it->x + (Vx * k) / interp;
-			int cy = it->y + (Vy * k) / interp;
+			int cx = x0 + (Vx * k) / interp;
+			int cy = y0 + (Vy * k) / interp;
 			rectangle(frame, Point(cx - 4, cy - 4), Point(cx + 4, cy + 4), color, 2);
 		}
 
