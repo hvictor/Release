@@ -174,12 +174,16 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 {
 	list<pred_state_t> *predator_state = tgtPredator->get_state();
 
+	int i = 0;
+
 	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); it++)
 	{
-		if (it - predator_state->begin() > 30)
+		if (i >= 30)
 			break;
 
 		rectangle(frame, Point(it->x - 8, it->y - 8), Point(it->x + 8, it->y + 8), OVERLAY_COLOR_BLUE_RGBA, 2);
+
+		i++;
 	}
 }
 
