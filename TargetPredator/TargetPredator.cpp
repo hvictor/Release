@@ -17,6 +17,21 @@ TargetPredator::~TargetPredator() {
 	// TODO Auto-generated destructor stub
 }
 
+list<pred_state_t> *TargetPredator::get_state()
+{
+	return &state;
+}
+
+void TargetPredator::update_state(int x, int y)
+{
+	pred_state_t tracker_state;
+
+	tracker_state.x = x;
+	tracker_state.y = y;
+
+	state.push_front(tracker_state);
+}
+
 pred_scan_t TargetPredator::engage_Mat8UC1(Mat f_8UC1, int width, int height)
 {
 	pred_scan_t engage_data;

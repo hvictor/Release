@@ -170,6 +170,19 @@ void OverlayRenderer::renderTargetTracker(Mat frame, Point center)
 		putText(frame, buffer, Point(r.tl().x - 30, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
 }
 
+void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator)
+{
+	list<pred_state_t> *predator_state = tgtPredator->get_state();
+
+	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); it++)
+	{
+		if (it - predator_state->begin() > 30)
+			break;
+
+		rectangle(frame, Point(it->x - 8, it->y - 8), Point(it->x + 8, it->y + 8), OVERLAY_COLOR_BLUE_RGBA, 2);
+	}
+}
+
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)
 {
 	Vec2f image_coords0 = netPoints.at<Vec2f>(0, 0);

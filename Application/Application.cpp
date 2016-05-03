@@ -232,9 +232,13 @@ void *frames_processor(void *)
 		//pred_scan_t engage_data = tgtPredator->engage_8UC4(frame_data[1]->left_data, width, height);
 		pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
 		//pred_scan_t engage_data = tgtPredator->engage_Mat8UC1(f_8UC1_0, width, height);
+
+		// Update Predator
+		tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
+
 		Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 		OverlayRenderer::getInstance()->renderTargetTracker(frame0_L, targetPosition);
-
+		OverlayRenderer::getInstance()->renderPredatorState(frame0_L, tgtPredator);
 
 		///////////////////////////////////////////////////////////////////////////////
 		//

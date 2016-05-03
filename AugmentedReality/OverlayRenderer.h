@@ -13,6 +13,7 @@
 #include "../OpticalLayer/TrajectoryRecognizer.h"
 #include "../OpticalLayer/StatefulObjectFilter.h"
 #include "../TrajectoryTracking/TrajectoryDescriptor.h"
+#include "../TargetPredator/TargetPredator.h"
 
 #define OVERLAY_COLOR_GREEN			Scalar(50, 205, 50)
 #define OVERLAY_COLOR_BLUE_RGBA		Scalar(255, 0, 0, 255)
@@ -33,6 +34,7 @@ public:
 	void renderTrackerState(Mat frame, StateRelatedTable *table, Point p);
 	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);
 	void renderTargetTracker(Mat frame, Point center);
+	void renderPredatorState(Mat frame, TargetPredator *tgtPredator);
 	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);
 	void renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDescriptor *descriptor);
 

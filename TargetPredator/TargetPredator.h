@@ -12,6 +12,8 @@
 #include <math.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <list>
+#include <algorithm>
 #include "../Common/opencv_headers.h"
 
 using namespace std;
@@ -24,6 +26,12 @@ typedef struct
 	int xr;
 } pred_scan_t;
 
+typedef struct
+{
+	int x;
+	int y;
+} pred_state_t;
+
 class TargetPredator {
 public:
 	TargetPredator();
@@ -31,6 +39,11 @@ public:
 	pred_scan_t engage_8UC1(uint8_t *data, int width, int height);
 	pred_scan_t engage_8UC4(uint8_t *data, int width, int height);
 	pred_scan_t engage_Mat8UC1(Mat f_8UC1, int width, int height);
+	void update_state(int x, int y);
+	list<pred_state_t> *get_state();
+
+private:
+	list<pred_state_t> state;
 };
 
 #endif /* TARGETPREDATOR_H_ */
