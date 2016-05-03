@@ -178,7 +178,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 	Scalar color = Scalar(255, 255, 0, 0);
 
-	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); it++)
+	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); )
 	{
 		if (i >= 30)
 			break;
@@ -189,6 +189,9 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 		int y0 = it->y;
 
 		it++;
+
+		if (it == predator_state->end())
+			break;
 
 		int x1 = it->x;
 		int y1 = it->y;
