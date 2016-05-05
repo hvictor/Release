@@ -129,6 +129,14 @@ void Configuration::writeConfigFile(string fileName)
 	// Interpolation Engine
 	fs << "InterpolationEngine_ExtremaNeighbourhoodSize" << interpolationEngineParameters.extremaNeighbourhoodSize;
 
+	// Calibration Data
+	fs << "CalibrationData_TGT_Hmin" << calibrationData.targetHSVRange.Hmin;
+	fs << "CalibrationData_TGT_Smin" << calibrationData.targetHSVRange.Smin;
+	fs << "CalibrationData_TGT_Vmin" << calibrationData.targetHSVRange.Vmin;
+	fs << "CalibrationData_TGT_Hmax" << calibrationData.targetHSVRange.Hmax;
+	fs << "CalibrationData_TGT_Smax" << calibrationData.targetHSVRange.Smax;
+	fs << "CalibrationData_TGT_Vmax" << calibrationData.targetHSVRange.Vmax;
+
 	string buf = fs.releaseAndGetString();
 
 	FILE *fp = fopen(fileName.c_str(), "w");
@@ -190,6 +198,14 @@ void Configuration::loadConfigFile(string fileName)
 
 	// Interpolation Engine
 	fs["InterpolationEngine_ExtremaNeighbourhoodSize"] >> interpolationEngineParameters.extremaNeighbourhoodSize;
+
+	// Calibration Data
+	fs["CalibrationData_TGT_Hmin"] >> calibrationData.targetHSVRange.Hmin;
+	fs["CalibrationData_TGT_Smin"] >> calibrationData.targetHSVRange.Smin;
+	fs["CalibrationData_TGT_Vmin"] >> calibrationData.targetHSVRange.Vmin;
+	fs["CalibrationData_TGT_Hmax"] >> calibrationData.targetHSVRange.Hmax;
+	fs["CalibrationData_TGT_Smax"] >> calibrationData.targetHSVRange.Smax;
+	fs["CalibrationData_TGT_Vmax"] >> calibrationData.targetHSVRange.Vmax;
 }
 
 void Configuration::display()

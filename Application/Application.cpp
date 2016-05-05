@@ -822,9 +822,12 @@ void run()
 
 	// Wait for UI to complete calibration
 	while (!systemCalibrated) {
-		usleep(100000);
-		printf("SYSTEM :: Waiting for calibration parameters.\n");
+		usleep(1000000);
+		printf("SYSTEM :: Waiting for calibration parameters...\n");
 	}
+
+	printf("SYSTEM :: (DISABLE ME) Writing config file.\n");
+	configuration->writeConfigFile("config_recording.xml");
 
 	switch (depthTech)
 	{
