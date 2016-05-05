@@ -208,8 +208,8 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 			double cx = (double)x0 + ((double)(Vx * k) / (double)interp);
 			double cy = (double)y0 + ((double)(Vy * k) / (double)interp);
 
-			if (impact_status)
-				rectangle(frame, Point2f(cx - 8.0, cy - 8.0), Point2f(cx + 8.0, cy + 8.0), OVERLAY_COLOR_BLUE_RGBA, 2);
+			if (impact_status && k == 0)
+				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), OVERLAY_COLOR_BLUE_RGBA, 2);
 			else
 				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
 		}
