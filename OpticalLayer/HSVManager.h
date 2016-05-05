@@ -15,8 +15,8 @@ using namespace cv;
 
 typedef struct
 {
-	unsigned int Hmin, Smin, Vmin;
-	unsigned int Hmax, Smax, Vmax;
+	int Hmin, Smin, Vmin;
+	int Hmax, Smax, Vmax;
 } HSVRange;
 
 class HSVManager {
