@@ -208,7 +208,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 			if (impact_status && k == 0) {
 				rectangle(frame, Point2f(x1 - 10.0, y1 - 10.0), Point2f(x1 + 10.0, y1 + 10.0), OVERLAY_COLOR_GREEN_RGBA, 2);
-				putText(frame, "[IMPACT]", Point(10, 20), FONT_HERSHEY_SIMPLEX, 0.8, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
+				putText(frame, "[IMPACT]", Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
 			}
 			else
 				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
