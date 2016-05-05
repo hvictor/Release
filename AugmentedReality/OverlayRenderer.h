@@ -30,6 +30,7 @@ public:
 	void renderGPUDeviceStatus(Mat& frame);
 	void renderModelInformation(Mat& frame, vector<Trajectory *> trajectories, char cameraFlag);
 	void renderArrow(Mat dst, Point S, Point P, Scalar predictionColor, double versorX, double versorY);
+	void renderArrow(Mat frame, Point p, Point q);
 	void renderTracker(Mat frame, Point p, int size);
 	void renderTrackerState(Mat frame, StateRelatedTable *table, Point p);
 	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);

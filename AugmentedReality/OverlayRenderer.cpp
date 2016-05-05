@@ -6,6 +6,7 @@
  */
 
 #include "OverlayRenderer.h"
+#include <math.h>
 
 OverlayRenderer *OverlayRenderer::getInstance()
 {
@@ -205,6 +206,8 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 			rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
 		}
 
+		renderArrow(frame, Point(x1, y1), Point(x1 + Vx, y1 + Vy));
+
 		i++;
 	}
 }
@@ -374,4 +377,23 @@ void OverlayRenderer::renderArrow(Mat dst, Point S, Point P, Scalar predictionCo
 	const Point* ppt[1] = { points[0] };
 	int npt[] = { 3 };
 	fillPoly(dst, ppt, npt, 1, predictionColor, 8);
+}
+
+void OverlayRenderer::renderArrow(Mat frame, Point p, Point q)
+{
+
+	Scalar yellow(255, 255, 0, 255);
+	double angle = atan2((double) p.y - q.y, (double) p.x - q.x);
+
+	line(frame, p, q, yellow, 2);
+
+	p.x = (int) (q.x + 9 * cos(angle + CV_PI / 4));
+	p.y = (int) (q.y + 9 * sin(angle + CV_PI / 4));
+
+	line(frame, p, q, yellow, 2);
+
+	p.x = (int) (q.x + 9 * cos(angle - CV_PI / 4));
+	p.y = (int) (q.y + 9 * sin(angle - CV_PI / 4));
+
+	line(frame, p, q, yellow, 2);
 }
