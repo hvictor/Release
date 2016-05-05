@@ -130,12 +130,12 @@ void Configuration::writeConfigFile(string fileName)
 	fs << "InterpolationEngine_ExtremaNeighbourhoodSize" << interpolationEngineParameters.extremaNeighbourhoodSize;
 
 	// Calibration Data
-	fs << "CalibrationData_TGT_Hmin" << calibrationData.targetHSVRange.Hmin;
-	fs << "CalibrationData_TGT_Smin" << calibrationData.targetHSVRange.Smin;
-	fs << "CalibrationData_TGT_Vmin" << calibrationData.targetHSVRange.Vmin;
-	fs << "CalibrationData_TGT_Hmax" << calibrationData.targetHSVRange.Hmax;
-	fs << "CalibrationData_TGT_Smax" << calibrationData.targetHSVRange.Smax;
-	fs << "CalibrationData_TGT_Vmax" << calibrationData.targetHSVRange.Vmax;
+	fs << "CalibrationData_TGT_Hmin" << (int)calibrationData.targetHSVRange.Hmin;
+	fs << "CalibrationData_TGT_Smin" << (int)calibrationData.targetHSVRange.Smin;
+	fs << "CalibrationData_TGT_Vmin" << (int)calibrationData.targetHSVRange.Vmin;
+	fs << "CalibrationData_TGT_Hmax" << (int)calibrationData.targetHSVRange.Hmax;
+	fs << "CalibrationData_TGT_Smax" << (int)calibrationData.targetHSVRange.Smax;
+	fs << "CalibrationData_TGT_Vmax" << (int)calibrationData.targetHSVRange.Vmax;
 
 	string buf = fs.releaseAndGetString();
 
@@ -200,12 +200,12 @@ void Configuration::loadConfigFile(string fileName)
 	fs["InterpolationEngine_ExtremaNeighbourhoodSize"] >> interpolationEngineParameters.extremaNeighbourhoodSize;
 
 	// Calibration Data
-	fs["CalibrationData_TGT_Hmin"] >> calibrationData.targetHSVRange.Hmin;
-	fs["CalibrationData_TGT_Smin"] >> calibrationData.targetHSVRange.Smin;
-	fs["CalibrationData_TGT_Vmin"] >> calibrationData.targetHSVRange.Vmin;
-	fs["CalibrationData_TGT_Hmax"] >> calibrationData.targetHSVRange.Hmax;
-	fs["CalibrationData_TGT_Smax"] >> calibrationData.targetHSVRange.Smax;
-	fs["CalibrationData_TGT_Vmax"] >> calibrationData.targetHSVRange.Vmax;
+	fs["CalibrationData_TGT_Hmin"] >> (int)calibrationData.targetHSVRange.Hmin;
+	fs["CalibrationData_TGT_Smin"] >> (int)calibrationData.targetHSVRange.Smin;
+	fs["CalibrationData_TGT_Vmin"] >> (int)calibrationData.targetHSVRange.Vmin;
+	fs["CalibrationData_TGT_Hmax"] >> (int)calibrationData.targetHSVRange.Hmax;
+	fs["CalibrationData_TGT_Smax"] >> (int)calibrationData.targetHSVRange.Smax;
+	fs["CalibrationData_TGT_Vmax"] >> (int)calibrationData.targetHSVRange.Vmax;
 }
 
 void Configuration::display()
