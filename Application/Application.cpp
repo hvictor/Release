@@ -825,10 +825,12 @@ void run()
 
 	printf("SYSTEM :: CALIB :: (ENABLE CALIBRATION PARAM CHECK!) Param RESET: Calibration required.");
 
+	/*
 	while (!systemCalibrated) {
 		usleep(1000000);
 		printf("SYSTEM :: Waiting for calibration parameters...\n");
 	}
+	*/
 
 
 	printf("SYSTEM :: (DISABLE ME) Writing config file.\n");
