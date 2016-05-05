@@ -7,6 +7,7 @@
 
 #include "TargetPredator.h"
 #include <stdio.h>
+#include <math.h>
 
 TargetPredator::TargetPredator() {
 	// TODO Auto-generated constructor stub
@@ -22,12 +23,49 @@ list<pred_state_t> *TargetPredator::get_state()
 	return &state;
 }
 
+bool TargetPredator::compute_impact_status(double old_velocityX, double old_velocityY, double velocityX, double velocityY)
+{
+
+	double inner_prod = old_velocityX * velocityX + old_velocityY * velocityY;
+	double norm_old = sqrt(old_velocityX * old_velocityX + old_velocityY * old_velocityY);
+	double norm = sqrt(velocityX * velocityX + velocityY * velocityY);
+
+	double cos_val = inner_prod / (norm * norm_old);
+	double angle = acos(cos_val) * 180.0 / M_PI;
+
+	if ((angle > 90.0 && velocityY < 0.0))// || ((old_velocityY * velocityY < 0.0) && velocityY < 0.0))
+		return true;
+
+	return false;
+}
+
 void TargetPredator::update_state(int x, int y)
 {
 	pred_state_t tracker_state;
+	list<pred_state_t>::iterator prev;
 
 	tracker_state.x = x;
 	tracker_state.y = y;
+
+	if (state.size() > 0) {
+		prev = state.begin();
+		tracker_state.Vx = x - prev->x;
+		tracker_state.Vy = y - prev->y;
+	}
+	else {
+		tracker_state.Vx = 0;
+		tracker_state.Vy = 0;
+	}
+
+	// Reset value
+	tracker_state.impact_status = false;
+
+	// Impact signaling
+	if (state.size() > 1) {
+		if (compute_impact_status((double)prev->Vx, (double)prev->Vy, (double)tracker_state.Vx, (double)tracker_state.Vy)) {
+			tracker_state.impact_status = true;
+		}
+	}
 
 	state.push_front(tracker_state);
 }

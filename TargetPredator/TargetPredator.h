@@ -30,6 +30,9 @@ typedef struct
 {
 	int x;
 	int y;
+	int Vx;
+	int Vy;
+	bool impact_status;
 } pred_state_t;
 
 class TargetPredator {
@@ -44,6 +47,7 @@ public:
 
 private:
 	list<pred_state_t> state;
+	bool compute_impact_status(double old_velocityX, double old_velocityY, double velocityX, double velocityY);
 };
 
 #endif /* TARGETPREDATOR_H_ */
