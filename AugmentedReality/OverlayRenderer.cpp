@@ -181,7 +181,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); )
 	{
-		if (i >= 20)
+		if (i >= 10)
 			break;
 
 		int interp = 4;
