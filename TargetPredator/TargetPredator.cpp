@@ -33,7 +33,7 @@ bool TargetPredator::compute_impact_status(double old_velocityX, double old_velo
 	double cos_val = inner_prod / (norm * norm_old);
 	double angle = acos(cos_val) * 180.0 / M_PI;
 
-	if ((angle > 90.0 && velocityY < 0.0))// || ((old_velocityY * velocityY < 0.0) && velocityY < 0.0))
+	if ((angle > 60.0 && velocityY < 0.0) || ((old_velocityY * velocityY < 0.0) && velocityY < 0.0))
 		return true;
 
 	return false;

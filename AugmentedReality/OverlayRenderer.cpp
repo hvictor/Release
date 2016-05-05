@@ -181,7 +181,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 	for (list<pred_state_t>::iterator it = predator_state->begin(); it != predator_state->end(); )
 	{
-		if (i >= 10)
+		if (i >= 20)
 			break;
 
 		int interp = 4;
@@ -209,7 +209,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 			double cy = (double)y0 + ((double)(Vy * k) / (double)interp);
 
 			if (impact_status)
-				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), OVERLAY_COLOR_BLUE_RGBA, 2);
+				rectangle(frame, Point2f(cx - 6.0, cy - 6.0), Point2f(cx + 6.0, cy + 6.0), OVERLAY_COLOR_BLUE_RGBA, 2);
 			else
 				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
 		}
