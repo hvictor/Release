@@ -186,8 +186,6 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 		int interp = 4;
 
-		double Vx = it->Vx;
-		double Vy = it->Vy;
 		int x0 = it->x;
 		int y0 = it->y;
 
@@ -201,15 +199,17 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 		int x1 = it->x;
 		int y1 = it->y;
 
-		//double Vx = (x1 - x0);
-		//double Vy = (y1 - y0);
+		double Vx = (x1 - x0);
+		double Vy = (y1 - y0);
 
 		for (int k = 0; k < interp; k++) {
 			double cx = (double)x0 + ((double)(Vx * k) / (double)interp);
 			double cy = (double)y0 + ((double)(Vy * k) / (double)interp);
 
-			if (impact_status && k == 0)
-				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), OVERLAY_COLOR_BLUE_RGBA, 2);
+			if (impact_status && k == 0) {
+				rectangle(frame, Point2f(cx - 10.0, cy - 10.0), Point2f(cx + 10.0, cy + 10.0), OVERLAY_COLOR_BLUE_RGBA, 2);
+				putText(frame, "[IMPACT]", Point(10, 20), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
+			}
 			else
 				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
 		}
