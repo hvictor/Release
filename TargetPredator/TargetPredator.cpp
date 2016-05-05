@@ -26,6 +26,12 @@ list<pred_state_t> *TargetPredator::get_state()
 bool TargetPredator::compute_impact_status(double old_velocityX, double old_velocityY, double velocityX, double velocityY)
 {
 
+	// Multiply by a factor of 100 to avoid numeric errors
+	old_velocityX *= 100.0;
+	old_velocityY *= 100.0;
+	velocityX *= 100.0;
+	velocityY *= 100.0;
+
 	double inner_prod = old_velocityX * velocityX + old_velocityY * velocityY;
 	double norm_old = sqrt(old_velocityX * old_velocityX + old_velocityY * old_velocityY);
 	double norm = sqrt(velocityX * velocityX + velocityY * velocityY);
