@@ -206,7 +206,12 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 			rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
 		}
 
-		renderArrow(frame, Point(x1, y1), Point(x1 + Vx, y1 + Vy));
+		if (i == 0) {
+			// The first list element is the latest: Predator performs list::push_front on new data.
+			// So, apart from movement trace rendering, the true velocity vector between the latest data and the immediately
+			// previous one is: [-Vx, -Vy]. The vector must be rendered starting from x0,y0, the tracking head.
+			renderArrow(frame, Point(x0, y0), Point(x0 - Vx, y0 - Vy));
+		}
 
 		i++;
 	}
