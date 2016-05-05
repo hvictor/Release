@@ -823,17 +823,17 @@ void run()
 	// Wait for UI to complete calibration
 	CalibrationData calibData = configuration->calibrationData;
 
-	if (calibData.targetHSVRange.Hmin == calibData.targetHSVRange.Smin == calibData.targetHSVRange.Vmin ==
-		calibData.targetHSVRange.Hmax == calibData.targetHSVRange.Smax == calibData.targetHSVRange.Vmax == 0)
-	{
+	//if (calibData.targetHSVRange.Hmin == calibData.targetHSVRange.Smin == calibData.targetHSVRange.Vmin ==
+	//	calibData.targetHSVRange.Hmax == calibData.targetHSVRange.Smax == calibData.targetHSVRange.Vmax == 0)
+	//{
 
-		printf("SYSTEM :: CALIB :: Param RESET: Calibration required.");
+	printf("SYSTEM :: CALIB :: Param RESET: Calibration required.");
 
-		while (!systemCalibrated) {
-			usleep(1000000);
-			printf("SYSTEM :: Waiting for calibration parameters...\n");
-		}
+	while (!systemCalibrated) {
+		usleep(1000000);
+		printf("SYSTEM :: Waiting for calibration parameters...\n");
 	}
+	//}
 
 	printf("SYSTEM :: (DISABLE ME) Writing config file.\n");
 	configuration->writeConfigFile("config_recording.xml");
