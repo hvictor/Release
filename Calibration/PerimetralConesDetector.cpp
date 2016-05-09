@@ -163,7 +163,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 			res.topRight = rs[i];
 			tr_set = true;
 		}
-		else if (rs[i].y < res.topRight) {
+		else if (rs[i].y < res.topRight.y) {
 			res.topRight = rs[i];
 			tr_index = i;
 		}
