@@ -29,7 +29,7 @@ PerimetralConesDetector::~PerimetralConesDetector()
 
 bool PerimetralConesDetector::valueInRange(int value, int min, int max)
 {
-    return (value >= min-10) && (value <= max+10);
+    return (value >= min-20) && (value <= max+20);
 }
 
 
@@ -59,7 +59,7 @@ Rect PerimetralConesDetector::merge_perimeters(vector<Rect> regions)
 }
 
 
-PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int width, int height)
+PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int width, int height, bool *status)
 {
 	PerimetralConeSet4 res;
 	vector<Rect> rs;
@@ -116,12 +116,13 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 		rectangle(frame_8UC4, rs[i], Scalar(255, 0, 0, 255), 2);
 	}
 
-	/*
-	res.topLeft 	= r[0];
-	res.bottomLeft	= r[1];
-	res.bottomRight = r[2];
-	res.topRight 	= r[3];
-	*/
+	if (rs.size() != 4) {
+		*status = false;
+		return res;
+	}
+
+	// Search top left
+	res.topLeft = rs[0];
 
 	return res;
 }
