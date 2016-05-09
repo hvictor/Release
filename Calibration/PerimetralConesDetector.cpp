@@ -178,12 +178,16 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	}
 
 	// The remaining one is Bottom Left
+	int bl_index = -1;
 	for (int i = 0; i < 4; i++) {
 		if (i == tl_index || i == br_index || i == tr_index)
 			continue;
 
 		res.bottomLeft = rs[i];
+		bl_index = i;
 	}
+
+	printf("TL = %d\nTR = %d\nBL = %d\nBR = %d", tl_index, tr_index, bl_index, br_index);
 
 	res.vertex_topLeft = res.topLeft.br();
 	res.vertex_topRight = Point(res.topRight.tl().x, res.topRight.br().y);
@@ -197,10 +201,11 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	rectangle(frame_8UC4, res.bottomLeft, Scalar(255, 255, 0, 255), 2);
 	rectangle(frame_8UC4, res.bottomRight, Scalar(255, 255, 0, 255), 2);
 
-	circle(frame_8UC4, res.vertex_topLeft, 8.0, Scalar(0, 255, 0, 255), 2);
-	circle(frame_8UC4, res.vertex_topRight, 8.0, Scalar(0, 255, 0, 255), 2);
-	circle(frame_8UC4, res.vertex_bottomLeft, 8.0, Scalar(0, 255, 0, 255), 2);
-	circle(frame_8UC4, res.vertex_bottomRight, 8.0, Scalar(0, 255, 0, 255), 2);
+
+	line(frame_8UC4, res.vertex_topLeft, res.vertex_topRight, Scalar(0, 255, 0, 255), 2);
+	line(frame_8UC4, res.vertex_topRight, res.vertex_bottomRight, Scalar(0, 255, 0, 255), 2);
+	line(frame_8UC4, res.vertex_bottomRight, res.vertex_bottomLeft, Scalar(0, 255, 0, 255), 2);
+	line(frame_8UC4, res.vertex_bottomLeft, res.vertex_topLeft, Scalar(0, 255, 0, 255), 2);
 
 	return res;
 }
