@@ -29,7 +29,7 @@ PerimetralConesDetector::~PerimetralConesDetector()
 
 bool PerimetralConesDetector::valueInRange(int value, int min, int max)
 {
-    return (value >= min-20) && (value <= max+20);
+    return (value >= min-30) && (value <= max+30);
 }
 
 
@@ -37,6 +37,7 @@ bool PerimetralConesDetector::perimeter_overlap(Rect A, Rect B)
 {
     bool xOverlap = valueInRange(A.tl().x, B.tl().x, B.br().x) || valueInRange(B.tl().x, A.tl().x, A.br().x);
     bool yOverlap = valueInRange(A.tl().y, B.tl().y, B.br().y) || valueInRange(B.tl().y, A.tl().y, A.br().y);
+    printf("OVERLAP\n");
 
     return xOverlap && yOverlap;
 }
@@ -55,7 +56,7 @@ Rect PerimetralConesDetector::merge_perimeters(vector<Rect> regions)
         if (regions[i].br().y > ymax) ymax = regions[i].br().y;
     }
 
-    return Rect(xmin, ymin, xmax-xmin, ymax-ymin);
+    return Rect(Point(xmin, ymin), Point(xmax, ymax));
 }
 
 
@@ -113,7 +114,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 
 	for (int i = 0; i < rs.size(); i++)
 	{
-		rectangle(frame_8UC4, rs[i], Scalar(255, 0, 0, 255), 2);
+		rectangle(frame_8UC4, rs[i], Scalar(255, 0, 0, 255), 1);
 	}
 
 	if (rs.size() != 4) {

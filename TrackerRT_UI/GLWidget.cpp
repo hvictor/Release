@@ -99,7 +99,6 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         //TennisFieldCalibrator *calibrator = new TennisFieldCalibrator();
 
-
         update();
     }
 
