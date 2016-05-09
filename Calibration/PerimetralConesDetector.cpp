@@ -32,7 +32,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	PerimetralConeSet4 res;
 	Rect r[4];
 	Mat frame_8UC4(Size(width, height), CV_8UC4, data);
-	Mat frame_8UC1(Size(width, height));
+	Mat frame_8UC1(Size(width, height), CV_8UC1);
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 
