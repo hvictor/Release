@@ -4,6 +4,7 @@
 #include <QOpenGLPixelTransferOptions>
 #include <iostream>
 #include "../OpticalLayer/HSVManager.h"
+#include "../Calibration/PerimetralConesDetector.h"
 #define QT_NO_DEBUG_OUTPUT
 
 extern FrameData **pRenderFrameData;
@@ -90,6 +91,11 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         emit transmitTargetHSVRange(hsv_range);
     else if (calib_field)
         emit transmitFieldMarkersHSVRange(hsv_range);
+
+    if (calib_field) {
+        PerimetralConeSet4 cones_set = PerimetralConesDetector::getInstance()->process_data_8UC4(u8data, width, height);
+        update();
+    }
 
     calib_tgt = false;
     calib_field = false;
