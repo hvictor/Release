@@ -32,10 +32,12 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	PerimetralConeSet4 res;
 	Rect r[4];
 	Mat frame_8UC4(Size(width, height), CV_8UC4, data);
+	Mat frame_8UC1(Size(width, height));
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 
-	findContours(frame_8UC4, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+	cvtColor(frame_8UC4, frame_8UC1, CV_RGBA2GRAY);
+	findContours(frame_8UC1, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 
 	vector<vector<Point>> contours_poly(contours.size());
 	vector<float>radius(contours.size());
