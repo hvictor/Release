@@ -84,32 +84,40 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 		//cout << "Cone: " << r << endl;
 	}
 
-	for (vector<Rect>::iterator it = rs.begin(); it != rs.end(); ) {
-		Rect i = *it;
-		vector<Rect> contacts;
+	while (true) {
+		bool merged_perim = false;
 
-		// Building contacting regions list
-		for (vector<Rect>::iterator jt = it+1; jt != rs.end(); ) {
-			Rect j = *jt;
+		for (vector<Rect>::iterator it = rs.begin(); it != rs.end(); ) {
+			Rect i = *it;
+			vector<Rect> contacts;
 
-			if (perimeter_overlap(i, j)) {
-				contacts.push_back(j);
-				jt = rs.erase(jt);
+			// Building contacting regions list
+			for (vector<Rect>::iterator jt = it+1; jt != rs.end(); ) {
+				Rect j = *jt;
+
+				if (perimeter_overlap(i, j)) {
+					contacts.push_back(j);
+					jt = rs.erase(jt);
+				}
+
+				if (jt != rs.end()) jt++;
 			}
 
-			if (jt != rs.end()) jt++;
+			// Merge region i with all contacting regions, and replace this new region in the original list
+			if (contacts.size() > 0) {
+				contacts.push_back(i);
+				Rect m = merge_perimeters(contacts);
+				// Here only m exists: memory of i and <contacts> has been freed
+				it = rs.erase(it);
+				rs.push_back(m);
+				merged_perim = true;
+			}
+
+			if (it != rs.end()) it++;
 		}
 
-		// Merge region i with all contacting regions, and replace this new region in the original list
-		if (contacts.size() > 0) {
-			contacts.push_back(i);
-			Rect m = merge_perimeters(contacts);
-			// Here only m exists: memory of i and <contacts> has been freed
-			it = rs.erase(it);
-			rs.push_back(m);
-		}
-
-		if (it != rs.end()) it++;
+		if (!merged_perim)
+			break;
 	}
 
 	for (int i = 0; i < rs.size(); i++)
@@ -122,8 +130,59 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 		return res;
 	}
 
-	// Search top left
+	int tl_index;
+	int br_index;
+	int tr_index;
+
+	// Search Top Left cone perimeter
 	res.topLeft = rs[0];
+	for (int i = 1; i < 4; i++) {
+		if (rs[i].tl().x < res.topLeft.x && rs[i].tl().y < res.topLeft.y) {
+			res.topLeft = rs[i];
+			tl_index = i;
+		}
+	}
+
+	// Search Bottom Right cone perimeter
+	res.bottomRight = rs[0];
+	for (int i = 1; i < 4; i++) {
+		if (rs[i].br().x > res.bottomRight.x && rs[i].br().y > res.bottomRight.y) {
+			res.bottomRight = rs[i];
+			br_index = i;
+		}
+	}
+
+	// Top Right is the remaining area with smaller y
+
+	bool tr_set = false;
+	for (int i = 0; i < 4; i++) {
+		if (i == tl_index || i == br_index)
+			continue;
+
+		if (!tr_set) {
+			res.topRight = res[i];
+			tr_set = true;
+		}
+		else if (rs[i].y < res.topRight) {
+			res.topRight = rs[i];
+			tr_index = i;
+		}
+	}
+
+	// The remaining one is Bottom Left
+	for (int i = 0; i < 4; i++) {
+		if (i == tl_index || i == br_index || i == tr_index)
+			continue;
+
+		res.bottomLeft = rs[i];
+	}
+
+	*status = true;
+
+	rectangle(frame_8UC4, res.topLeft, Scalar(255, 255, 0, 255), 1);
+	rectangle(frame_8UC4, res.topRight, Scalar(255, 255, 0, 255), 1);
+	rectangle(frame_8UC4, res.bottomLeft, Scalar(255, 255, 0, 255), 1);
+	rectangle(frame_8UC4, res.bottomRight, Scalar(255, 255, 0, 255), 1);
 
 	return res;
 }
