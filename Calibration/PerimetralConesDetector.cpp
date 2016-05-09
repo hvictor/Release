@@ -31,7 +31,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 {
 	PerimetralConeSet4 res;
 	Rect r[4];
-	Mat frame_8UC4(Size(width, height), CV_8UC1, data);
+	Mat frame_8UC4(Size(width, height), CV_8UC4, data);
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 
@@ -40,17 +40,20 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	vector<vector<Point>> contours_poly(contours.size());
 	vector<float>radius(contours.size());
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < contours.size(); i++)
 	{
 		approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
-		r[i] = boundingRect(Mat(contours_poly[i]));
-		rectangle(frame_8UC4, r[i], Scalar(255, 0, 0, 255), 2);
+		Rect r = boundingRect(Mat(contours_poly[i]));
+		rectangle(frame_8UC4, r, Scalar(255, 0, 0, 255), 2);
+		cout << "Cone: " << r << endl;
 	}
 
+	/*
 	res.topLeft 	= r[0];
 	res.bottomLeft	= r[1];
 	res.bottomRight = r[2];
 	res.topRight 	= r[3];
+	*/
 
 	return res;
 }
