@@ -154,7 +154,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 			res.bottomRight = rs[i];
 			br_set = true;
 		}
-		else if (rs[i].br().x > res.bottomRight.x && rs[i].br().y > res.bottomRight.y) {
+		else if (rs[i].br().x > res.bottomRight.br().x && rs[i].br().y > res.bottomRight.br().y) {
 			res.bottomRight = rs[i];
 			br_index = i;
 		}
@@ -171,7 +171,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 			res.topRight = rs[i];
 			tr_set = true;
 		}
-		else if (rs[i].y < res.topRight.y) {
+		else if (rs[i].tl().y < res.topRight.tl().y) {
 			res.topRight = rs[i];
 			tr_index = i;
 		}
@@ -187,7 +187,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 
 	res.vertex_topLeft = res.topLeft.br();
 	res.vertex_topRight = Point(res.topRight.tl().x, res.topRight.br().y);
-	res.vertex_bottomLeft = Point(res.bottomLeft.br().x, res.topRight.tl().y);
+	res.vertex_bottomLeft = Point(res.bottomLeft.br().x, res.bottomLeft.tl().y);
 	res.vertex_bottomRight = res.bottomRight.tl();
 
 	*status = true;
