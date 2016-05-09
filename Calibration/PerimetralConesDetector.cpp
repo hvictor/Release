@@ -144,9 +144,17 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	}
 
 	// Search Bottom Right cone perimeter
-	res.bottomRight = rs[0];
-	for (int i = 1; i < 4; i++) {
-		if (rs[i].br().x > res.bottomRight.x && rs[i].br().y > res.bottomRight.y) {
+	bool br_set = false;
+	for (int i = 0; i < 4; i++) {
+		if (i == tl_index) {
+			continue;
+		}
+
+		if (!br_set) {
+			res.bottomRight = rs[i];
+			br_set = true;
+		}
+		else if (rs[i].br().x > res.bottomRight.x && rs[i].br().y > res.bottomRight.y) {
 			res.bottomRight = rs[i];
 			br_index = i;
 		}
@@ -177,12 +185,22 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 		res.bottomLeft = rs[i];
 	}
 
+	res.vertex_topLeft = res.topLeft.br();
+	res.vertex_topRight = Point(res.topRight.tl().x, res.topRight.br().y);
+	res.vertex_bottomLeft = Point(res.bottomLeft.br().x, res.topRight.tl().y);
+	res.vertex_bottomRight = res.bottomRight.tl();
+
 	*status = true;
 
-	rectangle(frame_8UC4, res.topLeft, Scalar(255, 255, 0, 255), 1);
-	rectangle(frame_8UC4, res.topRight, Scalar(255, 255, 0, 255), 1);
-	rectangle(frame_8UC4, res.bottomLeft, Scalar(255, 255, 0, 255), 1);
-	rectangle(frame_8UC4, res.bottomRight, Scalar(255, 255, 0, 255), 1);
+	rectangle(frame_8UC4, res.topLeft, Scalar(255, 255, 0, 255), 2);
+	rectangle(frame_8UC4, res.topRight, Scalar(255, 255, 0, 255), 2);
+	rectangle(frame_8UC4, res.bottomLeft, Scalar(255, 255, 0, 255), 2);
+	rectangle(frame_8UC4, res.bottomRight, Scalar(255, 255, 0, 255), 2);
+
+	circle(frame_8UC4, res.vertex_topLeft, 8.0, Scalar(0, 255, 0, 255), 2);
+	circle(frame_8UC4, res.vertex_topRight, 8.0, Scalar(0, 255, 0, 255), 2);
+	circle(frame_8UC4, res.vertex_bottomLeft, 8.0, Scalar(0, 255, 0, 255), 2);
+	circle(frame_8UC4, res.vertex_bottomRight, 8.0, Scalar(0, 255, 0, 255), 2);
 
 	return res;
 }

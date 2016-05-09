@@ -17,6 +17,11 @@ typedef struct
 	Rect bottomLeft;
 	Rect bottomRight;
 	Rect topRight;
+
+	Point vertex_topLeft;
+	Point vertex_bottomLeft;
+	Point vertex_bottomRight;
+	Point vertex_topRight;
 } PerimetralConeSet4;
 
 class PerimetralConesDetector {
