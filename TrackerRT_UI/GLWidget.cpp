@@ -93,7 +93,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         emit transmitFieldMarkersHSVRange(hsv_range);
 
     if (calib_field) {
-        PerimetralConeSet4 cones_set = PerimetralConesDetector::getInstance()->process_data_8UC4(u8data, width, height);
+        PerimetralConeSet4 cones_set = PerimetralConesDetector::getInstance()->process_data_8UC4(u8data, 640, 480);
         update();
     }
 
