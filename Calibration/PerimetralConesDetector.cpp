@@ -230,23 +230,23 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	}
 
 	// Determine Bottom Left and Top Left
-	if (res[indexes_L[0]] < res[indexes_L[1]]) {
-		res.topLeft = res[indexes_L[0]];
-		res.bottomLeft = res[indexes_L[1]];
+	if (rs[indexes_L[0]] < rs[indexes_L[1]]) {
+		res.topLeft = rs[indexes_L[0]];
+		res.bottomLeft = rs[indexes_L[1]];
 	}
 	else {
-		res.topLeft = res[indexes_L[1]];
-		res.bottomLeft = res[indexes_L[0]];
+		res.topLeft = rs[indexes_L[1]];
+		res.bottomLeft = rs[indexes_L[0]];
 	}
 
 	// Determine Bottom Right and Top Right
-	if (res[indexes_R[0]] < res[indexes_R[1]]) {
-		res.topRight = res[indexes_R[0]];
-		res.bottomRight = res[indexes_R[1]];
+	if (rs[indexes_R[0]] < rs[indexes_R[1]]) {
+		res.topRight = rs[indexes_R[0]];
+		res.bottomRight = rs[indexes_R[1]];
 	}
 	else {
-		res.topRight = res[indexes_R[1]];
-		res.bottomRight = res[indexes_R[0]];
+		res.topRight = rs[indexes_R[1]];
+		res.bottomRight = rs[indexes_R[0]];
 	}
 
 	// Determine inner perimetral vertices
