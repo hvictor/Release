@@ -26,6 +26,11 @@ void TennisFieldCalibrator::renderCalibrationWindow(Mat calibrationFrame, double
 	putText(calibrationFrame, buffer, cvPoint(10,30), FONT_HERSHEY_SIMPLEX, 1.0, cvScalar(50, 205, 50), 1, CV_AA);
 }
 
+void TennisFieldCalibrator::setPerimetralCones(PerimetralConeSet4 cone_set)
+{
+	cones = cone_set;
+}
+
 void TennisFieldCalibrator::renderCalibrationWindow(Mat calibrationFrame, CalibrationWindow *calibrationWindow)
 {
 	char buffer[300];
@@ -136,6 +141,100 @@ Point TennisFieldCalibrator::findClosestPoint(vector<Point> pts, Point p)
 	return result;
 }
 
+TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vector<Point> intersPts)
+{
+	TennisFieldDelimiter *retval = new TennisFieldDelimiter();
+	Point2f bottomLeft, bottomRight;
+	Point2f topLeft, topRight;
+
+	double h = cones.vertex_bottomLeft.y - cones.vertex_topLeft.y;
+	double centerX = cones.vertex_topLeft.x + (cones.vertex_topRight.x - cones.vertex_topLeft.x)/2;
+
+	///
+	/// Top Left
+	///
+	// Define Calibration Window Quadrant
+	// Line between topLeft and bottomLeft
+	double m = (cones.vertex_topLeft.y - cones.vertex_bottomLeft.y) / (cones.vertex_topLeft.x - cones.vertex_bottomLeft.x);
+	double q = cones.vertex_topLeft.y - m * cones.vertex_topLeft.x;
+
+	// Find x for y = h/2
+	// y = mx + q ---> x = (y - q)/m
+	double y = cones.vertex_topLeft.y + h/2;
+	double x = (y - q)/m;
+	topLeft = cones.vertex_topLeft;
+	topRight = Point2f(centerX, topLeft.y);
+	bottomLeft = Point2f(x, y);
+	bottomRight = Point2f(centerX, y);
+
+	CalibrationWindow *w1 = new CalibrationWindow();
+
+	w1->topLeft = topLeft;
+	w1->topRight = topRight;
+	w1->bottomLeft = bottomLeft;
+	w1->bottomRight = bottomRight;
+
+	// Filter points with current sub-window
+	vector<Point> filtered = w1->filterPoints(intersPts);
+	retval->topLeft = findClosestPoint(filtered, cones.vertex_topLeft);
+
+	///
+	/// Bottom left
+	///
+	topLeft = bottomLeft;
+	bottomLeft = cones.vertex_bottomLeft;
+	topRight = topRight = Point2f(centerX, topLeft.y);
+	bottomRight = Point2f(centerX, bottomLeft.y);
+	w1->topLeft = topLeft;
+	w1->topRight = topRight;
+	w1->bottomLeft = bottomLeft;
+	w1->bottomRight = bottomRight;
+
+	// Filter points with current sub-window
+	filtered = w1->filterPoints(intersPts);
+	retval->bottomLeft = findClosestPoint(filtered, cones.vertex_bottomLeft);
+
+	//
+	// Bottom right
+	//
+	m = (cones.vertex_topRight.y - cones.vertex_bottomRight.y) / (cones.vertex_topRight.x - cones.vertex_bottomRight.x);
+	q = cones.vertex_topRight.y - m * cones.vertex_topRight.x;
+	y = cones.vertex_topRight.y + h/2;
+	x = (y - q)/m;
+	topLeft = topRight;
+	bottomLeft = bottomRight;
+	bottomRight = cones.vertex_bottomRight;
+	topRight = Point2f(x, y);
+	w1->topLeft = topLeft;
+	w1->topRight = topRight;
+	w1->bottomLeft = bottomLeft;
+	w1->bottomRight = bottomRight;
+
+	// Filter points with current sub-window
+	filtered = w1->filterPoints(intersPts);
+	retval->bottomRight = findClosestPoint(filtered, cones.vertex_bottomRight);
+
+	//
+	// Top right
+	//
+	bottomLeft = topLeft;
+	topLeft = Point2f(centerX, cones.vertex_topLeft.y);
+	bottomRight = topRight;
+	topRight = cones.vertex_topRight;
+	w1->topLeft = topLeft;
+	w1->topRight = topRight;
+	w1->bottomLeft = bottomLeft;
+	w1->bottomRight = bottomRight;
+
+	// Filter points with current sub-window
+	filtered = w1->filterPoints(intersPts);
+	retval->topRight = findClosestPoint(filtered, cones.vertex_topRight);
+
+	delete w1;
+
+	return retval;
+}
+
 TennisFieldDelimiter *TennisFieldCalibrator::computeTennisFieldDelimiter(Mat calibrationFrame, vector<Point> intersPts, CalibrationWindow *calibWnd)
 {
 	TennisFieldDelimiter *retval = new TennisFieldDelimiter();
@@ -233,6 +332,51 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeTennisFieldDelimiter(Mat cal
 	return retval;
 }
 
+TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int width, int height)
+{
+	Mat calibrationFrame(Size(width, height), CV_8UC4, u8data);
+	GpuMat d_calibrationFrame;
+
+	// If the calibration frame is not yet monochrome, convert it
+	if (calibrationFrame.channels() > 1) {
+		// Upload calibration frame data on GPU device's memory
+		printf("TennisFieldCalibrator :: calibrate(): converting RGB frame to grayscale...\n");
+		GpuMat d_calibrationFrameRGB(calibrationFrame);
+		gpu::cvtColor(d_calibrationFrameRGB, d_calibrationFrame, CV_RGB2GRAY);
+		printf("TennisFieldCalibrator :: calibrate(): conversion OK\n");
+	}
+	else {
+		d_calibrationFrame.upload(calibrationFrame);
+	}
+
+	// Detect lines
+	printf("TennisFieldCalibrator :: calibrate(): running CUDA segment detector...\n");
+	vector<Line> detectedLines = gpuLineDetector->detect(d_calibrationFrame);
+	printf("TennisFieldCalibrator :: calibrate(): detected %d segments\n", detectedLines.size());
+
+	// Process detected lines to obtain field lines
+	// Processing segments is only marginally required when Barrel / Cushion distortions
+	// prevent the line detector to detect straight continuous field lines, even after having detected
+	// edges with the CUDA Canny algorithm
+	// This processing does not perform a complex probabilistic analysis, simply check colinearity and
+	// endpoints distance in order to provide an indicator about  if some segments are observations of the same line
+	printf("TennisFieldCalibrator :: calibrate(): running coarse segment processor...\n");
+	vector<Line> fieldLines = detectedLines;// coarseSegmentProcessor->process(detectedLines);
+
+	// Get all intersection points
+	intersDetector = new IntersectionPointsDetector(calibrationWindow);
+	vector<Point> inters = intersDetector->computeIntersectionPoints(fieldLines);
+
+	// Find field delimiting points
+	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(calibrationFrame, inters);
+	for (int i = 0; i < inters.size(); i++) {
+		circle(calibrationFrame, inters[i], 6, Scalar(0, 255, 255));
+	}
+
+	delete intersDetector;
+	return tennisFieldDelimiter;
+}
+
 TennisFieldDelimiter *TennisFieldCalibrator::calibrate(Mat calibrationFrame)
 {
 	GpuMat d_calibrationFrame;
@@ -272,7 +416,6 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate(Mat calibrationFrame)
 	for (int i = 0; i < inters.size(); i++) {
 		circle(calibrationFrame, inters[i], 6, Scalar(0, 255, 255));
 	}
-	imwrite("/tmp/dio.png", calibrationFrame);
 
 	delete intersDetector;
 	return tennisFieldDelimiter;

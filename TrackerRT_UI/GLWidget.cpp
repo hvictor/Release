@@ -7,6 +7,7 @@
 #include "../Calibration/TennisFieldCalibrator.h"
 #include "../Calibration/PerimetralConesDetector.h"
 #include "../AugmentedReality/OverlayRenderer.h"
+
 #define QT_NO_DEBUG_OUTPUT
 
 extern FrameData **pRenderFrameData;
@@ -96,12 +97,16 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     if (calib_field) {
         bool status;
-        PerimetralConeSet4 cones_set = PerimetralConesDetector::getInstance()->process_data_8UC4(u8data, 640, 480, &status);
+        PerimetralConeSet4 cone_set = PerimetralConesDetector::getInstance()->process_data_8UC4(u8data, 640, 480, &status);
+        TennisFieldCalibrator *calibrator = new TennisFieldCalibrator();
 
-        //TennisFieldCalibrator *calibrator = new TennisFieldCalibrator();
         emit requestFrame();
 
-        OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cones_set);
+        calibrator->setPerimetralCones(cone_set);
+        calibrator->getCUDALinesDetector()->setCUDADetectorParameters(minLineLength, maxLineGap, 4096, 1);
+        calibrator->computeConeDelimitedStaticModel_8UC4(u8data, 640, 480);
+
+        OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
 
         update();
     }

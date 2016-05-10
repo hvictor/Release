@@ -13,6 +13,8 @@
 #include "IntersectionPointsDetector.h"
 #include "CalibrationWindow.h"
 #include "TennisFieldDelimiter.h"
+#include "PerimetralConesDetector.h"
+#include <stdint.h>
 
 class TennisFieldCalibrator {
 public:
@@ -23,7 +25,10 @@ public:
 	TennisFieldDelimiter *computeTennisFieldDelimiter(Mat calibrationFrame, vector<Point> intersPts, CalibrationWindow *calibWnd);
 	Point findClosestPoint(vector<Point> pts, Point p);
 	TennisFieldDelimiter *calibrate(Mat calibrationFrame);
+	TennisFieldDelimiter *calibrate_8UC4(uint8_t *u8data, int width, int height);
 	GPULineDetector *getCUDALinesDetector();
+	void setPerimetralCones(PerimetralConeSet4 cone_set);
+	TennisFieldDelimiter *computeConeDelimitedStaticModel(vector<Point> intersPts);
 
 private:
 	GPULineDetector *gpuLineDetector;
@@ -32,6 +37,7 @@ private:
 	CalibrationWindow *calibrationWindow;
 	void renderCalibrationWindow(Mat calibrationFrame, CalibrationWindow *calibrationWindow);
 	void renderCalibrationWindow(Mat calibrationFrame, double h, double basis_min, double basis_maj, double h_displacement);
+	PerimetralConeSet4 cones;
 };
 
 #endif /* TENNISFIELDCALIBRATOR_H_ */
