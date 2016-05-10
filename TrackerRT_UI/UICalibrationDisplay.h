@@ -19,6 +19,7 @@ public:
 public slots:
     void receiveTargetHSVRange(HSVRange targetHSVRange);
     void receiveFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
+    void provideFrame();
 
 private:
     Ui::UICalibrationDisplay *ui;

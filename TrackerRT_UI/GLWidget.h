@@ -26,12 +26,14 @@ public:
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;
     void renderStereoRawData(uchar *u8data);
+    void setRawData(uchar *u8data);
     void setClearColor(const QColor &color);
     void activateTargetCalibration();
     void activateFieldCalibration();
 
 signals:
     void clicked();
+    void requestFrame();
     void transmitTargetHSVRange(HSVRange targetHSVRange);
     void transmitFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
 

@@ -125,11 +125,6 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 		return res;
 	}
 
-	rectangle(frame_8UC4, rs[0], Scalar(255, 0, 0, 255), 2);
-	rectangle(frame_8UC4, rs[1], Scalar(0, 255, 0, 255), 2);
-	rectangle(frame_8UC4, rs[2], Scalar(0, 0, 255, 255), 2);
-	rectangle(frame_8UC4, rs[3], Scalar(255, 255, 0, 255), 2);
-
 	int tl_index;
 	int br_index;
 	int tr_index;
@@ -257,10 +252,12 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 
 	*status = true;
 
+	/*
 	line(frame_8UC4, res.vertex_topLeft, res.vertex_topRight, Scalar(0, 255, 0, 255), 2);
 	line(frame_8UC4, res.vertex_topRight, res.vertex_bottomRight, Scalar(0, 255, 0, 255), 2);
 	line(frame_8UC4, res.vertex_bottomRight, res.vertex_bottomLeft, Scalar(0, 255, 0, 255), 2);
 	line(frame_8UC4, res.vertex_bottomLeft, res.vertex_topLeft, Scalar(0, 255, 0, 255), 2);
+	*/
 
 	return res;
 }

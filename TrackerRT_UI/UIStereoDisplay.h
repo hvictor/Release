@@ -23,6 +23,7 @@ public:
 
 public slots:
     void fetch();
+    void updateRawData();
     void calibrateTarget();
     void calibrateField();
 

@@ -98,6 +98,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         PerimetralConeSet4 cones_set = PerimetralConesDetector::getInstance()->process_data_8UC4(u8data, 640, 480, &status);
 
         //TennisFieldCalibrator *calibrator = new TennisFieldCalibrator();
+        emit requestFrame();
 
         update();
     }
@@ -120,6 +121,11 @@ void GLWidget::renderStereoRawData(uchar *u8data)
 {
     this->u8data = u8data;
     update();
+}
+
+void GLWidget::setRawData(uchar *u8data)
+{
+    this->u8data = u8data;
 }
 
 void GLWidget::setClearColor(const QColor &color)

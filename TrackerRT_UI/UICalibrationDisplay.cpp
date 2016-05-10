@@ -22,11 +22,17 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
 
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitFieldMarkersHSVRange(HSVRange)), this, SLOT(receiveFieldMarkersHSVRange(HSVRange)));
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitTargetHSVRange(HSVRange)), this, SLOT(receiveTargetHSVRange(HSVRange)));
+    QObject::connect(ui->widget->glWidget, SIGNAL(requestFrame()), this, SLOT(provideFrame()));
 }
 
 UICalibrationDisplay::~UICalibrationDisplay()
 {
     delete ui;
+}
+
+void UICalibrationDisplay::provideFrame()
+{
+    ui->widget->updateRawData();
 }
 
 void UICalibrationDisplay::receiveTargetHSVRange(HSVRange targetHSVRange)

@@ -80,6 +80,17 @@ void UIStereoDisplay::fetch()
     }
 }
 
+void UIStereoDisplay::updateRawData()
+{
+    FrameData frame_data = directFetchRawStereoData(stereoSALExternPtr);
+
+    glWidget->renderStereoRawData((uchar *)(frame_data.left_data));
+
+    if (_stereo) {
+        glWidgetR->setRawData((uchar *)(frame_data.right_data));
+    }
+}
+
 void UIStereoDisplay::renderStereoRawData()
 {
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
