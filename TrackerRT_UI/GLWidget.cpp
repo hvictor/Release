@@ -6,6 +6,7 @@
 #include "../OpticalLayer/HSVManager.h"
 #include "../Calibration/TennisFieldCalibrator.h"
 #include "../Calibration/PerimetralConesDetector.h"
+#include "../AugmentedReality/OverlayRenderer.h"
 #define QT_NO_DEBUG_OUTPUT
 
 extern FrameData **pRenderFrameData;
@@ -99,6 +100,8 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         //TennisFieldCalibrator *calibrator = new TennisFieldCalibrator();
         emit requestFrame();
+
+        OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cones_set);
 
         update();
     }

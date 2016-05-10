@@ -14,6 +14,8 @@
 #include "../OpticalLayer/StatefulObjectFilter.h"
 #include "../TrajectoryTracking/TrajectoryDescriptor.h"
 #include "../TargetPredator/TargetPredator.h"
+#include "../Calibration/PerimetralConesDetector.h"
+#include <stdint.h>
 
 #define OVERLAY_COLOR_GREEN			Scalar(50, 205, 50)
 #define OVERLAY_COLOR_GREEN_RGBA	Scalar(50, 205, 50, 255)
@@ -39,6 +41,7 @@ public:
 	void renderPredatorState(Mat frame, TargetPredator *tgtPredator);
 	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);
 	void renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDescriptor *descriptor);
+	void renderPerimetralConeSet4_8UC4(uint8_t *u8data, int width, int height, PerimetralConeSet4 cones_set);
 
 private:
 	OverlayRenderer();

@@ -7,6 +7,8 @@
 
 #include "OverlayRenderer.h"
 #include <math.h>
+#include <stdlib.h>
+#include <stdint.h>
 
 OverlayRenderer *OverlayRenderer::getInstance()
 {
@@ -145,6 +147,16 @@ void OverlayRenderer::renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigur
 
 		putText(frame, buffer, Point(r.tl().x, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN, 2, CV_AA);
 	}
+}
+
+void OverlayRenderer::renderPerimetralConeSet4_8UC4(uint8_t *u8data, int width, int height, PerimetralConeSet4 cones_set)
+{
+	Mat frame_8UC4(Size(width, height), CV_8UC4, u8data);
+
+	line(frame_8UC4, cones_set.vertex_topLeft, cones_set.vertex_topRight, Scalar(0, 255, 0, 255), 2);
+	line(frame_8UC4, cones_set.vertex_topRight, cones_set.vertex_bottomRight, Scalar(0, 255, 0, 255), 2);
+	line(frame_8UC4, cones_set.vertex_bottomRight, cones_set.vertex_bottomLeft, Scalar(0, 255, 0, 255), 2);
+	line(frame_8UC4, cones_set.vertex_bottomLeft, cones_set.vertex_topLeft, Scalar(0, 255, 0, 255), 2);
 }
 
 void OverlayRenderer::renderTargetTracker(Mat frame, Point center)
