@@ -230,7 +230,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	}
 
 	// Determine Bottom Left and Top Left
-	if (rs[indexes_L[0]] < rs[indexes_L[1]]) {
+	if (rs[indexes_L[0]].tl().y < rs[indexes_L[1]].tl().y) {
 		res.topLeft = rs[indexes_L[0]];
 		res.bottomLeft = rs[indexes_L[1]];
 	}
@@ -240,7 +240,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	}
 
 	// Determine Bottom Right and Top Right
-	if (rs[indexes_R[0]] < rs[indexes_R[1]]) {
+	if (rs[indexes_R[0]].tl().y < rs[indexes_R[1]].tl().y) {
 		res.topRight = rs[indexes_R[0]];
 		res.bottomRight = rs[indexes_R[1]];
 	}
