@@ -134,6 +134,7 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 	int br_index;
 	int tr_index;
 
+	/*
 	// Search Top Left cone perimeter
 	res.topLeft = rs[0];
 	for (int i = 1; i < 4; i++) {
@@ -188,21 +189,73 @@ PerimetralConeSet4 PerimetralConesDetector::process_data_8UC4(uint8_t *data, int
 		res.bottomLeft = rs[i];
 		bl_index = i;
 	}
+	*/
 
-	printf("TL = %d\nTR = %d\nBL = %d\nBR = %d\n", tl_index, tr_index, bl_index, br_index);
+	// Left and Right cones
+	vector<int> indexes_L;
+	vector<int> indexes_R;
 
+	// Find min and max x
+	int xmin = RAND_MAX;
+	int ymin = RAND_MAX;
+	int xmax = -1;
+	int ymax = -1;
+
+	for (int i = 0; i < rs.size(); i++)
+	{
+		if (rs[i].tl().x < xmin) xmin = rs[i].tl().x;
+		if (rs[i].br().x > xmax) xmax = rs[i].br().x;
+		if (rs[i].tl().y < ymin) ymin = rs[i].tl().y;
+		if (rs[i].br().y > ymax) ymax = rs[i].br().y;
+	}
+
+	int x_center = xmin + (xmax - xmin) / 2;
+	int y_center = ymin + (ymax - ymin) / 2;
+
+	// Separate Left and Right cones
+	for (int i = 0; i < rs.size(); i++)
+	{
+		if (rs[i].tl().x < x_center) {
+			indexes_L.push_back(i);
+		}
+		else {
+			indexes_R.push_back(i);
+		}
+	}
+
+	// If there is a number of cones different from 2 at each side, something didn't work
+	if (indexes_L.size() != 2 || indexes_R.size() != 2) {
+		*status = false;
+		return res;
+	}
+
+	// Determine Bottom Left and Top Left
+	if (res[indexes_L[0]] < res[indexes_L[1]]) {
+		res.topLeft = res[indexes_L[0]];
+		res.bottomLeft = res[indexes_L[1]];
+	}
+	else {
+		res.topLeft = res[indexes_L[1]];
+		res.bottomLeft = res[indexes_L[0]];
+	}
+
+	// Determine Bottom Right and Top Right
+	if (res[indexes_R[0]] < res[indexes_R[1]]) {
+		res.topRight = res[indexes_R[0]];
+		res.bottomRight = res[indexes_R[1]];
+	}
+	else {
+		res.topRight = res[indexes_R[1]];
+		res.bottomRight = res[indexes_R[0]];
+	}
+
+	// Determine inner perimetral vertices
 	res.vertex_topLeft = res.topLeft.br();
 	res.vertex_topRight = Point(res.topRight.tl().x, res.topRight.br().y);
 	res.vertex_bottomLeft = Point(res.bottomLeft.br().x, res.bottomLeft.tl().y);
 	res.vertex_bottomRight = res.bottomRight.tl();
 
 	*status = true;
-
-	//rectangle(frame_8UC4, res.topLeft, Scalar(255, 255, 0, 255), 2);
-	//rectangle(frame_8UC4, res.topRight, Scalar(255, 255, 0, 255), 2);
-	//rectangle(frame_8UC4, res.bottomLeft, Scalar(255, 255, 0, 255), 2);
-	//rectangle(frame_8UC4, res.bottomRight, Scalar(255, 255, 0, 255), 2);
-
 
 	line(frame_8UC4, res.vertex_topLeft, res.vertex_topRight, Scalar(0, 255, 0, 255), 2);
 	line(frame_8UC4, res.vertex_topRight, res.vertex_bottomRight, Scalar(0, 255, 0, 255), 2);

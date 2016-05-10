@@ -10,6 +10,10 @@
 
 #include "../Common/data_types.h"
 #include "../Common/opencv_headers.h"
+#include <list>
+#include <vector>
+#include <algorithm>
+
 
 typedef struct
 {
