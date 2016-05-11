@@ -365,11 +365,15 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	printf("TennisFieldCalibrator :: calibrate(): running coarse segment processor...\n");
 	vector<Line> fieldLines = detectedLines;// coarseSegmentProcessor->process(detectedLines);
 
+	for (int i = 0; i < fieldLines.size(); i++) {
+		line(calibrationFrame, fieldLines[i].p0, fieldLines[i].p1, Scalar(255, 255, 0, 255), 2);
+	}
+
 	// Get all intersection points
 	intersDetector = new IntersectionPointsDetector(cones);
 	vector<Point> inters = intersDetector->computeIntersectionPoints(fieldLines);
 
-	if (fieldLines.size() < 4) {
+	if (fieldLines.size() < 4 || inters.size() < 4) {
 		*status = false;
 		return 0;
 	}
