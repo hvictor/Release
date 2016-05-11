@@ -7,10 +7,41 @@
 
 #include "TennisFieldStaticModel.h"
 
-TennisFieldStaticModel::TennisFieldStaticModel() {
+TennisFieldStaticModel *TennisFieldStaticModel::getInstance()
+{
+	static TennisFieldStaticModel *instance = 0;
+
+	if (instance == 0) {
+		instance = new TennisFieldStaticModel();
+	}
+
+	return instance;
 }
 
-TennisFieldStaticModel::~TennisFieldStaticModel() {
+TennisFieldStaticModel::TennisFieldStaticModel():
+		fieldDelimiter(0),
+		_score(0),
+		_line(0)
+{
+}
+
+int TennisFieldStaticModel::getScore()
+{
+	return _score;
+}
+
+int TennisFieldStaticModel::getLineHits()
+{
+	return _line;
+}
+
+TennisFieldStaticModel::~TennisFieldStaticModel()
+{
+}
+
+void TennisFieldStaticModel::setTennisFieldDelimiter(TennisFieldDelimiter *fieldDelimiter)
+{
+	this->fieldDelimiter = fieldDelimiter;
 }
 
 void TennisFieldStaticModel::computeTennisFieldVisualPoints(Mat objectPoints, Mat& visualPoints3D, double h_displacement)
@@ -57,8 +88,8 @@ void TennisFieldStaticModel::computeTennisNetVisualPoints(Mat objectPoints, Mat&
 
 int TennisFieldStaticModel::checkTennisField_2D(TennisField_3D *field, double x, double y)
 {
+/*
 	bool found = false;
-
 	for (int i = 0; i < field->score_positions.size(); i++) {
 		if (field->score_positions[i].x == (float)x && field->score_positions[i].y == (float)y) {
 			found = true;
@@ -68,6 +99,7 @@ int TennisFieldStaticModel::checkTennisField_2D(TennisField_3D *field, double x,
 
 	if (found)
 		return -1;
+*/
 
 	vector<Point2f> vertices;
 	vertices.push_back(field->near_L);
@@ -76,11 +108,39 @@ int TennisFieldStaticModel::checkTennisField_2D(TennisField_3D *field, double x,
 	vertices.push_back(field->far_L);
 	int c = (int)pointPolygonTest(vertices, Point2f((float)x, (float)y), false);
 
-	if (c >= 0) {
+	if (c > 0) {
 		field->score_positions.push_back(Point2f((float)x, (float)y));
 		field->score++;
 		field->trigger = true;
 	}
+	else if (c == 0) {
+		field->nets++;
+	}
 
 	return c;
+}
+
+int TennisFieldStaticModel::updateScoreTracking_2D(double x, double y)
+{
+	vector<Point2f> vertices;
+	vertices.push_back(fieldDelimiter->topLeft);
+	vertices.push_back(fieldDelimiter->topRight);
+	vertices.push_back(fieldDelimiter->bottomLeft);
+	vertices.push_back(fieldDelimiter->bottomRight);
+	int c = (int)pointPolygonTest(vertices, Point2f((float)x, (float)y), false);
+
+	if (c > 0) {
+		score_positions.push_back(Point2f((float)x, (float)y));
+		_score++;
+	}
+	else if (c == 0) {
+		_line++;
+	}
+
+	return c;
+}
+
+TennisFieldDelimiter *TennisFieldStaticModel::getTennisFieldDelimiter()
+{
+	return fieldDelimiter;
 }

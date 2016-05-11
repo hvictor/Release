@@ -37,10 +37,18 @@ void OverlayRenderer::renderFieldDelimiter_8UC4(uint8_t *u8data, int width, int 
 {
 	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
 
-	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 40, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 40, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 40, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 40, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 100, 0, 255), 2);
+}
+
+void OverlayRenderer::renderFieldDelimiter_Mat8UC4(Mat frame_RGBA, TennisFieldDelimiter *fieldDelimiter)
+{
+	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 100, 0, 255), 2);
 }
 
 void OverlayRenderer::renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor)

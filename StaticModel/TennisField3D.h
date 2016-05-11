@@ -31,6 +31,7 @@ typedef struct
 	// Score positions
 	vector<Point2f> score_positions;
 	int score;
+	int nets;
 
 } TennisField_3D;
 

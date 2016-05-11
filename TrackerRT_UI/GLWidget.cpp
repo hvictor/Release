@@ -7,6 +7,7 @@
 #include "../Calibration/TennisFieldCalibrator.h"
 #include "../Calibration/PerimetralConesDetector.h"
 #include "../AugmentedReality/OverlayRenderer.h"
+#include "../StaticModel/TennisFieldStaticModel.h"
 
 #define QT_NO_DEBUG_OUTPUT
 
@@ -115,6 +116,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         {
             OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[CALIBR] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
             OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
+            TennisFieldStaticModel::getInstance()->setTennisFieldDelimiter(fieldDelimiter);
         }
 
         OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);

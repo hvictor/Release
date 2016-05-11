@@ -132,7 +132,11 @@ TrajectoryTracker *trajectoryTracker;
 // HSV Manager
 HSVManager *hsvManager;
 
+// Target Predator
 TargetPredator *tgtPredator;
+
+// Static Model
+TennisFieldStaticModel *staticModel;
 
 void renderScene(void* userdata)
 {
@@ -152,6 +156,7 @@ void *frames_processor(void *)
 	FrameData *frame_data[2];
 	StatefulObjectFilter *statefulObjectFilter = new StatefulObjectFilter();
 	HSVRange hsvRangeTGT = Configuration::getInstance()->calibrationData.targetHSVRange;
+	TennisFieldDelimiter *fieldDelimiter = staticModel->getTennisFieldDelimiter();
 
 	if (configuration->getOperationalMode().processingMode == Record) {
 		printf("Stereo Application :: Frames Processor :: Leaving\n");
@@ -232,6 +237,9 @@ void *frames_processor(void *)
 		//pred_scan_t engage_data = tgtPredator->engage_8UC4(frame_data[1]->left_data, width, height);
 		pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
 		//pred_scan_t engage_data = tgtPredator->engage_Mat8UC1(f_8UC1_0, width, height);
+
+		// Render Field Delimiter
+		OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame0_L, fieldDelimiter);
 
 		// Update Predator
 		if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
@@ -769,6 +777,7 @@ void run()
 	hsvManager = HSVManager::getInstance();
 	trajectoryTracker = new TrajectoryTracker();
 	tgtPredator = new TargetPredator();
+	staticModel = TennisFieldStaticModel::getInstance();
 
 	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
 	configuration->display();
@@ -980,8 +989,8 @@ vector<MovingObject> fetchLatestPreciseObjectPosition(Mat frame, uint16_t frameT
 				if (obj->impacted && (k == 0)) {
 					circle(frame, Point(Cx, Cy), 4.0, Scalar(0, 255, 255), 2);
 					if (cameraFlag == 'L') {
-						TennisFieldStaticModel::checkTennisField_2D(&field1, (double)Cx, (double)Cy);
-						TennisFieldStaticModel::checkTennisField_2D(&field2, (double)Cx, (double)Cy);
+						//TennisFieldStaticModel::checkTennisField_2D(&field1, (double)Cx, (double)Cy);
+						//TennisFieldStaticModel::checkTennisField_2D(&field2, (double)Cx, (double)Cy);
 
 					}
 				}
