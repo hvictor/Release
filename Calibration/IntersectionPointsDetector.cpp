@@ -6,6 +6,7 @@
  */
 
 #include "IntersectionPointsDetector.h"
+#include <stdio.h>
 
 IntersectionPointsDetector::IntersectionPointsDetector(CalibrationWindow *calibrationWindow):
 	_use_cones(false)
@@ -95,16 +96,21 @@ vector<Point> IntersectionPointsDetector::computeIntersectionPoints(vector<Line>
 {
 	vector<Point> results;
 
+	printf("computeIntersectionPoints :: Creating calibration window using cones\n");
+
 	CalibrationWindow *wnd = new CalibrationWindow();
 	wnd->bottomLeft = _cone_set.vertex_bottomLeft;
 	wnd->bottomRight = _cone_set.vertex_bottomRight;
 	wnd->topLeft = _cone_set.vertex_topLeft;
 	wnd->topRight = _cone_set.vertex_topRight;
 
+	printf("computeIntersectionPoints :: Calibration window created, inspecting %d lines\n", lines.size());
+
 	for (int i = 0; i < lines.size()-1; i++) {
 		for (int j = 0; j < lines.size(); j++) {
 			Point2f r;
 
+			printf("computeIntersectionPoints :: Finding intersection point between lines %d and %d\n", i, j);
 			if (findIntersectionPoint(lines[i], lines[j], &r) && pointLiesOnSegment(r, lines[i]) && pointLiesOnSegment(r, lines[j])) {
 				if (wnd->containsPoint(r)) {
 					results.push_back(r);
@@ -112,6 +118,8 @@ vector<Point> IntersectionPointsDetector::computeIntersectionPoints(vector<Line>
 			}
 		}
 	}
+
+	printf("computeIntersectionPoints :: Done, deleting window and returning\n");
 
 	delete wnd;
 
