@@ -368,9 +368,9 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	vector<Point> inters = intersDetector->computeIntersectionPoints(fieldLines);
 
 	// Find field delimiting points
-	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(calibrationFrame, inters);
+	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
 	for (int i = 0; i < inters.size(); i++) {
-		circle(calibrationFrame, inters[i], 6, Scalar(0, 255, 255));
+		circle(calibrationFrame, inters[i], 6, Scalar(255, 200, 0));
 	}
 
 	delete intersDetector;
