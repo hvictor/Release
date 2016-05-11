@@ -350,10 +350,10 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 {
 	Mat calibrationFrame(Size(width, height), CV_8UC4, u8data);
 
-	int ymin = std::min(cones.topLeft.y, cones.topRight.y);
-	int ymax = std::max(cones.bottomLeft.y, cones.bottomRight.y);
-	int xmin = std::min(cones.topLeft.x, cones.bottomLeft.x);
-	int xmax = std::max(cones.topRight.x, cones.bottomRight.x);
+	int ymin = std::min(cones.vertex_topLeft.y, cones.vertex_topRight.y);
+	int ymax = std::max(cones.vertex_bottomLeft.y, cones.vertex_bottomRight.y);
+	int xmin = std::min(cones.vertex_topLeft.x, cones.vertex_bottomLeft.x);
+	int xmax = std::max(cones.vertex_topRight.x, cones.vertex_bottomRight.x);
 
 	Mat calibrationROI = calibrationFrame(Range(ymin, ymax), Range(xmin, xmax));
 
@@ -395,6 +395,7 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	// Find field delimiting points
 	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
 
+	printf("ROI: xmin=%d, ymin=%d, xmax=%d, ymax=%d\n", xmin, ymin, xmax, ymax)
 	rectangle(calibrationFrame, Point(xmin, ymin), Point(xmax, ymax), Scalar(255, 200, 0, 255), 2);
 
 	for (int i = 0; i < inters.size(); i++) {
