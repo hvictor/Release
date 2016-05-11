@@ -164,6 +164,9 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vec
 	// y = mx + q ---> x = (y - q)/m
 	double y = cones.vertex_topLeft.y + h/2;
 	double x = (y - q)/m;
+
+	printf("TL x, y, q, m = %g %g %g %g\n", x, y, q, m);
+
 	topLeft = cones.vertex_topLeft;
 	topRight = Point2f(centerX, topLeft.y);
 	bottomLeft = Point2f(x, y);
@@ -208,6 +211,9 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vec
 	q = cones.vertex_topRight.y - m * cones.vertex_topRight.x;
 	y = cones.vertex_topRight.y + h/2;
 	x = (y - q)/m;
+
+	printf("BR x, y, q, m = %g %g %g %g\n", x, y, q, m);
+
 	topLeft = topRight;
 	bottomLeft = bottomRight;
 	bottomRight = cones.vertex_bottomRight;
