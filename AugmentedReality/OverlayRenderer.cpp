@@ -37,18 +37,18 @@ void OverlayRenderer::renderFieldDelimiter_8UC4(uint8_t *u8data, int width, int 
 {
 	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
 
-	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 100, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 100, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 100, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 200, 0, 255), 2);
 }
 
 void OverlayRenderer::renderFieldDelimiter_Mat8UC4(Mat frame_RGBA, TennisFieldDelimiter *fieldDelimiter)
 {
-	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 100, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 100, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 100, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 100, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 200, 0, 255), 2);
 }
 
 void OverlayRenderer::renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor)
@@ -207,6 +207,14 @@ void OverlayRenderer::renderTargetTracker(Mat frame, Point center)
 		putText(frame, buffer, Point(r.tl().x - 30, r.tl().y - 15), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
 }
 
+void OverlayRenderer::renderStaticModelScoreTracking(Mat frame, TennisFieldStaticModel *staticModel)
+{
+	char scoreBuf[100];
+
+	sprintf(scoreBuf, "SCORE: %d\t\tLINE HIT: %d", staticModel->getScore(), staticModel->getLineHits());
+	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
+}
+
 void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator)
 {
 	list<pred_state_t> *predator_state = tgtPredator->get_state();
@@ -244,7 +252,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 			if (impact_status && k == 0) {
 				rectangle(frame, Point2f(x1 - 10.0, y1 - 10.0), Point2f(x1 + 10.0, y1 + 10.0), OVERLAY_COLOR_GREEN_RGBA, 2);
-				putText(frame, "[IMPACT]", Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
+				//putText(frame, "[IMPACT]", Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
 			}
 			else
 				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);

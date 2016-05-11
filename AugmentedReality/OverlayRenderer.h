@@ -46,6 +46,7 @@ public:
 	void renderFieldDelimiter_8UC4(uint8_t *u8data, int width, int height, TennisFieldDelimiter *fieldDelimiter);
 	void renderFieldDelimiter_Mat8UC4(Mat frame_RGBA, TennisFieldDelimiter *fieldDelimiter);
 	void renderPerimetralConeSet4_8UC4(uint8_t *u8data, int width, int height, PerimetralConeSet4 cones_set);
+	void renderStaticModelScoreTracking(Mat frame, TennisFieldStaticModel *staticModel);
 
 private:
 	OverlayRenderer();

@@ -9,9 +9,9 @@
 #include <stdio.h>
 #include <math.h>
 
-TargetPredator::TargetPredator() {
-	// TODO Auto-generated constructor stub
-
+TargetPredator::TargetPredator()
+{
+	_staticModel = TennisFieldStaticModel::getInstance();
 }
 
 TargetPredator::~TargetPredator() {
@@ -70,6 +70,7 @@ void TargetPredator::update_state(int x, int y)
 	if (state.size() > 1) {
 		if (compute_impact_status((double)prev->Vx, (double)prev->Vy, (double)tracker_state.Vx, (double)tracker_state.Vy)) {
 			tracker_state.impact_status = true;
+			_staticModel->updateScoreTracking_2D((double)x, (double)y);
 		}
 	}
 

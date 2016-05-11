@@ -15,6 +15,7 @@
 #include <list>
 #include <algorithm>
 #include "../Common/opencv_headers.h"
+#include "../StaticModel/TennisFieldStaticModel.h"
 
 using namespace std;
 using namespace cv;
@@ -48,6 +49,7 @@ public:
 private:
 	list<pred_state_t> state;
 	bool compute_impact_status(double old_velocityX, double old_velocityY, double velocityX, double velocityY);
+	TennisFieldStaticModel *_staticModel;
 };
 
 #endif /* TARGETPREDATOR_H_ */
