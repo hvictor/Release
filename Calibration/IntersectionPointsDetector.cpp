@@ -96,10 +96,10 @@ vector<Point> IntersectionPointsDetector::computeIntersectionPoints(vector<Line>
 	vector<Point> results;
 
 	CalibrationWindow *wnd = new CalibrationWindow();
-	wnd->bottomLeft = _cone_set.bottomLeft;
-	wnd->bottomRight = _cone_set.bottomRight;
-	wnd->topLeft = _cone_set.topLeft;
-	wnd->topRight = _cone_set.topRight;
+	wnd->bottomLeft = _cone_set.vertex_bottomLeft;
+	wnd->bottomRight = _cone_set.vertex_bottomRight;
+	wnd->topLeft = _cone_set.vertex_topLeft;
+	wnd->topRight = _cone_set.vertex_topRight;
 
 	for (int i = 0; i < lines.size()-1; i++) {
 		for (int j = 0; j < lines.size(); j++) {
