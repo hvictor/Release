@@ -45,10 +45,10 @@ void OverlayRenderer::renderFieldDelimiter_8UC4(uint8_t *u8data, int width, int 
 
 void OverlayRenderer::renderFieldDelimiter_Mat8UC4(Mat frame_RGBA, TennisFieldDelimiter *fieldDelimiter)
 {
-	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(0, 255, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(0, 255, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(0, 255, 0, 255), 2);
-	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(0, 255, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(0, 255, 0, 255), 3);
+	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(0, 255, 0, 255), 3);
+	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(0, 255, 0, 255), 3);
+	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(0, 255, 0, 255), 3);
 }
 
 void OverlayRenderer::renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor)
@@ -211,8 +211,8 @@ void OverlayRenderer::renderStaticModelScoreTracking(Mat frame, TennisFieldStati
 {
 	char scoreBuf[100];
 
-	sprintf(scoreBuf, "SCORE: %d\t\tLINE HIT: %d", staticModel->getScore(), staticModel->getLineHits());
-	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
+	sprintf(scoreBuf, "SCORE: %d        LINE HIT: %d", staticModel->getScore(), staticModel->getLineHits());
+	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
 }
 
 void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator)
