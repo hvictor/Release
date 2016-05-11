@@ -379,7 +379,13 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	printf("TennisFieldCalibrator :: calibrate(): running coarse segment processor...\n");
 	vector<Line> fieldLines = detectedLines;// coarseSegmentProcessor->process(detectedLines);
 
+	// Re-Translate detected lines into the originary coordinate system
 	for (int i = 0; i < fieldLines.size(); i++) {
+		fieldLines[i].p0.x += xmin;
+		fieldLines[i].p0.y += ymin;
+		fieldLines[i].p1.x += xmin;
+		fieldLines[i].p1.y += ymin;
+
 		line(calibrationFrame, fieldLines[i].p0, fieldLines[i].p1, Scalar(255, 255, 0, 255), 2);
 	}
 
@@ -399,8 +405,8 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
 
 	for (int i = 0; i < inters.size(); i++) {
-		inters[i].x += xmin;
-		inters[i].y += ymin;
+		inters[i].x;
+		inters[i].y;
 		circle(calibrationFrame, inters[i], 6, Scalar(255, 200, 0, 255));
 	}
 
