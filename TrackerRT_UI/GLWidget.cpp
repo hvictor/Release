@@ -18,8 +18,8 @@ GLWidget::GLWidget(char side, QWidget *parent)
       clearColor(Qt::black),
       program(0),
       _side(side),
-      minLineLength(40),
-      maxLineGap(5)
+      GPUMinSegmentLength(40),
+      GPUMaxSegmentDistance(5)
 {
     setup = 0;
     u8data = 0;
