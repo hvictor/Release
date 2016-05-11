@@ -123,10 +123,10 @@ int TennisFieldStaticModel::checkTennisField_2D(TennisField_3D *field, double x,
 int TennisFieldStaticModel::updateScoreTracking_2D(double x, double y)
 {
 	vector<Point2f> vertices;
-	vertices.push_back(fieldDelimiter->topLeft);
-	vertices.push_back(fieldDelimiter->topRight);
 	vertices.push_back(fieldDelimiter->bottomLeft);
 	vertices.push_back(fieldDelimiter->bottomRight);
+	vertices.push_back(fieldDelimiter->topRight);
+	vertices.push_back(fieldDelimiter->topLeft);
 	int c = (int)pointPolygonTest(vertices, Point2f((float)x, (float)y), false);
 
 	if (c > 0) {
