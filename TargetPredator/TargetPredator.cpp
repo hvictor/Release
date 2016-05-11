@@ -70,7 +70,7 @@ void TargetPredator::update_state(int x, int y)
 	if (state.size() > 1) {
 		if (compute_impact_status((double)prev->Vx, (double)prev->Vy, (double)tracker_state.Vx, (double)tracker_state.Vy)) {
 			tracker_state.impact_status = true;
-			_staticModel->updateScoreTracking_2D((double)x, (double)y);
+			_staticModel->updateScoreTracking_2D((double)prev->x, (double)prev->y);
 		}
 	}
 
