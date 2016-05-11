@@ -105,8 +105,16 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         emit requestFrame();
 
         calibrator->setPerimetralCones(cone_set);
-        calibrator->getCUDALinesDetector()->setCUDADetectorParameters(minLineLength, maxLineGap, 4096, 1);
-        calibrator->calibrate_8UC4(u8data, 640, 480);
+        calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
+        calibrator->calibrate_8UC4(u8data, 640, 480, &status);
+
+        if (!status) {
+            OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[CALIBR] Field calibration FAILED", OVERLAY_COLOR_BLUE_RGBA);
+        }
+        else
+        {
+            OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[CALIBR] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
+        }
 
         OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
 

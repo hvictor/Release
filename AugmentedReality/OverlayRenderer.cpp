@@ -27,6 +27,12 @@ OverlayRenderer::OverlayRenderer() {
 OverlayRenderer::~OverlayRenderer() {
 }
 
+void OverlayRenderer::renderStatus_8UC4(uint8_t *u8data, int width, int height, char *statusMessage, Scalar color)
+{
+	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
+	putText(frame_RGBA, statusMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, color, 2, CV_AA);
+}
+
 void OverlayRenderer::renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor)
 {
 	Point pi, pj;

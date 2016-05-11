@@ -25,7 +25,7 @@ public:
 	TennisFieldDelimiter *computeTennisFieldDelimiter(Mat calibrationFrame, vector<Point> intersPts, CalibrationWindow *calibWnd);
 	Point findClosestPoint(vector<Point> pts, Point p);
 	TennisFieldDelimiter *calibrate(Mat calibrationFrame);
-	TennisFieldDelimiter *calibrate_8UC4(uint8_t *u8data, int width, int height);
+	TennisFieldDelimiter *calibrate_8UC4(uint8_t *u8data, int width, int height, bool *status);
 	GPULineDetector *getCUDALinesDetector();
 	void setPerimetralCones(PerimetralConeSet4 cone_set);
 	TennisFieldDelimiter *computeConeDelimitedStaticModel(vector<Point> intersPts);

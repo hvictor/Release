@@ -19,6 +19,8 @@ public:
 public slots:
     void receiveTargetHSVRange(HSVRange targetHSVRange);
     void receiveFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
+    void setGPUMinSegmentLength(int minSegmentLen);
+    void setGPUMaxSegmentDistance(int maxSegmentDistance);
     void provideFrame();
 
 private:

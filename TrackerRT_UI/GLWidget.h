@@ -31,6 +31,9 @@ public:
     void activateTargetCalibration();
     void activateFieldCalibration();
 
+    double GPUMinSegmentLength;
+    double GPUMaxSegmentDistance;
+
 signals:
     void clicked();
     void requestFrame();
@@ -64,8 +67,6 @@ private:
     bool calib_tgt;
     bool calib_field;
 
-    double minLineLength;
-    double maxLineGap;
 };
 
 #endif

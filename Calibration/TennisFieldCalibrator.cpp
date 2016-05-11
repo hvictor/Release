@@ -332,7 +332,7 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeTennisFieldDelimiter(Mat cal
 	return retval;
 }
 
-TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int width, int height)
+TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int width, int height, bool *status)
 {
 	Mat calibrationFrame(Size(width, height), CV_8UC4, u8data);
 	GpuMat d_calibrationFrame;
@@ -361,7 +361,10 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	intersDetector = new IntersectionPointsDetector(cones);
 	vector<Point> inters = intersDetector->computeIntersectionPoints(fieldLines);
 
-	printf("TennisFieldCalibrator :: calibrate(): discovered %d intersection points\n", inters.size());
+	if (fieldLines.size() < 4) {
+		*status = false;
+		return 0;
+	}
 
 	// Find field delimiting points
 	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
@@ -370,6 +373,9 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	}
 
 	delete intersDetector;
+
+	*status = true;
+
 	return tennisFieldDelimiter;
 }
 

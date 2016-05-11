@@ -23,11 +23,24 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitFieldMarkersHSVRange(HSVRange)), this, SLOT(receiveFieldMarkersHSVRange(HSVRange)));
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitTargetHSVRange(HSVRange)), this, SLOT(receiveTargetHSVRange(HSVRange)));
     QObject::connect(ui->widget->glWidget, SIGNAL(requestFrame()), this, SLOT(provideFrame()));
+
+    QObject::connect(ui->gpuMinSegmentLengthSlider, SIGNAL(valueChanged(int)), this, SLOT(setGPUMinSegmentLength(int)));
+    QObject::connect(ui->gpuMaxSegmentDistanceSlider, SIGNAL(valueChanged(int)), this, SLOT(setGPUMaxSegmentDistance(int)));
 }
 
 UICalibrationDisplay::~UICalibrationDisplay()
 {
     delete ui;
+}
+
+void UICalibrationDisplay::setGPUMinSegmentLength(int minSegmentLen)
+{
+    ui->widget->glWidget->GPUMinSegmentLength = minSegmentLen;
+}
+
+void UICalibrationDisplay::setGPUMaxSegmentDistance(int maxSegmentDistance)
+{
+    ui->widget->glWidget->GPUMaxSegmentDistance = maxSegmentDistance;
 }
 
 void UICalibrationDisplay::provideFrame()
