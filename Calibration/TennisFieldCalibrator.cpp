@@ -337,17 +337,11 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	Mat calibrationFrame(Size(width, height), CV_8UC4, u8data);
 	GpuMat d_calibrationFrame;
 
-	// If the calibration frame is not yet monochrome, convert it
-	if (calibrationFrame.channels() > 1) {
-		// Upload calibration frame data on GPU device's memory
-		printf("TennisFieldCalibrator :: calibrate(): converting RGB frame to grayscale...\n");
-		GpuMat d_calibrationFrameRGB(calibrationFrame);
-		gpu::cvtColor(d_calibrationFrameRGB, d_calibrationFrame, CV_RGB2GRAY);
-		printf("TennisFieldCalibrator :: calibrate(): conversion OK\n");
-	}
-	else {
-		d_calibrationFrame.upload(calibrationFrame);
-	}
+	// Upload calibration frame data on GPU device's memory
+	printf("TennisFieldCalibrator :: calibrate(): converting RGB frame to grayscale...\n");
+	GpuMat d_calibrationFrameRGB(calibrationFrame);
+	gpu::cvtColor(d_calibrationFrameRGB, d_calibrationFrame, CV_RGBA2GRAY);
+	printf("TennisFieldCalibrator :: calibrate(): conversion OK\n");
 
 	// Detect lines
 	printf("TennisFieldCalibrator :: calibrate(): running CUDA segment detector...\n");
