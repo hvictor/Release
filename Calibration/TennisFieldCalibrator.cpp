@@ -392,10 +392,11 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 		return 0;
 	}
 
-	printf("OK, I have %d intersection points\n", inters.size());
-
 	// Find field delimiting points
 	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
+
+	rectangle(calibrationFrame, Point(xmin, ymin), Point(xmax, ymax), Scalar(255, 200, 0, 255), 2);
+
 	for (int i = 0; i < inters.size(); i++) {
 		inters[i].x += xmin;
 		inters[i].y += ymin;
