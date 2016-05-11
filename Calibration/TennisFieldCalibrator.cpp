@@ -349,11 +349,19 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeTennisFieldDelimiter(Mat cal
 TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int width, int height, bool *status)
 {
 	Mat calibrationFrame(Size(width, height), CV_8UC4, u8data);
+
+	int ymin = std::min(cones.topLeft.y, cones.topRight.y);
+	int ymax = std::max(cones.bottomLeft.y, cones.bottomRight.y);
+	int xmin = std::min(cones.topLeft.x, cones.bottomLeft.x);
+	int xmax = std::max(cones.topRight.x, cones.bottomRight.x);
+
+	Mat calibrationROI = calibrationFrame(Range(ymin, ymax), Range(xmin, xmax));
+
 	GpuMat d_calibrationFrame;
 
 	// Upload calibration frame data on GPU device's memory
 	printf("TennisFieldCalibrator :: calibrate(): converting RGB frame to grayscale...\n");
-	GpuMat d_calibrationFrameRGB(calibrationFrame);
+	GpuMat d_calibrationFrameRGB(calibrationROI);
 	gpu::cvtColor(d_calibrationFrameRGB, d_calibrationFrame, CV_RGBA2GRAY);
 	printf("TennisFieldCalibrator :: calibrate(): conversion OK\n");
 
@@ -389,6 +397,8 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	// Find field delimiting points
 	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
 	for (int i = 0; i < inters.size(); i++) {
+		inters[i].x += xmin;
+		inters[i].y += ymin;
 		circle(calibrationFrame, inters[i], 6, Scalar(255, 200, 0, 255));
 	}
 

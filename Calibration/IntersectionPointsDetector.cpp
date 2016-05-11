@@ -110,7 +110,6 @@ vector<Point> IntersectionPointsDetector::computeIntersectionPoints(vector<Line>
 		for (int j = 0; j < lines.size(); j++) {
 			Point2f r;
 
-			printf("computeIntersectionPoints :: Finding intersection point between lines %d and %d\n", i, j);
 			if (findIntersectionPoint(lines[i], lines[j], &r) && pointLiesOnSegment(r, lines[i]) && pointLiesOnSegment(r, lines[j])) {
 				if (wnd->containsPoint(r)) {
 					results.push_back(r);
