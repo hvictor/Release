@@ -7,8 +7,17 @@
 
 #include "IntersectionPointsDetector.h"
 
-IntersectionPointsDetector::IntersectionPointsDetector(CalibrationWindow *calibrationWindow) {
+IntersectionPointsDetector::IntersectionPointsDetector(CalibrationWindow *calibrationWindow):
+	_use_cones(false)
+{
 	this->calibrationWindow = calibrationWindow;
+}
+
+IntersectionPointsDetector::IntersectionPointsDetector(PerimetralConeSet4 cone_set):
+	_use_cones(true),
+	calibrationWindow(0)
+{
+	_cone_set = cone_set;
 }
 
 IntersectionPointsDetector::~IntersectionPointsDetector() {

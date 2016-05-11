@@ -358,7 +358,7 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	vector<Line> fieldLines = detectedLines;// coarseSegmentProcessor->process(detectedLines);
 
 	// Get all intersection points
-	intersDetector = new IntersectionPointsDetector(calibrationWindow);
+	intersDetector = new IntersectionPointsDetector(cones);
 	vector<Point> inters = intersDetector->computeIntersectionPoints(fieldLines);
 
 	// Find field delimiting points
