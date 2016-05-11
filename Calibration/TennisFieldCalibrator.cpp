@@ -387,6 +387,9 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	intersDetector = new IntersectionPointsDetector(cones);
 	vector<Point> inters = intersDetector->computeIntersectionPoints(fieldLines);
 
+	printf("ROI: xmin=%d, ymin=%d, xmax=%d, ymax=%d\n", xmin, ymin, xmax, ymax);
+	rectangle(calibrationFrame, Point(xmin, ymin), Point(xmax, ymax), Scalar(255, 200, 0, 255), 2);
+
 	if (fieldLines.size() < 4 || inters.size() < 4) {
 		*status = false;
 		return 0;
@@ -394,9 +397,6 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 
 	// Find field delimiting points
 	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
-
-	printf("ROI: xmin=%d, ymin=%d, xmax=%d, ymax=%d\n", xmin, ymin, xmax, ymax)
-	rectangle(calibrationFrame, Point(xmin, ymin), Point(xmax, ymax), Scalar(255, 200, 0, 255), 2);
 
 	for (int i = 0; i < inters.size(); i++) {
 		inters[i].x += xmin;
