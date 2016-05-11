@@ -95,17 +95,25 @@ vector<Point> IntersectionPointsDetector::computeIntersectionPoints(vector<Line>
 {
 	vector<Point> results;
 
+	CalibrationWindow *wnd = new CalibrationWindow();
+	wnd->bottomLeft = _cone_set.bottomLeft;
+	wnd->bottomRight = _cone_set.bottomRight;
+	wnd->topLeft = _cone_set.topLeft;
+	wnd->topRight = _cone_set.topRight;
+
 	for (int i = 0; i < lines.size()-1; i++) {
 		for (int j = 0; j < lines.size(); j++) {
 			Point2f r;
 
 			if (findIntersectionPoint(lines[i], lines[j], &r) && pointLiesOnSegment(r, lines[i]) && pointLiesOnSegment(r, lines[j])) {
-				if (calibrationWindow->containsPoint(r)) {
+				if (wnd->containsPoint(r)) {
 					results.push_back(r);
 				}
 			}
 		}
 	}
+
+	delete wnd;
 
 	return results;
 }
