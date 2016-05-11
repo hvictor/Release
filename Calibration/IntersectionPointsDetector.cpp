@@ -119,9 +119,9 @@ vector<Point> IntersectionPointsDetector::computeIntersectionPoints(vector<Line>
 		}
 	}
 
-	printf("computeIntersectionPoints :: Done, deleting window and returning\n");
-
 	delete wnd;
+
+	printf("computeIntersectionPoints :: Done, RETURNING\n");
 
 	return results;
 }

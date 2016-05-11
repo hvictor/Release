@@ -143,6 +143,8 @@ Point TennisFieldCalibrator::findClosestPoint(vector<Point> pts, Point p)
 
 TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vector<Point> intersPts)
 {
+	printf("computeConeDelimitedStaticModel(): Computing...\n");
+
 	TennisFieldDelimiter *retval = new TennisFieldDelimiter();
 	Point2f bottomLeft, bottomRight;
 	Point2f topLeft, topRight;
@@ -167,6 +169,8 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vec
 	bottomLeft = Point2f(x, y);
 	bottomRight = Point2f(centerX, y);
 
+	printf("computeConeDelimitedStaticModel(): Window TL\n");
+
 	CalibrationWindow *w1 = new CalibrationWindow();
 
 	w1->topLeft = topLeft;
@@ -181,6 +185,8 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vec
 	///
 	/// Bottom left
 	///
+	printf("computeConeDelimitedStaticModel(): Window BL\n");
+
 	topLeft = bottomLeft;
 	bottomLeft = cones.vertex_bottomLeft;
 	topRight = topRight = Point2f(centerX, topLeft.y);
@@ -197,6 +203,7 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vec
 	//
 	// Bottom right
 	//
+	printf("computeConeDelimitedStaticModel(): Window BR\n");
 	m = (cones.vertex_topRight.y - cones.vertex_bottomRight.y) / (cones.vertex_topRight.x - cones.vertex_bottomRight.x);
 	q = cones.vertex_topRight.y - m * cones.vertex_topRight.x;
 	y = cones.vertex_topRight.y + h/2;
@@ -217,6 +224,7 @@ TennisFieldDelimiter *TennisFieldCalibrator::computeConeDelimitedStaticModel(vec
 	//
 	// Top right
 	//
+	printf("computeConeDelimitedStaticModel(): Window TR\n");
 	bottomLeft = topLeft;
 	topLeft = Point2f(centerX, cones.vertex_topLeft.y);
 	bottomRight = topRight;
@@ -366,10 +374,12 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 		return 0;
 	}
 
+	printf("OK, I have %d intersection points\n", inters.size());
+
 	// Find field delimiting points
 	TennisFieldDelimiter *tennisFieldDelimiter = computeConeDelimitedStaticModel(inters);
 	for (int i = 0; i < inters.size(); i++) {
-		circle(calibrationFrame, inters[i], 6, Scalar(255, 200, 0));
+		circle(calibrationFrame, inters[i], 6, Scalar(255, 200, 0, 255));
 	}
 
 	delete intersDetector;
