@@ -106,7 +106,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         calibrator->setPerimetralCones(cone_set);
         calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
-        calibrator->calibrate_8UC4(u8data, 640, 480, &status);
+        TennisFieldDelimiter *fieldDelimiter = calibrator->calibrate_8UC4(u8data, 640, 480, &status);
 
         if (!status) {
             OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[CALIBR] Field calibration FAILED", OVERLAY_COLOR_BLUE_RGBA);
@@ -114,6 +114,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         else
         {
             OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[CALIBR] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
+            OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
         }
 
         OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);

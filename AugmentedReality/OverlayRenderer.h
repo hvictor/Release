@@ -15,6 +15,7 @@
 #include "../TrajectoryTracking/TrajectoryDescriptor.h"
 #include "../TargetPredator/TargetPredator.h"
 #include "../Calibration/PerimetralConesDetector.h"
+#include "../Calibration/TennisFieldDelimiter.h"
 #include <stdint.h>
 
 #define OVERLAY_COLOR_GREEN			Scalar(50, 205, 50)
@@ -42,6 +43,7 @@ public:
 	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);
 	void renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDescriptor *descriptor);
 	void renderStatus_8UC4(uint8_t *u8data, int width, int height, char *statusMessage, Scalar color);
+	void renderFieldDelimiter_8UC4(uint8_t *u8data, int width, int height, TennisFieldDelimiter *fieldDelimiter);
 	void renderPerimetralConeSet4_8UC4(uint8_t *u8data, int width, int height, PerimetralConeSet4 cones_set);
 
 private:

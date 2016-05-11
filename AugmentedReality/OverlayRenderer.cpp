@@ -33,6 +33,16 @@ void OverlayRenderer::renderStatus_8UC4(uint8_t *u8data, int width, int height, 
 	putText(frame_RGBA, statusMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, color, 2, CV_AA);
 }
 
+void OverlayRenderer::renderFieldDelimiter_8UC4(uint8_t *u8data, int width, int height, TennisFieldDelimiter *fieldDelimiter)
+{
+	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
+
+	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(255, 200, 0, 255), 2);
+	line(frame_RGBA, fieldDelimiter->bottomLeft, fieldDelimiter->topLeft, Scalar(255, 200, 0, 255), 2);
+}
+
 void OverlayRenderer::renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor)
 {
 	Point pi, pj;
