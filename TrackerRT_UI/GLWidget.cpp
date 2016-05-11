@@ -17,7 +17,9 @@ GLWidget::GLWidget(char side, QWidget *parent)
     : QGLWidget(parent),
       clearColor(Qt::black),
       program(0),
-      _side(side)
+      _side(side),
+      minLineLength(40),
+      maxLineGap(5)
 {
     setup = 0;
     u8data = 0;
