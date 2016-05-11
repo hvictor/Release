@@ -106,7 +106,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         calibrator->setPerimetralCones(cone_set);
         calibrator->getCUDALinesDetector()->setCUDADetectorParameters(minLineLength, maxLineGap, 4096, 1);
-        calibrator->computeConeDelimitedStaticModel_8UC4(u8data, 640, 480);
+        calibrator->calibrate_8UC4(u8data, 640, 480);
 
         OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
 
