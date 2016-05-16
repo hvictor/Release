@@ -116,7 +116,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         emit requestFrame();
 
-        usleep(100000);
+        usleep(500000);
 
         calibrator->setPerimetralCones(cone_set);
         calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
