@@ -44,7 +44,6 @@ GLWidget::~GLWidget()
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     if (!(calib_tgt || calib_perim)) {
-        printf("NOT TGT OR PERIM\n");
         return;
     }
 
@@ -60,16 +59,12 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
     rubberBand->setGeometry(QRect(origin, QSize()));
     rubberBand->show();
-
-    printf("OK!\n");
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (!(calib_tgt || calib_perim))
         return;
-
-    printf("MOVING FOR PERIM OR TGT\n");
 
     rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
 }
@@ -83,7 +78,6 @@ void GLWidget::activateFieldCalibration()
 void GLWidget::activatePerimeterCalibration()
 {
     calib_perim = true;
-    printf("PERIMETRAL CALIBRATION ACTIVATED\n");
     emit disableCalibControlFLD();
 }
 
@@ -150,14 +144,15 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
     emit requestFrame();
 
     calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
+    PerimetralConeSet4 cone_set = calibrator->getPerimetralCones();
 
     TennisFieldDelimiter *fieldDelimiter = calibrator->calibrate_8UC4(u8data, 640, 480, &status);
 
     if (!status) {
+        OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
         OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration FAILED", OVERLAY_COLOR_BLUE_RGBA);
     }
     else {
-        PerimetralConeSet4 cone_set = calibrator->getPerimetralCones();
         OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
         OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
         OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
