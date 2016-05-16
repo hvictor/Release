@@ -120,15 +120,19 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
 
         if (!status) {
+            printf("PERIM FAILED\n");
             OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[PRM] Perimetral calibration FAILED", OVERLAY_COLOR_BLUE_RGBA);
             emit disableCalibControlFLD();
         }
         else
         {
+            printf("PERIM SUCCEEDED\n");
             emit enableCalibControlFLD();
             OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[PRM] Perimetral calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
             OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
         }
+
+        usleep(100000);
 
         update();
     }
