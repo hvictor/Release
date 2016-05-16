@@ -25,6 +25,7 @@ public slots:
     void fetch();
     void updateRawData();
     void calibrateTarget();
+    void calibratePerimeter();
     void calibrateField();
 
 private:

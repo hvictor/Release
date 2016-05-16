@@ -64,6 +64,11 @@ void UIStereoDisplay::calibrateTarget()
     glWidget->activateTargetCalibration();
 }
 
+void UIStereoDisplay::calibratePerimeter()
+{
+    glWidget->activatePerimeterCalibration();
+}
+
 void UIStereoDisplay::calibrateField()
 {
     glWidget->activateFieldCalibration();

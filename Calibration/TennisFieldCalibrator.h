@@ -28,6 +28,7 @@ public:
 	TennisFieldDelimiter *calibrate_8UC4(uint8_t *u8data, int width, int height, bool *status);
 	GPULineDetector *getCUDALinesDetector();
 	void setPerimetralCones(PerimetralConeSet4 cone_set);
+	PerimetralConeSet4 getPerimetralCones();
 	TennisFieldDelimiter *computeConeDelimitedStaticModel(vector<Point> intersPts);
 
 private:

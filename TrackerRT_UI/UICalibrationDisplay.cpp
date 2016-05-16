@@ -18,7 +18,9 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     ui->widget->init(false, false);
 
     QObject::connect(ui->btnCalibTgt, SIGNAL(clicked()), ui->widget, SLOT(calibrateTarget()));
-    QObject::connect(ui->btnCalibField, SIGNAL(clicked()), ui->widget, SLOT(calibrateField()));
+    QObject::connect(ui->btnCalibPrm, SIGNAL(clicked()), ui->widget, SLOT(calibratePerimeter()));
+    QObject::connect(ui->btnCalibFld, SIGNAL(clicked()), ui->widget, SLOT(calibrateField()));
+
 
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitFieldMarkersHSVRange(HSVRange)), this, SLOT(receiveFieldMarkersHSVRange(HSVRange)));
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitTargetHSVRange(HSVRange)), this, SLOT(receiveTargetHSVRange(HSVRange)));
@@ -26,11 +28,26 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
 
     QObject::connect(ui->gpuMinSegmentLengthSlider, SIGNAL(valueChanged(int)), this, SLOT(setGPUMinSegmentLength(int)));
     QObject::connect(ui->gpuMaxSegmentDistanceSlider, SIGNAL(valueChanged(int)), this, SLOT(setGPUMaxSegmentDistance(int)));
+
+    QObject::connect(ui->widget->glWidget, SIGNAL(disableCalibControlFLD()), this, SLOT(disableCalibBtnFLD()));
+    QObject::connect(ui->widget->glWidget, SIGNAL(enableCalibControlFLD()), this, SLOT(enableCalibBtnFLD()));
+
+    ui->btnCalibFld->setDisabled(true);
 }
 
 UICalibrationDisplay::~UICalibrationDisplay()
 {
     delete ui;
+}
+
+void UICalibrationDisplay::enableCalibBtnFLD()
+{
+    ui->btnCalibFld->setEnabled(true);
+}
+
+void UICalibrationDisplay::disableCalibBtnFLD()
+{
+    ui->btnCalibFld->setDisabled(true);
 }
 
 void UICalibrationDisplay::setGPUMinSegmentLength(int minSegmentLen)

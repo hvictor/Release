@@ -10,6 +10,7 @@
 #include "../FastMemory/fast_mem_pool.h"
 #include "../SpinlockQueue/array_spinlock_queue.h"
 #include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
+#include "../Calibration/TennisFieldCalibrator.h"
 #include "../OpticalLayer/HSVManager.h"
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
@@ -30,6 +31,7 @@ public:
     void setClearColor(const QColor &color);
     void activateTargetCalibration();
     void activateFieldCalibration();
+    void activatePerimeterCalibration();
 
     double GPUMinSegmentLength;
     double GPUMaxSegmentDistance;
@@ -39,6 +41,8 @@ signals:
     void requestFrame();
     void transmitTargetHSVRange(HSVRange targetHSVRange);
     void transmitFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
+    void disableCalibControlFLD();
+    void enableCalibControlFLD();
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -49,6 +53,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    void runProbabilisticFieldLinesDetection_GPU();
     void makeObject();
     char _side;
     int idx;
@@ -66,7 +71,9 @@ private:
 
     bool calib_tgt;
     bool calib_field;
+    bool calib_perim;
 
+    TennisFieldCalibrator *calibrator;
 };
 
 #endif

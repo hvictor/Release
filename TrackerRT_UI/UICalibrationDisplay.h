@@ -22,6 +22,8 @@ public slots:
     void setGPUMinSegmentLength(int minSegmentLen);
     void setGPUMaxSegmentDistance(int maxSegmentDistance);
     void provideFrame();
+    void disableCalibBtnFLD();
+    void enableCalibBtnFLD();
 
 private:
     Ui::UICalibrationDisplay *ui;

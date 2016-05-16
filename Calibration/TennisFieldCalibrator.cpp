@@ -31,6 +31,11 @@ void TennisFieldCalibrator::setPerimetralCones(PerimetralConeSet4 cone_set)
 	cones = cone_set;
 }
 
+PerimetralConeSet4 TennisFieldCalibrator::getPerimetralCones()
+{
+	return cones;
+}
+
 void TennisFieldCalibrator::renderCalibrationWindow(Mat calibrationFrame, CalibrationWindow *calibrationWindow)
 {
 	char buffer[300];

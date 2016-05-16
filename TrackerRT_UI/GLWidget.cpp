@@ -27,6 +27,8 @@ GLWidget::GLWidget(char side, QWidget *parent)
     rubberBand = 0;
     calib_tgt = false;
     calib_field = false;
+    calib_perim = false;
+    calibrator = new TennisFieldCalibrator();
 }
 
 GLWidget::~GLWidget()
@@ -35,6 +37,7 @@ GLWidget::~GLWidget()
     vbo.destroy();
     delete texture;
     delete program;
+    delete calibrator;
     doneCurrent();
 }
 
@@ -59,7 +62,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (!(calib_tgt || calib_field))
+    if (!(calib_tgt || calib_perim))
         return;
 
     rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
@@ -68,11 +71,19 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 void GLWidget::activateFieldCalibration()
 {
     calib_field = true;
+    runProbabilisticFieldLinesDetection_GPU();
+}
+
+void GLWidget::activatePerimeterCalibration()
+{
+    calib_perim = true;
+    emit disableCalibControlFLD();
 }
 
 void GLWidget::activateTargetCalibration()
 {
     calib_tgt = true;
+    emit disableCalibControlFLD();
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -95,37 +106,57 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     if (calib_tgt)
         emit transmitTargetHSVRange(hsv_range);
-    else if (calib_field)
+    else if (calib_perim)
         emit transmitFieldMarkersHSVRange(hsv_range);
 
-    if (calib_field) {
+    if (calib_perim) {
         bool status;
         PerimetralConeSet4 cone_set = PerimetralConesDetector::getInstance()->process_data_8UC4(u8data, 640, 480, &status);
-        TennisFieldCalibrator *calibrator = new TennisFieldCalibrator();
 
         emit requestFrame();
 
         calibrator->setPerimetralCones(cone_set);
         calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
-        TennisFieldDelimiter *fieldDelimiter = calibrator->calibrate_8UC4(u8data, 640, 480, &status);
 
         if (!status) {
-            OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[CALIBR] Field calibration FAILED", OVERLAY_COLOR_BLUE_RGBA);
+            OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[PRM] Perimetral calibration FAILED", OVERLAY_COLOR_BLUE_RGBA);
+            emit disableCalibControlFLD();
         }
         else
         {
-            OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[CALIBR] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
-            OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
-            TennisFieldStaticModel::getInstance()->setTennisFieldDelimiter(fieldDelimiter);
+            emit enableCalibControlFLD();
+            OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[PRM] Perimetral calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
+            OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
         }
-
-        OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
 
         update();
     }
 
     calib_tgt = false;
     calib_field = false;
+}
+
+void GLWidget::runProbabilisticFieldLinesDetection_GPU()
+{
+    bool status = false;
+    emit requestFrame();
+
+    calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
+
+    TennisFieldDelimiter *fieldDelimiter = calibrator->calibrate_8UC4(u8data, 640, 480, &status);
+
+    if (!status) {
+        OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration FAILED", OVERLAY_COLOR_BLUE_RGBA);
+    }
+    else {
+        PerimetralConeSet4 cone_set = calibrator->getPerimetralCones();
+        OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
+        OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
+        OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
+        TennisFieldStaticModel::getInstance()->setTennisFieldDelimiter(fieldDelimiter);
+    }
+
+    update();
 }
 
 QSize GLWidget::minimumSizeHint() const
