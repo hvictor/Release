@@ -43,8 +43,10 @@ GLWidget::~GLWidget()
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-    if (!(calib_tgt || calib_perim))
+    if (!(calib_tgt || calib_perim)) {
+        printf("NOT TGT OR PERIM\n");
         return;
+    }
 
     origin = event->pos();
 
@@ -58,12 +60,16 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
     rubberBand->setGeometry(QRect(origin, QSize()));
     rubberBand->show();
+
+    printf("OK!\n");
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (!(calib_tgt || calib_perim))
         return;
+
+    printf("MOVING FOR PERIM OR TGT\n");
 
     rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
 }
@@ -77,6 +83,7 @@ void GLWidget::activateFieldCalibration()
 void GLWidget::activatePerimeterCalibration()
 {
     calib_perim = true;
+    printf("PERIMETRAL CALIBRATION ACTIVATED\n");
     emit disableCalibControlFLD();
 }
 
@@ -134,6 +141,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     calib_tgt = false;
     calib_field = false;
+    calib_perim = false;
 }
 
 void GLWidget::runProbabilisticFieldLinesDetection_GPU()
