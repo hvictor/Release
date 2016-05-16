@@ -116,6 +116,8 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         emit requestFrame();
 
+        usleep(100000);
+
         calibrator->setPerimetralCones(cone_set);
         calibrator->getCUDALinesDetector()->setCUDADetectorParameters(GPUMinSegmentLength, GPUMaxSegmentDistance, 4096, 1);
 
@@ -131,8 +133,6 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
             OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[PRM] Perimetral calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
             OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
         }
-
-        usleep(100000);
 
         update();
     }
