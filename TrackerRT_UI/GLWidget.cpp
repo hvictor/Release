@@ -43,7 +43,7 @@ GLWidget::~GLWidget()
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-    if (!(calib_tgt || calib_field))
+    if (!(calib_tgt || calib_perim))
         return;
 
     origin = event->pos();
