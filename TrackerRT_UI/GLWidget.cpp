@@ -88,7 +88,7 @@ void GLWidget::activateTargetCalibration()
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (!(calib_tgt || calib_field))
+    if (!(calib_tgt || calib_perim))
         return;
 
     QPoint dst = event->pos();
