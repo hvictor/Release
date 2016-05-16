@@ -408,6 +408,43 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 
 	delete intersDetector;
 
+
+	if (	tennisFieldDelimiter->bottomLeft.x < 0 ||
+			tennisFieldDelimiter->bottomLeft.x >= width ||
+			tennisFieldDelimiter->bottomLeft.y < 0 ||
+			tennisFieldDelimiter->bottomLeft.y >= height)
+	{
+		*status = false;
+		return 0;
+	}
+
+	if (	tennisFieldDelimiter->bottomRight.x < 0 ||
+			tennisFieldDelimiter->bottomRight.x >= width ||
+			tennisFieldDelimiter->bottomRight.y < 0 ||
+			tennisFieldDelimiter->bottomRight >= height)
+	{
+		*status = false;
+		return 0;
+	}
+
+	if (	tennisFieldDelimiter->topLeft.x < 0 ||
+			tennisFieldDelimiter->topLeft.x >= width ||
+			tennisFieldDelimiter->topLeft.y < 0 ||
+			tennisFieldDelimiter->topLeft.y >= height)
+	{
+		*status = false;
+		return 0;
+	}
+
+	if (	tennisFieldDelimiter->topRight.x < 0 ||
+			tennisFieldDelimiter->topRight.x >= width ||
+			tennisFieldDelimiter->topRight.y < 0 ||
+			tennisFieldDelimiter->topRight.y >= height)
+	{
+		*status = false;
+		return 0;
+	}
+
 	*status = true;
 
 	return tennisFieldDelimiter;
