@@ -421,7 +421,7 @@ TennisFieldDelimiter *TennisFieldCalibrator::calibrate_8UC4(uint8_t *u8data, int
 	if (	tennisFieldDelimiter->bottomRight.x < 0 ||
 			tennisFieldDelimiter->bottomRight.x >= width ||
 			tennisFieldDelimiter->bottomRight.y < 0 ||
-			tennisFieldDelimiter->bottomRight >= height)
+			tennisFieldDelimiter->bottomRight.y >= height)
 	{
 		*status = false;
 		return 0;
