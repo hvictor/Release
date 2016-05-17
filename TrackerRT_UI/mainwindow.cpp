@@ -114,6 +114,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->recordToBtn, SIGNAL(clicked(bool)), this, SLOT(chooseRecordDirectory()));
     QObject::connect(ui->startApplicationBtn, SIGNAL(clicked(bool)), this, SLOT(startApplication()));
 
+    QObject::connect(ui->fldModel_sensitivityEpsSlider, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_LinesSensitivityEPS(int)));
+
     stereoDisplay = new UIStereoDisplay();
 }
 
@@ -126,6 +128,11 @@ void MainWindow::startCalibrator()
 {
     UICalibrationDisplay *uiCalibratorDisplay = new UICalibrationDisplay();
     uiCalibratorDisplay->show();
+}
+
+void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
+{
+    Configuration::getInstance()->setStaticModelLinesSensitivityEPS(value);
 }
 
 void MainWindow::cpuCoreChanged(int value)

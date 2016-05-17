@@ -6,6 +6,7 @@
  */
 
 #include "TennisFieldStaticModel.h"
+#include "../Configuration/Configuration.h"
 
 TennisFieldStaticModel *TennisFieldStaticModel::getInstance()
 {
@@ -129,7 +130,7 @@ int TennisFieldStaticModel::updateScoreTracking_2D(double x, double y)
 	vertices.push_back(fieldDelimiter->topLeft);
 	double c = pointPolygonTest(vertices, Point2f((float)x, (float)y), true);
 
-	double eps = 0.5;
+	double eps = (double)Configuration::getInstance()->getStaticModelParameters().linesSensitivityEPS;
 
 	if (c >= eps) {
 		score_positions.push_back(Point2f((float)x, (float)y));

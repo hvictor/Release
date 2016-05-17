@@ -126,6 +126,11 @@ typedef struct
 	HSVRange fieldMarkersHSVRange;
 } CalibrationData;
 
+typedef struct
+{
+	int linesSensitivityEPS;
+} StaticModelParameters;
+
 class Configuration {
 public:
 
@@ -137,7 +142,8 @@ public:
 	void setZEDStereoCameraHardwareParameters(ZEDStereoCameraHardwareParameters zedParam);
 	void setFrameInfo(FrameInfo frameInfo);
 	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
-
+	void setStaticModelLinesSensitivityEPS(int value);
+	StaticModelParameters getStaticModelParameters();
 
 	// Public properties
 	CalibrationData calibrationData;
@@ -163,6 +169,7 @@ private:
 	DUOStereoCameraHardwareParameters duoHardwareParameters;
 	ZEDStereoCameraHardwareParameters zedHardwareParameters;
 	InterpolationEngineParameters interpolationEngineParameters;
+	StaticModelParameters staticModelParameters;
 };
 
 #endif /* CONFIGURATION_H_ */

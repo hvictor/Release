@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <UIModel.h>
 #include "UIStereoDisplay.h"
+#include "../Configuration/Configuration.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +29,7 @@ public slots:
     void chooseRecordDirectory();
     void updateViewProcessingMode(int processingMode);
     void startApplication();
+    void updateStaticModel_LinesSensitivityEPS(int value);
 };
 
 #endif // MAINWINDOW_H

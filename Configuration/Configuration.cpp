@@ -35,6 +35,16 @@ void Configuration::setOperationalMode(InputSensorDevice inputDevice, Processing
 	operationalMode.processingMode = processingMode;
 }
 
+void Configuration::setStaticModelLinesSensitivityEPS(int value)
+{
+	staticModelParameters.linesSensitivityEPS = value;
+}
+
+StaticModelParameters Configuration::getStaticModelParameters()
+{
+	return staticModelParameters;
+}
+
 void Configuration::setOpticalLayerParameters(OpticalLayerParameters opticalLayerParam)
 {
 	opticalLayerParameters = opticalLayerParam;

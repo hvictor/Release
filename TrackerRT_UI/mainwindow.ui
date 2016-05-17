@@ -27,7 +27,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -1841,7 +1841,7 @@
            <x>460</x>
            <y>50</y>
            <width>441</width>
-           <height>321</height>
+           <height>141</height>
           </rect>
          </property>
          <property name="frameShape">
@@ -2085,6 +2085,89 @@
         <attribute name="title">
          <string>Dynamic Model</string>
         </attribute>
+        <widget class="QFrame" name="frame_4">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>891</width>
+           <height>141</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QSlider" name="fldModel_sensitivityEpsSlider">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>20</y>
+            <width>91</width>
+            <height>19</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>20</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdTargetObjectEccentricty_4">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>260</x>
+            <y>20</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: black; color: lightgreen;</string>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QLabel" name="label_57">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>10</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string> Field Modelling</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_58">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>40</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Lines Sensitivity EPS:</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_5">
         <attribute name="title">
@@ -2190,9 +2273,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>fldModel_sensitivityEpsSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdTargetObjectEccentricty_4</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
