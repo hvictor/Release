@@ -78,8 +78,8 @@ void TargetPredator::update_state(int x, int y)
 
 	trackingWnd.cx = x;
 	trackingWnd.cy = y;
-	trackingWnd.w = tracker_state.Vx * 2;
-	trackingWnd.h = tracker_state.Vy * 2;
+	trackingWnd.w = 100;
+	trackingWnd.h = 100;
 }
 
 pred_wnd_t TargetPredator::get_tracking_wnd()
