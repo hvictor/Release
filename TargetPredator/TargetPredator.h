@@ -36,6 +36,14 @@ typedef struct
 	bool impact_status;
 } pred_state_t;
 
+typedef struct
+{
+	int cx;
+	int cy;
+	int w;
+	int h;
+} pred_wnd_t;
+
 class TargetPredator {
 public:
 	TargetPredator();
@@ -43,11 +51,13 @@ public:
 	pred_scan_t engage_8UC1(uint8_t *data, int width, int height);
 	pred_scan_t engage_8UC4(uint8_t *data, int width, int height);
 	pred_scan_t engage_Mat8UC1(Mat f_8UC1, int width, int height);
+	pred_wnd_t get_tracking_wnd();
 	void update_state(int x, int y);
 	list<pred_state_t> *get_state();
 
 private:
 	list<pred_state_t> state;
+	pred_wnd_t trackingWnd;
 	bool compute_impact_status(double old_velocityX, double old_velocityY, double velocityX, double velocityY);
 	TennisFieldStaticModel *_staticModel;
 };

@@ -40,6 +40,7 @@ public:
 	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);
 	void renderTargetTracker(Mat frame, Point center);
 	void renderPredatorState(Mat frame, TargetPredator *tgtPredator);
+	void renderPredatorTrackingWnd(Mat frame, pred_wnd_t predTrackingWnd);
 	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);
 	void renderInterpolatedTrajectoryHexa(Mat frame, TrajectoryDescriptor *descriptor);
 	void renderStatus_8UC4(uint8_t *u8data, int width, int height, char *statusMessage, Scalar color);

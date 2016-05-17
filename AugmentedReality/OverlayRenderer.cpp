@@ -212,7 +212,7 @@ void OverlayRenderer::renderStaticModelScoreTracking(Mat frame, TennisFieldStati
 	char scoreBuf[100];
 
 	sprintf(scoreBuf, "SCORE: %d        LINE HIT: %d", staticModel->getScore(), staticModel->getLineHits());
-	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_BLUE_RGBA, 2, CV_AA);
+	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
 }
 
 void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator)
@@ -255,7 +255,8 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 				//putText(frame, "[IMPACT]", Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
 			}
 			else {
-				color.val[1] -= 20;
+				color.val[1] -= 5;
+				color.val[3] -= 5;
 				rectangle(frame, Point2f(cx - 4.0, cy - 4.0), Point2f(cx + 4.0, cy + 4.0), color, 1);
 			}
 		}
@@ -270,6 +271,12 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 		i++;
 	}
+}
+
+void OverlayRenderer::renderPredatorTrackingWnd(Mat frame, pred_wnd_t predTrackingWnd)
+{
+	rectangle(frame, Point(predTrackingWnd.cx - predTrackingWnd.w/2, predTrackingWnd.cy - predTrackingWnd.h/2),
+			Point(predTrackingWnd.cx + predTrackingWnd.w/2, predTrackingWnd.cy + predTrackingWnd.h/2), OVERLAY_COLOR_YELLOW, 2);
 }
 
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)
