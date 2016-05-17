@@ -106,7 +106,7 @@ int TennisFieldStaticModel::checkTennisField_2D(TennisField_3D *field, double x,
 	vertices.push_back(field->near_R);
 	vertices.push_back(field->far_R);
 	vertices.push_back(field->far_L);
-	int c = (int)pointPolygonTest(vertices, Point2f((float)x, (float)y), false);
+	int c = (int)pointPolygonTest(vertices, Point2f((float)x, (float)y), true);
 
 	if (c > 0) {
 		field->score_positions.push_back(Point2f((float)x, (float)y));
@@ -127,13 +127,15 @@ int TennisFieldStaticModel::updateScoreTracking_2D(double x, double y)
 	vertices.push_back(fieldDelimiter->bottomRight);
 	vertices.push_back(fieldDelimiter->topRight);
 	vertices.push_back(fieldDelimiter->topLeft);
-	int c = (int)pointPolygonTest(vertices, Point2f((float)x, (float)y), false);
+	double c = pointPolygonTest(vertices, Point2f((float)x, (float)y), true);
 
-	if (c > 0) {
+	double eps = 0.5;
+
+	if (c >= eps) {
 		score_positions.push_back(Point2f((float)x, (float)y));
 		_score++;
 	}
-	else if (c == 0) {
+	else if (fabsl(c) < eps) {
 		_line++;
 	}
 
