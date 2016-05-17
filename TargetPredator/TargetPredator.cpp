@@ -82,6 +82,11 @@ void TargetPredator::update_state(int x, int y)
 	trackingWnd.h = tracker_state.Vy * 2;
 }
 
+pred_wnd_t TargetPredator::get_tracking_wnd()
+{
+	return trackingWnd;
+}
+
 pred_scan_t TargetPredator::engage_Mat8UC1(Mat f_8UC1, int width, int height)
 {
 	pred_scan_t engage_data;
