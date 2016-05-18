@@ -30,8 +30,8 @@ public slots:
     void updateViewProcessingMode(int processingMode);
     void startApplication();
     void updateStaticModel_LinesSensitivityEPS(int value);
-    updateOpticalLayerParam_LowPassFilterY(int value);
-    updateOpticalLayerParam_LowPassFilterX(int value)
+    void updateOpticalLayerParam_LowPassFilterY(int value);
+    void updateOpticalLayerParam_LowPassFilterX(int value);
 };
 
 #endif // MAINWINDOW_H
