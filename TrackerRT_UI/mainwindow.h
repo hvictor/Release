@@ -5,6 +5,7 @@
 #include <UIModel.h>
 #include "UIStereoDisplay.h"
 #include "../Configuration/Configuration.h"
+#include "../TargetPredator/TargetPredator.h"
 
 namespace Ui {
 class MainWindow;

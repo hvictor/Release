@@ -12,6 +12,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <list>
 #include <algorithm>
 #include "../Common/opencv_headers.h"
@@ -49,7 +50,7 @@ typedef struct
 
 class TargetPredator {
 public:
-	TargetPredator();
+	static TargetPredator *getInstance();
 	virtual ~TargetPredator();
 	pred_scan_t engage_8UC1(uint8_t *data, int width, int height);
 	pred_scan_t engage_8UC4(uint8_t *data, int width, int height);
@@ -57,8 +58,10 @@ public:
 	pred_wnd_t get_tracking_wnd();
 	void update_state(int x, int y);
 	list<pred_state_t> *get_state();
+	void update_filter_param();
 
 private:
+	TargetPredator();
 	list<pred_state_t> state;
 	pred_wnd_t trackingWnd;
 	bool compute_impact_status(double old_velocityX, double old_velocityY, double velocityX, double velocityY);

@@ -145,6 +145,7 @@ void MainWindow::updateOpticalLayerParam_LowPassFilterX(int value)
     param.linearLowPassFilterX = ((double)value) / 100.0;
 
     Configuration::getInstance()->setOpticalLayerParameters(param);
+    TargetPredator::getInstance()->update_filter_param();
 }
 
 void MainWindow::updateOpticalLayerParam_LowPassFilterY(int value)
@@ -154,6 +155,7 @@ void MainWindow::updateOpticalLayerParam_LowPassFilterY(int value)
     param.linearLowPassFilterY = ((double)value) / 100.0;
 
     Configuration::getInstance()->setOpticalLayerParameters(param);
+    TargetPredator::getInstance()->update_filter_param();
 }
 
 void MainWindow::cpuCoreChanged(int value)

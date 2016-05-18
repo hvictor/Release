@@ -778,7 +778,7 @@ void run()
 	configuration = Configuration::getInstance();
 	hsvManager = HSVManager::getInstance();
 	trajectoryTracker = new TrajectoryTracker();
-	tgtPredator = new TargetPredator();
+	tgtPredator = TargetPredator::getInstance();
 	staticModel = TennisFieldStaticModel::getInstance();
 
 	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");

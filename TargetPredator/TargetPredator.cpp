@@ -16,8 +16,27 @@ TargetPredator::TargetPredator()
 	_lowPassFilterY = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterY;
 }
 
+TargetPredator *TargetPredator::getInstance()
+{
+	static TargetPredator *instance = 0;
+
+	if (!instance) {
+		instance = new TargetPredator();
+	}
+
+	return instance;
+}
+
 TargetPredator::~TargetPredator() {
 	// TODO Auto-generated destructor stub
+}
+
+void TargetPredator::update_filter_param()
+{
+	_lowPassFilterX = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterX;
+	_lowPassFilterY = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterY;
+
+	printf("TargetPredator :: Filter :: x=%.2f, y=%.2f\n", _lowPassFilterX, _lowPassFilterY);
 }
 
 list<pred_state_t> *TargetPredator::get_state()
