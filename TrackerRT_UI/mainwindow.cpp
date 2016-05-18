@@ -116,6 +116,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->fldModel_sensitivityEpsSlider, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_LinesSensitivityEPS(int)));
 
+    QObject::connect(ui->lowPassXSlider, SIGNAL(valueChanged(int)), this, SLOT(updateOpticalLayerParam_LowPassFilterX(int)));
+    QObject::connect(ui->lowPassYSlider, SIGNAL(valueChanged(int)), this, SLOT(updateOpticalLayerParam_LowPassFilterY(int)));
+
     stereoDisplay = new UIStereoDisplay();
 }
 
@@ -133,6 +136,24 @@ void MainWindow::startCalibrator()
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
 {
     Configuration::getInstance()->setStaticModelLinesSensitivityEPS(value);
+}
+
+void MainWindow::updateOpticalLayerParam_LowPassFilterX(int value)
+{
+    OpticalLayerParameters param = Configuration::getInstance()->getOpticalLayerParameters();
+
+    param.linearLowPassFilterX = ((double)value) / 100.0;
+
+    Configuration::getInstance()->setOpticalLayerParameters(param);
+}
+
+void MainWindow::updateOpticalLayerParam_LowPassFilterY(int value)
+{
+    OpticalLayerParameters param = Configuration::getInstance()->getOpticalLayerParameters();
+
+    param.linearLowPassFilterY = ((double)value) / 100.0;
+
+    Configuration::getInstance()->setOpticalLayerParameters(param);
 }
 
 void MainWindow::cpuCoreChanged(int value)

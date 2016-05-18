@@ -230,8 +230,8 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 
 		int interp = 4;
 
-		int x0 = it->x;
-		int y0 = it->y;
+		int x0 = it->display_x;
+		int y0 = it->display_y;
 
 		bool impact_status = it->impact_status;
 
@@ -240,8 +240,8 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 		if (it == predator_state->end())
 			break;
 
-		int x1 = it->x;
-		int y1 = it->y;
+		int x1 = it->display_x;
+		int y1 = it->display_y;
 
 		double Vx = (x1 - x0);
 		double Vy = (y1 - y0);

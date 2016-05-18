@@ -16,6 +16,7 @@
 #include <algorithm>
 #include "../Common/opencv_headers.h"
 #include "../StaticModel/TennisFieldStaticModel.h"
+#include "../Configuration/Configuration.h"
 
 using namespace std;
 using namespace cv;
@@ -31,6 +32,8 @@ typedef struct
 {
 	int x;
 	int y;
+	int display_x;
+	int display_y;
 	int Vx;
 	int Vy;
 	bool impact_status;
@@ -60,6 +63,9 @@ private:
 	pred_wnd_t trackingWnd;
 	bool compute_impact_status(double old_velocityX, double old_velocityY, double velocityX, double velocityY);
 	TennisFieldStaticModel *_staticModel;
+
+	double _lowPassFilterX;
+	double _lowPassFilterY;
 };
 
 #endif /* TARGETPREDATOR_H_ */

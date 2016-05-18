@@ -12,6 +12,8 @@
 TargetPredator::TargetPredator()
 {
 	_staticModel = TennisFieldStaticModel::getInstance();
+	_lowPassFilterX = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterX;
+	_lowPassFilterY = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterY;
 }
 
 TargetPredator::~TargetPredator() {
@@ -57,10 +59,16 @@ void TargetPredator::update_state(int x, int y)
 		prev = state.begin();
 		tracker_state.Vx = x - prev->x;
 		tracker_state.Vy = y - prev->y;
+
+		tracker_state.display_x = _lowPassFilterX * x + (1.0 - _lowPassFilterX) * prev->display_x;
+		tracker_state.display_y = _lowPassFilterY * y + (1.0 - _lowPassFilterY) * prev->display_y;
 	}
 	else {
 		tracker_state.Vx = 0;
 		tracker_state.Vy = 0;
+
+		tracker_state.display_x = x;
+		tracker_state.display_y = y;
 	}
 
 	// Reset value
