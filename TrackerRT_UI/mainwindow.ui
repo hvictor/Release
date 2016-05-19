@@ -27,7 +27,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -2173,7 +2173,7 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>20</y>
+           <y>130</y>
            <width>891</width>
            <height>141</height>
           </rect>
@@ -2219,12 +2219,28 @@
            <enum>QLCDNumber::Flat</enum>
           </property>
          </widget>
+         <widget class="QLabel" name="label_58">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>141</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Lines Sensitivity EPS:</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QLabel" name="label_57">
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>10</y>
+           <y>122</y>
            <width>101</width>
            <height>16</height>
           </rect>
@@ -2236,12 +2252,114 @@
           <string> Field Modelling</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_58">
+        <widget class="QFrame" name="frame_6">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>891</width>
+           <height>91</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QLabel" name="label_62">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>211</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_enableDepthMeasurements">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>7</x>
+            <y>20</y>
+            <width>281</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Enable Hardware Depth Measurements</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QSlider" name="slider_DFI">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>50</y>
+            <width>91</width>
+            <height>19</height>
+           </rect>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdTargetObjectEccentricty_5">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>50</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: black; color: lightgreen;</string>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_64">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>41</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>DFI:</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QLabel" name="label_63">
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>40</y>
-           <width>141</width>
+           <y>12</y>
+           <width>151</width>
            <height>16</height>
           </rect>
          </property>
@@ -2249,7 +2367,7 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Lines Sensitivity EPS:</string>
+          <string>Depth and 3D Sensing</string>
          </property>
         </widget>
        </widget>
@@ -2333,11 +2451,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>220</x>
-     <y>97</y>
+     <y>207</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>101</y>
+     <y>211</y>
     </hint>
    </hints>
   </connection>
@@ -2370,6 +2488,22 @@
     <hint type="destinationlabel">
      <x>351</x>
      <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_DFI</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdTargetObjectEccentricty_5</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>120</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>205</x>
+     <y>136</y>
     </hint>
    </hints>
   </connection>

@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include "UIStereoDisplay.h"
 #include "UICalibrationDisplay.h"
+#include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 
 extern volatile bool systemCalibrated;
 
@@ -119,6 +120,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->lowPassXSlider, SIGNAL(valueChanged(int)), this, SLOT(updateOpticalLayerParam_LowPassFilterX(int)));
     QObject::connect(ui->lowPassYSlider, SIGNAL(valueChanged(int)), this, SLOT(updateOpticalLayerParam_LowPassFilterY(int)));
 
+    QObject::connect(ui->slider_DFI, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_DFI(int)));
+
     stereoDisplay = new UIStereoDisplay();
 }
 
@@ -136,6 +139,14 @@ void MainWindow::startCalibrator()
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
 {
     Configuration::getInstance()->setStaticModelLinesSensitivityEPS(value);
+}
+
+void MainWindow::updateDynamicModel_DFI(int value)
+{
+    ZEDStereoCameraHardwareParameters zedParam = Configuration::getInstance()->getZEDStereoCameraHardwareParameters();
+    zedParam.depthFrameInterleave = value;
+    Configuration::getInstance()->setZEDStereoCameraHardwareParameters(zedParam);
+    ZEDStereoSensorDriver::getInstance()->updateDepthFrameInterleave();
 }
 
 void MainWindow::updateOpticalLayerParam_LowPassFilterX(int value)

@@ -810,7 +810,7 @@ void run()
 		stereoSALExternPtr = stereoSAL;
 		break;
 	case StereoCameraZED:
-		stereoSAL = new ZEDStereoSensorDriver();
+		stereoSAL = ZEDStereoSensorDriver::getInstance();
 		depthTech = Stereo;
 		stereoSALExternPtr = stereoSAL;
 		break;

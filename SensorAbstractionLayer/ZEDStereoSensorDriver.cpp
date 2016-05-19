@@ -22,7 +22,6 @@ ZEDStereoSensorDriver::ZEDStereoSensorDriver()
 	this->zed = new sl::zed::Camera(zed::VGA, 30);
 
 	ZEDStereoCameraHardwareParameters zedParam = Configuration::getInstance()->getZEDStereoCameraHardwareParameters();
-
 	depthFrameInterleave = zedParam.depthFrameInterleave;
 
 	switch (zedParam.performanceMode)
@@ -54,6 +53,17 @@ ZEDStereoSensorDriver::ZEDStereoSensorDriver()
 		break;
 
 	}
+}
+
+ZEDStereoSensorDriver *ZEDStereoSensorDriver::getInstance()
+{
+	static ZEDStereoSensorDriver *instance = 0;
+
+	if (!instance) {
+		instance = new ZEDStereoSensorDriver();
+	}
+
+	return instance;
 }
 
 ZEDStereoSensorDriver::~ZEDStereoSensorDriver() {
@@ -98,6 +108,14 @@ ZEDCameraProperties *ZEDStereoSensorDriver::getZEDCameraProperties()
 	return zedProperties;
 }
 
+void ZEDStereoSensorDriver::updateDepthFrameInterleave()
+{
+	ZEDStereoCameraHardwareParameters zedParam = Configuration::getInstance()->getZEDStereoCameraHardwareParameters();
+	depthFrameInterleave = zedParam.depthFrameInterleave;
+
+	printf("ZEDStereoSensorDriver :: Update :: DFI parameter updated to %d [Frames]\n", depthFrameInterleave);
+}
+
 // Fetch ZED frame
 StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 {
@@ -106,7 +124,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	frameCounter++;
 
-	if (frameCounter >= depthFrameInterleave) {
+	if (frameCounter >= depthFrameInterleave && (depthFrameInterleave > 0)) {
 		computeDepth = true;
 		computeDisparity = true;
 		frameCounter = 0;
@@ -138,12 +156,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		float x = xyz[step*(240) + 100 + 0];
 		float y = xyz[step*(240) + 100 + 1];
 		float z = xyz[step*(240) + 100 + 2];
-		//printf("[step=%d] X=%.2f, Y=%.2f Z=%.2f\n", step, x, y, z);
-		x = xyz[step*(240) + 500 + 0];
-		y = xyz[step*(240) + 500 + 1];
-		z = xyz[step*(240) + 500 + 2];
-		//printf("[step=%d] X=%.2f, Y=%.2f Z=%.2f\n", step, x, y, z);
-		//printf("======\n");
+
+		printf("ZEDStereoSensorDriver :: DEBUG :: Measuring 3D ");
 
 
 		computeDepth = false;
