@@ -10,6 +10,8 @@
 #include <zed/Camera.hpp>
 #include <zed/utils/GlobalDefine.hpp>
 
+#include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
+
 using namespace sl;
 
 Configuration *Configuration::getInstance()
@@ -27,6 +29,11 @@ Configuration::Configuration() {
 }
 
 Configuration::~Configuration() {
+}
+
+void Configuration::publish()
+{
+	ZEDStereoSensorDriver::getInstance()->updateDepthFrameInterleave();
 }
 
 void Configuration::setOperationalMode(InputSensorDevice inputDevice, ProcessingMode processingMode)

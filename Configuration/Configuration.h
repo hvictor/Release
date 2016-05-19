@@ -144,6 +144,7 @@ public:
 	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
 	void setStaticModelLinesSensitivityEPS(int value);
 	StaticModelParameters getStaticModelParameters();
+	void publish();
 
 	// Public properties
 	CalibrationData calibrationData;

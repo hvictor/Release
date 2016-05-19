@@ -8,7 +8,6 @@
 #include <pthread.h>
 #include "UIStereoDisplay.h"
 #include "UICalibrationDisplay.h"
-#include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 
 extern volatile bool systemCalibrated;
 
@@ -146,7 +145,7 @@ void MainWindow::updateDynamicModel_DFI(int value)
     ZEDStereoCameraHardwareParameters zedParam = Configuration::getInstance()->getZEDStereoCameraHardwareParameters();
     zedParam.depthFrameInterleave = value;
     Configuration::getInstance()->setZEDStereoCameraHardwareParameters(zedParam);
-    ZEDStereoSensorDriver::getInstance()->updateDepthFrameInterleave();
+    Configuration::getInstance()->publish();
 }
 
 void MainWindow::updateOpticalLayerParam_LowPassFilterX(int value)
