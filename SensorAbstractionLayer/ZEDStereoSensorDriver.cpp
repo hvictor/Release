@@ -157,7 +157,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		float y = xyz[step*(240) + 100 + 1];
 		float z = xyz[step*(240) + 100 + 2];
 
-		printf("ZEDStereoSensorDriver :: DEBUG :: Measuring 3D ");
+		printf("ZEDStereoSensorDriver :: DEBUG :: Measuring 3D\n");
 
 
 		computeDepth = false;
