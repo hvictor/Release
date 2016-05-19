@@ -33,6 +33,7 @@ public slots:
     void updateStaticModel_LinesSensitivityEPS(int value);
     void updateOpticalLayerParam_LowPassFilterY(int value);
     void updateOpticalLayerParam_LowPassFilterX(int value);
+    void updateDynamicModel_DFI(int value);
 };
 
 #endif // MAINWINDOW_H
