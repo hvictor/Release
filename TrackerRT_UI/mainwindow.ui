@@ -27,7 +27,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -2026,7 +2026,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>330</x>
+            <x>370</x>
             <y>10</y>
             <width>51</width>
             <height>18</height>
@@ -2042,7 +2042,7 @@
          <widget class="QSlider" name="lowPassXSlider">
           <property name="geometry">
            <rect>
-            <x>220</x>
+            <x>260</x>
             <y>8</y>
             <width>101</width>
             <height>20</height>
@@ -2064,7 +2064,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>330</x>
+            <x>370</x>
             <y>30</y>
             <width>51</width>
             <height>18</height>
@@ -2082,7 +2082,7 @@
            <rect>
             <x>9</x>
             <y>8</y>
-            <width>211</width>
+            <width>241</width>
             <height>20</height>
            </rect>
           </property>
@@ -2099,7 +2099,7 @@
          <widget class="QSlider" name="lowPassYSlider">
           <property name="geometry">
            <rect>
-            <x>220</x>
+            <x>260</x>
             <y>28</y>
             <width>101</width>
             <height>20</height>
@@ -2135,7 +2135,7 @@
         <widget class="QLabel" name="label_60">
          <property name="geometry">
           <rect>
-           <x>400</x>
+           <x>440</x>
            <y>30</y>
            <width>21</width>
            <height>16</height>
@@ -2151,7 +2151,7 @@
         <widget class="QLabel" name="label_61">
          <property name="geometry">
           <rect>
-           <x>400</x>
+           <x>440</x>
            <y>50</y>
            <width>21</width>
            <height>16</height>
@@ -2187,7 +2187,7 @@
          <widget class="QSlider" name="fldModel_sensitivityEpsSlider">
           <property name="geometry">
            <rect>
-            <x>160</x>
+            <x>180</x>
             <y>20</y>
             <width>91</width>
             <height>19</height>
@@ -2206,7 +2206,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>260</x>
+            <x>280</x>
             <y>20</y>
             <width>51</width>
             <height>18</height>
@@ -2224,7 +2224,7 @@
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>141</width>
+            <width>161</width>
             <height>16</height>
            </rect>
           </property>
@@ -2305,7 +2305,7 @@
          <widget class="QSlider" name="slider_DFI">
           <property name="geometry">
            <rect>
-            <x>50</x>
+            <x>60</x>
             <y>50</y>
             <width>91</width>
             <height>19</height>
@@ -2324,7 +2324,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>150</x>
+            <x>160</x>
             <y>50</y>
             <width>51</width>
             <height>18</height>
@@ -2359,7 +2359,7 @@
           <rect>
            <x>20</x>
            <y>12</y>
-           <width>151</width>
+           <width>181</width>
            <height>16</height>
           </rect>
          </property>
