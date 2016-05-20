@@ -45,6 +45,9 @@ void OverlayRenderer::renderFieldDelimiter_8UC4(uint8_t *u8data, int width, int 
 
 void OverlayRenderer::renderFieldDelimiter_Mat8UC4(Mat frame_RGBA, TennisFieldDelimiter *fieldDelimiter)
 {
+	if (fieldDelimiter == 0)
+		return;
+
 	line(frame_RGBA, fieldDelimiter->topLeft, fieldDelimiter->topRight, Scalar(0, 255, 0, 255), 3);
 	line(frame_RGBA, fieldDelimiter->topRight, fieldDelimiter->bottomRight, Scalar(0, 255, 0, 255), 3);
 	line(frame_RGBA, fieldDelimiter->bottomRight, fieldDelimiter->bottomLeft, Scalar(0, 255, 0, 255), 3);

@@ -27,7 +27,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -272,10 +272,10 @@
          <widget class="QSlider" name="horizontalSlider">
           <property name="geometry">
            <rect>
-            <x>180</x>
+            <x>220</x>
             <y>20</y>
-            <width>141</width>
-            <height>19</height>
+            <width>101</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="maximum">
@@ -293,7 +293,7 @@
            <rect>
             <x>0</x>
             <y>20</y>
-            <width>81</width>
+            <width>91</width>
             <height>16</height>
            </rect>
           </property>
@@ -304,9 +304,9 @@
          <widget class="QCheckBox" name="checkBox">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>110</x>
             <y>20</y>
-            <width>71</width>
+            <width>81</width>
             <height>20</height>
            </rect>
           </property>
@@ -319,7 +319,7 @@
            <rect>
             <x>0</x>
             <y>40</y>
-            <width>81</width>
+            <width>91</width>
             <height>16</height>
            </rect>
           </property>
@@ -330,9 +330,9 @@
          <widget class="QSlider" name="horizontalSlider_3">
           <property name="geometry">
            <rect>
-            <x>180</x>
+            <x>220</x>
             <y>40</y>
-            <width>141</width>
+            <width>101</width>
             <height>20</height>
            </rect>
           </property>
@@ -351,7 +351,7 @@
            <rect>
             <x>0</x>
             <y>60</y>
-            <width>81</width>
+            <width>91</width>
             <height>16</height>
            </rect>
           </property>
@@ -364,7 +364,7 @@
            <rect>
             <x>0</x>
             <y>80</y>
-            <width>81</width>
+            <width>91</width>
             <height>16</height>
            </rect>
           </property>
@@ -375,9 +375,9 @@
          <widget class="QCheckBox" name="checkBox_3">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>110</x>
             <y>40</y>
-            <width>71</width>
+            <width>81</width>
             <height>20</height>
            </rect>
           </property>
@@ -388,9 +388,9 @@
          <widget class="QCheckBox" name="checkBox_4">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>110</x>
             <y>60</y>
-            <width>71</width>
+            <width>81</width>
             <height>20</height>
            </rect>
           </property>
@@ -401,9 +401,9 @@
          <widget class="QCheckBox" name="checkBox_5">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>110</x>
             <y>80</y>
-            <width>71</width>
+            <width>81</width>
             <height>20</height>
            </rect>
           </property>
@@ -414,9 +414,9 @@
          <widget class="QSlider" name="horizontalSlider_4">
           <property name="geometry">
            <rect>
-            <x>180</x>
+            <x>220</x>
             <y>60</y>
-            <width>141</width>
+            <width>101</width>
             <height>20</height>
            </rect>
           </property>
@@ -430,9 +430,9 @@
          <widget class="QSlider" name="horizontalSlider_5">
           <property name="geometry">
            <rect>
-            <x>180</x>
+            <x>220</x>
             <y>80</y>
-            <width>141</width>
+            <width>101</width>
             <height>20</height>
            </rect>
           </property>
@@ -840,7 +840,7 @@
           <rect>
            <x>480</x>
            <y>252</y>
-           <width>81</width>
+           <width>111</width>
            <height>16</height>
           </rect>
          </property>
@@ -2291,7 +2291,7 @@
            <rect>
             <x>7</x>
             <y>20</y>
-            <width>281</width>
+            <width>321</width>
             <height>20</height>
            </rect>
           </property>

@@ -33,7 +33,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>231</width>
+      <width>271</width>
       <height>16</height>
      </rect>
     </property>
@@ -46,7 +46,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>91</width>
+      <width>161</width>
       <height>16</height>
      </rect>
     </property>
@@ -59,7 +59,7 @@
      <rect>
       <x>10</x>
       <y>50</y>
-      <width>131</width>
+      <width>161</width>
       <height>16</height>
      </rect>
     </property>
@@ -72,7 +72,7 @@
      <rect>
       <x>10</x>
       <y>70</y>
-      <width>131</width>
+      <width>161</width>
       <height>16</height>
      </rect>
     </property>
@@ -83,9 +83,9 @@
    <widget class="QSlider" name="duoGainSlider">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>200</x>
       <y>30</y>
-      <width>181</width>
+      <width>131</width>
       <height>20</height>
      </rect>
     </property>
@@ -102,9 +102,9 @@
    <widget class="QSlider" name="duoExposureSlider">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>200</x>
       <y>50</y>
-      <width>181</width>
+      <width>131</width>
       <height>20</height>
      </rect>
     </property>
@@ -121,9 +121,9 @@
    <widget class="QSlider" name="duoIRLEDSlider">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>200</x>
       <y>70</y>
-      <width>181</width>
+      <width>131</width>
       <height>20</height>
      </rect>
     </property>
