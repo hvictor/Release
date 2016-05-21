@@ -40,6 +40,8 @@ public slots:
     void updateDynamicModel_VisualizePredatorTrackingWindow(bool status);
     void updateDynamicModel_SetTrackingWindowMode(TrackingWindowMode tWndMode);
     void updateDynamicModel_SetTrackingWindowSize(int size);
+    void trackingWindowSetAdaptiveTrackingWindow(bool status);
+    void trackingWindowSetStaticTrackingWindow(bool status);
 };
 
 #endif // MAINWINDOW_H

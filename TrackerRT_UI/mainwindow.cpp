@@ -124,6 +124,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->checkBox_enableDepthMeasurements, SIGNAL(toggled(bool)), this, SLOT(toggleDepthMeasurementsStatus(bool)));
     QObject::connect(ui->checkBox_tgtPred_UseWnd, SIGNAL(toggled(bool)), this, SLOT(trackingWindowUseToggled(bool)));
 
+    QObject::connect(ui->radioButton_tgtPred_AdaptiveTWND, SIGNAL(clicked(bool)), this, SLOT(trackingWindowSetAdaptiveTrackingWindow(bool)));
+    QObject::connect(ui->radioButton_tgtPred_StaticTWND, SIGNAL(clicked(bool)), this, SLOT(trackingWindowSetStaticTrackingWindow(bool)));
+    QObject::connect(ui->slider_tgtPred_TrackingWndSize, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetTrackingWindowSize(int)));
+
     stereoDisplay = new UIStereoDisplay();
 }
 
@@ -136,6 +140,20 @@ void MainWindow::startCalibrator()
 {
     UICalibrationDisplay *uiCalibratorDisplay = new UICalibrationDisplay();
     uiCalibratorDisplay->show();
+}
+
+void MainWindow::trackingWindowSetAdaptiveTrackingWindow(bool status)
+{
+    if (status) {
+        updateDynamicModel_SetTrackingWindowMode(AdaptiveTrackingWindow);
+    }
+}
+
+void MainWindow::trackingWindowSetStaticTrackingWindow(bool status)
+{
+    if (status) {
+        updateDynamicModel_SetTrackingWindowMode(StaticTrackingWindow);
+    }
 }
 
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)

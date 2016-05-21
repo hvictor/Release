@@ -249,12 +249,6 @@ void *frames_processor(void *)
 			OverlayRenderer::getInstance()->renderTargetTracker(frame0_L, targetPosition);
 			OverlayRenderer::getInstance()->renderPredatorState(frame0_L, tgtPredator);
 
-			printf("Wnd Enabled=%d, Visualize=%d, Mode=%d, Size=%d\n",
-					configuration->dynamicModelParameters.trackingWndEnabled,
-					configuration->dynamicModelParameters.visualizeTrackingWnd,
-					configuration->dynamicModelParameters.trackingWndMode,
-					configuration->dynamicModelParameters.trackingWndSize);
-
 			if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
 				OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame0_L, tgtPredator->get_tracking_wnd());
 			}

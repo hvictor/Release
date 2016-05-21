@@ -115,6 +115,8 @@ void TargetPredator::update_state(int x, int y)
 		}
 		else if (_configuration->dynamicModelParameters.trackingWndMode == AdaptiveTrackingWindow) {
 			_configuration->dynamicModelParameters.trackingWndSize = std::max(tracker_state.Vx, tracker_state.Vy);
+			trackingWnd.w = _configuration->dynamicModelParameters.trackingWndSize;
+			trackingWnd.h = _configuration->dynamicModelParameters.trackingWndSize;
 		}
 	}
 }
