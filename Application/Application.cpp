@@ -248,7 +248,10 @@ void *frames_processor(void *)
 			Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 			OverlayRenderer::getInstance()->renderTargetTracker(frame0_L, targetPosition);
 			OverlayRenderer::getInstance()->renderPredatorState(frame0_L, tgtPredator);
-			//OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame0_L, tgtPredator->get_tracking_wnd());
+
+			if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
+				OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame0_L, tgtPredator->get_tracking_wnd());
+			}
 		}
 
 		///////////////////////////////////////////////////////////////////////////////

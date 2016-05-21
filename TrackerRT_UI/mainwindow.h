@@ -34,6 +34,12 @@ public slots:
     void updateOpticalLayerParam_LowPassFilterY(int value);
     void updateOpticalLayerParam_LowPassFilterX(int value);
     void updateDynamicModel_DFI(int value);
+    void toggleDepthMeasurementsStatus(bool status);
+    void trackingWindowUseToggled(bool status);
+    void updateDynamicModel_UsePredatorTrackingWindow(bool status);
+    void updateDynamicModel_VisualizePredatorTrackingWindow(bool status);
+    void updateDynamicModel_SetTrackingWindowMode(TrackingWindowMode tWndMode);
+    void updateDynamicModel_SetTrackingWindowSize(int size);
 };
 
 #endif // MAINWINDOW_H

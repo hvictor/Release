@@ -60,6 +60,12 @@ enum ZEDSensingMode
 	FullSensing
 };
 
+enum TrackingWindowMode
+{
+	AdaptiveTrackingWindow,
+	StaticTrackingWindow
+};
+
 typedef struct
 {
 	// Input Device
@@ -131,6 +137,14 @@ typedef struct
 	int linesSensitivityEPS;
 } StaticModelParameters;
 
+typedef struct
+{
+	bool trackingWndEnabled;
+	bool visualizeTrackingWnd;
+	TrackingWindowMode trackingWndMode;
+	int trackingWndSize;
+} DynamicModelParameters;
+
 class Configuration {
 public:
 
@@ -144,6 +158,7 @@ public:
 	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
 	void setStaticModelLinesSensitivityEPS(int value);
 	StaticModelParameters getStaticModelParameters();
+	DynamicModelParameters dynamicModelParameters;
 	void publish();
 
 	// Public properties

@@ -279,7 +279,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 void OverlayRenderer::renderPredatorTrackingWnd(Mat frame, pred_wnd_t predTrackingWnd)
 {
 	rectangle(frame, Point(predTrackingWnd.cx - predTrackingWnd.w/2, predTrackingWnd.cy - predTrackingWnd.h/2),
-			Point(predTrackingWnd.cx + predTrackingWnd.w/2, predTrackingWnd.cy + predTrackingWnd.h/2), OVERLAY_COLOR_YELLOW, 2);
+			Point(predTrackingWnd.cx + predTrackingWnd.w/2, predTrackingWnd.cy + predTrackingWnd.h/2), OVERLAY_COLOR_YELLOW_RGBA, 2);
 }
 
 void OverlayRenderer::renderTennisNet(Mat frame, Mat netPoints, Mat netVisualPoints)

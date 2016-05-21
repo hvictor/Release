@@ -121,6 +121,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->slider_DFI, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_DFI(int)));
 
+    QObject::connect(ui->checkBox_enableDepthMeasurements, SIGNAL(toggled(bool)), this, SLOT(toggleDepthMeasurementsStatus(bool)));
+    QObject::connect(ui->checkBox_tgtPred_UseWnd, SIGNAL(toggled(bool)), this, SLOT(trackingWindowUseToggled(bool)));
+
     stereoDisplay = new UIStereoDisplay();
 }
 
@@ -185,6 +188,22 @@ void MainWindow::cpuCoreChanged(int value)
         //this->ui->labelPeakGPU->setText(QString("Peak ") + QString::number(CircularIndicator::gpu_freq[value]) + " [MHz]");
 }
 
+void MainWindow::toggleDepthMeasurementsStatus(bool status)
+{
+    if (!status) {
+        ui->label_DFI->setEnabled(false);
+        ui->slider_DFI->setEnabled(false);
+        ui->lcd_DFI->setEnabled(false);
+        updateDynamicModel_DFI(0);
+    }
+    else {
+        ui->label_DFI->setEnabled(true);
+        ui->slider_DFI->setEnabled(true);
+        ui->lcd_DFI->setEnabled(true);
+        updateDynamicModel_DFI((int)ui->lcd_DFI->value());
+    }
+}
+
 void MainWindow::updateViewProcessingMode(int processingMode)
 {
     if (processingMode == 0) {
@@ -209,4 +228,62 @@ void MainWindow::startApplication()
     systemCalibrated = true;
     stereoDisplay->init(false, true);
     stereoDisplay->show();
+}
+
+void MainWindow::trackingWindowUseToggled(bool status)
+{
+    if (status) {
+        ui->checkBox_tgtPred_VisualizeWnd->setEnabled(true);
+        ui->radioButton_tgtPred_AdaptiveTWND->setEnabled(true);
+        ui->radioButton_tgtPred_StaticTWND->setEnabled(true);
+        ui->label_tgtPred_TrackingWndSize->setEnabled(true);
+        ui->slider_tgtPred_TrackingWndSize->setEnabled(true);
+        ui->lcd_tgtPredTrackingWndSize->setEnabled(true);
+
+        updateDynamicModel_UsePredatorTrackingWindow(true);
+        updateDynamicModel_VisualizePredatorTrackingWindow(ui->checkBox_tgtPred_VisualizeWnd->isChecked());
+        updateDynamicModel_SetTrackingWindowSize(ui->slider_tgtPred_TrackingWndSize->value());
+
+        if (ui->radioButton_tgtPred_AdaptiveTWND->isChecked())
+        {
+            updateDynamicModel_SetTrackingWindowMode(AdaptiveTrackingWindow);
+        }
+        else if (ui->radioButton_tgtPred_StaticTWND->isChecked())
+        {
+            updateDynamicModel_SetTrackingWindowMode(StaticTrackingWindow);
+        }
+
+    }
+    else {
+        updateDynamicModel_UsePredatorTrackingWindow(false);
+        updateDynamicModel_VisualizePredatorTrackingWindow(false);
+
+        ui->checkBox_tgtPred_VisualizeWnd->setEnabled(false);
+        ui->radioButton_tgtPred_AdaptiveTWND->setEnabled(false);
+        ui->radioButton_tgtPred_StaticTWND->setEnabled(false);
+        ui->label_tgtPred_TrackingWndSize->setEnabled(false);
+        ui->slider_tgtPred_TrackingWndSize->setEnabled(false);
+        ui->lcd_tgtPredTrackingWndSize->setEnabled(false);
+
+    }
+}
+
+void MainWindow::updateDynamicModel_UsePredatorTrackingWindow(bool status)
+{
+    Configuration::getInstance()->dynamicModelParameters.trackingWndEnabled = status;
+}
+
+void MainWindow::updateDynamicModel_VisualizePredatorTrackingWindow(bool status)
+{
+    Configuration::getInstance()->dynamicModelParameters.visualizeTrackingWnd = status;
+}
+
+void MainWindow::updateDynamicModel_SetTrackingWindowMode(TrackingWindowMode tWndMode)
+{
+    Configuration::getInstance()->dynamicModelParameters.trackingWndMode = tWndMode;
+}
+
+void MainWindow::updateDynamicModel_SetTrackingWindowSize(int size)
+{
+    Configuration::getInstance()->dynamicModelParameters.trackingWndSize = size;
 }

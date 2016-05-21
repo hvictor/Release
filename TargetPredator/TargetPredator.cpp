@@ -11,6 +11,7 @@
 
 TargetPredator::TargetPredator()
 {
+	_configuration = Configuration::getInstance();
 	_staticModel = TennisFieldStaticModel::getInstance();
 	_lowPassFilterX = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterX;
 	_lowPassFilterY = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterY;
@@ -105,8 +106,17 @@ void TargetPredator::update_state(int x, int y)
 
 	trackingWnd.cx = x;
 	trackingWnd.cy = y;
-	trackingWnd.w = 100;
-	trackingWnd.h = 100;
+
+	if (_configuration->dynamicModelParameters.trackingWndEnabled) {
+
+		if (_configuration->dynamicModelParameters.trackingWndMode == StaticTrackingWindow) {
+			trackingWnd.w = _configuration->dynamicModelParameters.trackingWndSize;
+			trackingWnd.h = _configuration->dynamicModelParameters.trackingWndSize;
+		}
+		else if (_configuration->dynamicModelParameters.trackingWndMode == AdaptiveTrackingWindow) {
+			_configuration->dynamicModelParameters.trackingWndSize = std::max(tracker_state.Vx, tracker_state.Vy);
+		}
+	}
 }
 
 pred_wnd_t TargetPredator::get_tracking_wnd()

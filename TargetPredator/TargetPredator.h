@@ -69,6 +69,8 @@ private:
 
 	double _lowPassFilterX;
 	double _lowPassFilterY;
+
+	Configuration *_configuration;
 };
 
 #endif /* TARGETPREDATOR_H_ */

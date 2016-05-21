@@ -23,6 +23,7 @@
 #define OVERLAY_COLOR_BLUE_RGBA		Scalar(255, 0, 0, 255)
 #define OVERLAY_COLOR_RED			Scalar(0, 0, 255)
 #define OVERLAY_COLOR_YELLOW		Scalar(0, 255, 255)
+#define OVERLAY_COLOR_YELLOW_RGBA	Scalar(255, 255, 0, 255)
 #define OVERLAY_COLOR_ORANGE		Scalar(0, 200, 255)
 
 class OverlayRenderer {
