@@ -257,6 +257,7 @@ void MainWindow::trackingWindowUseToggled(bool status)
     else {
         updateDynamicModel_UsePredatorTrackingWindow(false);
         updateDynamicModel_VisualizePredatorTrackingWindow(false);
+        updateDynamicModel_SetTrackingWindowSize(ui->slider_tgtPred_TrackingWndSize->value());
 
         ui->checkBox_tgtPred_VisualizeWnd->setEnabled(false);
         ui->radioButton_tgtPred_AdaptiveTWND->setEnabled(false);
