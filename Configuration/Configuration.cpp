@@ -34,6 +34,7 @@ Configuration::~Configuration() {
 void Configuration::publish()
 {
 	ZEDStereoSensorDriver::getInstance()->updateDepthFrameInterleave();
+	TargetPredator::getInstance()->update_free_play_param();
 }
 
 void Configuration::setOperationalMode(InputSensorDevice inputDevice, ProcessingMode processingMode)

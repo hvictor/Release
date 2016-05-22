@@ -59,6 +59,7 @@ public:
 	void update_state(int x, int y);
 	list<pred_state_t> *get_state();
 	void update_filter_param();
+	void update_free_play_param();
 
 private:
 	TargetPredator();
@@ -69,6 +70,8 @@ private:
 
 	double _lowPassFilterX;
 	double _lowPassFilterY;
+
+	bool _freePlay;
 
 	Configuration *_configuration;
 };

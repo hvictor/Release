@@ -139,6 +139,7 @@ typedef struct
 
 typedef struct
 {
+	bool freePlay;
 	bool trackingWndEnabled;
 	bool visualizeTrackingWnd;
 	TrackingWindowMode trackingWndMode;

@@ -96,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mdiArea_5->addSubWindow(subWindowGPU);
 
     QObject::connect(ui->calibratorBtn, SIGNAL(clicked()), this, SLOT(startCalibrator()));
+    QObject::connect(ui->btnSaveConfig, SIGNAL(clicked()), this, SLOT(saveConfig()));
 
     // Processing Mode
     QObject::connect(ui->processingModeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setProcessingMode(int)));
@@ -127,6 +128,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->radioButton_tgtPred_AdaptiveTWND, SIGNAL(clicked(bool)), this, SLOT(trackingWindowSetAdaptiveTrackingWindow(bool)));
     QObject::connect(ui->radioButton_tgtPred_StaticTWND, SIGNAL(clicked(bool)), this, SLOT(trackingWindowSetStaticTrackingWindow(bool)));
     QObject::connect(ui->slider_tgtPred_TrackingWndSize, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetTrackingWindowSize(int)));
+
+    QObject::connect(ui->checkBox_playSettings_FreePlay, SIGNAL(toggled(bool)), this, SLOT(updateDynamicModel_SetFreePlay(bool)));
 
     stereoDisplay = new UIStereoDisplay();
 }
@@ -241,11 +244,23 @@ void MainWindow::chooseRecordDirectory()
     dialog->show();
 }
 
+void MainWindow::saveConfig()
+{
+    Configuration::getInstance()->writeConfigFile("/home/ubuntu/Release/config_recording.xml");
+    printf("Configuration file written.\n");
+}
+
 void MainWindow::startApplication()
 {
     systemCalibrated = true;
     stereoDisplay->init(false, true);
     stereoDisplay->show();
+}
+
+void MainWindow::updateDynamicModel_SetFreePlay(bool status)
+{
+    Configuration::getInstance()->dynamicModelParameters.freePlay = status;
+    Configuration::getInstance()->publish();
 }
 
 void MainWindow::trackingWindowUseToggled(bool status)

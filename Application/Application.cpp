@@ -239,8 +239,10 @@ void *frames_processor(void *)
 		//pred_scan_t engage_data = tgtPredator->engage_Mat8UC1(f_8UC1_0, width, height);
 
 		// Render Field Delimiter and Score
-		OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame0_L, fieldDelimiter);
-		OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame0_L, staticModel);
+		if (!configuration->dynamicModelParameters.freePlay) {
+			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame0_L, fieldDelimiter);
+			OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame0_L, staticModel);
+		}
 
 		// Update Predator
 		if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
@@ -844,9 +846,8 @@ void run()
 		printf("SYSTEM :: Waiting for calibration parameters...\n");
 	}
 
-
-	printf("SYSTEM :: (DISABLE ME) Writing config file.\n");
-	configuration->writeConfigFile("config_recording.xml");
+//	printf("SYSTEM :: (DISABLE ME) Writing config file.\n");
+//	configuration->writeConfigFile("config_recording.xml");
 
 	switch (depthTech)
 	{

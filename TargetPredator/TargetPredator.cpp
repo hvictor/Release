@@ -40,6 +40,13 @@ void TargetPredator::update_filter_param()
 	printf("TargetPredator :: Filter :: x=%.2f, y=%.2f\n", _lowPassFilterX, _lowPassFilterY);
 }
 
+void TargetPredator::update_free_play_param()
+{
+	_freePlay = Configuration::getInstance()->dynamicModelParameters.freePlay;
+
+	printf("TargetPredator :: Play :: Free Play = %d\n", _freePlay);
+}
+
 list<pred_state_t> *TargetPredator::get_state()
 {
 	return &state;
@@ -98,7 +105,10 @@ void TargetPredator::update_state(int x, int y)
 	if (state.size() > 1) {
 		if (compute_impact_status((double)prev->Vx, (double)prev->Vy, (double)tracker_state.Vx, (double)tracker_state.Vy)) {
 			tracker_state.impact_status = true;
-			_staticModel->updateScoreTracking_2D((double)prev->x, (double)prev->y);
+
+			if (!_freePlay) {
+				_staticModel->updateScoreTracking_2D((double)prev->x, (double)prev->y);
+			}
 		}
 	}
 
