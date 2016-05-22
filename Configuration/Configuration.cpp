@@ -11,6 +11,7 @@
 #include <zed/utils/GlobalDefine.hpp>
 
 #include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
+#include "../TargetPredator/TargetPredator.h"
 
 using namespace sl;
 

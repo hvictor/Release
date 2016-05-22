@@ -17,7 +17,6 @@
 #include <time.h>
 #include <string>
 #include "../OpticalLayer/HSVManager.h"
-#include "../TargetPredator/TargetPredator.h"
 
 using namespace std;
 using namespace cv;
