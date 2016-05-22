@@ -231,6 +231,8 @@ void *frames_processor(void *)
 
 		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
 		//hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
+		printf("Application :: Using HSV range: %d %d %d - %d %d %d\n", hsvRangeTGT.Hmin,
+				hsvRangeTGT.Smin, hsvRangeTGT.Vmin, hsvRangeTGT.Hmax, hsvRangeTGT.Smax, hsvRangeTGT.Vmax);
 		hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
 		//f_8UC1_0 = hsvManager->filterHSVRange_out_Mat8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT);
 
