@@ -219,12 +219,12 @@ void Configuration::loadConfigFile(string fileName)
 	fs["InterpolationEngine_ExtremaNeighbourhoodSize"] >> interpolationEngineParameters.extremaNeighbourhoodSize;
 
 	// Calibration Data
-	fs["CalibrationData_TGT_Hmin"] >> (int)calibrationData.targetHSVRange.Hmin;
-	fs["CalibrationData_TGT_Smin"] >> (int)calibrationData.targetHSVRange.Smin;
-	fs["CalibrationData_TGT_Vmin"] >> (int)calibrationData.targetHSVRange.Vmin;
-	fs["CalibrationData_TGT_Hmax"] >> (int)calibrationData.targetHSVRange.Hmax;
-	fs["CalibrationData_TGT_Smax"] >> (int)calibrationData.targetHSVRange.Smax;
-	fs["CalibrationData_TGT_Vmax"] >> (int)calibrationData.targetHSVRange.Vmax;
+	fs["CalibrationData_TGT_Hmin"] >> calibrationData.targetHSVRange.Hmin;
+	fs["CalibrationData_TGT_Smin"] >> calibrationData.targetHSVRange.Smin;
+	fs["CalibrationData_TGT_Vmin"] >> calibrationData.targetHSVRange.Vmin;
+	fs["CalibrationData_TGT_Hmax"] >> calibrationData.targetHSVRange.Hmax;
+	fs["CalibrationData_TGT_Smax"] >> calibrationData.targetHSVRange.Smax;
+	fs["CalibrationData_TGT_Vmax"] >> calibrationData.targetHSVRange.Vmax;
 }
 
 void Configuration::display()
@@ -261,4 +261,12 @@ void Configuration::display()
 	cout << "\tDepth Frame Interleave:\t\t" << zedHardwareParameters.depthFrameInterleave << endl;
 	cout << "[Interpolation Engine]" << endl;
 	cout << "\tExtrema Neighbourhood Size:\t" << interpolationEngineParameters.extremaNeighbourhoodSize << endl;
+
+	cout << "[Calibration Data]\n" << endl;
+	cout << "CalibrationData_TGT_Hmin: " << calibrationData.targetHSVRange.Hmin << endl;
+	cout << "CalibrationData_TGT_Smin: " << calibrationData.targetHSVRange.Smin << endl;
+	cout << "CalibrationData_TGT_Vmin: " << calibrationData.targetHSVRange.Vmin << endl;
+	cout << "CalibrationData_TGT_Hmax: " << calibrationData.targetHSVRange.Hmax << endl;
+	cout << "CalibrationData_TGT_Smax: " << calibrationData.targetHSVRange.Smax << endl;
+	cout << "CalibrationData_TGT_Vmax: " << calibrationData.targetHSVRange.Vmax << endl;
 }
