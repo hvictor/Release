@@ -27,7 +27,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -2436,10 +2436,10 @@
          <widget class="QSlider" name="slider_tgtPred_TrackingWndSize">
           <property name="geometry">
            <rect>
-            <x>260</x>
+            <x>360</x>
             <y>70</y>
-            <width>131</width>
-            <height>19</height>
+            <width>81</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="minimum">
@@ -2458,7 +2458,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>400</x>
+            <x>445</x>
             <y>70</y>
             <width>51</width>
             <height>18</height>
@@ -2474,9 +2474,9 @@
          <widget class="QLabel" name="label_tgtPred_TrackingWndSize">
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>243</x>
             <y>70</y>
-            <width>161</width>
+            <width>51</width>
             <height>16</height>
            </rect>
           </property>
@@ -2484,7 +2484,7 @@
            <bool>true</bool>
           </property>
           <property name="text">
-           <string>Tracking Window Size:</string>
+           <string>Size:</string>
           </property>
          </widget>
          <widget class="QCheckBox" name="checkBox_tgtPred_VisualizeWnd">
@@ -2493,7 +2493,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>260</x>
+            <x>240</x>
             <y>20</y>
             <width>231</width>
             <height>20</height>
@@ -2525,9 +2525,9 @@
          <widget class="QRadioButton" name="radioButton_tgtPred_StaticTWND">
           <property name="geometry">
            <rect>
-            <x>260</x>
-            <y>40</y>
-            <width>211</width>
+            <x>10</x>
+            <y>70</y>
+            <width>181</width>
             <height>20</height>
            </rect>
           </property>
@@ -2537,6 +2537,42 @@
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_3</string>
           </attribute>
+         </widget>
+         <widget class="QLabel" name="label_tgtPred_TrackingWndSize_2">
+          <property name="geometry">
+           <rect>
+            <x>243</x>
+            <y>40</y>
+            <width>101</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Factor [x, y]:</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_AdaptiveTrackingWndX">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>40</y>
+            <width>68</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_AdaptiveTrackingWndY">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>40</y>
+            <width>68</width>
+            <height>21</height>
+           </rect>
+          </property>
          </widget>
         </widget>
         <widget class="QLabel" name="label_69">

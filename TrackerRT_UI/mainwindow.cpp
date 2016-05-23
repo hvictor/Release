@@ -124,12 +124,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->checkBox_enableDepthMeasurements, SIGNAL(toggled(bool)), this, SLOT(toggleDepthMeasurementsStatus(bool)));
     QObject::connect(ui->checkBox_tgtPred_UseWnd, SIGNAL(toggled(bool)), this, SLOT(trackingWindowUseToggled(bool)));
+    QObject::connect(ui->checkBox_tgtPred_VisualizeWnd, SIGNAL(toggled(bool)), this, SLOT(trackingWindowVisualizeToggled(bool)));
 
-    QObject::connect(ui->radioButton_tgtPred_AdaptiveTWND, SIGNAL(clicked(bool)), this, SLOT(trackingWindowSetAdaptiveTrackingWindow(bool)));
-    QObject::connect(ui->radioButton_tgtPred_StaticTWND, SIGNAL(clicked(bool)), this, SLOT(trackingWindowSetStaticTrackingWindow(bool)));
+    QObject::connect(ui->radioButton_tgtPred_AdaptiveTWND, SIGNAL(toggled(bool)), this, SLOT(trackingWindowSetAdaptiveTrackingWindow(bool)));
+    QObject::connect(ui->radioButton_tgtPred_StaticTWND, SIGNAL(toggled(bool)), this, SLOT(trackingWindowSetStaticTrackingWindow(bool)));
     QObject::connect(ui->slider_tgtPred_TrackingWndSize, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetTrackingWindowSize(int)));
 
     QObject::connect(ui->checkBox_playSettings_FreePlay, SIGNAL(toggled(bool)), this, SLOT(updateDynamicModel_SetFreePlay(bool)));
+
+    QObject::connect(ui->doubleSpinBox_AdaptiveTrackingWndX, SIGNAL(valueChanged(double)), this, SLOT(updateDynamicModel_SetAdaptiveTrackingWndX(double)));
+    QObject::connect(ui->doubleSpinBox_AdaptiveTrackingWndY, SIGNAL(valueChanged(double)), this, SLOT(updateDynamicModel_SetAdaptiveTrackingWndY(double)));
 
     stereoDisplay = new UIStereoDisplay();
 }
@@ -257,10 +261,29 @@ void MainWindow::startApplication()
     stereoDisplay->show();
 }
 
+void MainWindow::updateDynamicModel_SetAdaptiveTrackingWndX(double fx)
+{
+    Configuration::getInstance()->dynamicModelParameters.trackingWndAdaptiveFactorX = fx;
+
+    printf("Dynamic Model :: Update :: Adaptive Tracking Window: Factor X: %.2f\n", fx);
+}
+
+void MainWindow::updateDynamicModel_SetAdaptiveTrackingWndX(double fy)
+{
+    Configuration::getInstance()->dynamicModelParameters.trackingWndAdaptiveFactorY = fy;
+
+    printf("Dynamic Model :: Update :: Adaptive Tracking Window: Factor Y: %.2f\n", fy);
+}
+
 void MainWindow::updateDynamicModel_SetFreePlay(bool status)
 {
     Configuration::getInstance()->dynamicModelParameters.freePlay = status;
     Configuration::getInstance()->publish();
+}
+
+void MainWindow::trackingWindowVisualizeToggled(bool status)
+{
+    Configuration::getInstance()->dynamicModelParameters.visualizeTrackingWnd = status;
 }
 
 void MainWindow::trackingWindowUseToggled(bool status)
@@ -272,6 +295,8 @@ void MainWindow::trackingWindowUseToggled(bool status)
         ui->label_tgtPred_TrackingWndSize->setEnabled(true);
         ui->slider_tgtPred_TrackingWndSize->setEnabled(true);
         ui->lcd_tgtPredTrackingWndSize->setEnabled(true);
+        ui->doubleSpinBox_AdaptiveTrackingWndX->setEnabled(true);
+        ui->doubleSpinBox_AdaptiveTrackingWndY->setEnabled(true);
 
         updateDynamicModel_UsePredatorTrackingWindow(true);
         updateDynamicModel_VisualizePredatorTrackingWindow(ui->checkBox_tgtPred_VisualizeWnd->isChecked());
@@ -298,7 +323,8 @@ void MainWindow::trackingWindowUseToggled(bool status)
         ui->label_tgtPred_TrackingWndSize->setEnabled(false);
         ui->slider_tgtPred_TrackingWndSize->setEnabled(false);
         ui->lcd_tgtPredTrackingWndSize->setEnabled(false);
-
+        ui->doubleSpinBox_AdaptiveTrackingWndX->setEnabled(false);
+        ui->doubleSpinBox_AdaptiveTrackingWndY->setEnabled(false);
     }
 }
 

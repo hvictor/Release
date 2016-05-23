@@ -40,6 +40,8 @@ public slots:
     void updateDynamicModel_VisualizePredatorTrackingWindow(bool status);
     void updateDynamicModel_SetTrackingWindowMode(TrackingWindowMode tWndMode);
     void updateDynamicModel_SetTrackingWindowSize(int size);
+    void updateDynamicModel_SetAdaptiveTrackingWndX(double fx);
+    void updateDynamicModel_SetAdaptiveTrackingWndY(double fy);
     void trackingWindowSetAdaptiveTrackingWindow(bool status);
     void trackingWindowSetStaticTrackingWindow(bool status);
     void updateDynamicModel_SetFreePlay(bool status);

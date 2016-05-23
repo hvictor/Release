@@ -144,6 +144,8 @@ typedef struct
 	bool visualizeTrackingWnd;
 	TrackingWindowMode trackingWndMode;
 	int trackingWndSize;
+	double trackingWndAdaptiveFactorX;
+	double trackingWndAdaptiveFactorY;
 } DynamicModelParameters;
 
 class Configuration {
