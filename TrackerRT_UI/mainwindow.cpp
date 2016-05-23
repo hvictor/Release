@@ -268,7 +268,7 @@ void MainWindow::updateDynamicModel_SetAdaptiveTrackingWndX(double fx)
     printf("Dynamic Model :: Update :: Adaptive Tracking Window: Factor X: %.2f\n", fx);
 }
 
-void MainWindow::updateDynamicModel_SetAdaptiveTrackingWndX(double fy)
+void MainWindow::updateDynamicModel_SetAdaptiveTrackingWndY(double fy)
 {
     Configuration::getInstance()->dynamicModelParameters.trackingWndAdaptiveFactorY = fy;
 
