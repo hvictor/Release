@@ -2538,7 +2538,7 @@
            <string notr="true">buttonGroup_3</string>
           </attribute>
          </widget>
-         <widget class="QLabel" name="label_tgtPred_TrackingWndSize_2">
+         <widget class="QLabel" name="label_tgtPred_TrackingWndFactor">
           <property name="geometry">
            <rect>
             <x>243</x>

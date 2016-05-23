@@ -159,6 +159,7 @@ void MainWindow::trackingWindowSetAdaptiveTrackingWindow(bool status)
 void MainWindow::trackingWindowSetStaticTrackingWindow(bool status)
 {
     if (status) {
+        updateDynamicModel_SetTrackingWindowSize(ui->slider_tgtPred_TrackingWndSize->value());
         updateDynamicModel_SetTrackingWindowMode(StaticTrackingWindow);
     }
 }
@@ -297,6 +298,7 @@ void MainWindow::trackingWindowUseToggled(bool status)
         ui->lcd_tgtPredTrackingWndSize->setEnabled(true);
         ui->doubleSpinBox_AdaptiveTrackingWndX->setEnabled(true);
         ui->doubleSpinBox_AdaptiveTrackingWndY->setEnabled(true);
+        ui->label_tgtPred_TrackingWndFactor->setEnabled(true);
 
         updateDynamicModel_UsePredatorTrackingWindow(true);
         updateDynamicModel_VisualizePredatorTrackingWindow(ui->checkBox_tgtPred_VisualizeWnd->isChecked());
@@ -317,6 +319,7 @@ void MainWindow::trackingWindowUseToggled(bool status)
         updateDynamicModel_VisualizePredatorTrackingWindow(false);
         updateDynamicModel_SetTrackingWindowSize(ui->slider_tgtPred_TrackingWndSize->value());
 
+        ui->label_tgtPred_TrackingWndFactor->setEnabled(false);
         ui->checkBox_tgtPred_VisualizeWnd->setEnabled(false);
         ui->radioButton_tgtPred_AdaptiveTWND->setEnabled(false);
         ui->radioButton_tgtPred_StaticTWND->setEnabled(false);
