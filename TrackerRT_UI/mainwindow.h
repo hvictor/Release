@@ -36,6 +36,7 @@ public slots:
     void updateDynamicModel_DFI(int value);
     void toggleDepthMeasurementsStatus(bool status);
     void trackingWindowUseToggled(bool status);
+    void trackingWindowVisualizeToggled(bool status);
     void updateDynamicModel_UsePredatorTrackingWindow(bool status);
     void updateDynamicModel_VisualizePredatorTrackingWindow(bool status);
     void updateDynamicModel_SetTrackingWindowMode(TrackingWindowMode tWndMode);
