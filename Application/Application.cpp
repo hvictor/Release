@@ -666,7 +666,8 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				frameData->step_xyz = stereoFrame.stepXYZ;
 
 				// Confidence data
-				memcpy(frameData->, stereoFrame.xyzData, frameSize.width * frameSize.height * sizeof(float));
+				memcpy(frameData->confidence_data, stereoFrame.xyzData, frameSize.width * frameSize.height * sizeof(float));
+				frameData->step_confidence = stereoFrame.stepConfidence;
 
 			}
 			else {
