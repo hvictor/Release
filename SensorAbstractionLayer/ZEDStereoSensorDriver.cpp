@@ -144,18 +144,26 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	if (computeDepth) {
 
+		// Confidence
 		zed::Mat confidence = zed->retrieveMeasure(sl::zed::MEASURE::CONFIDENCE);
-		cout << "confidence: channels: " << confidence.channels << ", type: " << confidence.data_type << endl;
+		frame.confidenceData = (float *)confidence.data;
+		frame.stepConfidence = (short)(confidence.step / sizeof(float));
 
-
+		// Depth
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
-		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
-		int step = xyzMat.step / sizeof(float);
 
+		// XYZ
+		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
+		frame.xyzData = (float *)xyzMat.data;
+		frame.stepXYZ = (short)(xyzMat.step / sizeof(float));
+
+
+		/*
 		float *xyz = (float *)xyzMat.data;//zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
 		float x = xyz[step* 320 + 240 + 0];
 		float y = xyz[step* 320 + 240 + 1];
 		float z = xyz[step* 320 + 240 + 2];
+		*/
 
 		printf("ZEDStereoSensorDriver :: DEBUG :: [x, y, z] = %.2f, %.2f %.2f, [depth] = %d\n", x, y, z, frame.depthData[step * 320 + 240]);
 

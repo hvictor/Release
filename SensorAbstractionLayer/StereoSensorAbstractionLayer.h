@@ -18,6 +18,10 @@ typedef struct
 	uint8_t *leftData;
 	uint8_t *rightData;
 	uint8_t *depthData;
+	float 	*confidenceData;
+	float	*xyzData;
+	short	stepConfidence;
+	short	stepXYZ;
 	int bytesLength;
 	int channels;
 } StereoFrame;

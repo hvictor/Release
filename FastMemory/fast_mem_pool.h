@@ -19,9 +19,13 @@ typedef struct
 	uint8_t *left_data;
 	uint8_t *right_data;
 	uint8_t *depth_data;
+	float *xyz_data;
+	float *confidence_data;
 	bool depth_data_avail;
 	int index;
 	int free;
+	short step_xyz;
+	short step_confidence;
 } FrameData;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels);

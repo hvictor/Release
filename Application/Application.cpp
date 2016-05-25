@@ -281,7 +281,7 @@ void *frames_processor(void *)
 		// Get candidate tables
 		//
 		///////////////////////////////////////////////////////////////////////////////
-		vector<StateRelatedTable *> t = statefulObjectFilter->getTrajectoryCandidateTables();
+		//vector<StateRelatedTable *> t = statefulObjectFilter->getTrajectoryCandidateTables();
 
 		// If forcing RGB output
 		if (force_rgb_output) {
@@ -346,6 +346,7 @@ void *frames_processor(void *)
 			}
 			*/
 
+			/***************
 			for (int j = 0; j < t.size(); j++) {
 				StateRelatedTable *table = t[j];
 
@@ -366,6 +367,7 @@ void *frames_processor(void *)
 			}
 
 			statefulObjectFilter->tick();
+			*****************/
 
 			// Render human shape recognition trackers
 			//OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
@@ -657,7 +659,15 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			if (stereoFrame.depthData != 0) {
 				frameData->depth_data_avail = true;
-				memcpy(frameData->depth_data, stereoFrame.depthData, frameSize.width * frameSize.height * sizeof(uint8_t));
+				//memcpy(frameData->depth_data, stereoFrame.depthData, frameSize.width * frameSize.height * sizeof(uint8_t));
+
+				// XYZ data
+				memcpy(frameData->xyz_data, stereoFrame.xyzData, frameSize.width * frameSize.height * sizeof(float));
+				frameData->step_xyz = stereoFrame.stepXYZ;
+
+				// Confidence data
+				memcpy(frameData->, stereoFrame.xyzData, frameSize.width * frameSize.height * sizeof(float));
+
 			}
 			else {
 				frameData->depth_data_avail = false;
