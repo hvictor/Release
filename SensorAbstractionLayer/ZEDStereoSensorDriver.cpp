@@ -128,6 +128,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		computeDepth = true;
 		computeDisparity = true;
 		frameCounter = 0;
+
+		this->zed->setConfidenceThreshold(50);
 	}
 
 	if (this->zed->grab(sensingMode, computeDisparity, computeDepth)) {
