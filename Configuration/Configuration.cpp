@@ -26,7 +26,10 @@ Configuration *Configuration::getInstance()
 	return instance;
 }
 
-Configuration::Configuration() {
+Configuration::Configuration()
+{
+	dynamicModelParameters.freePlay = true;
+	dynamicModelParameters.trackingWndEnabled = false;
 }
 
 Configuration::~Configuration() {
