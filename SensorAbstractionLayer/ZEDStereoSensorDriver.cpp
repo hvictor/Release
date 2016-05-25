@@ -150,7 +150,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		zed::Mat confidence = zed->retrieveMeasure(sl::zed::MEASURE::CONFIDENCE);
 		frame.confidenceData = (float *)confidence.data;
 		frame.stepConfidence = (short)(confidence.step / sizeof(float));
-		frame.confidenceMat = Mat(Size(frameSize.width, frameSize.height));
+		frame.confidenceMat = Mat(Size(frameSize.width, frameSize.height), CV_32FC1);
 		slMat2cvMat(confidence).copyTo(frame.confidenceMat);
 
 		// Depth
