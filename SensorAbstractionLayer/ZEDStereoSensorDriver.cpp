@@ -151,7 +151,10 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		frame.confidenceData = (float *)confidence.data;
 		frame.stepConfidence = (short)(confidence.step / sizeof(float));
 		frame.confidenceMat = Mat(Size(frameSize.width, frameSize.height), CV_32FC1);
+
+		printf("Driver :: Copying confidence matrix...\n");
 		slMat2cvMat(confidence).copyTo(frame.confidenceMat);
+		printf("Driver :: OK Copying confidence matrix.\n");
 
 		// Depth
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
