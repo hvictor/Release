@@ -240,25 +240,25 @@ void *frames_processor(void *)
 
 		// Render Field Delimiter and Score
 		if (!configuration->dynamicModelParameters.freePlay) {
-			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame0_L, fieldDelimiter);
-			OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame0_L, staticModel);
+			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
+			OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
 		}
 
 		// Update Predator
 		if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
 			tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 			Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
-			//OverlayRenderer::getInstance()->renderTargetTracker(frame0_L, targetPosition);
-			OverlayRenderer::getInstance()->renderPredatorState(frame0_L, tgtPredator);
+			//OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
+			OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
 
 			if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
-				OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame0_L, tgtPredator->get_tracking_wnd());
+				OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame1_L, tgtPredator->get_tracking_wnd());
 			}
 
 			if (fd->depth_data_avail) {
 				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
 				float confidence = ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
-				OverlayRenderer::getInstance()->renderTarget3DPosition(frame0_L, targetPosition, measurement, confidence);
+				OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement, confidence);
 			}
 		}
 
