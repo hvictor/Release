@@ -154,7 +154,6 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 		printf("Driver :: Copying confidence matrix...\n");
 		slMat2cvMat(confidence).copyTo(frame.confidenceMat);
-		printf("Driver :: OK Copying confidence matrix.\n");
 
 		// Depth
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
@@ -174,6 +173,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 		computeDepth = false;
 		computeDisparity = false;
+
+		printf("Driver :: OK Copying!\n");
 	}
 
 	// DEPTH:
