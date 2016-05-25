@@ -34,7 +34,7 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 			mem[i].right_data = (uint8_t *)malloc(frame_width * frame_height * channels * sizeof(uint8_t));
 
 			mem[i].xyz_data = (float *)malloc(frame_width * frame_height * sizeof(float));
-			mem[i].confidence_data = (float *)malloc(frame_width * frame_height * sizeof(float));
+			//mem[i].confidence_data = (float *)malloc(frame_width * frame_height * sizeof(float));
 			//mem[i].depth_data = (uint8_t *)malloc(frame_width * frame_height * sizeof(uint8_t));
 		}
 

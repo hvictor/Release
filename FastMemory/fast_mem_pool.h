@@ -9,6 +9,7 @@
 #define FAST_MEM_POOL_H_
 
 #include "../Configuration/configs.h"
+#include "../Common/opencv_headers.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -26,6 +27,8 @@ typedef struct
 	int free;
 	short step_xyz;
 	short step_confidence;
+
+	Mat confidenceMat;
 } FrameData;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels);

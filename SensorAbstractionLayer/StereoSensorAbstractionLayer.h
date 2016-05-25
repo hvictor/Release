@@ -24,6 +24,8 @@ typedef struct
 	short	stepXYZ;
 	int bytesLength;
 	int channels;
+
+	Mat confidenceMat;
 } StereoFrame;
 
 typedef struct
