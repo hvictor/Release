@@ -257,9 +257,7 @@ void *frames_processor(void *)
 
 			if (fd->depth_data_avail) {
 				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
-				printf("Getting confidence...\n");
-				float confidence = fd->pConfidenceMat->at<float>(targetPosition.y, targetPosition.x);//ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
-				printf("Got confidence\n");
+				float confidence = ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
 
 				OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement, confidence);
 			}
@@ -675,10 +673,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				frameData->step_xyz = stereoFrame.stepXYZ;
 
 				// Confidence data
-				printf("[YEAH Application] Assigning confidence Matrix...\n");
-				//memcpy(frameData->confidence_data, stereoFrame.xyzData, frameSize.width * frameSize.height * sizeof(float));
-				frameData->pConfidenceMat = new Mat(Size(frameSize.width, frameSize.height), CV_32FC1, stereoFrame.confidenceMat.data);
-				printf("[YEAH Application] OK Assigning confidence Matrix\n");
+				memcpy(frameData->confidence_data, stereoFrame.confidenceData, frameSize.width * frameSize.height * sizeof(float));
 				frameData->step_confidence = stereoFrame.stepConfidence;
 			}
 			else {
