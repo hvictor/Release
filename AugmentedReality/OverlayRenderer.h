@@ -16,11 +16,13 @@
 #include "../TargetPredator/TargetPredator.h"
 #include "../Calibration/PerimetralConesDetector.h"
 #include "../Calibration/TennisFieldDelimiter.h"
+#include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 #include <stdint.h>
 
 #define OVERLAY_COLOR_GREEN			Scalar(50, 205, 50)
 #define OVERLAY_COLOR_GREEN_RGBA	Scalar(50, 205, 50, 255)
 #define OVERLAY_COLOR_BLUE_RGBA		Scalar(255, 0, 0, 255)
+#define OVERLAY_COLOR_RED_RGBA		Scalar(255, 0, 0, 255)
 #define OVERLAY_COLOR_RED			Scalar(0, 0, 255)
 #define OVERLAY_COLOR_YELLOW		Scalar(0, 255, 255)
 #define OVERLAY_COLOR_YELLOW_RGBA	Scalar(255, 255, 0, 255)
@@ -40,6 +42,7 @@ public:
 	void renderTrackerState(Mat frame, StateRelatedTable *table, Point p);
 	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);
 	void renderTargetTracker(Mat frame, Point center);
+	void renderTarget3DPosition(Mat frame, Point center, ZEDMeasure3D measure, float confidence);
 	void renderPredatorState(Mat frame, TargetPredator *tgtPredator);
 	void renderPredatorTrackingWnd(Mat frame, pred_wnd_t predTrackingWnd);
 	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);

@@ -181,3 +181,18 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	return frame;
 }
 
+ZEDMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, int x, int y, int step)
+{
+	ZEDMeasure3D meas;
+
+	meas.x_mm = data[step * x + y];
+	meas.y_mm = data[step * x + y + 1];
+	meas.z_mm = data[step * x + y + 2];
+
+	return meas;
+}
+
+float ZEDStereoSensorDriver::readMeasurementDataConfidence(float *data, int x, int y, int step)
+{
+	return data[step * x + y];
+}

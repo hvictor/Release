@@ -22,9 +22,9 @@ typedef struct
 
 typedef struct
 {
-	int x_mm;
-	int y_mm;
-	int z_mm;
+	float x_mm;
+	float y_mm;
+	float z_mm;
 } ZEDMeasure3D;
 
 class ZEDStereoSensorDriver : public StereoSensorAbstractionLayer {
@@ -37,9 +37,11 @@ public:
 	bool closeCamera();
 	StereoFrame fetchStereoFrame();
 	ZEDCameraProperties *getZEDCameraProperties();
-	ZEDMeasure3D readMeasure3D(int x, int y);
 	void updateDepthFrameInterleave();
+
 	static ZEDStereoSensorDriver *getInstance();
+	static ZEDMeasure3D readMeasurementData3D(float *data, int x, int y, int step);
+	static float readMeasurementDataConfidence(float *data, int x, int y, int step);
 
 private:
 	ZEDCameraProperties *zedProperties;

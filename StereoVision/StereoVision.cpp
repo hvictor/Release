@@ -37,5 +37,3 @@ vector<Point2f> StereoVision::project3DCoordinatesOnImagePlane(CameraIntrinsics 
 
 	return retval;
 }
-
-

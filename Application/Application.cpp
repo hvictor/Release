@@ -248,11 +248,17 @@ void *frames_processor(void *)
 		if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
 			tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 			Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
-			OverlayRenderer::getInstance()->renderTargetTracker(frame0_L, targetPosition);
+			//OverlayRenderer::getInstance()->renderTargetTracker(frame0_L, targetPosition);
 			OverlayRenderer::getInstance()->renderPredatorState(frame0_L, tgtPredator);
 
 			if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
 				OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame0_L, tgtPredator->get_tracking_wnd());
+			}
+
+			if (fd->depth_data_avail) {
+				ZEDMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
+				float confidence = ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
+				OverlayRenderer::getInstance()->renderTarget3DPosition(frame0_L, targetPosition, measurement, confidence);
 			}
 		}
 
@@ -668,7 +674,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				// Confidence data
 				memcpy(frameData->confidence_data, stereoFrame.xyzData, frameSize.width * frameSize.height * sizeof(float));
 				frameData->step_confidence = stereoFrame.stepConfidence;
-
+				printf("Application :: Memory :: Copying XYZ and Confidence data.\n");
 			}
 			else {
 				frameData->depth_data_avail = false;

@@ -13,6 +13,13 @@
 #include "IntrinsicParameters.h"
 #include "ExtrinsicParameters.h"
 
+typedef struct
+{
+	float x;
+	float y;
+	float z;
+} StereoMeasureXYZ;
+
 class StereoVision {
 public:
 	StereoVision();
