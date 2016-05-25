@@ -15,6 +15,12 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/gpu/gpu.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
+
+
 typedef struct
 {
 	uint8_t *left_data;
@@ -27,7 +33,6 @@ typedef struct
 	int free;
 	short step_xyz;
 	short step_confidence;
-
 	Mat confidenceMat;
 } FrameData;
 
