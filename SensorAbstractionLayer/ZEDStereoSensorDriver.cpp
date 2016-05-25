@@ -129,7 +129,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		computeDisparity = true;
 		frameCounter = 0;
 
-		this->zed->setConfidenceThreshold(100);
+		this->zed->setConfidenceThreshold(60);
 	}
 
 	if (this->zed->grab(sensingMode, computeDisparity, computeDepth)) {
@@ -198,5 +198,5 @@ StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, 
 
 float ZEDStereoSensorDriver::readMeasurementDataConfidence(float *data, int x, int y, int step)
 {
-	return data[step * x + y];
+	return data[step * y + x];
 }
