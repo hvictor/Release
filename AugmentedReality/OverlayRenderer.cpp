@@ -470,15 +470,17 @@ void OverlayRenderer::renderArrow(Mat frame, Point p, Point q)
 
 void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure, float confidence)
 {
-	char stateMessage[100];
+	char stateMessage[200];
 
 	measure.x_mm /= 1000.0;
 	measure.y_mm /= 1000.0;
 	measure.z_mm /= 1000.0;
 
-	printf("dio\n");
+	printf("diooo\n");
 
 	sprintf(stateMessage, "T=[%d,%d] XYZ=[%.2f, %.2f, %.2f] CONFID=%.2f", center.x, center.y, measure.x_mm, measure.y_mm, measure.z_mm, confidence);
+
+	printf("diooooooo\n");
 	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 0.7, OVERLAY_COLOR_RED_RGBA, 2, CV_AA);
 
 	printf("gesu\n");
