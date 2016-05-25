@@ -677,6 +677,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				// Confidence data
 				printf("[Application] Assigning confidence Mat\n");
 				//memcpy(frameData->confidence_data, stereoFrame.xyzData, frameSize.width * frameSize.height * sizeof(float));
+				frameData->confidenceMat = Mat(frameSize.width, frameSize.height, CV_32FC1);
 				frameData->confidenceMat = stereoFrame.confidenceMat;
 				printf("[Application] OK Assigning confidence Mat\n");
 				frameData->step_confidence = stereoFrame.stepConfidence;
