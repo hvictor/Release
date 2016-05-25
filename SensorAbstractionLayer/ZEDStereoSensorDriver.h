@@ -20,13 +20,6 @@ typedef struct
 	int exposure;
 } ZEDCameraProperties;
 
-typedef struct
-{
-	float x_mm;
-	float y_mm;
-	float z_mm;
-} ZEDMeasure3D;
-
 class ZEDStereoSensorDriver : public StereoSensorAbstractionLayer {
 public:
 	ZEDStereoSensorDriver();
@@ -40,7 +33,7 @@ public:
 	void updateDepthFrameInterleave();
 
 	static ZEDStereoSensorDriver *getInstance();
-	static ZEDMeasure3D readMeasurementData3D(float *data, int x, int y, int step);
+	static StereoSensorMeasure3D readMeasurementData3D(float *data, int x, int y, int step);
 	static float readMeasurementDataConfidence(float *data, int x, int y, int step);
 
 private:

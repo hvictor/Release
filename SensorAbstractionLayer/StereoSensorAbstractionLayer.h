@@ -32,6 +32,13 @@ typedef struct
 	int height;
 } StereoFrameSize;
 
+typedef struct
+{
+	float x_mm;
+	float y_mm;
+	float z_mm;
+} StereoSensorMeasure3D;
+
 class StereoSensorAbstractionLayer {
 public:
 	StereoSensorAbstractionLayer();

@@ -256,7 +256,7 @@ void *frames_processor(void *)
 			}
 
 			if (fd->depth_data_avail) {
-				ZEDMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
+				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
 				float confidence = ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
 				OverlayRenderer::getInstance()->renderTarget3DPosition(frame0_L, targetPosition, measurement, confidence);
 			}

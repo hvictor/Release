@@ -468,7 +468,7 @@ void OverlayRenderer::renderArrow(Mat frame, Point p, Point q)
 	line(frame, p, q, yellow, 2);
 }
 
-void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, ZEDMeasure3D measure, float confidence)
+void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure, float confidence)
 {
 	char stateMessage[100];
 	sprintf(stateMessage, "XYZ=[%.2f, %.2f, %.2f] CONFID=%.2f", measure.x_mm, measure.y_mm, measure.z_mm, confidence);
