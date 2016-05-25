@@ -189,9 +189,9 @@ StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, 
 {
 	StereoSensorMeasure3D meas;
 
-	meas.x_mm = data[step * x + y];
-	meas.y_mm = data[step * x + y + 1];
-	meas.z_mm = data[step * x + y + 2];
+	meas.x_mm = data[step * y + x];
+	meas.y_mm = data[step * y + x + 1];
+	meas.z_mm = data[step * y + x + 2];
 
 	return meas;
 }
