@@ -213,7 +213,7 @@ float ZEDStereoSensorDriver::readMeasurementDataConfidence(float *data, int x, i
 	return data[step * y + x];
 }
 
-static StereoSensorMeasure3D readMeasurementMatrix3D(Mat *xyzMat, int x, int y)
+StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementMatrix3D(Mat *xyzMat, int x, int y)
 {
 	StereoSensorMeasure3D meas;
 	Vec4f v = xyzMat->at<float>(y, x);
@@ -225,7 +225,7 @@ static StereoSensorMeasure3D readMeasurementMatrix3D(Mat *xyzMat, int x, int y)
 	return meas;
 }
 
-static int retryTargetScanMatrix3D(pred_scan_t engage_data, Mat *xyzMat, StereoSensorMeasure3D *measurement)
+int ZEDStereoSensorDriver::retryTargetScanMatrix3D(pred_scan_t engage_data, Mat *xyzMat, StereoSensorMeasure3D *measurement)
 {
 	int y = engage_data.row;
 
