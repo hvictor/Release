@@ -262,6 +262,11 @@ void *frames_processor(void *)
 				if (measurement.z_mm > 0.0) {
 					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
 				}
+				else {
+					if (ZEDStereoSensorDriver::retryTargetScan3D(engage_data, fd->xyz_data, fd->step_xyz, &measurement)) {
+						OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
+					}
+				}
 			}
 		}
 

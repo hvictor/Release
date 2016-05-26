@@ -179,6 +179,22 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	return frame;
 }
 
+int ZEDStereoSensorDriver::retryTargetScan3D(pred_scan_t engage_data, float *xyz_data, int step_xyz, StereoSensorMeasure3D *measurement)
+{
+	int y = engage_data.row;
+
+	for (int x = engage_data.xl; x <= engage_data.xr; x++) {
+		StereoSensorMeasure3D meas = readMeasurementData3D(xyz_data, x, y, step_xyz);
+
+		if (meas.z_mm > 0.0) {
+			*measurement = meas;
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
 StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, int x, int y, int step)
 {
 	StereoSensorMeasure3D meas;

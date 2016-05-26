@@ -11,6 +11,7 @@
 #include "StereoSensorAbstractionLayer.h"
 #include <zed/Camera.hpp>
 #include <zed/utils/GlobalDefine.hpp>
+#include "../TargetPredator/TargetPredator.h"
 
 using namespace sl;
 
@@ -35,6 +36,7 @@ public:
 	static ZEDStereoSensorDriver *getInstance();
 	static StereoSensorMeasure3D readMeasurementData3D(float *data, int x, int y, int step);
 	static float readMeasurementDataConfidence(float *data, int x, int y, int step);
+	static int retryTargetScan3D(pred_scan_t engage_data, float *xyz_data, int step_xyz, StereoSensorMeasure3D *measurement);
 
 private:
 	ZEDCameraProperties *zedProperties;
