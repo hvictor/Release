@@ -83,6 +83,15 @@ bool ZEDStereoSensorDriver::openCamera()
 
 	camera_open = true;
 
+	zed::StereoParameters stereoParam = zed->getParameters();
+	_param_L = stereoParam.LeftCam;
+	_param_R = stereoParam.RightCam;
+
+	Configuration::getInstance()->zedHardwareParameters.fx_L = _param_L.fx;
+	Configuration::getInstance()->zedHardwareParameters.fy_L = _param_L.fy;
+	Configuration::getInstance()->zedHardwareParameters.fx_R = _param_R.fx;
+	Configuration::getInstance()->zedHardwareParameters.fy_R = _param_R.fy;
+
 	return true;
 }
 

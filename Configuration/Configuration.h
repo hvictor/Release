@@ -111,6 +111,12 @@ typedef struct
 	int sensingModeIntValue;
 
 	int depthFrameInterleave;
+
+	// Focal Lengths
+	float fx_L;
+	float fy_L;
+	float fx_R;
+	float fy_R;
 } ZEDStereoCameraHardwareParameters;
 
 typedef struct
@@ -167,6 +173,7 @@ public:
 
 	// Public properties
 	CalibrationData calibrationData;
+	ZEDStereoCameraHardwareParameters zedHardwareParameters;
 
 	// Get configuration components
 	FrameInfo getFrameInfo();
@@ -187,7 +194,6 @@ private:
 	OperationalMode operationalMode;
 	OpticalLayerParameters opticalLayerParameters;
 	DUOStereoCameraHardwareParameters duoHardwareParameters;
-	ZEDStereoCameraHardwareParameters zedHardwareParameters;
 	InterpolationEngineParameters interpolationEngineParameters;
 	StaticModelParameters staticModelParameters;
 };

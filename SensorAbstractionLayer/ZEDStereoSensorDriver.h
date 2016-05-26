@@ -51,6 +51,9 @@ private:
 	bool computeDepth;
 	int frameCounter;
 	int depthFrameInterleave;
+
+	zed::CamParameters _param_L;
+	zed::CamParameters _param_R;
 };
 
 #endif /* ZEDSTEREOSENSORDRIVER_H_ */
