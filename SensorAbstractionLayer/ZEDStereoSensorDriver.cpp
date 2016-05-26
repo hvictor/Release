@@ -199,6 +199,12 @@ StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, 
 {
 	StereoSensorMeasure3D meas;
 
+	if (step*y + x + 2 >= 640 * 480 * sizeof(float)) {
+		printf("FATAL SIZE ERROR\n"); exit(0);
+	}
+
+	printf("Using step=%d\n", step);
+
 	meas.x_mm = data[step * y + x];
 	meas.y_mm = data[step * y + x + 1];
 	meas.z_mm = data[step * y + x + 2];
