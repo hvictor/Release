@@ -146,6 +146,7 @@ typedef struct
 	int trackingWndSize;
 	double trackingWndAdaptiveFactorX;
 	double trackingWndAdaptiveFactorY;
+	int confidenceThreshold;
 } DynamicModelParameters;
 
 class Configuration {

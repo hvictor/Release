@@ -129,7 +129,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		computeDisparity = true;
 		frameCounter = 0;
 
-		this->zed->setConfidenceThreshold(80);
+		this->zed->setConfidenceThreshold(Configuration::getInstance()->dynamicModelParameters.confidenceThreshold);
 	}
 
 	if (this->zed->grab(sensingMode, computeDisparity, computeDepth)) {
@@ -149,10 +149,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		// Confidence
 		zed::Mat confidence = zed->retrieveMeasure(sl::zed::MEASURE::CONFIDENCE);
 		frame.confidenceData = (float *)confidence.data;
-		frame.stepConfidence = (short)(confidence.step / sizeof(float));
-
-		printf("Driver :: Copying confidence matrix...\n");
-		slMat2cvMat(confidence).copyTo(frame.confidenceMat);
+		frame.stepConfidence = (confidence.step / sizeof(float));
 
 		// Depth
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
@@ -160,7 +157,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		// XYZ
 		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
 		frame.xyzData = (float *)xyzMat.data;
-		frame.stepXYZ = (short)(xyzMat.step / sizeof(float));
+		frame.stepXYZ = (xyzMat.step / sizeof(float));
 
 
 		/*

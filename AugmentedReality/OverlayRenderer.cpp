@@ -468,7 +468,7 @@ void OverlayRenderer::renderArrow(Mat frame, Point p, Point q)
 	line(frame, p, q, yellow, 2);
 }
 
-void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure, float confidence)
+void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure)
 {
 	char stateMessage[200];
 

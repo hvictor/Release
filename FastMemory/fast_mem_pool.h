@@ -31,8 +31,8 @@ typedef struct
 	bool depth_data_avail;
 	int index;
 	int free;
-	short step_xyz;
-	short step_confidence;
+	int step_xyz;
+	int step_confidence;
 } FrameData;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels);

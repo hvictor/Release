@@ -20,12 +20,10 @@ typedef struct
 	uint8_t *depthData;
 	float 	*confidenceData;
 	float	*xyzData;
-	short	stepConfidence;
-	short	stepXYZ;
+	int	stepConfidence;
+	int	stepXYZ;
 	int bytesLength;
 	int channels;
-
-	Mat confidenceMat;
 } StereoFrame;
 
 typedef struct

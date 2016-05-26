@@ -257,9 +257,11 @@ void *frames_processor(void *)
 
 			if (fd->depth_data_avail) {
 				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
-				float confidence = ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
+				//float confidence = 0.0;//ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
 
-				OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement, confidence);
+				if (measurement.z_mm > 0.0) {
+					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
+				}
 			}
 		}
 
@@ -673,8 +675,8 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				frameData->step_xyz = stereoFrame.stepXYZ;
 
 				// Confidence data
-				memcpy(frameData->confidence_data, stereoFrame.confidenceData, frameSize.width * frameSize.height * sizeof(float));
-				frameData->step_confidence = stereoFrame.stepConfidence;
+				//memcpy(frameData->confidence_data, stereoFrame.confidenceData, frameSize.width * frameSize.height * sizeof(float));
+				//frameData->step_confidence = stereoFrame.stepConfidence;
 			}
 			else {
 				frameData->depth_data_avail = false;

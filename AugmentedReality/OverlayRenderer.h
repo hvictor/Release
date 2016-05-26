@@ -42,7 +42,7 @@ public:
 	void renderTrackerState(Mat frame, StateRelatedTable *table, Point p);
 	void renderHumanTrackers(Mat frame, vector<cv::Rect> humanFigures);
 	void renderTargetTracker(Mat frame, Point center);
-	void renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure, float confidence);
+	void renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure);
 	void renderPredatorState(Mat frame, TargetPredator *tgtPredator);
 	void renderPredatorTrackingWnd(Mat frame, pred_wnd_t predTrackingWnd);
 	void renderInterpolatedTrajectoryCubic(Mat frame, TrajectoryDescriptor *descriptor);
