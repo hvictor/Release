@@ -155,7 +155,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
 
 		// XYZ
-		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
+		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZRGBA);
 		frame.xyzData = (float *)xyzMat.data;
 		frame.stepXYZ = (xyzMat.step / sizeof(float));
 
