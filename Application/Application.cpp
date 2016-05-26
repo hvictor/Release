@@ -264,7 +264,10 @@ void *frames_processor(void *)
 				meas.z_mm = ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth);
 				meas.x_mm = (meas.z_mm * (float)targetPosition.x) / Configuration::getInstance()->zedHardwareParameters.fx_L;
 				meas.y_mm = (meas.z_mm * (float)targetPosition.y) / Configuration::getInstance()->zedHardwareParameters.fy_L;
-				OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
+
+				if (meas.z_mm > 0.0) {
+					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
+				}
 
 				/* XYZ
 				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);

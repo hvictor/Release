@@ -481,7 +481,7 @@ void OverlayRenderer::renderDepthInformation(Mat frame, int x, int y, float dept
 void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure)
 {
 	char stateMessage[200];
-	sprintf(stateMessage, ">>> %.2f, %.2f, %.2f", measure.x_mm, measure.y_mm, measure.z_mm);
+	sprintf(stateMessage, "XYZ = %.2f, %.2f, %.2f [m]", measure.x_mm * 0.001, measure.y_mm * 0.001, measure.z_mm * 0.001);
 
 	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
 
