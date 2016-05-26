@@ -174,7 +174,7 @@ void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
 void MainWindow::updateDynamicModel_Confidence(int value)
 {
     Configuration::getInstance()->dynamicModelParameters.confidenceThreshold = value;
-    prinf("Dynamic Model :: Update :: Confidence Threshold = %d\n", Configuration::getInstance()->dynamicModelParameters.confidenceThreshold);
+    printf("Dynamic Model :: Update :: Confidence Threshold = %d\n", Configuration::getInstance()->dynamicModelParameters.confidenceThreshold);
 }
 
 void MainWindow::updateDynamicModel_DFI(int value)

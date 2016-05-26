@@ -159,7 +159,6 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		frame.xyzData = (float *)xyzMat.data;
 		frame.stepXYZ = (xyzMat.step / sizeof(float));
 
-
 		/*
 		float *xyz = (float *)xyzMat.data;//zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
 		float x = xyz[step* 320 + 240 + 0];
@@ -169,8 +168,6 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 		computeDepth = false;
 		computeDisparity = false;
-
-		printf("Driver :: OK Copying!\n");
 	}
 
 	// DEPTH:
