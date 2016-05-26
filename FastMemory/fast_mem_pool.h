@@ -33,6 +33,7 @@ typedef struct
 	int free;
 	int step_xyz;
 	int step_confidence;
+	int step_depth;
 	//Mat *xyzMat;
 } FrameData;
 

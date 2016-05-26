@@ -146,15 +146,15 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	if (computeDepth) {
 
-		frame.leftData = (uint8_t *)(zed->normalizeMeasure(zed::MEASURE::DEPTH)).data;
-
 		// Confidence
 		zed::Mat confidence = zed->retrieveMeasure(sl::zed::MEASURE::CONFIDENCE);
 		frame.confidenceData = (float *)confidence.data;
 		frame.stepConfidence = (confidence.step / sizeof(float));
 
 		// Depth
-		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
+		zed::Mat depthMat = zed->retrieveMeasure(sl::zed::MEASURE::DEPTH);
+		frame.depthData = (uint8_t *)depthMat.data;
+		frame.stepDepth = (depthMat.step / sizeof(uint8_t));
 
 		// XYZ
 		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
@@ -211,6 +211,11 @@ int ZEDStereoSensorDriver::retryTargetScan3D(pred_scan_t engage_data, float *xyz
 	measurement->z_mm *= factor;
 
 	return 0;
+}
+
+uint8_t ZEDStereoSensorDriver::readMeasurementDataDepth(uint8_t *depth_data, int x, int y, int step)
+{
+	return depth_data[step * y + x];
 }
 
 StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, int x, int y, int step)

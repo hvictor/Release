@@ -22,6 +22,7 @@ typedef struct
 	float	*xyzData;
 	int	stepConfidence;
 	int	stepXYZ;
+	int stepDepth;
 	int bytesLength;
 	int channels;
 	//Mat *xyzMat;

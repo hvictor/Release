@@ -468,6 +468,16 @@ void OverlayRenderer::renderArrow(Mat frame, Point p, Point q)
 	line(frame, p, q, yellow, 2);
 }
 
+void renderDepthInformation(Mat frame, int x, int y, uint8_t depth)
+{
+	char stateMessage[200];
+	sprintf(stateMessage, "DEPTH = %d m\n", depth * 0.001);
+
+	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
+
+	circle(frame, Point(x, y), 5, OVERLAY_COLOR_RED_RGBA, -1);
+}
+
 void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure)
 {
 	char stateMessage[200];

@@ -39,6 +39,7 @@ public:
 	static int retryTargetScan3D(pred_scan_t engage_data, float *xyz_data, int step_xyz, StereoSensorMeasure3D *measurement);
 	static StereoSensorMeasure3D readMeasurementMatrix3D(Mat *xyzMat, int x, int y);
 	static int retryTargetScanMatrix3D(pred_scan_t engage_data, Mat *xyzMat, StereoSensorMeasure3D *measurement);
+	static uint8_t readMeasurementDataDepth(uint8_t *depth_data, int x, int y, int step);
 
 private:
 	ZEDCameraProperties *zedProperties;
