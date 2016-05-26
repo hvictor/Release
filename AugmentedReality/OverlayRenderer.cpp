@@ -471,7 +471,7 @@ void OverlayRenderer::renderArrow(Mat frame, Point p, Point q)
 void renderDepthInformation(Mat frame, int x, int y, float depth)
 {
 	char stateMessage[200];
-	sprintf(stateMessage, "DEPTH = %d m\n", depth * 0.001);
+	sprintf(stateMessage, "DEPTH = %.2f m\n", depth * 0.001);
 
 	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
 
