@@ -158,8 +158,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
 		frame.xyzData = (float *)xyzMat.data;
 		frame.stepXYZ = (xyzMat.step / sizeof(float));
-		frame.xyzMat = new Mat(Size(frameSize.width, frameSize.height), CV_32FC4);
-		slMat2cvMat(xyzMat).copyTo(*(frame.xyzMat));
+		//frame.xyzMat = new Mat(Size(frameSize.width, frameSize.height), CV_32FC4);
+		//slMat2cvMat(xyzMat).copyTo(*(frame.xyzMat));
 
 		/*
 		float *xyz = (float *)xyzMat.data;//zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
