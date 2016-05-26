@@ -146,6 +146,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 
 	if (computeDepth) {
 
+		frame.leftData = (uint8_t *)(zed->normalizeMeasure(zed::MEASURE::DEPTH)).data;
+
 		// Confidence
 		zed::Mat confidence = zed->retrieveMeasure(sl::zed::MEASURE::CONFIDENCE);
 		frame.confidenceData = (float *)confidence.data;
