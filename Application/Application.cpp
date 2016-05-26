@@ -257,20 +257,10 @@ void *frames_processor(void *)
 
 			if (fd->depth_data_avail) {
 
-				OverlayRenderer::getInstance()->renderDepthInformation(frame1_L, targetPosition.x, targetPosition.y,
-						ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth));
-
-				//hsvManager->filterHSVRange_out_8UC1(frame_data[1]->right_data, width, height, hsvRangeTGT, buf_8UC1_0);
-				//pred_scan_t engage_data_R = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
-				//Point targetPosition_R(engage_data_R.xl + (engage_data_R.xr-engage_data_R.xl)/2, engage_data_R.row);
-
-				// Use as stereo-matched (APPROX)
-				// x = (z * xL) / f
-				// y = (z * yL) / f
-				// z = z = f*b / d
+				//OverlayRenderer::getInstance()->renderDepthInformation(frame1_L, targetPosition.x, targetPosition.y,
+				//		ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth));
 
 				StereoSensorMeasure3D meas;
-
 				meas.z_mm = ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth);
 				meas.x_mm = (meas.z_mm * (float)targetPosition.x) / Configuration::getInstance()->zedHardwareParameters.fx_L;
 				meas.y_mm = (meas.z_mm * (float)targetPosition.y) / Configuration::getInstance()->zedHardwareParameters.fy_L;
