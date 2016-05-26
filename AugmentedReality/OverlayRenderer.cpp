@@ -471,14 +471,9 @@ void OverlayRenderer::renderArrow(Mat frame, Point p, Point q)
 void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSensorMeasure3D measure)
 {
 	char stateMessage[200];
+	sprintf(stateMessage, "XYZ = [%.2f, %.2f, %.2f]", measure.x_mm, measure.y_mm, measure.z_mm);
 
-	measure.x_mm;
-	measure.y_mm;
-	measure.z_mm;
-
-	sprintf(stateMessage, "T=[%d,%d] XYZ=[%.2f, %.2f, %.2f]", center.x, center.y, measure.x_mm, measure.y_mm, measure.z_mm);
-
-	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 0.7, OVERLAY_COLOR_RED_RGBA, 2, CV_AA);
+	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
 
 	circle(frame, center, 5, OVERLAY_COLOR_RED_RGBA, -1);
 }
