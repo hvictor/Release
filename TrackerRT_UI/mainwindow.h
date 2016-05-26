@@ -46,6 +46,7 @@ public slots:
     void trackingWindowSetAdaptiveTrackingWindow(bool status);
     void trackingWindowSetStaticTrackingWindow(bool status);
     void updateDynamicModel_SetFreePlay(bool status);
+    void updateDynamicModel_Confidence(int value);
     void saveConfig();
 };
 
