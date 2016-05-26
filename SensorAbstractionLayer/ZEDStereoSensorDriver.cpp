@@ -155,7 +155,7 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		frame.depthData = (uint8_t *)(zed->retrieveMeasure(sl::zed::MEASURE::DEPTH)).data;
 
 		// XYZ
-		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZRGBA);
+		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
 		frame.xyzData = (float *)xyzMat.data;
 		frame.stepXYZ = (xyzMat.step / sizeof(float));
 
@@ -199,15 +199,9 @@ StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, 
 {
 	StereoSensorMeasure3D meas;
 
-	if (step*y + x + 2 >= 640 * 480 * sizeof(float)) {
-		printf("FATAL SIZE ERROR\n"); exit(0);
-	}
-
-	printf("Using step=%d\n", step);
-
-	meas.x_mm = data[step * y + x];
-	meas.y_mm = data[step * y + x + 1];
-	meas.z_mm = data[step * y + x + 2];
+	meas.x_mm = data[step * y + x] * 0.001;
+	meas.y_mm = data[step * y + x + 1] * 0.001;
+	meas.z_mm = data[step * y + x + 2] * 0.001;
 
 	return meas;
 }
