@@ -185,14 +185,28 @@ int ZEDStereoSensorDriver::retryTargetScan3D(pred_scan_t engage_data, float *xyz
 {
 	int y = engage_data.row;
 
+	int meas_count = 0;
+
+	measurement->x_mm = 0.0;
+	measurement->y_mm = 0.0;
+	measurement->z_mm = 0.0;
+
 	for (int x = engage_data.xl; x <= engage_data.xr; x++) {
 		StereoSensorMeasure3D meas = readMeasurementData3D(xyz_data, x, y, step_xyz);
 
 		if (meas.z_mm > 0.0) {
-			*measurement = meas;
-			return 1;
+			measurement->x_mm += meas.x_mm;
+			measurement->y_mm += meas.y_mm;
+			measurement->z_mm += meas.z_mm;
+
+			meas_count++;
 		}
 	}
+
+	float factor = 1.0 / ((float)meas_count);
+	measurement->x_mm *= factor;
+	measurement->y_mm *= factor;
+	measurement->z_mm *= factor;
 
 	return 0;
 }
@@ -229,14 +243,28 @@ int ZEDStereoSensorDriver::retryTargetScanMatrix3D(pred_scan_t engage_data, Mat 
 {
 	int y = engage_data.row;
 
+	int meas_count = 0;
+
+	measurement->x_mm = 0.0;
+	measurement->y_mm = 0.0;
+	measurement->z_mm = 0.0;
+
 	for (int x = engage_data.xl; x <= engage_data.xr; x++) {
 		StereoSensorMeasure3D meas = readMeasurementMatrix3D(xyzMat, x, y);
 
 		if (meas.z_mm > 0.0) {
-			*measurement = meas;
-			return 1;
+			measurement->x_mm += meas.x_mm;
+			measurement->y_mm += meas.y_mm;
+			measurement->z_mm += meas.z_mm;
+
+			meas_count++;
 		}
 	}
+
+	float factor = 1.0 / ((float)meas_count);
+	measurement->x_mm *= factor;
+	measurement->y_mm *= factor;
+	measurement->z_mm *= factor;
 
 	return 0;
 }
