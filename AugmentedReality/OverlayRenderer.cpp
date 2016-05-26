@@ -476,7 +476,7 @@ void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSens
 	measure.y_mm;
 	measure.z_mm;
 
-	sprintf(stateMessage, "C=%.2f T=[%d,%d] XYZ=[%.2f, %.2f, %.2f]", confidence, center.x, center.y, measure.x_mm, measure.y_mm, measure.z_mm);
+	sprintf(stateMessage, "T=[%d,%d] XYZ=[%.2f, %.2f, %.2f]", center.x, center.y, measure.x_mm, measure.y_mm, measure.z_mm);
 
 	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 0.7, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
 
