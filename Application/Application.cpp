@@ -681,7 +681,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			if (stereoFrame.depthData != 0) {
 				frameData->depth_data_avail = true;
-				memcpy(frameData->depth_data, stereoFrame.depthData, frameSize.width * frameSize.height * sizeof(uint8_t));
+				memcpy(frameData->depth_data, stereoFrame.depthData, frameSize.width * frameSize.height * sizeof(float));
 				frameData->step_depth = stereoFrame.stepDepth;
 
 				// XYZ data

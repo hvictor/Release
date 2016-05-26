@@ -25,7 +25,7 @@ typedef struct
 {
 	uint8_t *left_data;
 	uint8_t *right_data;
-	uint8_t *depth_data;
+	float *depth_data;
 	float *xyz_data;
 	float *confidence_data;
 	bool depth_data_avail;
