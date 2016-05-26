@@ -24,6 +24,7 @@ typedef struct
 	int	stepXYZ;
 	int bytesLength;
 	int channels;
+	Mat *xyzMat;
 } StereoFrame;
 
 typedef struct

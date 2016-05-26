@@ -33,6 +33,7 @@ typedef struct
 	int free;
 	int step_xyz;
 	int step_confidence;
+	Mat *xyzMat;
 } FrameData;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels);

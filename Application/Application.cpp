@@ -256,14 +256,16 @@ void *frames_processor(void *)
 			}
 
 			if (fd->depth_data_avail) {
-				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
+				//StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
+				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementMatrix3D(fd->xyzMat, targetPosition.x, targetPosition.y);
 				//float confidence = 0.0;//ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
 
 				if (measurement.z_mm > 0.0) {
 					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
 				}
 				else {
-					if (ZEDStereoSensorDriver::retryTargetScan3D(engage_data, fd->xyz_data, fd->step_xyz, &measurement)) {
+					//if (ZEDStereoSensorDriver::retryTargetScan3D(engage_data, fd->xyz_data, fd->step_xyz, &measurement)) {
+					if (ZEDStereoSensorDriver::retryTargetScanMatrix3D(engage_data, fd->xyzMat, &measurement)) {
 						OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
 					}
 				}
@@ -676,7 +678,8 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				//memcpy(frameData->depth_data, stereoFrame.depthData, frameSize.width * frameSize.height * sizeof(uint8_t));
 
 				// XYZ data
-				memcpy(frameData->xyz_data, stereoFrame.xyzData, frameSize.width * frameSize.height * 4 * sizeof(float));
+				frameData->xyzMat = stereoFrame.xyzMat;
+				//memcpy(frameData->xyz_data, stereoFrame.xyzData, frameSize.width * frameSize.height * 4 * sizeof(float));
 				frameData->step_xyz = stereoFrame.stepXYZ;
 
 				// Confidence data

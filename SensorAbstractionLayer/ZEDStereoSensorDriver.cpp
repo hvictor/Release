@@ -158,6 +158,8 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		zed::Mat xyzMat = zed->retrieveMeasure(sl::zed::MEASURE::XYZ);
 		frame.xyzData = (float *)xyzMat.data;
 		frame.stepXYZ = (xyzMat.step / sizeof(float));
+		frame.xyzMat = new Mat(Size(frameSize.width, frameSize.height), CV_32FC4);
+		slMat2cvMat(xyzMat).copyTo(*(frame.xyzMat));
 
 		/*
 		float *xyz = (float *)xyzMat.data;//zed->retrieveMeasure(sl::zed::MEASURE::XYZ).data;
@@ -209,4 +211,32 @@ StereoSensorMeasure3D ZEDStereoSensorDriver::readMeasurementData3D(float *data, 
 float ZEDStereoSensorDriver::readMeasurementDataConfidence(float *data, int x, int y, int step)
 {
 	return data[step * y + x];
+}
+
+static StereoSensorMeasure3D readMeasurementMatrix3D(Mat *xyzMat, int x, int y)
+{
+	StereoSensorMeasure3D meas;
+	Vec4f v = xyzMat->at<float>(y, x);
+
+	meas.x_mm = -v.val[0] * 0.001;
+	meas.y_mm = -v.val[1] * 0.001;
+	meas.z_mm = v.val[2] * 0.001;
+
+	return meas;
+}
+
+static int retryTargetScanMatrix3D(pred_scan_t engage_data, Mat *xyzMat, StereoSensorMeasure3D *measurement)
+{
+	int y = engage_data.row;
+
+	for (int x = engage_data.xl; x <= engage_data.xr; x++) {
+		StereoSensorMeasure3D meas = readMeasurementMatrix3D(xyzMat, x, y);
+
+		if (meas.z_mm > 0.0) {
+			*measurement = meas;
+			return 1;
+		}
+	}
+
+	return 0;
 }
