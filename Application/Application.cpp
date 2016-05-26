@@ -269,6 +269,8 @@ void *frames_processor(void *)
 						OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
 					}
 				}
+
+				delete fd->xyzMat;
 			}
 		}
 
