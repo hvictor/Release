@@ -45,7 +45,6 @@ void UIStereoDisplay::init(bool stereo, bool autoFetch)
     _autoFetch = autoFetch;
 
     mainLayout->addWidget(glWidget, 0, 0);
-    mainLayout->addWidget(dynamicModelDisplay, 0, 1);
 
     if (_stereo) {
         mainLayout->addWidget(glWidgetR, 0, 1);
