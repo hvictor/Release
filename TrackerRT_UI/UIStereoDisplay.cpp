@@ -32,11 +32,9 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
 
     glWidget = new GLWidget('L');
     glWidgetR = new GLWidget('R');
-    dynamicModelDisplay = new DynamicModelDisplay();
 
     glWidget->setClearColor(clearColor);
     glWidgetR->setClearColor(clearColor);
-    dynamicModelDisplay->setClearColor(clearColor);
 
     setWindowTitle(tr("[DISPLAY STEREO]"));
 }
@@ -110,8 +108,6 @@ void UIStereoDisplay::renderStereoRawData()
     if (_stereo) {
         glWidgetR->renderStereoRawData((uchar *)((*pRenderFrameData)->right_data));
     }
-
-    dynamicModelDisplay->renderStereoRawData(0);
 
     fast_mem_pool_release_memory(*pRenderFrameData);
 }
