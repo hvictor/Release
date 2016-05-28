@@ -19,7 +19,7 @@ class DynamicModelDisplay : public QGLWidget, protected QOpenGLFunctions
 
 public:
     explicit DynamicModelDisplay(QWidget *parent = 0);
-    ~GLWidget();
+    ~DynamicModelDisplay();
 
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;

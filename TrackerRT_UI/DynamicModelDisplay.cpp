@@ -21,65 +21,65 @@ DynamicModelDisplay::DynamicModelDisplay(QWidget *parent)
 
 }
 
-GLWidget::~GLWidget()
+DynamicModelDisplay::~DynamicModelDisplay()
 {
     makeCurrent();
 
     doneCurrent();
 }
 
-void GLWidget::mousePressEvent(QMouseEvent *event)
+void DynamicModelDisplay::mousePressEvent(QMouseEvent *event)
 {
 
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event)
+void DynamicModelDisplay::mouseMoveEvent(QMouseEvent *event)
 {
 
 }
 
-void GLWidget::activateFieldCalibration()
+void DynamicModelDisplay::activateFieldCalibration()
 {
 
 }
 
-void GLWidget::activatePerimeterCalibration()
+void DynamicModelDisplay::activatePerimeterCalibration()
 {
 
 }
 
-void GLWidget::activateTargetCalibration()
+void DynamicModelDisplay::activateTargetCalibration()
 {
 
 }
 
-void GLWidget::mouseReleaseEvent(QMouseEvent *event)
+void DynamicModelDisplay::mouseReleaseEvent(QMouseEvent *event)
 {
 
 }
 
-QSize GLWidget::minimumSizeHint() const
-{
-    return QSize(640, 480);
-}
-
-QSize GLWidget::sizeHint() const
+QSize DynamicModelDisplay::minimumSizeHint() const
 {
     return QSize(640, 480);
 }
 
-void GLWidget::renderStereoRawData(uchar *u8data)
+QSize DynamicModelDisplay::sizeHint() const
+{
+    return QSize(640, 480);
+}
+
+void DynamicModelDisplay::renderStereoRawData(uchar *u8data)
 {
     update();
 }
 
-void GLWidget::setClearColor(const QColor &color)
+void DynamicModelDisplay::setClearColor(const QColor &color)
 {
     clearColor = color;
     update();
 }
 
-void GLWidget::initializeGL()
+void DynamicModelDisplay::initializeGL()
 {
     initializeOpenGLFunctions();
     makeObject();
@@ -96,7 +96,7 @@ void GLWidget::initializeGL()
 
 }
 
-void GLWidget::paintGL()
+void DynamicModelDisplay::paintGL()
 {
     glClearColor(clearColor.redF(), clearColor.greenF(), clearColor.blueF(), clearColor.alphaF());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -109,7 +109,7 @@ void GLWidget::paintGL()
     glEnd();
 
 }
-void GLWidget::resizeGL(int width, int height)
+void DynamicModelDisplay::resizeGL(int width, int height)
 {
     glViewport(0, 0, 640, 480);
 }
