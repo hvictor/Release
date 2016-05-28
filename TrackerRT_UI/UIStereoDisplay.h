@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include <QTimer>
 #include "GLWidget.h"
+#include "DynamicModelDisplay.h"
 
 namespace Ui {
 class UIStereoDisplay;
@@ -20,6 +21,7 @@ public:
     void init(bool stereo, bool autoFetch);
     GLWidget *glWidget;
     GLWidget *glWidgetR;
+    DynamicModelDisplay *dynamicModelDisplay;
 
 public slots:
     void fetch();
