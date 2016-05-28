@@ -486,4 +486,9 @@ void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSens
 	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
 
 	circle(frame, center, 5, OVERLAY_COLOR_RED_RGBA, -1);
+
+	FILE *fp = fopen("/tmp/data.txt", "a+");
+	char buf[300];
+	sprintf(buf, "%.2f %.2f %.2f\n", measure.x_mm * 0.001, measure.y_mm * 0.001, measure.z_mm * 0.001);
+	fclose(fp);
 }
