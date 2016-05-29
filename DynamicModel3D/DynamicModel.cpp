@@ -48,8 +48,8 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 	actual->vy = (actual->pos.y - prev->pos.y) / delta_ms;
 	actual->vz = (actual->pos.z - prev->pos.z) / delta_ms;
 
-	printf("Dynamic Model :: compute_dynamical_state_data() :: v = [%.2f, %.2f, %.2f] [mm / ms] = [%.2f, %.2f, %.2f] [m / s]\n", actual->vx, actual->vy, actual->vz,
-			actual->vx * 0.001, actual->vy * 0.001, actual->vz * 0.001);
+	// Velocity in [mm / ms] is already a value in [m / s]
+	printf("Dynamic Model :: compute_dynamical_state_data() :: v = [%.2f, %.2f, %.2f] [m / s]\n", actual->vx, actual->vy, actual->vz);
 }
 
 void DynamicModel::recalc(Vector3D v, struct timespec t)
