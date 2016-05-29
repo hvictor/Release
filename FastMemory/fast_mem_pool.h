@@ -19,6 +19,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/gpu/gpu.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
+#include "../RealTime/nanotimer_rt.h"
 
 
 typedef struct
@@ -35,6 +36,8 @@ typedef struct
 	int step_confidence;
 	int step_depth;
 	//Mat *xyzMat;
+
+	struct timespec t;
 } FrameData;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels);

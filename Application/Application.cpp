@@ -53,6 +53,8 @@
 
 #include "../TargetPredator/TargetPredator.h"
 
+#include "../DynamicModel3D/DynamicModel.h"
+
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -137,6 +139,9 @@ TargetPredator *tgtPredator;
 
 // Static Model
 TennisFieldStaticModel *staticModel;
+
+// Dynamic Model
+DynamicModel *dynamicModel;
 
 void renderScene(void* userdata)
 {
@@ -248,7 +253,7 @@ void *frames_processor(void *)
 		if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
 			tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 			Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
-			OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
+			//OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
 			OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
 
 			if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
@@ -268,6 +273,14 @@ void *frames_processor(void *)
 				if (meas.z_mm > 0.0) {
 					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
 				}
+
+				Vector3D meas_v;
+				meas_v.x = (double)meas.x_mm;
+				meas_v.y = (double)meas.y_mm;
+				meas_v.z = (double)meas.z_mm;
+
+				// Recalc dynamic model
+				dynamicModel->recalc(meas_v, fd->t);
 
 				/* XYZ
 				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
@@ -701,6 +714,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				// Confidence data
 				//memcpy(frameData->confidence_data, stereoFrame.confidenceData, frameSize.width * frameSize.height * sizeof(float));
 				//frameData->step_confidence = stereoFrame.stepConfidence;
+
+				// Time measurement
+				frameData->t = stereoFrame.t;
 			}
 			else {
 				frameData->depth_data_avail = false;
@@ -828,6 +844,7 @@ void run()
 	trajectoryTracker = new TrajectoryTracker();
 	tgtPredator = TargetPredator::getInstance();
 	staticModel = TennisFieldStaticModel::getInstance();
+	dynamicModel = DynamicModel::getInstance();
 
 	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
 	configuration->display();

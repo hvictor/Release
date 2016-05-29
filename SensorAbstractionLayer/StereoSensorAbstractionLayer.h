@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "../Configuration/Configuration.h"
+#include "../RealTime/nanotimer_rt.h"
 
 typedef struct
 {
@@ -26,6 +27,8 @@ typedef struct
 	int bytesLength;
 	int channels;
 	//Mat *xyzMat;
+	struct timespec t;
+
 } StereoFrame;
 
 typedef struct
