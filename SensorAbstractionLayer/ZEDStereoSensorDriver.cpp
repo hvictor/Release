@@ -6,6 +6,7 @@
  */
 
 #include "ZEDStereoSensorDriver.h"
+#include "../RealTime/nanotimer_rt.h"
 
 ZEDStereoSensorDriver::ZEDStereoSensorDriver()
 {
@@ -179,6 +180,9 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 		float z = xyz[step* 320 + 240 + 2];
 		*/
 
+		// Time measurement
+		nanotimer_rt_start(&(frame.t));
+
 		computeDepth = false;
 		computeDisparity = false;
 	}
@@ -186,8 +190,6 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	// DEPTH:
 	//cv::Mat tmp8u = zed::slMat2cvMat(zed->normalizeMeasure(sl::zed::MEASURE::DEPTH));
 	//frame.leftData = (uint8_t *)(tmp8u.data);
-
-
 
 	return frame;
 }

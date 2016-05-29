@@ -36,14 +36,14 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 
 	double delta_ms = nanotimer_rt_ms_diff(prev_t, act_t);
 
-	printf("Dynamic Model :: compute_dynamical_state_data() :: delta t = %.2f [ms]", delta_ms);
+	printf("Dynamic Model :: compute_dynamical_state_data() :: delta t = %.2f [ms]\n", delta_ms);
 
 	// Velocity components [mm / ms]
 	actual->vx = (actual->pos.x - prev->pos.x) / delta_ms;
 	actual->vy = (actual->pos.y - prev->pos.y) / delta_ms;
 	actual->vz = (actual->pos.z - prev->pos.z) / delta_ms;
 
-	printf("Dynamic Model :: compute_dynamical_state_data() :: v = [%.2f, %.2f, %.2f] [mm / ms] = [%.2f, %.2f, %.2f] [m / s]", actual->vx, actual->vy, actual->vz,
+	printf("Dynamic Model :: compute_dynamical_state_data() :: v = [%.2f, %.2f, %.2f] [mm / ms] = [%.2f, %.2f, %.2f] [m / s]\n", actual->vx, actual->vy, actual->vz,
 			actual->vx * 0.001, actual->vy * 0.001, actual->vz * 0.001);
 }
 
@@ -67,7 +67,15 @@ void DynamicModel::recalc(Vector3D v, struct timespec t)
 	dyn_state_t *dyn = make_dynamical_state(v, t);
 
 	// Compute velocity and acceleration components based on previous state
-	compute_dynamical_state_data(dyn, *(state.begin()));
+
+	if(state.size() > 1) {
+		compute_dynamical_state_data(dyn, *(state.begin()));
+	}
+	else {
+		dyn->vx = 0.0;
+		dyn->vy = 0.0;
+		dyn->vz = 0.0;
+	}
 
 	// Add dynamical state to the model
 	state.push_front(dyn);
