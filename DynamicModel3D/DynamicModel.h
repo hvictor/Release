@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <list>
 #include <algorithm>
+#include "../Common/opencv_headers.h"
 
 using namespace std;
 using namespace cv;
