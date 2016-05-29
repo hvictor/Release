@@ -44,6 +44,10 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 	// Velocity in [mm / ms] is already a value in [m / s]
 	printf("Dynamic Model :: compute_dynamical_state_data() :: delta t = %.2f [ms]        v = [%.2f, %.2f, %.2f] [m / s]\n",
 			delta_ms, actual->vx, actual->vy, actual->vz);
+
+	if (prev->vy >= 0.0 && actual->vy < 0.0) {
+		printf("Dynamic Model :: IMPACT\n");
+	}
 }
 
 void DynamicModel::recalc(Vector3D v, struct timespec t)
