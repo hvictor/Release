@@ -15,14 +15,15 @@
 #include <stdio.h>
 #include <list>
 #include <algorithm>
+#include "DynamicModel3D_KalmanFilter.h"
 #include "../Common/opencv_headers.h"
+#include "../Common/data_types.h"
+#include "../RealTime/nanotimer_rt.h"
+#include "../Configuration/Configuration.h"
+
 
 using namespace std;
 using namespace cv;
-
-#include "DynamicModel3D.h"
-#include "../RealTime/nanotimer_rt.h"
-#include "../Configuration/Configuration.h"
 
 typedef struct
 {
