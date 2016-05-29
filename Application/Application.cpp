@@ -272,15 +272,15 @@ void *frames_processor(void *)
 
 				if (meas.z_mm > 0.0) {
 					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
+
+					Vector3D meas_v;
+					meas_v.x = (double)meas.x_mm;
+					meas_v.y = (double)meas.y_mm;
+					meas_v.z = (double)meas.z_mm;
+
+					// Recalc dynamic model
+					dynamicModel->recalc(meas_v, fd->t);
 				}
-
-				Vector3D meas_v;
-				meas_v.x = (double)meas.x_mm;
-				meas_v.y = (double)meas.y_mm;
-				meas_v.z = (double)meas.z_mm;
-
-				// Recalc dynamic model
-				dynamicModel->recalc(meas_v, fd->t);
 
 				/* XYZ
 				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
