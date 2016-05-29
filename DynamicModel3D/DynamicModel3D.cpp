@@ -153,7 +153,6 @@ MechanicalStateTracking *makeMechanicalStateTracking(MechanicalState *state, uin
 {
 	MechanicalStateTracking *tracking = new MechanicalStateTracking();
 	tracking->kalmanFilter = new DynamicModel3D_KalmanFilter();
-
 	tracking->filterCallCounter = 1;
 
 	cout << "KalmanFilter: Initializing filter for Tracker " << trajectoryID << endl;

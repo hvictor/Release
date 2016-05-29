@@ -153,6 +153,10 @@ typedef struct
 	double trackingWndAdaptiveFactorX;
 	double trackingWndAdaptiveFactorY;
 	int confidenceThreshold;
+
+	// Dynamic Model 3D
+	bool recalcDynamicModel3D;
+	bool useInputKalmanFilter;
 } DynamicModelParameters;
 
 class Configuration {
