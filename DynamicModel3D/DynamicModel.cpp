@@ -36,6 +36,11 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 
 	double delta_ms = nanotimer_rt_ms_diff(prev_t, act_t);
 
+	printf("Dynamic Model :: actPOS=[%.2f %.2f %.2f] prevPOS=[%.2f %.2f %.2f] dPOS=[%.2f %.2f %.2f]\n",
+			actual->pos.x, actual->pos.y, actual->pos.z,
+			prev->pos.x, prev->pos.y, prev->pos.z,
+			(actual->pos.x - prev->pos.x), (actual->pos.y - prev->pos.y), (actual->pos.z - prev->pos.z));
+
 	printf("Dynamic Model :: compute_dynamical_state_data() :: delta t = %.2f [ms]\n", delta_ms);
 
 	// Velocity components [mm / ms]
