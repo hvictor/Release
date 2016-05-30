@@ -47,6 +47,7 @@ public slots:
     void trackingWindowSetStaticTrackingWindow(bool status);
     void updateDynamicModel_SetFreePlay(bool status);
     void updateDynamicModel_Confidence(int value);
+    void updateDynamicModel_UseInputKalmanFilter(bool status);
     void saveConfig();
 };
 

@@ -30,7 +30,9 @@ Configuration::Configuration()
 {
 	dynamicModelParameters.freePlay = true;
 	dynamicModelParameters.trackingWndEnabled = false;
-	dynamicModelParameters.confidenceThreshold = 90;
+	dynamicModelParameters.confidenceThreshold = 100;
+	dynamicModelParameters.trackingWndEnabled = false;
+	dynamicModelParameters.useInputKalmanFilter = true;
 }
 
 Configuration::~Configuration() {

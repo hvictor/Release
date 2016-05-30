@@ -46,7 +46,7 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 			delta_ms, actual->vx, actual->vy, actual->vz);
 
 	if (prev->vy >= 0.0 && actual->vy < 0.0) {
-		printf("Dynamic Model :: IMPACT\n");
+		printf("Dynamic Model :: IMPACT at [x = %.2f, y = %.2f, z = %.2f]\n", prev->pos.x, prev->pos.y, prev->pos.z);
 	}
 }
 

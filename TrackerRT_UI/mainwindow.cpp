@@ -125,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->checkBox_enableDepthMeasurements, SIGNAL(toggled(bool)), this, SLOT(toggleDepthMeasurementsStatus(bool)));
     QObject::connect(ui->checkBox_tgtPred_UseWnd, SIGNAL(toggled(bool)), this, SLOT(trackingWindowUseToggled(bool)));
     QObject::connect(ui->checkBox_tgtPred_VisualizeWnd, SIGNAL(toggled(bool)), this, SLOT(trackingWindowVisualizeToggled(bool)));
+    QObject::connect(ui->checkBox_enableInputKF, SIGNAL(toggled(bool)), this, SLOT(updateDynamicModel_UseInputKalmanFilter(bool)));
 
     QObject::connect(ui->radioButton_tgtPred_AdaptiveTWND, SIGNAL(toggled(bool)), this, SLOT(trackingWindowSetAdaptiveTrackingWindow(bool)));
     QObject::connect(ui->radioButton_tgtPred_StaticTWND, SIGNAL(toggled(bool)), this, SLOT(trackingWindowSetStaticTrackingWindow(bool)));
@@ -268,6 +269,13 @@ void MainWindow::startApplication()
     systemCalibrated = true;
     stereoDisplay->init(false, true);
     stereoDisplay->show();
+}
+
+void MainWindow::updateDynamicModel_UseInputKalmanFilter(bool status)
+{
+    Configuration::getInstance()->dynamicModelParameters.useInputKalmanFilter = status;
+
+    printf("Dynamic Model :: Update :: Input Kalman Filter Status: %d\n", status);
 }
 
 void MainWindow::updateDynamicModel_SetAdaptiveTrackingWndX(double fx)
