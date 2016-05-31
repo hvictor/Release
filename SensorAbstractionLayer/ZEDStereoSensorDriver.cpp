@@ -168,6 +168,7 @@ float ZEDStereoSensorDriver::repeatedDepthMeasure(int x, int y)
 
 		// Discard invalid measurement
 		if (meas <= 0.0) {
+			usleep(100000);
 			continue;
 		}
 
@@ -175,6 +176,8 @@ float ZEDStereoSensorDriver::repeatedDepthMeasure(int x, int y)
 		accepted_samples++;
 
 		printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: P=[%d, %d] Meas=[%d] Depth = %.2f\t[mm]\n", x, y, i, meas);
+
+		usleep(100000);
 	}
 
 	mean /= ((float)accepted_samples);
