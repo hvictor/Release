@@ -10,7 +10,6 @@
 
 #include "../Configuration/Configuration.h"
 #include "../StereoVision/StereoVision.h"
-#include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 #include "../Common/opencv_headers.h"
 #include "../Common/data_types.h"
 

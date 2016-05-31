@@ -6,6 +6,7 @@
  */
 
 #include "GroundModel.h"
+#include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 
 GroundModel *getInstance()
 {
