@@ -40,6 +40,8 @@ public:
 	static StereoSensorMeasure3D readMeasurementMatrix3D(Mat *xyzMat, int x, int y);
 	static int retryTargetScanMatrix3D(pred_scan_t engage_data, Mat *xyzMat, StereoSensorMeasure3D *measurement);
 	static float readMeasurementDataDepth(float *depth_data, int x, int y, int step);
+	float repeatedDepthMeasure(int x, int y);
+	StereoSensorMeasure3D triangulate(float z_depth, float x_image_plane, float y_image_plane);
 
 private:
 	ZEDCameraProperties *zedProperties;

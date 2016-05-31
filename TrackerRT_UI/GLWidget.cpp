@@ -8,6 +8,7 @@
 #include "../Calibration/PerimetralConesDetector.h"
 #include "../AugmentedReality/OverlayRenderer.h"
 #include "../StaticModel/TennisFieldStaticModel.h"
+#include "../StaticModel/GroundModel.h"
 
 #define QT_NO_DEBUG_OUTPUT
 
@@ -159,6 +160,8 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
         OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
         TennisFieldStaticModel::getInstance()->setTennisFieldDelimiter(fieldDelimiter);
+
+        GroundModel::getInstance()->computeGroundPlaneLinearModel(fieldDelimiter->bottomLeft, fieldDelimiter->bottomRight, fieldDelimiter->topLeft, fieldDelimiter->topRight);
     }
 
     update();

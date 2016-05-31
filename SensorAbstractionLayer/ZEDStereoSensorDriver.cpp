@@ -126,6 +126,63 @@ void ZEDStereoSensorDriver::updateDepthFrameInterleave()
 	printf("ZEDStereoSensorDriver :: Update :: DFI parameter updated to %d [Frames]\n", depthFrameInterleave);
 }
 
+// Triangulate Depth and Image Plane coordinates using reference camera intrinsic
+// parameters in order to obtain real-world coordinates.
+StereoSensorMeasure3D ZEDStereoSensorDriver::triangulate(float z_depth, float x_image_plane, float y_image_plane)
+{
+	StereoSensorMeasure3D meas;
+
+	meas.z_mm = z_depth;
+	meas.x_mm = (z_depth * x_image_plane) / Configuration::getInstance()->zedHardwareParameters.fx_L;
+	meas.y_mm = (z_depth * y_image_plane) / Configuration::getInstance()->zedHardwareParameters.fy_L;
+
+	return meas;
+}
+
+// Read Depth data multiple times and mean the value, then compute
+float ZEDStereoSensorDriver::repeatedDepthMeasure(int x, int y)
+{
+	float mean = 0.0;
+
+	int accepted_samples = 0;
+	int samples = Configuration::getInstance()->staticModelParameters.groundPlaneModelDepthSamples;
+
+	// Set configured measure confidence threshold
+	this->zed->setConfidenceThreshold(Configuration::getInstance()->dynamicModelParameters.confidenceThreshold);
+
+	for (int i = 0; i < samples; i++) {
+
+		// Perform Hardware Measurement
+		if (this->zed->grab(zed::SENSING_MODE::RAW, true, true)) {
+			// Error, return a mean = 0.0
+			return mean;
+		}
+
+		// Retrieve Hardware measure
+		zed::Mat depthMat = zed->retrieveMeasure(sl::zed::MEASURE::DEPTH);
+		float *depth_data = (float *)depthMat.data;
+		int step = (depthMat.step / sizeof(float));
+
+		// Read measure from depth data buffer
+		float meas = readMeasurementDataDepth(depth_data, x, y, step);
+
+		// Discard invalid measurement
+		if (meas <= 0.0) {
+			continue;
+		}
+
+		mean += meas;
+		accepted_samples++;
+
+		printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: P=[%d, %d] Meas=[%d] Depth = %.2f\t[mm]", x, y, i, meas);
+	}
+
+	mean /= ((float)accepted_samples);
+	printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: MEAN Depth = %.2f\t[mm]", mean);
+
+	return mean;
+}
+
 // Fetch ZED frame
 StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 {

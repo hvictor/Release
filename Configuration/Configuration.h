@@ -141,6 +141,7 @@ typedef struct
 typedef struct
 {
 	int linesSensitivityEPS;
+	int groundPlaneModelDepthSamples;
 } StaticModelParameters;
 
 typedef struct
@@ -172,10 +173,11 @@ public:
 	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
 	void setStaticModelLinesSensitivityEPS(int value);
 	StaticModelParameters getStaticModelParameters();
-	DynamicModelParameters dynamicModelParameters;
 	void publish();
 
 	// Public properties
+	StaticModelParameters staticModelParameters;
+	DynamicModelParameters dynamicModelParameters;
 	CalibrationData calibrationData;
 	ZEDStereoCameraHardwareParameters zedHardwareParameters;
 
@@ -199,7 +201,6 @@ private:
 	OpticalLayerParameters opticalLayerParameters;
 	DUOStereoCameraHardwareParameters duoHardwareParameters;
 	InterpolationEngineParameters interpolationEngineParameters;
-	StaticModelParameters staticModelParameters;
 };
 
 #endif /* CONFIGURATION_H_ */
