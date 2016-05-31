@@ -8,7 +8,7 @@
 #include "GroundModel.h"
 #include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 
-GroundModel *getInstance()
+GroundModel *GroundModel::getInstance()
 {
 	static GroundModel *inst = 0;
 
