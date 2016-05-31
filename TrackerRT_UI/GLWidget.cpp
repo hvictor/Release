@@ -161,7 +161,7 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
         TennisFieldStaticModel::getInstance()->setTennisFieldDelimiter(fieldDelimiter);
 
-        //GroundModel::getInstance()->computeGroundPlaneLinearModel(fieldDelimiter->bottomLeft, fieldDelimiter->bottomRight, fieldDelimiter->topLeft, fieldDelimiter->topRight);
+        GroundModel::getInstance()->computeGroundPlaneLinearModel(fieldDelimiter->bottomLeft, fieldDelimiter->bottomRight, fieldDelimiter->topLeft, fieldDelimiter->topRight);
     }
 
     update();
