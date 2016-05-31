@@ -174,11 +174,11 @@ float ZEDStereoSensorDriver::repeatedDepthMeasure(int x, int y)
 		mean += meas;
 		accepted_samples++;
 
-		printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: P=[%d, %d] Meas=[%d] Depth = %.2f\t[mm]", x, y, i, meas);
+		printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: P=[%d, %d] Meas=[%d] Depth = %.2f\t[mm]\n", x, y, i, meas);
 	}
 
 	mean /= ((float)accepted_samples);
-	printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: MEAN Depth = %.2f\t[mm]", mean);
+	printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: MEAN Depth = %.2f\t[mm]\n", mean);
 
 	return mean;
 }
