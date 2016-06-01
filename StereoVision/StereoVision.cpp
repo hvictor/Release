@@ -46,9 +46,9 @@ Vector3D StereoVision::convertStereoMeasureToVector(StereoSensorMeasure3D stereo
 {
 	Vector3D v;
 
-	v.x = stereoMeasure.x_mm;
-	v.y = stereoMeasure.y_mm;
-	v.z = stereoMeasure.z_mm;
+	v.x = stereoMeasure.x_mm * 0.001;
+	v.y = stereoMeasure.y_mm * 0.001;
+	v.z = stereoMeasure.z_mm * 0.001;
 
 	return v;
 }
