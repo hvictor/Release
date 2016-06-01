@@ -96,12 +96,6 @@ bool ZEDStereoSensorDriver::openCamera()
 	Configuration::getInstance()->zedHardwareParameters.fx_R = _param_R.fx;
 	Configuration::getInstance()->zedHardwareParameters.fy_R = _param_R.fy;
 
-	Configuration::getInstance()->zedHardwareParameters.rotationVector_L.at<float>(0, 1) = stereoParam->Ry;
-	Configuration::getInstance()->zedHardwareParameters.rotationVector_L.at<float>(0, 2) = stereoParam->RZ;
-
-	Configuration::getInstance()->zedHardwareParameters.translationVector_L.at<float>(0, 1) = stereoParam->Ty;
-	Configuration::getInstance()->zedHardwareParameters.translationVector_L.at<float>(0, 2) = stereoParam->TZ;
-
 	/*
 	 * Camera Matrix:
 	 *
@@ -115,10 +109,10 @@ bool ZEDStereoSensorDriver::openCamera()
 
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,0) = _param_L.fx;	// fx
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,1) = 0.0;			// 0
-	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,2) = _param_L.cx;	// Cx
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,2) = -0.5*_param_L.cx;	// Cx
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,0) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,1) = _param_L.fy;	// fy
-	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,2) = _param_L.cy;	// Cy
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,2) = -0.5*_param_L.cy;	// Cy
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,0) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,1) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,2) = 1.0;			// 1
