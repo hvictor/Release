@@ -77,7 +77,7 @@ bool ZEDStereoSensorDriver::openCamera()
 	if (camera_open)
 		return true;
 
-	if (zed->init(performanceMode, 0, true, false, false) != zed::SUCCESS) {
+	if (zed->init(performanceMode, 0, true, false, true) != zed::SUCCESS) {
 		printf("ZED init error\n");
 		camera_open = false;
 	}
