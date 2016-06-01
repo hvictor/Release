@@ -109,10 +109,10 @@ bool ZEDStereoSensorDriver::openCamera()
 
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,0) = _param_L.fx;	// fx
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,1) = 0.0;			// 0
-	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,2) = _param_L.cx / 4.0;	// Cx
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,2) = 0.0;	// Cx
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,0) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,1) = _param_L.fy;	// fy
-	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,2) = _param_L.cy / 4.0;	// Cy
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,2) = 0.0	// Cy
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,0) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,1) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,2) = 1.0;			// 1
