@@ -28,7 +28,7 @@ Configuration *Configuration::getInstance()
 
 Configuration::Configuration()
 {
-	staticModelParameters.groundPlaneModelDepthSamples = 10;
+	staticModelParameters.groundPlaneModelDepthSamples = 50;
 
 	dynamicModelParameters.freePlay = true;
 	dynamicModelParameters.trackingWndEnabled = false;

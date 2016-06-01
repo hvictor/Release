@@ -88,6 +88,9 @@ bool ZEDStereoSensorDriver::openCamera()
 	_param_L = stereoParam->LeftCam;
 	_param_R = stereoParam->RightCam;
 
+	printf("Driver :: FOCAL LEN: x=%.2f, y=%.2f\n", _param_L.fx, _param_L.fy);
+	printf("Driver :: OPTICAL CENTER: Cx=%.2f, Cy=%.2f\n", _param_L.cx, _param_L.cy);
+
 	Configuration::getInstance()->zedHardwareParameters.fx_L = _param_L.fx;
 	Configuration::getInstance()->zedHardwareParameters.fy_L = _param_L.fy;
 	Configuration::getInstance()->zedHardwareParameters.fx_R = _param_R.fx;
@@ -188,7 +191,7 @@ float ZEDStereoSensorDriver::repeatedDepthMeasure(int x, int y)
 
 		// Discard invalid measurement
 		if (meas <= 0.0) {
-			usleep(100000);
+			usleep(50000);
 			continue;
 		}
 
@@ -197,7 +200,7 @@ float ZEDStereoSensorDriver::repeatedDepthMeasure(int x, int y)
 
 		printf("ZEDStereoSensorDriver :: Repeated Depth Measure :: P=[%d, %d] Meas=[%d] Depth = %.2f\t[mm]\n", x, y, i, meas);
 
-		usleep(100000);
+		usleep(50000);
 	}
 
 	mean /= ((float)accepted_samples);
