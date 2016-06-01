@@ -53,8 +53,8 @@ PlaneLinearModel GroundModel::computeGroundPlaneLinearModel(Point nearL, Point n
 
 	Vector3D vector_nearL = StereoVision::convertStereoMeasureToVector(sensorDriverHdl->triangulate(depth_nearL, nearL.x, nearL.y));
 	Vector3D vector_nearR = StereoVision::convertStereoMeasureToVector(sensorDriverHdl->triangulate(depth_nearR, nearR.x, nearR.y));
-	Vector3D vector_farL = StereoVision::convertStereoMeasureToVector(sensorDriverHdl->triangulate(depth_farL, farL.x, farL.y));
-	Vector3D vector_farR = StereoVision::convertStereoMeasureToVector(sensorDriverHdl->triangulate(depth_farR, farR.x, farR.y));
+	Vector3D vector_farL = StereoVision::convertStereoMeasureToVectorScaledToMeters(sensorDriverHdl->triangulate(depth_farL, farL.x, farL.y));
+	Vector3D vector_farR = StereoVision::convertStereoMeasureToVectorScaledToMeters(sensorDriverHdl->triangulate(depth_farR, farR.x, farR.y));
 
 	measure_points.push_back(vector_nearL);
 	measure_points.push_back(vector_nearR);

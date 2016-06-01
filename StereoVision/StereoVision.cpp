@@ -46,12 +46,24 @@ Vector3D StereoVision::convertStereoMeasureToVector(StereoSensorMeasure3D stereo
 {
 	Vector3D v;
 
+	v.x = stereoMeasure.x_mm;
+	v.y = stereoMeasure.y_mm;
+	v.z = stereoMeasure.z_mm;
+
+	return v;
+}
+
+Vector3D StereoVision::convertStereoMeasureToVectorScaledToMeters(StereoSensorMeasure3D stereoMeasure)
+{
+	Vector3D v;
+
 	v.x = stereoMeasure.x_mm * 0.001;
 	v.y = stereoMeasure.y_mm * 0.001;
 	v.z = stereoMeasure.z_mm * 0.001;
 
 	return v;
 }
+
 
 vector<Point2f> StereoVision::project3DCoordinatesOnImagePlane(vector<Vector3D> coords_3d)
 {
@@ -61,6 +73,7 @@ vector<Point2f> StereoVision::project3DCoordinatesOnImagePlane(vector<Vector3D> 
 
 	for (int i = 0; i < coords_3d.size(); i++) {
 		objectPoints.at<Vec3f>(0, i) = Point3f(coords_3d[i].x, coords_3d[i].y, coords_3d[i].z);
+		printf("StereoVision :: TRANSFERRING 3D COORD TO GPU DEVICE MEMORY: [%.2f, %.2f, %.2f]\n", coords_3d[i].x, coords_3d[i].y, coords_3d[i].z);
 	}
 
 	GpuMat d_objectPoints(objectPoints);
@@ -78,6 +91,7 @@ vector<Point2f> StereoVision::project3DCoordinatesOnImagePlane(vector<Vector3D> 
 	for (int i = 0; i < coords_3d.size(); i++) {
 		Vec2f image_coords = imagePoints.at<Vec2f>(0, i);
 		Point2f p(image_coords.val[0], image_coords.val[1]);
+		printf("StereoVision :: TRANSFERRING 3D COORD FROM GPU DEVICE TO HOST MEMORY: RES=[%.2f, %.2f]\n", image_coords.val[0], image_coords.val[1]);
 		retval.push_back(p);
 	}
 

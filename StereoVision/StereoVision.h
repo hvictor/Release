@@ -27,6 +27,7 @@ public:
 	static vector<Point2f> project3DCoordinatesOnImagePlane(CameraIntrinsics intrinsics, ExtrinsicParameters extrinsics, vector<Vector3D> coords_3d);
 	static vector<Point2f> project3DCoordinatesOnImagePlane(vector<Vector3D> coords_3d);
 	static Vector3D convertStereoMeasureToVector(StereoSensorMeasure3D stereoMeasure);
+	static Vector3D convertStereoMeasureToVectorScaledToMeters(StereoSensorMeasure3D stereoMeasure);
 	virtual ~StereoVision();
 };
 
