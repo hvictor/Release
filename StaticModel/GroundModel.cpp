@@ -61,6 +61,12 @@ PlaneLinearModel GroundModel::computeGroundPlaneLinearModel(Point nearL, Point n
 	measure_points.push_back(vector_farR);
 	measure_points.push_back(vector_farL);
 
+	printf("Floor Model :: Points:\n");
+	printf("\t[NEAR L] = [%.2f, %.2f, %.2f]\n", vector_nearL.x, vector_nearL.y, vector_nearL.z);
+	printf("\t[NEAR R] = [%.2f, %.2f, %.2f]\n", vector_nearR.x, vector_nearR.y, vector_nearR.z);
+	printf("\t[FAR  R] = [%.2f, %.2f, %.2f]\n", vector_farR.x, vector_farR.y, vector_farR.z);
+	printf("\t[FAR  L] = [%.2f, %.2f, %.2f]\n", vector_farL.x, vector_farL.y, vector_farL.z);
+
 	// Re-project triangulated 3D measurements on the Reference Camera's image plane for visual validation
 
 	vector<Point2f> projections = StereoVision::project3DCoordinatesOnImagePlane(measure_points);
@@ -70,6 +76,11 @@ PlaneLinearModel GroundModel::computeGroundPlaneLinearModel(Point nearL, Point n
 	groundPlaneLinearModel.nearR = vector_nearR;
 	groundPlaneLinearModel.farL = vector_farL;
 	groundPlaneLinearModel.farR = vector_farR;
+
+	printf("\tPROJ: [NEAR L] = [%.2f, %.2f]\n", projections[0].x, projections[0].y);
+	printf("\tPROJ: [NEAR R] = [%.2f, %.2f]\n", projections[1].x, projections[1].y);
+	printf("\tPROJ: [FAR  R] = [%.2f, %.2f]\n", projections[2].x, projections[2].y);
+	printf("\tPROJ: [FAR  L] = [%.2f, %.2f]\n", projections[3].x, projections[3].y);
 
 	groundPlaneLinearModel.proj_nearL = projections[0];
 	groundPlaneLinearModel.proj_nearR = projections[1];

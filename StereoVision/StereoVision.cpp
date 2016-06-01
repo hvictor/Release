@@ -8,6 +8,9 @@
 #include "StereoVision.h"
 #include "../DynamicModel3D/DynamicModel3D.h"
 #include "../Configuration/Configuration.h"
+#include <iostream>
+
+using namespace std;
 
 StereoVision::StereoVision() {
 }
@@ -62,6 +65,11 @@ vector<Point2f> StereoVision::project3DCoordinatesOnImagePlane(vector<Vector3D> 
 
 	GpuMat d_objectPoints(objectPoints);
 	GpuMat d_imagePoints;
+
+	cout << "StereoVision :: Project 3D to Image Plane :: " << endl;
+	cout << "\t===> Rotation Vector: " << hwParam.rotationVector_L << endl;
+	cout << "\t===> Translation Vector: " << hwParam.translationVector_L << endl;
+	cout << "\t===> Reference Camera Matrix: " << hwParam.cameraMatrix_L << endl;
 
 	gpu::projectPoints(d_objectPoints, hwParam.rotationVector_L, hwParam.translationVector_L, hwParam.cameraMatrix_L, Mat(), d_imagePoints);
 
