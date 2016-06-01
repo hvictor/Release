@@ -77,6 +77,20 @@ PlaneLinearModel GroundModel::computeGroundPlaneLinearModel(Point nearL, Point n
 	groundPlaneLinearModel.farL = vector_farL;
 	groundPlaneLinearModel.farR = vector_farR;
 
+	//////////////////
+	groundPlaneLinearModel.nearL.x = 0.0;
+	groundPlaneLinearModel.nearL.y = 0.0;
+	groundPlaneLinearModel.nearL.z = 2000.0;
+
+	groundPlaneLinearModel.nearR.x = 500.0;
+	groundPlaneLinearModel.nearR.y = 500.0;
+	groundPlaneLinearModel.nearR.z = 2000.0;
+	///////////////////
+
+	groundPlaneLinearModel.farL = vector_farL;
+	groundPlaneLinearModel.farR = vector_farR;
+
+
 	printf("\tPROJ: [NEAR L] = [%.2f, %.2f]\n", projections[0].x, projections[0].y);
 	printf("\tPROJ: [NEAR R] = [%.2f, %.2f]\n", projections[1].x, projections[1].y);
 	printf("\tPROJ: [FAR  R] = [%.2f, %.2f]\n", projections[2].x, projections[2].y);
