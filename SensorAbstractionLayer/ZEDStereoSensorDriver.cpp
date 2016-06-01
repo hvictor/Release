@@ -106,6 +106,18 @@ bool ZEDStereoSensorDriver::openCamera()
 	 * f: Focal length
 	 * C: Optical center of projection
 	 */
+
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,0) = 200.207839; 	// fx
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,1) = 0.0;		// 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,2) = 153.666066;	// Cx
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,0) = 0.0;		// 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,1) = 193.858211;	// fy
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,2) = 115.804223;	// Cy
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,0) = 0.0;             // 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,1) = 0.0;		// 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,2) = 1.0;		// 1
+
+	/*
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,0) = _param_L.fx;	// fx
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,1) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,2) = _param_L.cx;	// Cx
@@ -115,6 +127,7 @@ bool ZEDStereoSensorDriver::openCamera()
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,0) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,1) = 0.0;			// 0
 	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,2) = 1.0;			// 1
+	*/
 
 	return true;
 }
