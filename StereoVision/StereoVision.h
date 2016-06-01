@@ -10,6 +10,7 @@
 
 #include "../Common/opencv_headers.h"
 #include "../Common/data_types.h"
+#include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
 #include "IntrinsicParameters.h"
 #include "ExtrinsicParameters.h"
 
