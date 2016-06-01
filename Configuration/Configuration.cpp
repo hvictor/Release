@@ -35,6 +35,14 @@ Configuration::Configuration()
 	dynamicModelParameters.confidenceThreshold = 100;
 	dynamicModelParameters.trackingWndEnabled = false;
 	dynamicModelParameters.useInputKalmanFilter = true;
+
+	zedHardwareParameters.cameraMatrix_L = Mat(3, 3, CV_32FC1);
+
+	zedHardwareParameters.rotationVector_L = Mat(1, 3, CV_32FC1);
+	zedHardwareParameters.translationVector_L = Mat(1, 3, CV_32FC1);
+
+	for (int l = 0; l < 3; l++) { zedHardwareParameters.rotationVector_L.at<float>(0, l) = 0.0; }
+	for (int l = 0; l < 3; l++) { zedHardwareParameters.translationVector_L.at<float>(0, l) = 0.0; }
 }
 
 Configuration::~Configuration() {

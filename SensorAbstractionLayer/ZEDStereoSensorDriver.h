@@ -12,6 +12,8 @@
 #include <zed/Camera.hpp>
 #include <zed/utils/GlobalDefine.hpp>
 #include "../TargetPredator/TargetPredator.h"
+#include "../StereoVision/IntrinsicParameters.h"
+#include "../StereoVision/ExtrinsicParameters.h"
 
 using namespace sl;
 

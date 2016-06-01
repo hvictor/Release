@@ -491,3 +491,13 @@ void OverlayRenderer::renderTarget3DPosition(Mat frame, Point center, StereoSens
 //	fprintf(fp, "%.2f,%.2f,%.2f\n", measure.x_mm * 0.001, measure.y_mm * 0.001, measure.z_mm * 0.001);
 //	fclose(fp);
 }
+
+void OverlayRenderer::renderPlanePointSetProjection_8UC4(uint8_t *u8data, int width, int height, Point2f nearL, Point2f nearR, Point2f farR, Point2f farL)
+{
+	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
+
+	circle(frame_RGBA, nearL, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
+	circle(frame_RGBA, nearR, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
+	circle(frame_RGBA, farL, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
+	circle(frame_RGBA, farR, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
+}

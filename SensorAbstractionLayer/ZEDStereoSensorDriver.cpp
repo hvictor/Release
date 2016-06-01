@@ -93,6 +93,26 @@ bool ZEDStereoSensorDriver::openCamera()
 	Configuration::getInstance()->zedHardwareParameters.fx_R = _param_R.fx;
 	Configuration::getInstance()->zedHardwareParameters.fy_R = _param_R.fy;
 
+	/*
+	 * Camera Matrix:
+	 *
+	 * fx	0	Cx
+	 * 0	fy	Cy
+	 * 0	0	1
+	 *
+	 * f: Focal length
+	 * C: Optical center of projection
+	 */
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,0) = _param_L.fx;	// fx
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,1) = 0.0;			// 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(0,2) = _param_L.cx;	// Cx
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,0) = 0.0;			// 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,1) = _param_L.fy;	// fy
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(1,2) = _param_L.cy;	// Cy
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,0) = 0.0;			// 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,1) = 0.0;			// 0
+	Configuration::getInstance()->zedHardwareParameters.cameraMatrix_L.at<float>(2,2) = 1.0;			// 1
+
 	return true;
 }
 
@@ -185,6 +205,8 @@ float ZEDStereoSensorDriver::repeatedDepthMeasure(int x, int y)
 
 	return mean;
 }
+
+// Convert
 
 // Fetch ZED frame
 StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()

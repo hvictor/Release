@@ -17,6 +17,7 @@
 #include <time.h>
 #include <string>
 #include "../OpticalLayer/HSVManager.h"
+#include "../Common/opencv_headers.h"
 
 using namespace std;
 using namespace cv;
@@ -117,6 +118,14 @@ typedef struct
 	float fy_L;
 	float fx_R;
 	float fy_R;
+
+	// Reference Camera Matrix
+	Mat cameraMatrix_L;
+
+	// Reference Camera Rotation and Translation vectors
+	Mat rotationVector_L;
+	Mat translationVector_L;
+
 } ZEDStereoCameraHardwareParameters;
 
 typedef struct

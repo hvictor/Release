@@ -159,9 +159,17 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
         OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
         OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
+
         TennisFieldStaticModel::getInstance()->setTennisFieldDelimiter(fieldDelimiter);
 
-        GroundModel::getInstance()->computeGroundPlaneLinearModel(fieldDelimiter->bottomLeft, fieldDelimiter->bottomRight, fieldDelimiter->topLeft, fieldDelimiter->topRight);
+        PlaneLinearModel planeLinearModel = GroundModel::getInstance()->computeGroundPlaneLinearModel(fieldDelimiter->bottomLeft, fieldDelimiter->bottomRight, fieldDelimiter->topLeft, fieldDelimiter->topRight);
+
+        OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
+        OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
+        OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);
+        OverlayRenderer::getInstance()->renderPlanePointSetProjection_8UC4(u8data, 640, 480,
+                                        planeLinearModel.proj_nearL, planeLinearModel.proj_nearR,
+                                        planeLinearModel.proj_farR, planeLinearModel.proj_farL);
     }
 
     update();

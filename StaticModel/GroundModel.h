@@ -24,6 +24,10 @@ typedef struct
 	Vector3D nearL, nearR;
 	Vector3D farL, farR;
 
+	// Projections on Image Plane
+	Point2f proj_nearL, proj_nearR;
+	Point2f proj_farL, proj_farR;
+
 } PlaneLinearModel;
 
 class GroundModel {
