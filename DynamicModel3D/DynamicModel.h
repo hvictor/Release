@@ -20,7 +20,7 @@
 #include "../Common/data_types.h"
 #include "../RealTime/nanotimer_rt.h"
 #include "../Configuration/Configuration.h"
-
+#include "../StaticModel/GroundModel.h"
 
 using namespace std;
 using namespace cv;
@@ -51,6 +51,7 @@ private:
 	Configuration *config;
 	dyn_state_t *make_dynamical_state(Vector3D v, struct timespec t);
 	void compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t *prev);
+	GroundModel *_groundModel;
 };
 
 #endif /* DYNAMICMODEL_H_ */

@@ -7,6 +7,7 @@
 
 #include "GroundModel.h"
 #include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
+#include <math.h>
 
 GroundModel *GroundModel::getInstance()
 {
@@ -25,6 +26,41 @@ GroundModel::GroundModel()
 
 GroundModel::~GroundModel()
 {
+}
+
+// Compute plane linear equation coefficients
+void GroundModel::computeLinearEquationCoefficients(PlaneLinearModel *planeModel, Vector3D P1, Vector3D P2, Vector3D P3)
+{
+	//	ax + by + cz + d = 0
+	//	P1 = (x1, y1, z1)
+	//  P2 = (x2, y2, z2)
+	//	P3 = (x3, y3, z3)
+	//
+	//  a = (y2-y1)*(z3-z1) - (y3-y1)*(z2-z1)
+	//  b = (x2-x1)*(z3-z1) - (x3-x1)*(z2-z1)
+	//	c = (x2-x1)*(y3-y1) - (x3-x1)*(y2-y1)
+	//	d = -(a*x4 + b*y4 + c*z4)
+
+	double x1 = P1.x;
+	double y1 = P1.y;
+	double z1 = P1.z;
+
+	double x2 = P2.x;
+	double y2 = P2.y;
+	double z2 = P2.z;
+
+	double x3 = P3.x;
+	double y3 = P3.y;
+	double z3 = P3.z;
+
+	double x4 = P1.x;
+	double y4 = P1.y;
+	double z4 = P1.z;
+
+	planeModel->a = (y2-y1)*(z3-z1) - (y3-y1)*(z2-z1);
+	planeModel->b = (x2-x1)*(z3-z1) - (x3-x1)*(z2-z1);
+	planeModel->c = (x2-x1)*(y3-y1) - (x3-x1)*(y2-y1);
+	planeModel->d = -(planeModel->a*x4 + planeModel->b*y4 + planeModel->c*z4);
 }
 
 PlaneLinearModel GroundModel::computeGroundPlaneLinearModel(Point nearL, Point nearR, Point farL, Point farR)
@@ -91,6 +127,27 @@ PlaneLinearModel GroundModel::computeGroundPlaneLinearModel(Point nearL, Point n
 	groundPlaneLinearModel.proj_farR = projections[2];
 	groundPlaneLinearModel.proj_farL = projections[3];
 
+	computeLinearEquationCoefficients(&groundPlaneLinearModel, vector_nearL, vector_nearR, vector_farL);
+	printf("Floor Model :: Linear equation: %.2f*x + %.2f*y + %.2f*z + %.2f = 0\n", groundPlaneLinearModel.a, groundPlaneLinearModel.b, groundPlaneLinearModel.c, groundPlaneLinearModel.d);
+
+	_planeLinearModel = groundPlaneLinearModel;
+
 	return groundPlaneLinearModel;
 }
 
+PlaneLinearModel GroundModel::getGroundPlaneLinearModel()
+{
+	return _planeLinearModel;
+}
+
+double GroundModel::computeDistanceFromGroundPlane(Vector3D v)
+{
+	// dist = abs(a*vx + b*vy + c*vz + d) / sqrt(a^2 + b^2 + c^2)
+
+	double a = _planeLinearModel.a;
+	double b = _planeLinearModel.b;
+	double c = _planeLinearModel.c;
+	double d = _planeLinearModel.d;
+
+	return (fabsl(a * v.x + b * v.y + c * v.z + d) / sqrt(a*a + b*b + c*c));
+}

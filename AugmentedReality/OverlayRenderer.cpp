@@ -501,3 +501,15 @@ void OverlayRenderer::renderPlanePointSetProjection_8UC4(uint8_t *u8data, int wi
 	circle(frame_RGBA, farL, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
 	circle(frame_RGBA, farR, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
 }
+
+void OverlayRenderer::renderFloorPlane_8UC4(uint8_t *u8data, int width, int height, GroundModel *model)
+{
+	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
+
+	Vector3D nearL = model->getGroundPlaneLinearModel().nearL;
+	Vector3D nearR = model->getGroundPlaneLinearModel().nearR;
+	Vector3D farL = model->getGroundPlaneLinearModel().farL;
+	Vector3D farR = model->getGroundPlaneLinearModel().farR;
+
+
+}

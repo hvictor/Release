@@ -23,6 +23,7 @@ DynamicModel::DynamicModel()
 	kalmanFilter = new DynamicModel3D_KalmanFilter();
 	filterCallCounter = 0;
 	config = Configuration::getInstance();
+	_groundModel = GroundModel::getInstance();
 }
 
 DynamicModel::~DynamicModel()
@@ -53,7 +54,9 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 			filterCallCounter = 1;
 		}
 
-		printf("Dynamic Model :: IMPACT at [x = %.2f, y = %.2f, z = %.2f]\n", prev->pos.x, prev->pos.y, prev->pos.z);
+		printf("Dynamic Model :: IMPACT at [x = %.2f, y = %.2f, z = %.2f] ---> FLOOR DIST = %.2f\n",
+				prev->pos.x, prev->pos.y, prev->pos.z,
+				_groundModel->computeDistanceFromGroundPlane(prev->pos));
 	}
 }
 

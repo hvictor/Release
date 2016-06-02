@@ -170,6 +170,8 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         OverlayRenderer::getInstance()->renderPlanePointSetProjection_8UC4(u8data, 640, 480,
                                         planeLinearModel.proj_nearL, planeLinearModel.proj_nearR,
                                         planeLinearModel.proj_farR, planeLinearModel.proj_farL);
+
+
     }
 
     update();

@@ -18,7 +18,11 @@ using namespace cv;
 
 typedef struct
 {
-	// Plane equation
+	// Plane equation: a*x + b*y + c*z + d = 0
+	double a;
+	double b;
+	double c;
+	double d;
 
 	// Points of appoggio
 	Vector3D nearL, nearR;
@@ -35,9 +39,13 @@ public:
 	static GroundModel *getInstance();
 	virtual ~GroundModel();
 	PlaneLinearModel computeGroundPlaneLinearModel(Point nearL, Point nearR, Point farL, Point farR);
+	PlaneLinearModel getGroundPlaneLinearModel();
+	void computeLinearEquationCoefficients(PlaneLinearModel *planeModel, Vector3D P1, Vector3D P2, Vector3D P3);
+	double computeDistanceFromGroundPlane(Vector3D v);
 
 private:
 	GroundModel();
+	PlaneLinearModel _planeLinearModel;
 
 };
 
