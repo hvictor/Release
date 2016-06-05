@@ -37,10 +37,16 @@ typedef struct
 	bool impacted;		// Impact status
 } dyn_state_t;
 
+typedef struct
+{
+	bool impact;
+	Vector3D impact_pos;
+} dyn_model_result_t;
+
 class DynamicModel {
 public:
 	virtual ~DynamicModel();
-	void recalc(Vector3D v, struct timespec t);
+	dyn_model_result_t recalc(Vector3D v, struct timespec t);
 	static DynamicModel *getInstance();
 
 private:
@@ -50,7 +56,7 @@ private:
 	int filterCallCounter;
 	Configuration *config;
 	dyn_state_t *make_dynamical_state(Vector3D v, struct timespec t);
-	void compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t *prev);
+	void compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t *prev, dyn_model_result_t *res);
 	GroundModel *_groundModel;
 };
 

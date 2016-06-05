@@ -138,6 +138,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->slider_Confidence, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_Confidence(int)));
 
+    QObject::connect(ui->slider_FloorDistTol, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetImpactFloorDistTolerance(int)));
+
     stereoDisplay = new UIStereoDisplay();
 }
 
@@ -290,6 +292,13 @@ void MainWindow::updateDynamicModel_SetAdaptiveTrackingWndY(double fy)
     Configuration::getInstance()->dynamicModelParameters.trackingWndAdaptiveFactorY = fy;
 
     printf("Dynamic Model :: Update :: Adaptive Tracking Window: Factor Y: %.2f\n", fy);
+}
+
+void MainWindow::updateDynamicModel_SetImpactFloorDistTolerance(int tol)
+{
+    Configuration::getInstance()->dynamicModelParameters.impactMaxFloorDistance = (double)tol;
+
+    printf("Dynamic Model :: Update :: Impact Floor Distance Tolerance: %.2f\n", tol);
 }
 
 void MainWindow::updateDynamicModel_SetFreePlay(bool status)

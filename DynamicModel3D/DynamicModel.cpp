@@ -30,7 +30,7 @@ DynamicModel::~DynamicModel()
 {
 }
 
-void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t *prev)
+void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t *prev, dyn_model_result_t *res)
 {
 	struct timespec *prev_t = &(prev->t);
 	struct timespec *act_t = &(actual->t);
@@ -54,14 +54,20 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 			filterCallCounter = 1;
 		}
 
-		printf("Dynamic Model :: IMPACT at [x = %.2f, y = %.2f, z = %.2f] ---> FLOOR DIST = %.2f\n",
-				prev->pos.x, prev->pos.y, prev->pos.z,
-				_groundModel->computeDistanceFromGroundPlane(prev->pos));
+		if (_groundModel->computeDistanceFromGroundPlane(prev->pos) <= config->dynamicModelParameters.impactMaxFloorDistance) {
+			res->impact = true;
+			res->impact_pos = prev->pos;
+		}
+		else {
+			res->impact = false;
+		}
 	}
 }
 
-void DynamicModel::recalc(Vector3D v, struct timespec t)
+dyn_model_result_t DynamicModel::recalc(Vector3D v, struct timespec t)
 {
+	dyn_model_result_t res;
+
 	if (config->dynamicModelParameters.useInputKalmanFilter) {
 		if (filterCallCounter == 0) {
 			printf("Dynamic Model :: Kalman Filter :: Initializing filter.\n");
@@ -82,7 +88,7 @@ void DynamicModel::recalc(Vector3D v, struct timespec t)
 	// Compute velocity and acceleration components based on previous state
 
 	if(state.size() > 1) {
-		compute_dynamical_state_data(dyn, *(state.begin()));
+		compute_dynamical_state_data(dyn, *(state.begin()), &res);
 	}
 	else {
 		dyn->vx = 0.0;
@@ -92,6 +98,8 @@ void DynamicModel::recalc(Vector3D v, struct timespec t)
 
 	// Add dynamical state to the model
 	state.push_front(dyn);
+
+	return res;
 }
 
 dyn_state_t *DynamicModel::make_dynamical_state(Vector3D v, struct timespec t)

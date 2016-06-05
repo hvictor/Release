@@ -35,6 +35,7 @@ Configuration::Configuration()
 	dynamicModelParameters.confidenceThreshold = 100;
 	dynamicModelParameters.trackingWndEnabled = false;
 	dynamicModelParameters.useInputKalmanFilter = true;
+	dynamicModelParameters.impactMaxFloorDistance = 100.0;
 
 	zedHardwareParameters.cameraMatrix_L = Mat(3, 3, CV_32FC1);
 

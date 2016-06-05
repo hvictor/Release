@@ -510,6 +510,4 @@ void OverlayRenderer::renderFloorPlane_8UC4(uint8_t *u8data, int width, int heig
 	Vector3D nearR = model->getGroundPlaneLinearModel().nearR;
 	Vector3D farL = model->getGroundPlaneLinearModel().farL;
 	Vector3D farR = model->getGroundPlaneLinearModel().farR;
-
-
 }

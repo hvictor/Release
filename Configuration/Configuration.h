@@ -167,6 +167,8 @@ typedef struct
 	// Dynamic Model 3D
 	bool recalcDynamicModel3D;
 	bool useInputKalmanFilter;
+	double impactMaxFloorDistance;
+
 } DynamicModelParameters;
 
 class Configuration {
