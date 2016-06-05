@@ -192,9 +192,9 @@ PlaneReferenceSystemAxis GroundModel::computePlaneReferenceSystemAxis(PlaneLinea
 	normal.x /= norm;
 	normal.y /= norm;
 	normal.z /= norm;
-	normal.x *= 500;
-	normal.y *= 500;
-	normal.z *= 500;
+	normal.x *= -500.0;
+	normal.y *= -500.0;
+	normal.z *= -500.0;
 
 	// Using Near, Left as visual origin
 	Vector3D visualAxisEndPointX = planeModel->nearR;
