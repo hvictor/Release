@@ -496,10 +496,10 @@ void OverlayRenderer::renderPlanePointSetProjection_8UC4(uint8_t *u8data, int wi
 {
 	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
 
-	circle(frame_RGBA, nearL, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
-	circle(frame_RGBA, nearR, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
-	circle(frame_RGBA, farL, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
-	circle(frame_RGBA, farR, 8, OVERLAY_COLOR_YELLOW_RGBA, -1);
+	circle(frame_RGBA, nearL, 4, OVERLAY_COLOR_YELLOW_RGBA, -1);
+	circle(frame_RGBA, nearR, 4, OVERLAY_COLOR_YELLOW_RGBA, -1);
+	circle(frame_RGBA, farL, 4, OVERLAY_COLOR_YELLOW_RGBA, -1);
+	circle(frame_RGBA, farR, 4, OVERLAY_COLOR_YELLOW_RGBA, -1);
 }
 
 void OverlayRenderer::renderFloorPlane_8UC4(uint8_t *u8data, int width, int height, GroundModel *model)
