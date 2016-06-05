@@ -188,12 +188,18 @@ PlaneReferenceSystemAxis GroundModel::computePlaneReferenceSystemAxis(PlaneLinea
 	PlaneReferenceSystemAxis axis;
 
 	Vector3D normal = computePlaneNormalVector(planeModel);
+	double norm = sqrt(normal.x*normal.x + normal.y*normal.y + normal.z*normal.z);
+	normal.x /= norm;
+	normal.y /= norm;
+	normal.z /= norm;
+	normal.x *= 500;
+	normal.y *= 500;
+	normal.z *= 500;
 
 	// Using Near, Left as visual origin
 	Vector3D visualAxisEndPointX = planeModel->nearR;
 
 	Vector3D visualAxisEndPointZ = planeModel->farL;
-	visualAxisEndPointZ.z *= -1.0;
 
 	Vector3D visualOrigin = planeModel->nearL;
 

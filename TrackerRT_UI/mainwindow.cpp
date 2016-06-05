@@ -168,10 +168,10 @@ void MainWindow::showFloorLinearModelCoefficients()
 
     PlaneLinearModel floorLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
 
-    ui->spinBoxFloorLinearModelX->setValue(floorLinearModel.a);
-    ui->spinBoxFloorLinearModelY->setValue(floorLinearModel.b);
-    ui->spinBoxFloorLinearModelZ->setValue(floorLinearModel.c);
-    ui->spinBoxFloorLinearModelD->setValue(floorLinearModel.d);
+    ui->spinBoxFloorLinearModelX->setValue(floorLinearModel.a * 0.001);
+    ui->spinBoxFloorLinearModelY->setValue(floorLinearModel.b * 0.001);
+    ui->spinBoxFloorLinearModelZ->setValue(floorLinearModel.c * 0.001);
+    ui->spinBoxFloorLinearModelD->setValue(floorLinearModel.d * 0.001);
 }
 
 void MainWindow::trackingWindowSetAdaptiveTrackingWindow(bool status)

@@ -2834,7 +2834,7 @@
           <rect>
            <x>10</x>
            <y>320</y>
-           <width>171</width>
+           <width>331</width>
            <height>16</height>
           </rect>
          </property>
@@ -2842,15 +2842,15 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Floor Linear Model:</string>
+          <string>Floor Linear Model Coefficients [m]:</string>
          </property>
         </widget>
         <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelX">
          <property name="geometry">
           <rect>
-           <x>160</x>
-           <y>320</y>
-           <width>111</width>
+           <x>10</x>
+           <y>340</y>
+           <width>151</width>
            <height>21</height>
           </rect>
          </property>
@@ -2858,25 +2858,25 @@
         <widget class="QLabel" name="label_70">
          <property name="geometry">
           <rect>
-           <x>280</x>
-           <y>320</y>
+           <x>170</x>
+           <y>340</y>
            <width>41</width>
-           <height>16</height>
+           <height>20</height>
           </rect>
          </property>
          <property name="autoFillBackground">
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>x +</string>
+          <string>X</string>
          </property>
         </widget>
         <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelY">
          <property name="geometry">
           <rect>
-           <x>320</x>
-           <y>320</y>
-           <width>111</width>
+           <x>10</x>
+           <y>360</y>
+           <width>151</width>
            <height>21</height>
           </rect>
          </property>
@@ -2884,8 +2884,8 @@
         <widget class="QLabel" name="label_72">
          <property name="geometry">
           <rect>
-           <x>440</x>
-           <y>320</y>
+           <x>170</x>
+           <y>360</y>
            <width>41</width>
            <height>16</height>
           </rect>
@@ -2894,15 +2894,15 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>y +</string>
+          <string>Y</string>
          </property>
         </widget>
         <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelZ">
          <property name="geometry">
           <rect>
-           <x>480</x>
-           <y>320</y>
-           <width>111</width>
+           <x>10</x>
+           <y>380</y>
+           <width>151</width>
            <height>21</height>
           </rect>
          </property>
@@ -2910,8 +2910,8 @@
         <widget class="QLabel" name="label_73">
          <property name="geometry">
           <rect>
-           <x>600</x>
-           <y>320</y>
+           <x>170</x>
+           <y>380</y>
            <width>41</width>
            <height>16</height>
           </rect>
@@ -2920,25 +2920,25 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>z +</string>
+          <string>Z</string>
          </property>
         </widget>
         <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelD">
          <property name="geometry">
           <rect>
-           <x>640</x>
-           <y>320</y>
-           <width>111</width>
+           <x>10</x>
+           <y>400</y>
+           <width>151</width>
            <height>21</height>
           </rect>
          </property>
         </widget>
-        <widget class="QLabel" name="label_74">
+        <widget class="QLabel" name="label_75">
          <property name="geometry">
           <rect>
-           <x>760</x>
-           <y>320</y>
-           <width>131</width>
+           <x>170</x>
+           <y>400</y>
+           <width>41</width>
            <height>16</height>
           </rect>
          </property>
@@ -2946,7 +2946,7 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>= 0    [mm]</string>
+          <string>D</string>
          </property>
         </widget>
        </widget>
