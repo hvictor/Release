@@ -511,3 +511,11 @@ void OverlayRenderer::renderFloorPlane_8UC4(uint8_t *u8data, int width, int heig
 	Vector3D farL = model->getGroundPlaneLinearModel().farL;
 	Vector3D farR = model->getGroundPlaneLinearModel().farR;
 }
+
+void OverlayRenderer::renderImpactData3D(Mat frame, Vector3D impact_pos)
+{
+	char stateMessage[200];
+	sprintf(stateMessage, "IMPACT = [%.2f, %.2f, %.2f] [m]", impact_pos.x * 0.001, impact_pos.y * 0.001, impact_pos.z * 0.001);
+
+	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
+}

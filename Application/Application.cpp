@@ -271,7 +271,7 @@ void *frames_processor(void *)
 				meas.y_mm = (meas.z_mm * (float)targetPosition.y) / Configuration::getInstance()->zedHardwareParameters.fy_L;
 
 				if (meas.z_mm > 0.0) {
-					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
+					//OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
 
 					Vector3D meas_v;
 					meas_v.x = (double)meas.x_mm;
@@ -279,7 +279,15 @@ void *frames_processor(void *)
 					meas_v.z = (double)meas.z_mm;
 
 					// Recalc dynamic model
-					dynamicModel->recalc(meas_v, fd->t);
+					dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);
+
+					if (dynamicModelResult.impact) {
+						OverlayRenderer::getInstance()->renderImpactData3D(frame1_L, dynamicModelResult.impact_pos);
+						printf("Dynamic Model Result :: Impact at [%.2f, %.2f %.2f] [m]\n",
+								dynamicModelResult.impact_pos.x * 0.001,
+								dynamicModelResult.impact_pos.y * 0.001,
+								dynamicModelResult.impact_pos.z * 0.001);
+					}
 				}
 
 				/* XYZ
