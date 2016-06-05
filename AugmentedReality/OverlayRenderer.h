@@ -22,7 +22,7 @@
 
 #define OVERLAY_COLOR_GREEN			Scalar(50, 205, 50)
 #define OVERLAY_COLOR_GREEN_RGBA	Scalar(50, 205, 50, 255)
-#define OVERLAY_COLOR_BLUE_RGBA		Scalar(255, 0, 0, 255)
+#define OVERLAY_COLOR_BLUE_RGBA		Scalar(0, 0, 255, 255)
 #define OVERLAY_COLOR_RED_RGBA		Scalar(255, 0, 0, 255)
 #define OVERLAY_COLOR_RED			Scalar(0, 0, 255)
 #define OVERLAY_COLOR_YELLOW		Scalar(0, 255, 255)

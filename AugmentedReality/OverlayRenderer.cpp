@@ -518,7 +518,7 @@ void OverlayRenderer::renderPlaneReferenceSystemAxis_8UC4(uint8_t *u8data, int w
 
 	line(frame_RGBA, refSysAxis.proj_xAxisFrom, refSysAxis.proj_xAxisTo, OVERLAY_COLOR_GREEN_RGBA, 2);
 	line(frame_RGBA, refSysAxis.proj_yAxisFrom, refSysAxis.proj_yAxisTo, OVERLAY_COLOR_YELLOW_RGBA, 2);
-	line(frame_RGBA, refSysAxis.proj_zAxisFrom, refSysAxis.proj_zAxisTo, OVERLAY_COLOR_RED_RGBA, 2);
+	line(frame_RGBA, refSysAxis.proj_zAxisFrom, refSysAxis.proj_zAxisTo, OVERLAY_COLOR_BLUE_RGBA, 2);
 }
 
 void OverlayRenderer::renderImpactData3D(Mat frame, Vector3D impact_pos)
