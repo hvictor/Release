@@ -54,8 +54,12 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 			filterCallCounter = 1;
 		}
 
-		if (_groundModel->computeDistanceFromGroundPlane(prev->pos) <= config->dynamicModelParameters.impactMaxFloorDistance) {
-			printf("Dynamic Model :: IMPACT DETECTED :: Floor Plane Dist = %.2f\n", _groundModel->computeDistanceFromGroundPlane(prev->pos));
+		double dist = _groundModel->computeDistanceFromGroundPlane(prev->pos);
+
+		printf("[%.2f %.2f %.2f] DIST = %.2f\n", prev->pos.x, prev->pos.y, prev->pos.z, dist);
+
+		if (dist <= config->dynamicModelParameters.impactMaxFloorDistance) {
+			printf("Dynamic Model :: *** IMPACT DETECTED *** :: [%.2f %.2f %.2f] DIST = %.2f\n", prev->pos.x, prev->pos.y, prev->pos.z, dist);
 			res->impact = true;
 			res->impact_pos = prev->pos;
 		}
