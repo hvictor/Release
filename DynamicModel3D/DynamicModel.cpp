@@ -46,6 +46,9 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 	//printf("Dynamic Model :: compute_dynamical_state_data() :: delta t = %.2f [ms]        v = [%.2f, %.2f, %.2f] [m / s]\n",
 	//		delta_ms, actual->vx, actual->vy, actual->vz);
 
+	res->impact = false;
+
+
 	if (prev->vy >= 0.0 && actual->vy < 0.0) {
 
 		if (config->dynamicModelParameters.useInputKalmanFilter) {
@@ -62,9 +65,7 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 			printf("Dynamic Model :: *** IMPACT DETECTED *** :: [%.2f %.2f %.2f] DIST = %.2f\n", prev->pos.x, prev->pos.y, prev->pos.z, dist);
 			res->impact = true;
 			res->impact_pos = prev->pos;
-		}
-		else {
-			res->impact = false;
+			prev->impacted = true;
 		}
 	}
 }
@@ -113,6 +114,7 @@ dyn_state_t *DynamicModel::make_dynamical_state(Vector3D v, struct timespec t)
 
 	dyn_state->pos = v;
 	dyn_state->t = t;
+	dyn_state->impacted = false;
 
 	return dyn_state;
 }
