@@ -2720,7 +2720,7 @@
            <number>10</number>
           </property>
           <property name="maximum">
-           <number>300</number>
+           <number>500</number>
           </property>
           <property name="value">
            <number>100</number>

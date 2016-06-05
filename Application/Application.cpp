@@ -283,7 +283,7 @@ void *frames_processor(void *)
 
 					if (dynamicModelResult.impact) {
 						OverlayRenderer::getInstance()->renderImpactData3D(frame1_L, dynamicModelResult.impact_pos);
-						printf("Dynamic Model Result :: Impact at [%.2f, %.2f %.2f] [m]\n",
+						printf("RESULT :: Impact at [%.2f, %.2f %.2f] [m]\n",
 								dynamicModelResult.impact_pos.x * 0.001,
 								dynamicModelResult.impact_pos.y * 0.001,
 								dynamicModelResult.impact_pos.z * 0.001);
