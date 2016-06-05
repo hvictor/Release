@@ -298,7 +298,7 @@ void MainWindow::updateDynamicModel_SetImpactFloorDistTolerance(int tol)
 {
     Configuration::getInstance()->dynamicModelParameters.impactMaxFloorDistance = (double)tol;
 
-    printf("Dynamic Model :: Update :: Impact Floor Distance Tolerance: %.2f\n", tol);
+    printf("Dynamic Model :: Update :: Impact Floor Distance Tolerance: %.2f [mm]\n", Configuration::getInstance()->dynamicModelParameters.impactMaxFloorDistance);
 }
 
 void MainWindow::updateDynamicModel_SetFreePlay(bool status)
