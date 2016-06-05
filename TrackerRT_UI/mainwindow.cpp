@@ -164,6 +164,8 @@ void MainWindow::startCalibrator()
 
 void MainWindow::showFloorLinearModelCoefficients()
 {
+    printf("Static Model :: Floor Linear Model :: Received coefficients ready signal\n");
+
     PlaneLinearModel floorLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
 
     ui->spinBoxFloorLinearModelX->setValue(floorLinearModel.a);

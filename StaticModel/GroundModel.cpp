@@ -210,5 +210,28 @@ PlaneReferenceSystemAxis GroundModel::computePlaneReferenceSystemAxis(PlaneLinea
 	axis.zAxisFrom = visualOrigin;
 	axis.zAxisTo = visualAxisEndPointZ;
 
+	// Project points on Image Plane forv visualization
+	vector<Vector3D> points3d;
+
+	points3d.push_back(axis.xAxisFrom);
+	points3d.push_back(axis.xAxisTo);
+
+	points3d.push_back(axis.yAxisFrom);
+	points3d.push_back(axis.yAxisTo);
+
+	points3d.push_back(axis.zAxisFrom);
+	points3d.push_back(axis.zAxisTo);
+
+	vector<Point2f> projections = StereoVision::project3DCoordinatesOnImagePlane(points3d);
+
+	axis.proj_xAxisFrom = projections[0];
+	axis.proj_xAxisTo = projections[1];
+
+	axis.proj_yAxisFrom = projections[2];
+	axis.proj_yAxisTo = projections[3];
+
+	axis.proj_zAxisFrom = projections[4];
+	axis.proj_zAxisTo = projections[5];
+
 	return axis;
 }

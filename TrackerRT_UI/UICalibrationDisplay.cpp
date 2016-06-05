@@ -32,6 +32,8 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     QObject::connect(ui->widget->glWidget, SIGNAL(disableCalibControlFLD()), this, SLOT(disableCalibBtnFLD()));
     QObject::connect(ui->widget->glWidget, SIGNAL(enableCalibControlFLD()), this, SLOT(enableCalibBtnFLD()));
 
+    QObject::connect(ui->widget->glWidget, SIGNAL(floorLinearModelReady()), this, SIGNAL(floorLinearModelReady()));
+
     ui->btnCalibFld->setDisabled(true);
 }
 

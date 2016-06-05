@@ -512,6 +512,15 @@ void OverlayRenderer::renderFloorPlane_8UC4(uint8_t *u8data, int width, int heig
 	Vector3D farR = model->getGroundPlaneLinearModel().farR;
 }
 
+void OverlayRenderer::renderPlaneReferenceSystemAxis_8UC4(uint8_t *u8data, int width, int height, PlaneReferenceSystemAxis refSysAxis)
+{
+	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
+
+	line(frame_RGBA, refSysAxis.proj_xAxisFrom, refSysAxis.proj_xAxisTo, OVERLAY_COLOR_GREEN_RGBA, 2);
+	line(frame_RGBA, refSysAxis.proj_yAxisFrom, refSysAxis.proj_yAxisTo, OVERLAY_COLOR_YELLOW_RGBA, 2);
+	line(frame_RGBA, refSysAxis.proj_zAxisFrom, refSysAxis.proj_zAxisTo, OVERLAY_COLOR_RED_RGBA, 2);
+}
+
 void OverlayRenderer::renderImpactData3D(Mat frame, Vector3D impact_pos)
 {
 	char stateMessage[200];

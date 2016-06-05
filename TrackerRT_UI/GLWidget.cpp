@@ -163,6 +163,7 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         TennisFieldStaticModel::getInstance()->setTennisFieldDelimiter(fieldDelimiter);
 
         PlaneLinearModel planeLinearModel = GroundModel::getInstance()->computeGroundPlaneLinearModel(fieldDelimiter->bottomLeft, fieldDelimiter->bottomRight, fieldDelimiter->topLeft, fieldDelimiter->topRight);
+        PlaneReferenceSystemAxis refSysAxis = GroundModel::getInstance()->computePlaneReferenceSystemAxis(&planeLinearModel);
 
         emit floorLinearModelReady();
 
@@ -172,7 +173,7 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         OverlayRenderer::getInstance()->renderPlanePointSetProjection_8UC4(u8data, 640, 480,
                                         planeLinearModel.proj_nearL, planeLinearModel.proj_nearR,
                                         planeLinearModel.proj_farR, planeLinearModel.proj_farL);
-
+        OverlayRenderer::getInstance()->renderPlaneReferenceSystemAxis_8UC4(u8data, 640, 480, refSysAxis);
 
     }
 

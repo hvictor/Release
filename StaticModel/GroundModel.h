@@ -40,6 +40,10 @@ typedef struct
 	Vector3D xAxisFrom, xAxisTo;
 	Vector3D yAxisFrom, yAxisTo;
 	Vector3D zAxisFrom, zAxisTo;
+
+	Point2f proj_xAxisFrom, proj_xAxisTo;
+	Point2f proj_yAxisFrom, proj_yAxisTo;
+	Point2f proj_zAxisFrom, proj_zAxisTo;
 } PlaneReferenceSystemAxis;
 
 class GroundModel {

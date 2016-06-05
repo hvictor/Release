@@ -57,6 +57,7 @@ public:
 	void renderPlanePointSetProjection_8UC4(uint8_t *u8data, int width, int height, Point2f nearL, Point2f nearR, Point2f farR, Point2f farL);
 	void renderFloorPlane_8UC4(uint8_t *u8data, int width, int height, GroundModel *model);
 	void renderImpactData3D(Mat frame, Vector3D impact_pos);
+	void renderPlaneReferenceSystemAxis_8UC4(uint8_t *u8data, int width, int height, PlaneReferenceSystemAxis refSysAxis);
 
 private:
 	OverlayRenderer();

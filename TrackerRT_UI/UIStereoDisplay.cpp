@@ -37,8 +37,6 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
     glWidgetR->setClearColor(clearColor);
 
     setWindowTitle(tr("[DISPLAY STEREO]"));
-
-    QObject::connect(glWidget, SIGNAL(floorLinearModelReady()), this, SIGNAL(floorLinearModelReady()));
 }
 
 void UIStereoDisplay::init(bool stereo, bool autoFetch)

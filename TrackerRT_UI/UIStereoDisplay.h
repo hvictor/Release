@@ -34,9 +34,6 @@ private:
     bool _autoFetch;
     QGridLayout *mainLayout;
 
-signals:
-    void floorLinearModelReady(void);
-
 private slots:
     void renderStereoRawData();
 };
