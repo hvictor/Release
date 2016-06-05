@@ -48,6 +48,7 @@ public slots:
     void updateDynamicModel_SetFreePlay(bool status);
     void updateDynamicModel_Confidence(int value);
     void updateDynamicModel_UseInputKalmanFilter(bool status);
+    void updateDynamicModel_SetImpactFloorDistTolerance(int tol);
     void saveConfig();
 };
 
