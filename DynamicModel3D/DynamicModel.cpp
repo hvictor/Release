@@ -54,6 +54,8 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 			filterCallCounter = 1;
 		}
 
+		printf("Dynamic Model :: Impact Candidate :: Floor Plane Dist = %.2f,\tMax Dist = %.2f\n", _groundModel->computeDistanceFromGroundPlane(prev->pos), config->dynamicModelParameters.impactMaxFloorDistance);
+
 		if (_groundModel->computeDistanceFromGroundPlane(prev->pos) <= config->dynamicModelParameters.impactMaxFloorDistance) {
 			res->impact = true;
 			res->impact_pos = prev->pos;
