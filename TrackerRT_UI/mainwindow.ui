@@ -2674,7 +2674,7 @@
            <rect>
             <x>7</x>
             <y>40</y>
-            <width>151</width>
+            <width>211</width>
             <height>20</height>
            </rect>
           </property>
@@ -2734,7 +2734,7 @@
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>161</width>
+            <width>211</width>
             <height>16</height>
            </rect>
           </property>
@@ -2816,7 +2816,7 @@
          </property>
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>7</x>
            <y>290</y>
            <width>241</width>
            <height>20</height>
@@ -2827,6 +2827,126 @@
          </property>
          <property name="checked">
           <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_68">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>320</y>
+           <width>171</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Floor Linear Model:</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelX">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>320</y>
+           <width>111</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_70">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>320</y>
+           <width>41</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>x +</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelY">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>320</y>
+           <width>111</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_72">
+         <property name="geometry">
+          <rect>
+           <x>440</x>
+           <y>320</y>
+           <width>41</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>y +</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelZ">
+         <property name="geometry">
+          <rect>
+           <x>480</x>
+           <y>320</y>
+           <width>111</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_73">
+         <property name="geometry">
+          <rect>
+           <x>600</x>
+           <y>320</y>
+           <width>41</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>z +</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="spinBoxFloorLinearModelD">
+         <property name="geometry">
+          <rect>
+           <x>640</x>
+           <y>320</y>
+           <width>111</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_74">
+         <property name="geometry">
+          <rect>
+           <x>760</x>
+           <y>320</y>
+           <width>131</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>= 0    [mm]</string>
          </property>
         </widget>
        </widget>

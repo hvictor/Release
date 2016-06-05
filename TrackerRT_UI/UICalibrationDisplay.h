@@ -25,6 +25,9 @@ public slots:
     void disableCalibBtnFLD();
     void enableCalibBtnFLD();
 
+signals:
+    void floorLinearModelReady();
+
 private:
     Ui::UICalibrationDisplay *ui;
     HSVRange tgt_hsv_range;

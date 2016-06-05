@@ -164,6 +164,8 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
 
         PlaneLinearModel planeLinearModel = GroundModel::getInstance()->computeGroundPlaneLinearModel(fieldDelimiter->bottomLeft, fieldDelimiter->bottomRight, fieldDelimiter->topLeft, fieldDelimiter->topRight);
 
+        emit floorLinearModelReady();
+
         OverlayRenderer::getInstance()->renderPerimetralConeSet4_8UC4(u8data, 640, 480, cone_set);
         OverlayRenderer::getInstance()->renderStatus_8UC4(u8data, 640, 480, "[FLD] Field calibration OKAY", OVERLAY_COLOR_GREEN_RGBA);
         OverlayRenderer::getInstance()->renderFieldDelimiter_8UC4(u8data, 640, 480, fieldDelimiter);

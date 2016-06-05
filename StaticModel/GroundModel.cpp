@@ -151,3 +151,64 @@ double GroundModel::computeDistanceFromGroundPlane(Vector3D v)
 
 	return (fabsl(a * v.x + b * v.y + c * v.z + d) / sqrt(a*a + b*b + c*c));
 }
+
+void GroundModel::setGroundPlaneLinearModelFactorX(double a)
+{
+	_planeLinearModel.a = a;
+}
+
+void GroundModel::setGroundPlaneLinearModelFactorY(double b)
+{
+	_planeLinearModel.b = b;
+}
+
+void GroundModel::setGroundPlaneLinearModelFactorZ(double c)
+{
+	_planeLinearModel.c = c;
+}
+
+void GroundModel::setGroundPlaneLinearModelFactorD(double d)
+{
+	_planeLinearModel.d = d;
+}
+
+Vector3D GroundModel::computePlaneNormalVector(PlaneLinearModel *planeModel)
+{
+	Vector3D normal;
+
+	normal.x = planeModel->a;
+	normal.y = planeModel->b;
+	normal.z = planeModel->c;
+
+	return normal;
+}
+
+PlaneReferenceSystemAxis GroundModel::computePlaneReferenceSystemAxis(PlaneLinearModel *planeModel)
+{
+	PlaneReferenceSystemAxis axis;
+
+	Vector3D normal = computePlaneNormalVector(planeModel);
+
+	// Using Near, Left as visual origin
+	Vector3D visualAxisEndPointX = planeModel->nearR;
+
+	Vector3D visualAxisEndPointZ = planeModel->farL;
+	visualAxisEndPointZ.z *= -1.0;
+
+	Vector3D visualOrigin = planeModel->nearL;
+
+	normal.x += visualOrigin.x;
+	normal.y += visualOrigin.y;
+	normal.z += visualOrigin.z;
+
+	axis.yAxisFrom = visualOrigin;
+	axis.yAxisTo = normal;
+
+	axis.xAxisFrom = visualOrigin;
+	axis.xAxisTo = visualAxisEndPointX;
+
+	axis.zAxisFrom = visualOrigin;
+	axis.zAxisTo = visualAxisEndPointZ;
+
+	return axis;
+}

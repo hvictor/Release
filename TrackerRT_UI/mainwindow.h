@@ -31,6 +31,10 @@ public slots:
     void updateViewProcessingMode(int processingMode);
     void startApplication();
     void updateStaticModel_LinesSensitivityEPS(int value);
+    void updateStaticModel_SetFloorPlaneLinearModelFactorX(double a);
+    void updateStaticModel_SetFloorPlaneLinearModelFactorY(double b);
+    void updateStaticModel_SetFloorPlaneLinearModelFactorZ(double c);
+    void updateStaticModel_SetFloorPlaneLinearModelFactorD(double d);
     void updateOpticalLayerParam_LowPassFilterY(int value);
     void updateOpticalLayerParam_LowPassFilterX(int value);
     void updateDynamicModel_DFI(int value);
@@ -50,6 +54,7 @@ public slots:
     void updateDynamicModel_UseInputKalmanFilter(bool status);
     void updateDynamicModel_SetImpactFloorDistTolerance(int tol);
     void saveConfig();
+    void showFloorLinearModelCoefficients(void);
 };
 
 #endif // MAINWINDOW_H

@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include "UIStereoDisplay.h"
 #include "UICalibrationDisplay.h"
+#include "../StaticModel/GroundModel.h"
 
 extern volatile bool systemCalibrated;
 
@@ -140,7 +141,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->slider_FloorDistTol, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetImpactFloorDistTolerance(int)));
 
-    stereoDisplay = new UIStereoDisplay();
+    QObject::connect(ui->spinBoxFloorLinearModelX, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorX(double)));
+    QObject::connect(ui->spinBoxFloorLinearModelY, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorY(double)));
+    QObject::connect(ui->spinBoxFloorLinearModelZ, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorZ(double)));
+    QObject::connect(ui->spinBoxFloorLinearModelD, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorD(double)));
+
 }
 
 MainWindow::~MainWindow()
@@ -151,7 +156,20 @@ MainWindow::~MainWindow()
 void MainWindow::startCalibrator()
 {
     UICalibrationDisplay *uiCalibratorDisplay = new UICalibrationDisplay();
+
+    QObject::connect(uiCalibratorDisplay, SIGNAL(floorLinearModelReady(void)), this, SLOT(showFloorLinearModelCoefficients(void)));
+
     uiCalibratorDisplay->show();
+}
+
+void MainWindow::showFloorLinearModelCoefficients()
+{
+    PlaneLinearModel floorLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
+
+    ui->spinBoxFloorLinearModelX->setValue(floorLinearModel.a);
+    ui->spinBoxFloorLinearModelY->setValue(floorLinearModel.b);
+    ui->spinBoxFloorLinearModelZ->setValue(floorLinearModel.c);
+    ui->spinBoxFloorLinearModelD->setValue(floorLinearModel.d);
 }
 
 void MainWindow::trackingWindowSetAdaptiveTrackingWindow(bool status)
@@ -172,6 +190,30 @@ void MainWindow::trackingWindowSetStaticTrackingWindow(bool status)
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
 {
     Configuration::getInstance()->setStaticModelLinesSensitivityEPS(value);
+}
+
+void MainWindow::updateStaticModel_SetFloorPlaneLinearModelFactorX(double a)
+{
+    GroundModel::getInstance()->setGroundPlaneLinearModelFactorX(a);
+    printf("Static Model :: Update :: Floor Linear Plane Factor X: %.2f\n", GroundModel::getInstance()->getGroundPlaneLinearModel().a);
+}
+
+void MainWindow::updateStaticModel_SetFloorPlaneLinearModelFactorY(double b)
+{
+    GroundModel::getInstance()->setGroundPlaneLinearModelFactorY(b);
+    printf("Static Model :: Update :: Floor Linear Plane Factor Y: %.2f\n", GroundModel::getInstance()->getGroundPlaneLinearModel().b);
+}
+
+void MainWindow::updateStaticModel_SetFloorPlaneLinearModelFactorZ(double c)
+{
+    GroundModel::getInstance()->setGroundPlaneLinearModelFactorZ(c);
+    printf("Static Model :: Update :: Floor Linear Plane Factor Z: %.2f\n", GroundModel::getInstance()->getGroundPlaneLinearModel().c);
+}
+
+void MainWindow::updateStaticModel_SetFloorPlaneLinearModelFactorD(double d)
+{
+    GroundModel::getInstance()->setGroundPlaneLinearModelFactorD(d);
+    printf("Static Model :: Update :: Floor Linear Plane Factor D: %.2f\n", GroundModel::getInstance()->getGroundPlaneLinearModel().d);
 }
 
 void MainWindow::updateDynamicModel_Confidence(int value)

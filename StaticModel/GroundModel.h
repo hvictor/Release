@@ -34,14 +34,28 @@ typedef struct
 
 } PlaneLinearModel;
 
+// Linear Model floor plane's reference system axis set for Overlay visual reference
+typedef struct
+{
+	Vector3D xAxisFrom, xAxisTo;
+	Vector3D yAxisFrom, yAxisTo;
+	Vector3D zAxisFrom, zAxisTo;
+} PlaneReferenceSystemAxis;
+
 class GroundModel {
 public:
 	static GroundModel *getInstance();
 	virtual ~GroundModel();
 	PlaneLinearModel computeGroundPlaneLinearModel(Point nearL, Point nearR, Point farL, Point farR);
 	PlaneLinearModel getGroundPlaneLinearModel();
+	void setGroundPlaneLinearModelFactorX(double a);
+	void setGroundPlaneLinearModelFactorY(double b);
+	void setGroundPlaneLinearModelFactorZ(double c);
+	void setGroundPlaneLinearModelFactorD(double d);
 	void computeLinearEquationCoefficients(PlaneLinearModel *planeModel, Vector3D P1, Vector3D P2, Vector3D P3);
 	double computeDistanceFromGroundPlane(Vector3D v);
+	Vector3D computePlaneNormalVector(PlaneLinearModel *planeModel);
+	PlaneReferenceSystemAxis computePlaneReferenceSystemAxis(PlaneLinearModel *planeModel);
 
 private:
 	GroundModel();

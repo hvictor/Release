@@ -43,6 +43,7 @@ signals:
     void transmitFieldMarkersHSVRange(HSVRange fieldMarkersHSVRange);
     void disableCalibControlFLD();
     void enableCalibControlFLD();
+    void floorLinearModelReady();
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
