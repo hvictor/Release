@@ -47,7 +47,7 @@ private:
 	NetModel();
 
 	NetCoordinates3D	_netCoordinates3D;
-	NetVisualProjection _netVisualProjection
+	NetVisualProjection _netVisualProjection;
 };
 
 #endif /* GROUNDMODEL_H_ */
