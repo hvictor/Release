@@ -42,12 +42,15 @@ public:
 	void computeImagePlaneProjections();
 	NetVisualProjection getNetVisualProjection();
 	NetCoordinates3D getNetCoordinates3D();
+	void setReady(bool ready);
+	bool isReady();
 
 private:
 	NetModel();
 
 	NetCoordinates3D	_netCoordinates3D;
 	NetVisualProjection _netVisualProjection;
+	bool _ready;
 };
 
 #endif /* NETMODEL_H_ */

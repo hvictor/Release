@@ -22,10 +22,21 @@ NetModel *NetModel::getInstance()
 
 NetModel::NetModel()
 {
+	_ready = false;
 }
 
 NetModel::~NetModel()
 {
+}
+
+void NetModel::setReady(bool ready)
+{
+	_ready = ready;
+}
+
+bool NetModel::isReady()
+{
+	return _ready;
 }
 
 void NetModel::measureBasePointNear(int x, int y)

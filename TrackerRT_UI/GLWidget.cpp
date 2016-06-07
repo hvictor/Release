@@ -114,7 +114,10 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         if (!net_points_calibrated) {
             NetModel::getInstance()->setHeight(Configuration::getInstance()->staticModelParameters.netHeight);
+            NetModel::getInstance()->setReady(true);
         }
+
+        return;
     }
 
     QPoint dst = event->pos();
