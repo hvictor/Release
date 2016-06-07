@@ -31,6 +31,7 @@
 #include "../StereoVision/StereoVision.h"
 #include "../AugmentedReality/OverlayRenderer.h"
 #include "../StaticModel/TennisFieldStaticModel.h"
+#include "../StaticModel/NetModel.h"
 
 #include "../OpticalLayer/pyrlk_optical_flow.h"
 #include "../OpticalLayer/FlowProcessor.h"
@@ -177,6 +178,7 @@ void *frames_processor(void *)
 	uint8_t *buf_8UC1_0 = (uint8_t *)malloc(width * height * sizeof(uint8_t));
 	Mat f_8UC1_0;
 	//uint8_t *buf_8UC1_1 = (uint8_t *)malloc(width * height * sizeof(uint8_t));
+	NetVisualProjection netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
 
 	while (1) {
 		FrameData *fd;
@@ -247,6 +249,7 @@ void *frames_processor(void *)
 		if (!configuration->dynamicModelParameters.freePlay) {
 			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
 			OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
+			OverlayRenderer::getInstance()->renderNet(frame1_L, netVisualProjection);
 		}
 
 		// Update Predator

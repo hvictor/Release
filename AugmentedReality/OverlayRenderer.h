@@ -62,6 +62,7 @@ public:
 	void renderPlaneReferenceSystemAxis_8UC4(uint8_t *u8data, int width, int height, PlaneReferenceSystemAxis refSysAxis);
 	void renderNet_8UC4(uint8_t *u8data, int width, int height, NetVisualProjection netVisualProjection);
 	void renderNetVisualPoints_8UC4(uint8_t *u8data, int width, int height, vector<Point2f> netVisualPoints);
+	void renderNet(Mat frame_RGBA, NetVisualProjection netVisualProjection);
 
 private:
 	OverlayRenderer();

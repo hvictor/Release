@@ -115,7 +115,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
         if (!net_points_calibrated) {
             NetModel::getInstance()->setHeight(Configuration::getInstance()->staticModelParameters.netHeight);
             NetModel::getInstance()->computeImagePlaneProjections();
-            NetModel::getInstance()->computeNetVisualPoints();
+            //NetModel::getInstance()->computeNetVisualPoints();
             NetModel::getInstance()->setReady(true);
 
             calib_net = false;
@@ -209,7 +209,7 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         if (NetModel::getInstance()->isReady()) {
             printf("Overlay :: Rendering Net\n");
             OverlayRenderer::getInstance()->renderNet_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualProjection());
-            OverlayRenderer::getInstance()->renderNetVisualPoints_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualPoints());
+            //OverlayRenderer::getInstance()->renderNetVisualPoints_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualPoints());
         }
     }
 

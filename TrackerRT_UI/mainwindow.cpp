@@ -147,6 +147,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->spinBoxFloorLinearModelD, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorD(double)));
 
     QObject::connect(ui->sliderNetHeight, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetNetHeight(int)));
+    QObject::connect(ui->sliderMeasSMP, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetStaticModelMeasureSamples(int)));
 }
 
 MainWindow::~MainWindow()
@@ -194,6 +195,12 @@ void MainWindow::updateStaticModel_SetNetHeight(int value)
 {
     Configuration::getInstance()->staticModelParameters.netHeight = (double)value;
     printf("Static Model :: Update :: Net height = %.2f [mm]\n", Configuration::getInstance()->staticModelParameters.netHeight);
+}
+
+void MainWindow::updateStaticModel_SetStaticModelMeasureSamples(int value)
+{
+    Configuration::getInstance()->staticModelParameters.groundPlaneModelDepthSamples = value;
+    printf("Static Model :: Update :: Depth Measure Samples = %d\n", Configuration::getInstance()->staticModelParameters.groundPlaneModelDepthSamples);
 }
 
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
