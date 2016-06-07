@@ -36,8 +36,6 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
     glWidget->setClearColor(clearColor);
     glWidgetR->setClearColor(clearColor);
 
-    printf("??? Creating Stereo Display\n");
-
     setWindowTitle(tr("[DISPLAY STEREO]"));
 }
 
