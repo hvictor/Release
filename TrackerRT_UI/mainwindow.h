@@ -35,6 +35,7 @@ public slots:
     void updateStaticModel_SetFloorPlaneLinearModelFactorY(double b);
     void updateStaticModel_SetFloorPlaneLinearModelFactorZ(double c);
     void updateStaticModel_SetFloorPlaneLinearModelFactorD(double d);
+    void updateStaticModel_SetNetHeight(double value);
     void updateOpticalLayerParam_LowPassFilterY(int value);
     void updateOpticalLayerParam_LowPassFilterX(int value);
     void updateDynamicModel_DFI(int value);

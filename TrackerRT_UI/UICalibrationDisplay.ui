@@ -55,7 +55,21 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="btnCalibNet">
+            <property name="text">
+             <string>NET</string>
+            </property>
+           </widget>
+          </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnCalibUpdateNet">
+          <property name="text">
+           <string>Update Net</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

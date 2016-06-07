@@ -27,6 +27,7 @@ public slots:
     void calibrateTarget();
     void calibratePerimeter();
     void calibrateField();
+    void calibrateNet();
 
 private:
     Ui::UIStereoDisplay *ui;

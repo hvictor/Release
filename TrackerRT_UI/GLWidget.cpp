@@ -9,6 +9,7 @@
 #include "../AugmentedReality/OverlayRenderer.h"
 #include "../StaticModel/TennisFieldStaticModel.h"
 #include "../StaticModel/GroundModel.h"
+#include "../StaticModel/NetModel.h"
 
 #define QT_NO_DEBUG_OUTPUT
 
@@ -29,6 +30,7 @@ GLWidget::GLWidget(char side, QWidget *parent)
     calib_tgt = false;
     calib_field = false;
     calib_perim = false;
+    calib_net = false;
     calibrator = new TennisFieldCalibrator();
 }
 
@@ -88,10 +90,32 @@ void GLWidget::activateTargetCalibration()
     emit disableCalibControlFLD();
 }
 
+void GLWidget::activateNetCalibration()
+{
+    calib_net = true;
+}
+
 void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (!(calib_tgt || calib_perim))
+    static int net_points_calibrated = 0;
+
+    if (!(calib_tgt || calib_perim || calib_net))
         return;
+
+    if (calib_net) {
+        if (net_points_calibrated == 0) {
+            NetModel::getInstance()->measureBasePointNear(event->pos().x(), event->pos().y());
+        }
+        else if (net_points_calibrated == 1) {
+            NetModel::getInstance()->measureBasePointFar(event->pos().x(), event->pos().y());
+        }
+
+        net_points_calibrated = (net_points_calibrated + 1) % 2;
+
+        if (!net_points_calibrated) {
+            NetModel::getInstance()->setHeight(Configuration::getInstance()->staticModelParameters.netHeight);
+        }
+    }
 
     QPoint dst = event->pos();
     rubberBand->hide();

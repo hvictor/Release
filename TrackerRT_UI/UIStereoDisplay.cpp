@@ -64,6 +64,11 @@ void UIStereoDisplay::calibrateTarget()
     glWidget->activateTargetCalibration();
 }
 
+void UIStereoDisplay::calibrateNet()
+{
+    glWidget->activateNetCalibration();
+}
+
 void UIStereoDisplay::calibratePerimeter()
 {
     glWidget->activatePerimeterCalibration();

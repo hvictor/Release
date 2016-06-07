@@ -20,6 +20,7 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     QObject::connect(ui->btnCalibTgt, SIGNAL(clicked()), ui->widget, SLOT(calibrateTarget()));
     QObject::connect(ui->btnCalibPrm, SIGNAL(clicked()), ui->widget, SLOT(calibratePerimeter()));
     QObject::connect(ui->btnCalibFld, SIGNAL(clicked()), ui->widget, SLOT(calibrateField()));
+    QObject::connect(ui->btnCalibNet, SIGNAL(clicked()), ui->widget, SLOT(calibrateNet()));
 
 
     QObject::connect(ui->widget->glWidget, SIGNAL(transmitFieldMarkersHSVRange(HSVRange)), this, SLOT(receiveFieldMarkersHSVRange(HSVRange)));

@@ -2248,6 +2248,60 @@
            <string>Lines Sensitivity EPS:</string>
           </property>
          </widget>
+         <widget class="QLabel" name="label_74">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>151</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Net Height [cm]:</string>
+          </property>
+         </widget>
+         <widget class="QSlider" name="sliderNetHeight">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>40</y>
+            <width>91</width>
+            <height>19</height>
+           </rect>
+          </property>
+          <property name="minimum">
+           <number>50</number>
+          </property>
+          <property name="maximum">
+           <number>200</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcdNetHeight">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>280</x>
+            <y>40</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: black; color: lightgreen;</string>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
+          </property>
+          <property name="intValue" stdset="0">
+           <number>50</number>
+          </property>
+         </widget>
         </widget>
         <widget class="QLabel" name="label_57">
          <property name="geometry">
@@ -3174,10 +3228,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>sliderNetHeight</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNetHeight</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>234</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>306</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

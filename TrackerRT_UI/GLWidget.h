@@ -32,6 +32,7 @@ public:
     void activateTargetCalibration();
     void activateFieldCalibration();
     void activatePerimeterCalibration();
+    void activateNetCalibration();
 
     double GPUMinSegmentLength;
     double GPUMaxSegmentDistance;
@@ -73,6 +74,7 @@ private:
     bool calib_tgt;
     bool calib_field;
     bool calib_perim;
+    bool calib_net;
 
     TennisFieldCalibrator *calibrator;
 };

@@ -151,6 +151,7 @@ typedef struct
 {
 	int linesSensitivityEPS;
 	int groundPlaneModelDepthSamples;
+	double netHeight;
 } StaticModelParameters;
 
 typedef struct

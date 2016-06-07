@@ -146,6 +146,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->spinBoxFloorLinearModelZ, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorZ(double)));
     QObject::connect(ui->spinBoxFloorLinearModelD, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorD(double)));
 
+    QObject::connect(ui->sliderNetHeight, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetNetHeight(int)));
 }
 
 MainWindow::~MainWindow()
@@ -187,6 +188,12 @@ void MainWindow::trackingWindowSetStaticTrackingWindow(bool status)
         updateDynamicModel_SetTrackingWindowSize(ui->slider_tgtPred_TrackingWndSize->value());
         updateDynamicModel_SetTrackingWindowMode(StaticTrackingWindow);
     }
+}
+
+void MainWindow::updateStaticModel_SetNetHeight(double value)
+{
+    Configuration::getInstance()->staticModelParameters.netHeight = (double)value * 10.0;
+    printf("Static Model :: Update :: Net height = %.2f [cm]\n", Configuration::getInstance()->staticModelParameters.netHeight = (double)value * 0.1);
 }
 
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
