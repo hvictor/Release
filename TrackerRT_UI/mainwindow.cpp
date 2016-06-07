@@ -148,6 +148,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->sliderNetHeight, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetNetHeight(int)));
     QObject::connect(ui->sliderMeasSMP, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetStaticModelMeasureSamples(int)));
+
+    stereoDisplay = new UIStereoDisplay();
 }
 
 MainWindow::~MainWindow()
@@ -327,9 +329,7 @@ void MainWindow::saveConfig()
 void MainWindow::startApplication()
 {
     systemCalibrated = true;
-    printf("??? INITIALIZING STEREO DISPLAY\n");
     stereoDisplay->init(false, true);
-    printf("??? SHOWING STEREO DISPLAY\n");
     stereoDisplay->show();
 }
 
