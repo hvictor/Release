@@ -925,6 +925,7 @@ void run()
 		printf("SYSTEM :: Waiting for calibration parameters...\n");
 	}
 
+	printf("SYSTEM :: Starting\n");
 //	printf("SYSTEM :: (DISABLE ME) Writing config file.\n");
 //	configuration->writeConfigFile("config_recording.xml");
 

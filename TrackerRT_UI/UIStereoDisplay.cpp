@@ -36,11 +36,14 @@ UIStereoDisplay::UIStereoDisplay(QDialog *parent):
     glWidget->setClearColor(clearColor);
     glWidgetR->setClearColor(clearColor);
 
+    printf("??? Creating Stereo Display\n");
+
     setWindowTitle(tr("[DISPLAY STEREO]"));
 }
 
 void UIStereoDisplay::init(bool stereo, bool autoFetch)
 {
+    printf("??? Init\n");
     _stereo = stereo;
     _autoFetch = autoFetch;
 
@@ -57,6 +60,8 @@ void UIStereoDisplay::init(bool stereo, bool autoFetch)
         connect(timer, &QTimer::timeout, this, &UIStereoDisplay::renderStereoRawData);
         timer->start(1);
     }
+
+    printf("??? Init Done\n");
 }
 
 void UIStereoDisplay::calibrateTarget()
@@ -103,6 +108,8 @@ void UIStereoDisplay::updateRawData()
 
 void UIStereoDisplay::renderStereoRawData()
 {
+    printf("??? Pulling\n");
+
     if (array_spinlock_queue_pull(outputFramesQueueExternPtr, (void **)pRenderFrameData) < 0) {
         return;
     }
@@ -112,6 +119,8 @@ void UIStereoDisplay::renderStereoRawData()
     if (_stereo) {
         glWidgetR->renderStereoRawData((uchar *)((*pRenderFrameData)->right_data));
     }
+
+    printf("??? Pull OK\n");
 
     fast_mem_pool_release_memory(*pRenderFrameData);
 }
