@@ -5,8 +5,8 @@
  *      Author: sled
  */
 
-#ifndef GROUNDMODEL_H_
-#define GROUNDMODEL_H_
+#ifndef NETMODEL_H_
+#define NETMODEL_H_
 
 #include "../Configuration/Configuration.h"
 #include "../StereoVision/StereoVision.h"
@@ -50,4 +50,4 @@ private:
 	NetVisualProjection _netVisualProjection;
 };
 
-#endif /* GROUNDMODEL_H_ */
+#endif /* NETMODEL_H_ */
