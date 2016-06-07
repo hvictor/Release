@@ -42,14 +42,18 @@ public:
 	void computeImagePlaneProjections();
 	NetVisualProjection getNetVisualProjection();
 	NetCoordinates3D getNetCoordinates3D();
+	vector<Point2f>	getNetVisualPoints();
+	void computeNetVisualPoints();
 	void setReady(bool ready);
 	bool isReady();
 
 private:
 	NetModel();
 
+	vector<Point2f> 	_netVisualPoints;
 	NetCoordinates3D	_netCoordinates3D;
 	NetVisualProjection _netVisualProjection;
+
 	bool _ready;
 };
 

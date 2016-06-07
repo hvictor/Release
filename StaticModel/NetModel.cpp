@@ -98,6 +98,34 @@ void NetModel::computeImagePlaneProjections()
 	_netVisualProjection.topFar = projections[3];
 }
 
+void NetModel::computeNetVisualPoints()
+{
+	float deltay = (_netCoordinates3D.baseNear.y - _netCoordinates3D.baseNear.y) / 10;
+	float deltaz = (_netCoordinates3D.baseFar.z - _netCoordinates3D.baseNear.z) / 15;
+	float deltax = fabsl(_netCoordinates3D.baseFar.x - _netCoordinates3D.baseNear.x) / 10;
+
+	_netVisualPoints.clear();
+
+	vector<Vector3D> vs;
+	int pos = 0;
+	for (int z = 0; z < 10; z++) {
+		for (int y = 0; y <= 10; y++) {
+			Vector3D v;
+			v.x = _netCoordinates3D.baseNear.x + y*deltax;
+			v.y = _netCoordinates3D.topNear.y + y*deltay;
+			v.z = _netCoordinates3D.baseNear.z + y*deltaz;
+			vs.push_back(v);
+		}
+	}
+
+	_netVisualPoints = StereoVision::project3DCoordinatesOnImagePlane(vs);
+}
+
+vector<Point2f> NetModel::getNetVisualPoints()
+{
+	return _netVisualPoints;
+}
+
 NetVisualProjection NetModel::getNetVisualProjection()
 {
 	return _netVisualProjection;

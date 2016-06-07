@@ -29,6 +29,7 @@
 #define OVERLAY_COLOR_YELLOW		Scalar(0, 255, 255)
 #define OVERLAY_COLOR_YELLOW_RGBA	Scalar(255, 255, 0, 255)
 #define OVERLAY_COLOR_ORANGE		Scalar(0, 200, 255)
+#define OVERLAY_COLOR_ORANGE_RGBA	Scalar(255, 200, 0, 255)
 
 class OverlayRenderer {
 public:
@@ -60,6 +61,7 @@ public:
 	void renderImpactData3D(Mat frame, Vector3D impact_pos);
 	void renderPlaneReferenceSystemAxis_8UC4(uint8_t *u8data, int width, int height, PlaneReferenceSystemAxis refSysAxis);
 	void renderNet_8UC4(uint8_t *u8data, int width, int height, NetVisualProjection netVisualProjection);
+	void renderNetVisualPoints_8UC4(uint8_t *u8data, int width, int height, vector<Point2f> netVisualPoints);
 
 private:
 	OverlayRenderer();
