@@ -44,7 +44,7 @@ public:
 	NetCoordinates3D getNetCoordinates3D();
 
 private:
-	GroundModel();
+	NetModel();
 
 	NetCoordinates3D	_netCoordinates3D;
 	NetVisualProjection _netVisualProjection
