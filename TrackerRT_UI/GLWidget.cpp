@@ -114,6 +114,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
         if (!net_points_calibrated) {
             NetModel::getInstance()->setHeight(Configuration::getInstance()->staticModelParameters.netHeight);
+            NetModel::getInstance()->computeImagePlaneProjections();
             NetModel::getInstance()->setReady(true);
         }
 
@@ -202,6 +203,10 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
                                         planeLinearModel.proj_farR, planeLinearModel.proj_farL);
         OverlayRenderer::getInstance()->renderPlaneReferenceSystemAxis_8UC4(u8data, 640, 480, refSysAxis);
 
+        if (NetModel::getInstance()->isReady()) {
+            printf("Overlay :: Rendering Net\n");
+            OverlayRenderer::getInstance()->renderNet_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualProjection());
+        }
     }
 
     update();

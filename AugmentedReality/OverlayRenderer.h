@@ -18,6 +18,7 @@
 #include "../Calibration/TennisFieldDelimiter.h"
 #include "../SensorAbstractionLayer/StereoSensorAbstractionLayer.h"
 #include "../StaticModel/GroundModel.h"
+#include "../StaticModel/NetModel.h"
 #include <stdint.h>
 
 #define OVERLAY_COLOR_GREEN			Scalar(50, 205, 50)
@@ -58,6 +59,7 @@ public:
 	void renderFloorPlane_8UC4(uint8_t *u8data, int width, int height, GroundModel *model);
 	void renderImpactData3D(Mat frame, Vector3D impact_pos);
 	void renderPlaneReferenceSystemAxis_8UC4(uint8_t *u8data, int width, int height, PlaneReferenceSystemAxis refSysAxis);
+	void renderNet_8UC4(uint8_t *u8data, int width, int height, NetVisualProjection netVisualProjection);
 
 private:
 	OverlayRenderer();

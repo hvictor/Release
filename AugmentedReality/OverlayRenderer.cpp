@@ -528,3 +528,13 @@ void OverlayRenderer::renderImpactData3D(Mat frame, Vector3D impact_pos)
 
 	putText(frame, stateMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
 }
+
+void OverlayRenderer::renderNet_8UC4(uint8_t *u8data, int width, int height, NetVisualProjection netVisualProjection)
+{
+	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
+
+	line(frame_RGBA, netVisualProjection.baseNear, netVisualProjection.baseFar, OVERLAY_COLOR_YELLOW, 2);
+	line(frame_RGBA, netVisualProjection.baseFar, netVisualProjection.topFar, OVERLAY_COLOR_GREEN, 2);
+	line(frame_RGBA, netVisualProjection.topFar, netVisualProjection.topNear, OVERLAY_COLOR_GREEN, 2);
+	line(frame_RGBA, netVisualProjection.topNear, netVisualProjection.baseNear, OVERLAY_COLOR_GREEN, 2);
+}
