@@ -2258,7 +2258,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Net Height [cm]:</string>
+           <string>Net Height [mm]:</string>
           </property>
          </widget>
          <widget class="QSlider" name="sliderNetHeight">
@@ -2271,10 +2271,10 @@
            </rect>
           </property>
           <property name="minimum">
-           <number>50</number>
+           <number>500</number>
           </property>
           <property name="maximum">
-           <number>200</number>
+           <number>2000</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -2298,8 +2298,11 @@
           <property name="segmentStyle">
            <enum>QLCDNumber::Flat</enum>
           </property>
+          <property name="value" stdset="0">
+           <double>500.000000000000000</double>
+          </property>
           <property name="intValue" stdset="0">
-           <number>50</number>
+           <number>500</number>
           </property>
          </widget>
         </widget>

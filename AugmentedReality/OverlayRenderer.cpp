@@ -534,7 +534,9 @@ void OverlayRenderer::renderNet_8UC4(uint8_t *u8data, int width, int height, Net
 	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
 
 	line(frame_RGBA, netVisualProjection.baseNear, netVisualProjection.baseFar, OVERLAY_COLOR_YELLOW, 2);
-	line(frame_RGBA, netVisualProjection.baseFar, netVisualProjection.topFar, OVERLAY_COLOR_GREEN, 2);
-	line(frame_RGBA, netVisualProjection.topFar, netVisualProjection.topNear, OVERLAY_COLOR_GREEN, 2);
-	line(frame_RGBA, netVisualProjection.topNear, netVisualProjection.baseNear, OVERLAY_COLOR_GREEN, 2);
+	circle(frame_RGBA, netVisualProjection.topNear, 4, OVERLAY_COLOR_BLUE_RGBA, -1);
+	circle(frame_RGBA, netVisualProjection.topFar, 4, OVERLAY_COLOR_BLUE_RGBA, -1);
+	//line(frame_RGBA, netVisualProjection.baseFar, netVisualProjection.topFar, OVERLAY_COLOR_GREEN, 2);
+	//line(frame_RGBA, netVisualProjection.topFar, netVisualProjection.topNear, OVERLAY_COLOR_GREEN, 2);
+	//line(frame_RGBA, netVisualProjection.topNear, netVisualProjection.baseNear, OVERLAY_COLOR_GREEN, 2);
 }

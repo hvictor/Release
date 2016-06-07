@@ -192,8 +192,8 @@ void MainWindow::trackingWindowSetStaticTrackingWindow(bool status)
 
 void MainWindow::updateStaticModel_SetNetHeight(int value)
 {
-    Configuration::getInstance()->staticModelParameters.netHeight = (double)value * 10.0;
-    printf("Static Model :: Update :: Net height = %.2f [cm]\n", Configuration::getInstance()->staticModelParameters.netHeight = (double)value * 0.1);
+    Configuration::getInstance()->staticModelParameters.netHeight = (double)value;
+    printf("Static Model :: Update :: Net height = %.2f [mm]\n", Configuration::getInstance()->staticModelParameters.netHeight);
 }
 
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)
