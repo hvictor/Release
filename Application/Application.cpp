@@ -232,6 +232,8 @@ void *frames_processor(void *)
 			frame1_R = Mat(Size(width, height), CV_8UC4, frame_data[1]->right_data);
 		}
 
+		printf("*** 1\n");
+
 		//players = detectPlayers(frame0_L);
 		//Mat filtered0 = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
 		//Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
@@ -252,6 +254,8 @@ void *frames_processor(void *)
 			//OverlayRenderer::getInstance()->renderNet(frame1_L, netVisualProjection);
 		}
 
+		printf("*** 2\n");
+
 		// Update Predator
 		if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
 			tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
@@ -259,9 +263,13 @@ void *frames_processor(void *)
 			//OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
 			OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
 
+			printf("*** 3\n");
+
 			if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
 				OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame1_L, tgtPredator->get_tracking_wnd());
 			}
+
+			printf("*** 4\n");
 
 			if (fd->depth_data_avail) {
 
