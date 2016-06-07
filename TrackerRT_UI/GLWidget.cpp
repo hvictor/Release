@@ -116,6 +116,8 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
             NetModel::getInstance()->setHeight(Configuration::getInstance()->staticModelParameters.netHeight);
             NetModel::getInstance()->computeImagePlaneProjections();
             NetModel::getInstance()->setReady(true);
+
+            calib_net = false;
         }
 
         return;
