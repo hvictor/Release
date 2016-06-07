@@ -327,7 +327,9 @@ void MainWindow::saveConfig()
 void MainWindow::startApplication()
 {
     systemCalibrated = true;
+    printf("??? INITIALIZING STEREO DISPLAY\n");
     stereoDisplay->init(false, true);
+    printf("??? SHOWING STEREO DISPLAY\n");
     stereoDisplay->show();
 }
 
