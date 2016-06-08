@@ -569,3 +569,30 @@ void OverlayRenderer::renderNetVisualPoints_8UC4(uint8_t *u8data, int width, int
 		circle(frame_RGBA, netVisualPoints[i], 3, color, -1);
 	}
 }
+
+void OverlayRenderer::renderTwoPlayersFieldRepresentation(Mat frame_RGBA, TwoPlayersFieldRepresentation twoPlayersFieldRepresentation)
+{
+	PlayerFieldSide P1Side = twoPlayersFieldRepresentation.P1Field;
+	PlayerFieldSide P2Side = twoPlayersFieldRepresentation.P2Field;
+
+	Point2f P1NearL(P1Side.nearL.x, P1Side.nearL.y);
+	Point2f P1NearR(P1Side.nearR.x, P1Side.nearR.y);
+	Point2f P1FarR(P1Side.farR.x, P1Side.farR.y);
+	Point2f P1FarL(P1Side.farL.x, P1Side.nearL.y);
+
+	Point2f P2NearL(P2Side.nearL.x, P2Side.nearL.y);
+	Point2f P2NearR(P2Side.nearR.x, P2Side.nearR.y);
+	Point2f P2FarR(P2Side.farR.x, P2Side.farR.y);
+	Point2f P2FarL(P2Side.farL.x, P2Side.nearL.y);
+
+	line(frame_RGBA, P1NearL, P1NearR, OVERLAY_COLOR_RED_RGBA, 2);
+	line(frame_RGBA, P1NearR, P1FarR, OVERLAY_COLOR_YELLOW_RGBA, 2);
+	line(frame_RGBA, P1FarR, P1FarL, OVERLAY_COLOR_RED_RGBA, 2);
+	line(frame_RGBA, P1FarL, P1NearL, OVERLAY_COLOR_RED_RGBA, 2);
+
+	line(frame_RGBA, P2NearL, P2NearR, OVERLAY_COLOR_BLUE_RGBA, 2);
+	line(frame_RGBA, P2NearR, P2FarR, OVERLAY_COLOR_BLUE_RGBA, 2);
+	line(frame_RGBA, P2FarR, P2FarL, OVERLAY_COLOR_BLUE_RGBA, 2);
+	// No overrender separation line
+
+}

@@ -19,6 +19,12 @@
 using namespace std;
 using namespace cv;
 
+typedef struct
+{
+	Vector2D nearL, nearR;
+	Vector2D farL, farR;
+} PlayerFieldSide;
+
 class PlayLogic {
 public:
 	PlayLogic();
@@ -26,6 +32,7 @@ public:
 
 	virtual void feedWithFloorBounceData(Vector3D floorBounceData, Vector2D opticalBounceData) = 0;
 	virtual PlayScore *retrievePlayScore() = 0;
+	virtual void generateFieldRepresentationFromModel() = 0;
 };
 
 #endif /* PLAYLOGIC_H_ */

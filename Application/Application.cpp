@@ -57,6 +57,7 @@
 #include "../DynamicModel3D/DynamicModel.h"
 
 #include "../PlayLogic/PlayLogicFactory.h"
+#include "../PlayLogic/TwoPlayersPlayLogic.h"
 
 #include <GL/glut.h>
 #include <GL/gl.h>
@@ -183,7 +184,24 @@ void *frames_processor(void *)
 	uint8_t *buf_8UC1_0 = (uint8_t *)malloc(width * height * sizeof(uint8_t));
 	Mat f_8UC1_0;
 	//uint8_t *buf_8UC1_1 = (uint8_t *)malloc(width * height * sizeof(uint8_t));
+
+	// Fetch the Net's visual projection on the Reference Camera's Image Plane
 	NetVisualProjection netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
+
+	// Field Representation for Two-Players Play mode
+	TwoPlayersFieldRepresentation twoPlayersFieldRepresentation;
+
+	// Generate Field Representation from Static Model in the Play Logic
+	playLogic->generateFieldRepresentationFromModel();
+
+	if (configuration->playLogicParameters.playLogicType == TwoPlayers)
+	{
+		twoPlayersFieldRepresentation = ((TwoPlayersPlayLogic *)playLogic)->retrieveFieldRepresentation();
+	}
+	else if (configuration->playLogicParameters.playLogicType == SinglePlayer)
+	{
+		// Not yet implemented
+	}
 
 	while (1) {
 		FrameData *fd;
@@ -255,6 +273,7 @@ void *frames_processor(void *)
 			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
 			OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
 			OverlayRenderer::getInstance()->renderNet(frame1_L, netVisualProjection);
+			OverlayRenderer::getInstance()->renderTwoPlayersFieldRepresentation(frame1_L, twoPlayersFieldRepresentation);
 		}
 
 		// Update Predator

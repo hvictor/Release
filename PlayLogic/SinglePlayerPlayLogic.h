@@ -17,6 +17,7 @@ public:
 	virtual ~SinglePlayerPlayLogic();
 
 	void feedWithFloorBounceData(Vector3D floorBounceData, Vector2D opticalBounceData);
+	void generateFieldRepresentationFromModel();
 	PlayScore *retrievePlayScore();
 };
 
