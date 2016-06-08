@@ -7,7 +7,8 @@
 
 #include "StereoSensorAbstractionLayer.h"
 
-StereoSensorAbstractionLayer::StereoSensorAbstractionLayer() {
+StereoSensorAbstractionLayer::StereoSensorAbstractionLayer()
+{
 }
 
 StereoSensorAbstractionLayer::~StereoSensorAbstractionLayer() {
