@@ -149,6 +149,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->sliderNetHeight, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetNetHeight(int)));
     QObject::connect(ui->sliderMeasSMP, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetStaticModelMeasureSamples(int)));
 
+    QObject::connect(ui->radioButton_TwoPlayers, SIGNAL(toggled(bool)), this, SLOT(updatePlayModel_SetTwoPlayersLogic(bool)));
+    QObject::connect(ui->radioButton_SinglePlayer, SIGNAL(toggled(bool)), this, SLOT(updatePlayModel_SetSinglePlayerLogic(bool)));
+
+    // Instantiate Stereo Display
     stereoDisplay = new UIStereoDisplay();
 }
 
@@ -266,6 +270,22 @@ void MainWindow::updateOpticalLayerParam_LowPassFilterY(int value)
 
     Configuration::getInstance()->setOpticalLayerParameters(param);
     TargetPredator::getInstance()->update_filter_param();
+}
+
+void MainWindow::updatePlayModel_SetTwoPlayersLogic(bool status)
+{
+    if (!status) return;
+
+    Configuration::getInstance()->playLogicParameters.playLogicType = TwoPlayers;
+    printf("Play Model :: Update :: Setting Two-Players Logic\n");
+}
+
+void MainWindow::updatePlayModel_SetSinglePlayerLogic(bool status)
+{
+    if (!status) return;
+
+    Configuration::getInstance()->playLogicParameters.playLogicType = SinglePlayer;
+    printf("Play Model :: Update :: Setting Single-Player Logic\n");
 }
 
 void MainWindow::cpuCoreChanged(int value)

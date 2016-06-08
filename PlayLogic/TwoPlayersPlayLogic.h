@@ -9,14 +9,19 @@
 #define TWOPLAYERSPLAYLOGIC_H_
 
 #include "PlayLogic.h"
+#include "TwoPlayersPlayScore.h"
 
 class TwoPlayersPlayLogic : public PlayLogic {
 public:
 	TwoPlayersPlayLogic();
 	virtual ~TwoPlayersPlayLogic();
 
-	void feedWithFloorBounceData(Vector3D floorBounceData);
+	void feedWithFloorBounceData(Vector3D floorBounceData, Vector2D opticalBounceData);
 	PlayScore *retrievePlayScore();
+
+private:
+	TwoPlayersPlayScore *_playScore;
+
 };
 
 #endif /* TWOPLAYERSPLAYLOGIC_H_ */

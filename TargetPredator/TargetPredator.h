@@ -38,6 +38,7 @@ typedef struct
 	int Vx;
 	int Vy;
 	bool impact_status;
+	bool confirmation;
 } pred_state_t;
 
 typedef struct
@@ -60,6 +61,7 @@ public:
 	list<pred_state_t> *get_state();
 	void update_filter_param();
 	void update_free_play_param();
+	pred_state_t confirm_latest_impact();
 
 private:
 	TargetPredator();

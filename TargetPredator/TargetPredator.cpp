@@ -74,6 +74,26 @@ bool TargetPredator::compute_impact_status(double old_velocityX, double old_velo
 	return false;
 }
 
+pred_state_t TargetPredator::confirm_latest_impact()
+{
+	pred_state_t ret;
+
+	for (list<pred_state_t>::iterator it = state.begin(); it != state.end(); ++it)
+	{
+		if (it->impact_status) {
+			if (it->confirmation) {
+				ret = *it;
+				break;
+			}
+
+			it->confirmation = true;
+			return *it;
+		}
+	}
+
+	return ret;
+}
+
 void TargetPredator::update_state(int x, int y)
 {
 	pred_state_t tracker_state;

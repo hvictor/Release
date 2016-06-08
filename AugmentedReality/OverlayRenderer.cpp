@@ -237,6 +237,7 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 		int y0 = it->display_y;
 
 		bool impact_status = it->impact_status;
+		bool confirmation = it->confirmation;
 
 		it++;
 
@@ -254,7 +255,10 @@ void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator
 			double cy = (double)y0 + ((double)(Vy * k) / (double)interp);
 
 			if (impact_status && k == 0) {
-				rectangle(frame, Point2f(x1 - 10.0, y1 - 10.0), Point2f(x1 + 10.0, y1 + 10.0), OVERLAY_COLOR_GREEN_RGBA, 2);
+				if (confirmation)
+					rectangle(frame, Point2f(x1 - 15.0, y1 - 15.0), Point2f(x1 + 15.0, y1 + 15.0), OVERLAY_COLOR_YELLOW_RGBA, 2);
+				else
+					rectangle(frame, Point2f(x1 - 10.0, y1 - 10.0), Point2f(x1 + 10.0, y1 + 10.0), OVERLAY_COLOR_GREEN_RGBA, 2);
 				//putText(frame, "[IMPACT]", Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
 			}
 			else {

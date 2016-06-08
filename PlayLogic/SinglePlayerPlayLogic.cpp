@@ -15,7 +15,7 @@ SinglePlayerPlayLogic::~SinglePlayerPlayLogic()
 {
 }
 
-void SinglePlayerPlayLogic::feedWithFloorBounceData(Vector3D floorBounceData)
+void SinglePlayerPlayLogic::feedWithFloorBounceData(Vector3D floorBounceData, Vector2D opticalBounceData)
 {
 
 }

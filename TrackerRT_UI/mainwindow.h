@@ -55,6 +55,8 @@ public slots:
     void updateDynamicModel_Confidence(int value);
     void updateDynamicModel_UseInputKalmanFilter(bool status);
     void updateDynamicModel_SetImpactFloorDistTolerance(int tol);
+    void updatePlayModel_SetTwoPlayersLogic(bool status);
+    void updatePlayModel_SetSinglePlayerLogic(bool status);
     void saveConfig();
     void showFloorLinearModelCoefficients(void);
 };

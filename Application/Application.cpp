@@ -56,6 +56,8 @@
 
 #include "../DynamicModel3D/DynamicModel.h"
 
+#include "../PlayLogic/PlayLogicFactory.h"
+
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -143,6 +145,9 @@ TennisFieldStaticModel *staticModel;
 
 // Dynamic Model
 DynamicModel *dynamicModel;
+
+// Play Logic
+PlayLogic *playLogic;
 
 void renderScene(void* userdata)
 {
@@ -290,6 +295,15 @@ void *frames_processor(void *)
 								dynamicModelResult.impact_pos.x * 0.001,
 								dynamicModelResult.impact_pos.y * 0.001,
 								dynamicModelResult.impact_pos.z * 0.001);
+
+						// Search in the TargetPredator backlog the last impact and mark it as confirmed
+						printf("Application :: Notifying impact confirmation to TargetPredator\n");
+						Vector2D opticalLatestImpactData;
+						pred_state_t latest_impact = tgtPredator->confirm_latest_impact();
+						opticalLatestImpactData.x = latest_impact.x;
+						opticalLatestImpactData.y = latest_impact.y;
+
+						playLogic->feedWithFloorBounceData(dynamicModelResult.impact_pos, opticalLatestImpactData);
 					}
 				}
 
@@ -917,7 +931,22 @@ void run()
 		printf("SYSTEM :: Waiting for calibration parameters...\n");
 	}
 
-	printf("SYSTEM :: Starting\n");
+	printf("Application :: Setting up Play Logic\n");
+
+	switch(configuration->playLogicParameters.playLogicType)
+	{
+	case TwoPlayers:
+		printf("Application :: Requesting TwoPlayersLogic to PlayLogicFactory\n");
+		playLogic = PlayLogicFactory::getInstance()->requestTwoPlayersPlayLogic();
+		break;
+	case SinglePlayer:
+		printf("Application :: Requesting SinglePlayerLogic to PlayLogicFactory\n");
+		playLogic = PlayLogicFactory::getInstance()->requestSinglePlayerPlayLogic();
+		break;
+	default:
+		break;
+	}
+
 //	printf("SYSTEM :: (DISABLE ME) Writing config file.\n");
 //	configuration->writeConfigFile("config_recording.xml");
 

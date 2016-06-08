@@ -67,6 +67,12 @@ enum TrackingWindowMode
 	StaticTrackingWindow
 };
 
+enum PlayLogicType
+{
+	TwoPlayers,
+	SinglePlayer
+};
+
 typedef struct
 {
 	// Input Device
@@ -172,6 +178,11 @@ typedef struct
 
 } DynamicModelParameters;
 
+typedef struct
+{
+	PlayLogicType playLogicType;
+} PlayLogicParameters;
+
 class Configuration {
 public:
 
@@ -185,6 +196,7 @@ public:
 	void setInterpolationEngineParameters(InterpolationEngineParameters interpEngineParam);
 	void setStaticModelLinesSensitivityEPS(int value);
 	StaticModelParameters getStaticModelParameters();
+	PlayLogicParameters playLogicParameters;
 	void publish();
 
 	// Public properties

@@ -7,12 +7,15 @@
 
 #include "TwoPlayersPlayScore.h"
 
-TwoPlayersPlayScore::TwoPlayersPlayScore() {
-	// TODO Auto-generated constructor stub
-
+TwoPlayersPlayScore::TwoPlayersPlayScore()
+{
+	Player1_Score = 0;
+	Player1_Nets = 0;
+	Player2_Score = 0;
+	Player2_Nets = 0;
 }
 
-TwoPlayersPlayScore::~TwoPlayersPlayScore() {
-	// TODO Auto-generated destructor stub
+TwoPlayersPlayScore::~TwoPlayersPlayScore()
+{
 }
 

@@ -15,5 +15,10 @@ typedef struct
     double z;
 } Vector3D;
 
+typedef struct
+{
+    double x;
+    double y;
+} Vector2D;
 
 #endif /* DATATYPES_H_ */

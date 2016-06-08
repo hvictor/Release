@@ -15,6 +15,11 @@ class TwoPlayersPlayScore : public PlayScore
 public:
 	TwoPlayersPlayScore();
 	virtual ~TwoPlayersPlayScore();
+
+	int Player1_Score;
+	int Player1_Nets;
+	int Player2_Score;
+	int Player2_Nets;
 };
 
 #endif /* TWOPLAYERSPLAYSCORE_H_ */
