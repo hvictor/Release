@@ -25,3 +25,7 @@ PlayScore *SinglePlayerPlayLogic::retrievePlayScore()
 	return 0;
 }
 
+void SinglePlayerPlayLogic::generateFieldRepresentationFromModel()
+{
+
+}
