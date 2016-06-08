@@ -14,7 +14,6 @@
 #include "../StaticModel/GroundModel.h"
 #include "../StaticModel/NetModel.h"
 #include "../StereoVision/StereoVision.h"
-#include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 
 using namespace std;
 using namespace cv;
