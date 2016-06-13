@@ -7,6 +7,7 @@
 
 #include "TwoPlayersPlayLogic.h"
 #include "../StaticModel/TennisFieldStaticModel.h"
+#include "../Common/converters.h"
 
 TwoPlayersPlayLogic::TwoPlayersPlayLogic()
 {
@@ -17,11 +18,168 @@ TwoPlayersPlayLogic::~TwoPlayersPlayLogic()
 {
 }
 
+ImpactResult TwoPlayersPlayLogic::__checkPlayer1Field(double x, double y)
+{
+	vector<Point2f> vertices;
+
+	vertices.push_back(vector2d_to_point2f(_P1Field.nearL));
+	vertices.push_back(vector2d_to_point2f(_P1Field.nearR));
+	vertices.push_back(vector2d_to_point2f(_P1Field.farR));
+	vertices.push_back(vector2d_to_point2f(_P1Field.farL));
+
+	double c = pointPolygonTest(vertices, Point2f((float)x, (float)y), true);
+
+	double eps = (double)Configuration::getInstance()->getStaticModelParameters().linesSensitivityEPS;
+
+	if (c >= eps) {
+		return Impact_Player1_Field;
+	}
+	else if (fabsl(c) < eps) {
+		return Impact_Player1_Line;
+	}
+
+	return Impact_Null;
+}
+
+ImpactResult TwoPlayersPlayLogic::__checkPlayer2Field(double x, double y)
+{
+	vector<Point2f> vertices;
+
+	vertices.push_back(vector2d_to_point2f(_P2Field.nearL));
+	vertices.push_back(vector2d_to_point2f(_P2Field.nearR));
+	vertices.push_back(vector2d_to_point2f(_P2Field.farR));
+	vertices.push_back(vector2d_to_point2f(_P2Field.farL));
+
+	double c = pointPolygonTest(vertices, Point2f((float)x, (float)y), true);
+
+	double eps = (double)Configuration::getInstance()->getStaticModelParameters().linesSensitivityEPS;
+
+	// Inside Field
+	if (c >= eps) {
+		return Impact_Player2_Field;
+	}
+
+	// On the Line
+	else if (fabsl(c) < eps) {
+		return Impact_Player2_Line;
+	}
+
+	return Impact_Null;
+}
+
+ImpactResult TwoPlayersPlayLogic::analyzeImpactEventData(double x, double y)
+{
+	ImpactResult res_P1 = __checkPlayer1Field(x, y);
+
+	if (res_P1 == Impact_Player1_Field)
+		return Impact_Player1_Field;
+
+	ImpactResult res_P2 = __checkPlayer2Field(x, y);
+
+	if (res_P2 == Impact_Player2_Field)
+		return Impact_Player2_Field;
+
+	// Only happens without net
+	if (res_P1 == Impact_Player1_Line && res_P2 == Impact_Player2_Line)
+		return Impact_CentralLine;
+
+	else if (res_P1 == Impact_Player1_Line && res_P2 == Impact_Null)
+		return Impact_Player1_Line;
+
+	else if (res_P2 == Impact_Player2_Line && res_P1 == Impact_Null)
+		return Impact_Player2_Line;
+
+	else
+		return Impact_Null;
+}
+
+void TwoPlayersPlayLogic::notifyTargetLost()
+{
+	switch (_FSM_state)
+	{
+	case FSM_Wait_P1_Impact:
+		//_FSM_state = FSM_Missed_P1; // Virtual transitory state
+		// P1 Field was missed by P2: Assign point to P1
+		printf("Two-Players PlayLogic :: NotifyTargetLost :: P1 Field was missed by P2: Assign point to P1\n");
+		_playScore->Player1_Score++;
+
+		_FSM_state = FSM_Idle;
+		break;
+	case FSM_Wait_P2_Impact:
+		//_FSM_state = FSM_Missed_P2; // Virtual transitory state
+		// P2 Field was missed by P1: Assign point to P2
+		printf("Two-Players PlayLogic :: NotifyTargetLost :: P2 Field was missed by P1: Assign point to P2\n");
+		_playScore->Player2_Score++;
+
+		_FSM_state = FSM_Idle;
+		break;
+
+	default:
+		break;
+	}
+}
+
+// Two-Players Logic Finite State Machine (FSM) Implementation
+void TwoPlayersPlayLogic::updateFSMState(Vector3D floorBounceData, Vector2D opticalBounceData)
+{
+	// Analyze the current event
+	ImpactResult res = analyzeImpactEventData(opticalBounceData.x, opticalBounceData.y);
+
+	switch (_FSM_state)
+	{
+	case FSM_Idle:
+		// Not P1 or P2 impact: stay Idle
+		// Impact in P1: start waiting for impact in P2
+		if (res == Impact_Player1_Field)
+			_FSM_state = FSM_Wait_P2_Impact;
+
+		// Impact in P2: start waiting for impact in P1
+		else if (res == Impact_Player2_Field)
+			_FSM_state = FSM_Wait_P1_Impact;
+
+		break;
+
+	case FSM_Wait_P1_Impact:
+		// Impact in P1: start waiting for imapct in P2
+		if (res == Impact_Player1_Field)
+			_FSM_state = FSM_Wait_P2_Impact;
+		else {
+			//_FSM_state = FSM_Missed_P1; // Virtual state, transitory
+
+		}
+
+		// Reset Automata
+		_FSM_state = FSM_Idle;
+
+		break;
+
+	case FSM_Wait_P2_Impact:
+		// Impact in P2: start waiting for imapct in P1
+		if (res == Impact_Player2_Field)
+			_FSM_state = FSM_Wait_P1_Impact;
+		else {
+			//_FSM_state = FSM_Missed_P2; // Virtual state, transitory
+
+
+		}
+
+		// Reset Automata
+		_FSM_state = FSM_Idle;
+
+		break;
+
+	default:
+		break;
+	}
+}
+
 void TwoPlayersPlayLogic::feedWithFloorBounceData(Vector3D floorBounceData, Vector2D opticalBounceData)
 {
 	printf("Play Logic :: Two-Players :: Feed Data: 3D=[%.2f, %2f, %2f] 2D=[%.2f, %.2f]\n",
 			floorBounceData.x, floorBounceData.y, floorBounceData.z,
 			opticalBounceData.x, opticalBounceData.y);
+
+	updateFSMState(floorBounceData, opticalBounceData);
 }
 
 PlayScore *TwoPlayersPlayLogic::retrievePlayScore()

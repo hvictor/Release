@@ -46,6 +46,8 @@ Configuration::Configuration()
 	for (int l = 0; l < 3; l++) { zedHardwareParameters.translationVector_L.at<float>(0, l) = 0.0; }
 
 	playLogicParameters.playLogicType = TwoPlayers;
+
+	dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = 10;
 }
 
 Configuration::~Configuration() {

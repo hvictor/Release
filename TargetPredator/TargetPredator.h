@@ -62,6 +62,7 @@ public:
 	void update_filter_param();
 	void update_free_play_param();
 	pred_state_t confirm_latest_impact();
+	bool TargetLost;
 
 private:
 	TargetPredator();
@@ -74,6 +75,8 @@ private:
 	double _lowPassFilterY;
 
 	bool _freePlay;
+
+	int _tgtUnseen;
 
 	Configuration *_configuration;
 };

@@ -271,7 +271,7 @@ void *frames_processor(void *)
 		// Render Field Delimiter and Score
 		if (!configuration->dynamicModelParameters.freePlay) {
 			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
-			OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
+			// Testing: OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
 			OverlayRenderer::getInstance()->renderNet(frame1_L, netVisualProjection);
 			OverlayRenderer::getInstance()->renderTwoPlayersFieldRepresentation(frame1_L, twoPlayersFieldRepresentation);
 		}
@@ -322,7 +322,9 @@ void *frames_processor(void *)
 						opticalLatestImpactData.x = latest_impact.x;
 						opticalLatestImpactData.y = latest_impact.y;
 
-						playLogic->feedWithFloorBounceData(dynamicModelResult.impact_pos, opticalLatestImpactData);
+						if (!configuration->dynamicModelParameters.freePlay) {
+							playLogic->feedWithFloorBounceData(dynamicModelResult.impact_pos, opticalLatestImpactData);
+						}
 					}
 				}
 
@@ -342,6 +344,12 @@ void *frames_processor(void *)
 				}
 				*/
 			}
+		}
+
+		// If the Target has been lost, notify the PlayLogic
+		if (tgtPredator->TargetLost)
+		{
+			((TwoPlayersPlayLogic *)playLogic)->notifyTargetLost();
 		}
 
 		///////////////////////////////////////////////////////////////////////////////

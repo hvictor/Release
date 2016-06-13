@@ -15,6 +15,8 @@ TargetPredator::TargetPredator()
 	_staticModel = TennisFieldStaticModel::getInstance();
 	_lowPassFilterX = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterX;
 	_lowPassFilterY = Configuration::getInstance()->getOpticalLayerParameters().linearLowPassFilterY;
+	TargetLost = false;
+	_tgtUnseen = 0;
 }
 
 TargetPredator *TargetPredator::getInstance()
@@ -126,9 +128,11 @@ void TargetPredator::update_state(int x, int y)
 		if (compute_impact_status((double)prev->Vx, (double)prev->Vy, (double)tracker_state.Vx, (double)tracker_state.Vy)) {
 			tracker_state.impact_status = true;
 
+			/* Testing
 			if (!_freePlay) {
 				_staticModel->updateScoreTracking_2D((double)prev->x, (double)prev->y);
 			}
+			*/
 		}
 	}
 
@@ -254,6 +258,22 @@ pred_scan_t TargetPredator::engage_8UC1(uint8_t *data, int width, int height)
 	engage_data.row = row_scan_max;
 	engage_data.xl = scan_xl;
 	engage_data.xr = scan_xr;
+
+	// Increment TGT LST counter
+	if (row_scan_max == 0 && scan_xl == 0 && scan_xr == 0)
+	{
+		_tgtUnseen++;
+
+		if (_tgtUnseen >= _configuration->dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold)
+		{
+			_tgtUnseen = 0;
+			TargetLost = true;
+		}
+	}
+	else
+	{
+		TargetLost = false;
+	}
 
 	return engage_data;
 }

@@ -176,6 +176,8 @@ typedef struct
 	bool useInputKalmanFilter;
 	double impactMaxFloorDistance;
 
+	// Target Predator
+	int targetPredatorTGTLOSTFramesThreshold;
 } DynamicModelParameters;
 
 typedef struct
