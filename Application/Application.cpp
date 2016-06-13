@@ -272,6 +272,7 @@ void *frames_processor(void *)
 		if (!configuration->dynamicModelParameters.freePlay) {
 			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
 			// Testing: OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
+			OverlayRenderer::getInstance()->renderTwoPlayersPlayLogicScoreTracking(frame1_L, (TwoPlayersPlayLogic *)playLogic);
 			OverlayRenderer::getInstance()->renderNet(frame1_L, netVisualProjection);
 			OverlayRenderer::getInstance()->renderTwoPlayersFieldRepresentation(frame1_L, twoPlayersFieldRepresentation);
 		}

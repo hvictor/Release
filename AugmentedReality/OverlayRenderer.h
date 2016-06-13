@@ -56,6 +56,7 @@ public:
 	void renderFieldDelimiter_Mat8UC4(Mat frame_RGBA, TennisFieldDelimiter *fieldDelimiter);
 	void renderPerimetralConeSet4_8UC4(uint8_t *u8data, int width, int height, PerimetralConeSet4 cones_set);
 	void renderStaticModelScoreTracking(Mat frame, TennisFieldStaticModel *staticModel);
+	void renderTwoPlayersPlayLogicScoreTracking(Mat frame, TwoPlayersPlayLogic *playLogic);
 	void renderDepthInformation(Mat frame, int x, int y, float depth);
 	void renderPlanePointSetProjection_8UC4(uint8_t *u8data, int width, int height, Point2f nearL, Point2f nearR, Point2f farR, Point2f farL);
 	void renderFloorPlane_8UC4(uint8_t *u8data, int width, int height, GroundModel *model);

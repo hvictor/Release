@@ -218,6 +218,16 @@ void OverlayRenderer::renderStaticModelScoreTracking(Mat frame, TennisFieldStati
 	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_GREEN_RGBA, 2, CV_AA);
 }
 
+void OverlayRenderer::renderTwoPlayersPlayLogicScoreTracking(Mat frame, TwoPlayersPlayLogic *playLogic)
+{
+	char scoreBuf[100];
+
+	TwoPlayersPlayScore *playScore = playLogic->retrievePlayScore();
+
+	sprintf(scoreBuf, "P1: %d -- P2: %d", playScore->Player1_Score, playScore->Player2_Score);
+	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
+}
+
 void OverlayRenderer::renderPredatorState(Mat frame, TargetPredator *tgtPredator)
 {
 	list<pred_state_t> *predator_state = tgtPredator->get_state();
