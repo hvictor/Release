@@ -609,5 +609,5 @@ void OverlayRenderer::renderTwoPlayersFieldRepresentation(Mat frame_RGBA, TwoPla
 
 void OverlayRenderer::renderRedPointerDot(Mat frame_RGBA, double x, double y)
 {
-	circle(frame_RGBA, Point2f(x, y), 4, OVERLAY_COLOR_RED_RGBA, -1);
+	circle(frame_RGBA, Point2f(x, y), 8, OVERLAY_COLOR_RED_RGBA, -1);
 }
