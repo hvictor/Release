@@ -12,6 +12,7 @@
 TwoPlayersPlayLogic::TwoPlayersPlayLogic()
 {
 	_playScore = new TwoPlayersPlayScore();
+	_FSM_state = FSM_Idle;
 }
 
 TwoPlayersPlayLogic::~TwoPlayersPlayLogic()
@@ -30,6 +31,8 @@ ImpactResult TwoPlayersPlayLogic::__checkPlayer1Field(double x, double y)
 	double c = pointPolygonTest(vertices, Point2f((float)x, (float)y), true);
 
 	double eps = (double)Configuration::getInstance()->getStaticModelParameters().linesSensitivityEPS;
+
+	printf("Check P1 Field: c=%.2f, eps=%.2f\n", c, eps);
 
 	if (c >= eps) {
 		return Impact_Player1_Field;
@@ -53,6 +56,8 @@ ImpactResult TwoPlayersPlayLogic::__checkPlayer2Field(double x, double y)
 	double c = pointPolygonTest(vertices, Point2f((float)x, (float)y), true);
 
 	double eps = (double)Configuration::getInstance()->getStaticModelParameters().linesSensitivityEPS;
+
+	printf("Check P2 Field: c=%.2f, eps=%.2f\n", c, eps);
 
 	// Inside Field
 	if (c >= eps) {
@@ -177,6 +182,7 @@ void TwoPlayersPlayLogic::updateFSMState(Vector3D floorBounceData, Vector2D opti
 		break;
 
 	default:
+		printf("FSM: Unknown status: %d\n", _FSM_state);
 		break;
 	}
 }
