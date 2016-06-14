@@ -97,6 +97,9 @@ pred_state_t TargetPredator::confirm_latest_impact()
 			// Fetch correct data (the real impact state is the previous)
 			it++;
 
+			if (it == state.end())
+				break;
+
 			ret.x = it->x;
 			ret.y = it->y;
 
