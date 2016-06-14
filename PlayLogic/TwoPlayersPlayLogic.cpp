@@ -57,7 +57,7 @@ ImpactResult TwoPlayersPlayLogic::__checkPlayer2Field(double x, double y)
 
 	double eps = (double)Configuration::getInstance()->getStaticModelParameters().linesSensitivityEPS;
 
-	printf("Check P2 Field: c=%.2f, eps=%.2f\n", c, eps);
+	//printf("Check P2 Field: c=%.2f, eps=%.2f\n", c, eps);
 
 	// Inside Field
 	if (c >= eps) {
@@ -75,14 +75,14 @@ ImpactResult TwoPlayersPlayLogic::__checkPlayer2Field(double x, double y)
 ImpactResult TwoPlayersPlayLogic::analyzeImpactEventData(double x, double y)
 {
 	ImpactResult res_P1 = __checkPlayer1Field(x, y);
-	printf("RES P1 = %d\n", res_P1);
+	//printf("RES P1 = %d\n", res_P1);
 
 	if (res_P1 == Impact_Player1_Field)
 		return Impact_Player1_Field;
 
 	ImpactResult res_P2 = __checkPlayer2Field(x, y);
 
-	printf("RES P2 = %d\n--------\n", res_P2);
+	//printf("RES P2 = %d\n--------\n", res_P2);
 
 	if (res_P2 == Impact_Player2_Field)
 		return Impact_Player2_Field;
@@ -133,51 +133,52 @@ void TwoPlayersPlayLogic::updateFSMState(Vector3D floorBounceData, Vector2D opti
 {
 	// Analyze the current event
 	ImpactResult res = analyzeImpactEventData(opticalBounceData.x, opticalBounceData.y);
-	printf("Two-Players PlayLogic :: FSM :: Impact Event Data Analysis Result: res=%d\n", res);
 
 	switch (_FSM_state)
 	{
 	case FSM_Idle:
-		printf("FSM :: IDLE\n");
 		// Not P1 or P2 impact: stay Idle
 		// Impact in P1: start waiting for impact in P2
-		if (res == Impact_Player1_Field)
+		if (res == Impact_Player1_Field) {
 			_FSM_state = FSM_Wait_P2_Impact;
+			printf("Two-Players PlayLogic :: FSM :: Waiting Impact in P2\n");
+		}
 
 		// Impact in P2: start waiting for impact in P1
-		else if (res == Impact_Player2_Field)
+		else if (res == Impact_Player2_Field) {
 			_FSM_state = FSM_Wait_P1_Impact;
+			printf("Two-Players PlayLogic :: FSM :: Waiting Impact in P1\n");
+		}
 
 		break;
 
 	case FSM_Wait_P1_Impact:
-		printf("FSM :: WAITING P1 IMPACT\n");
 		// Impact in P1: start waiting for imapct in P2
-		if (res == Impact_Player1_Field)
+		if (res == Impact_Player1_Field) {
 			_FSM_state = FSM_Wait_P2_Impact;
-		else {
-			//_FSM_state = FSM_Missed_P1; // Virtual state, transitory
-
+			printf("Two-Players PlayLogic :: FSM :: P2 responded correctly, the ball is of P1\n");
 		}
-
-		// Reset Automata
-		_FSM_state = FSM_Idle;
+		else {
+			printf("Two-Players PlayLogic :: FSM :: P2 failed, point of P1\n");
+			_playScore->Player1_Score++;
+			// Reset Automata
+			_FSM_state = FSM_Idle;
+		}
 
 		break;
 
 	case FSM_Wait_P2_Impact:
-		printf("FSM :: WAITING P2 IMPACT\n");
 		// Impact in P2: start waiting for imapct in P1
-		if (res == Impact_Player2_Field)
+		if (res == Impact_Player2_Field) {
 			_FSM_state = FSM_Wait_P1_Impact;
-		else {
-			//_FSM_state = FSM_Missed_P2; // Virtual state, transitory
-
-
+		printf("Two-Players PlayLogic :: FSM :: P1 responded correctly, the ball is of P2\n");
 		}
-
-		// Reset Automata
-		_FSM_state = FSM_Idle;
+		else {
+			printf("Two-Players PlayLogic :: FSM :: P1 failed, point of P2\n");
+			_playScore->Player2_Score++;
+			// Reset Automata
+			_FSM_state = FSM_Idle;
+		}
 
 		break;
 

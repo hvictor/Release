@@ -2051,6 +2051,9 @@
           <property name="segmentStyle">
            <enum>QLCDNumber::Flat</enum>
           </property>
+          <property name="value" stdset="0">
+           <double>50.000000000000000</double>
+          </property>
          </widget>
          <widget class="QSlider" name="lowPassXSlider">
           <property name="geometry">
@@ -2089,6 +2092,9 @@
           <property name="segmentStyle">
            <enum>QLCDNumber::Flat</enum>
           </property>
+          <property name="value" stdset="0">
+           <double>100.000000000000000</double>
+          </property>
          </widget>
          <widget class="QLabel" name="label_49">
           <property name="geometry">
@@ -2122,6 +2128,9 @@
            <number>50</number>
           </property>
           <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
            <number>100</number>
           </property>
           <property name="orientation">
@@ -2610,10 +2619,13 @@
            <string>Enable Tracking Window</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QSlider" name="slider_tgtPred_TrackingWndSize">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>360</x>
@@ -2634,7 +2646,7 @@
          </widget>
          <widget class="QLCDNumber" name="lcd_tgtPredTrackingWndSize">
           <property name="enabled">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <property name="geometry">
            <rect>
@@ -2652,6 +2664,9 @@
           </property>
          </widget>
          <widget class="QLabel" name="label_tgtPred_TrackingWndSize">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>243</x>
@@ -2669,7 +2684,7 @@
          </widget>
          <widget class="QCheckBox" name="checkBox_tgtPred_VisualizeWnd">
           <property name="enabled">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <property name="geometry">
            <rect>
@@ -2687,6 +2702,9 @@
           </property>
          </widget>
          <widget class="QRadioButton" name="radioButton_tgtPred_AdaptiveTWND">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -2703,6 +2721,9 @@
           </attribute>
          </widget>
          <widget class="QRadioButton" name="radioButton_tgtPred_StaticTWND">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -2719,6 +2740,9 @@
           </attribute>
          </widget>
          <widget class="QLabel" name="label_tgtPred_TrackingWndFactor">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>243</x>
@@ -2735,6 +2759,9 @@
           </property>
          </widget>
          <widget class="QDoubleSpinBox" name="doubleSpinBox_AdaptiveTrackingWndX">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>360</x>
@@ -2745,6 +2772,9 @@
           </property>
          </widget>
          <widget class="QDoubleSpinBox" name="doubleSpinBox_AdaptiveTrackingWndY">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>430</x>
@@ -2865,7 +2895,7 @@
            <string>Free Play / Training</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QLCDNumber" name="lcdFloorDistTol">
@@ -2971,6 +3001,9 @@
           </property>
           <property name="text">
            <string>Two Players</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_4</string>

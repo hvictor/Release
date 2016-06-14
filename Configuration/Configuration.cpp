@@ -31,7 +31,7 @@ Configuration::Configuration()
 	staticModelParameters.groundPlaneModelDepthSamples = 5;
 	staticModelParameters.netHeight = 500.0;
 
-	dynamicModelParameters.freePlay = true;
+	dynamicModelParameters.freePlay = false;
 	dynamicModelParameters.trackingWndEnabled = false;
 	dynamicModelParameters.confidenceThreshold = 100;
 	dynamicModelParameters.trackingWndEnabled = false;
@@ -48,6 +48,9 @@ Configuration::Configuration()
 	playLogicParameters.playLogicType = TwoPlayers;
 
 	dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = 80;
+
+	opticalLayerParameters.linearLowPassFilterX = 0.5;
+	opticalLayerParameters.linearLowPassFilterY = 1.0;
 }
 
 Configuration::~Configuration() {
