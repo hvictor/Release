@@ -152,6 +152,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->radioButton_TwoPlayers, SIGNAL(toggled(bool)), this, SLOT(updatePlayModel_SetTwoPlayersLogic(bool)));
     QObject::connect(ui->radioButton_SinglePlayer, SIGNAL(toggled(bool)), this, SLOT(updatePlayModel_SetSinglePlayerLogic(bool)));
 
+    QObject::connect(ui->slider_TGTLST_Thresh, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetTargetLostThreshold(int)));
+
     // Instantiate Stereo Display
     stereoDisplay = new UIStereoDisplay();
 }
@@ -187,6 +189,12 @@ void MainWindow::trackingWindowSetAdaptiveTrackingWindow(bool status)
     if (status) {
         updateDynamicModel_SetTrackingWindowMode(AdaptiveTrackingWindow);
     }
+}
+
+void MainWindow::updateDynamicModel_SetTargetLostThreshold(int value)
+{
+    Configuration::getInstance()->dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = value;
+    printf("Dynamic Model :: Update :: TGT LST = %d [Frames]\n", Configuration::getInstance()->dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold);
 }
 
 void MainWindow::trackingWindowSetStaticTrackingWindow(bool status)

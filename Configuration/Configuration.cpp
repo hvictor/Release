@@ -47,7 +47,7 @@ Configuration::Configuration()
 
 	playLogicParameters.playLogicType = TwoPlayers;
 
-	dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = 10;
+	dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = 80;
 }
 
 Configuration::~Configuration() {
