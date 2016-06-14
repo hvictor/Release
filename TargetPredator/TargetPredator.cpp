@@ -268,6 +268,7 @@ pred_scan_t TargetPredator::engage_8UC1(uint8_t *data, int width, int height)
 		{
 			_tgtUnseen = 0;
 			TargetLost = true;
+			state.clear();
 		}
 	}
 	else
