@@ -190,9 +190,11 @@ void TwoPlayersPlayLogic::updateFSMState(Vector3D floorBounceData, Vector2D opti
 
 void TwoPlayersPlayLogic::feedWithFloorBounceData(Vector3D floorBounceData, Vector2D opticalBounceData)
 {
+	/*
 	printf("Play Logic :: Two-Players :: Feed Data: 3D=[%.2f, %2f, %2f] 2D=[%.2f, %.2f]\n",
 			floorBounceData.x, floorBounceData.y, floorBounceData.z,
 			opticalBounceData.x, opticalBounceData.y);
+	*/
 
 	updateFSMState(floorBounceData, opticalBounceData);
 }

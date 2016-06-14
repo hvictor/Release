@@ -310,14 +310,7 @@ void *frames_processor(void *)
 					dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);
 
 					if (dynamicModelResult.impact) {
-						OverlayRenderer::getInstance()->renderImpactData3D(frame1_L, dynamicModelResult.impact_pos);
-						printf("RESULT :: Impact at [%.2f, %.2f %.2f] [m]\n",
-								dynamicModelResult.impact_pos.x * 0.001,
-								dynamicModelResult.impact_pos.y * 0.001,
-								dynamicModelResult.impact_pos.z * 0.001);
-
 						// Search in the TargetPredator backlog the last impact and mark it as confirmed
-						printf("Application :: Notifying impact confirmation to TargetPredator\n");
 						Vector2D opticalLatestImpactData;
 						pred_state_t latest_impact = tgtPredator->confirm_latest_impact();
 						opticalLatestImpactData.x = latest_impact.x;
