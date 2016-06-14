@@ -222,7 +222,7 @@ void OverlayRenderer::renderTwoPlayersPlayLogicScoreTracking(Mat frame, TwoPlaye
 {
 	char scoreBuf[100];
 
-	TwoPlayersPlayScore *playScore = playLogic->retrievePlayScore();
+	TwoPlayersPlayScore *playScore = (TwoPlayersPlayScore *)playLogic->retrievePlayScore();
 
 	sprintf(scoreBuf, "P1: %d -- P2: %d", playScore->Player1_Score, playScore->Player2_Score);
 	putText(frame, scoreBuf, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
