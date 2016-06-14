@@ -606,3 +606,8 @@ void OverlayRenderer::renderTwoPlayersFieldRepresentation(Mat frame_RGBA, TwoPla
 	// No overrender separation line
 
 }
+
+void OverlayRenderer::renderRedPointerDot(Mat frame_RGBA, double x, double y)
+{
+	circle(frame_RGBA, Point2f(x, y), 4, OVERLAY_COLOR_RED_RGBA, -1);
+}
