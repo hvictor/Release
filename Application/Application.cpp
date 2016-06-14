@@ -313,8 +313,8 @@ void *frames_processor(void *)
 						// Search in the TargetPredator backlog the last impact and mark it as confirmed
 						Vector2D opticalLatestImpactData;
 						pred_state_t latest_impact = tgtPredator->confirm_latest_impact();
-						opticalLatestImpactData.x = latest_impact.x;
-						opticalLatestImpactData.y = latest_impact.y;
+						opticalLatestImpactData.x = (double)latest_impact.x;
+						opticalLatestImpactData.y = (double)latest_impact.y;
 
 						OverlayRenderer::getInstance()->renderRedPointerDot(frame1_L, opticalLatestImpactData.x, opticalLatestImpactData.y);
 
