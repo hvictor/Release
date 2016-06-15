@@ -30,6 +30,7 @@ public slots:
     void chooseRecordDirectory();
     void updateViewProcessingMode(int processingMode);
     void startApplication();
+    void stopApplication();
     void updateStaticModel_LinesSensitivityEPS(int value);
     void updateStaticModel_SetFloorPlaneLinearModelFactorX(double a);
     void updateStaticModel_SetFloorPlaneLinearModelFactorY(double b);
