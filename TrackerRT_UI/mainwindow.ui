@@ -27,7 +27,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -621,7 +621,7 @@
            <rect>
             <x>300</x>
             <y>156</y>
-            <width>131</width>
+            <width>71</width>
             <height>54</height>
            </rect>
           </property>
@@ -653,6 +653,19 @@
           </property>
           <property name="text">
            <string>Save Configuration</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="stopApplicationBtn">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>156</y>
+            <width>71</width>
+            <height>54</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>STOP</string>
           </property>
          </widget>
         </widget>

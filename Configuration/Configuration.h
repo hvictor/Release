@@ -84,6 +84,9 @@ typedef struct
 
 	// Processing
 	ProcessingMode processingMode;
+
+	// Record Dynamic Models Data
+	bool recordDynamicModelsData;
 } OperationalMode;
 
 typedef struct
@@ -192,6 +195,7 @@ typedef struct
 {
 	char recordingDirectory[100];
 	char recordingFileName[80];
+	char recordingFileNameFullPath[180];
 } RecordingParameters;
 
 typedef struct
@@ -217,6 +221,8 @@ public:
 	void publish();
 
 	// Public properties
+	OperationalMode operationalMode;
+	OpticalLayerParameters opticalLayerParameters;
 	StaticModelParameters staticModelParameters;
 	DynamicModelParameters dynamicModelParameters;
 	CalibrationData calibrationData;
@@ -238,8 +244,6 @@ public:
 private:
 	Configuration();
 	FrameInfo frameInfo;
-	OperationalMode operationalMode;
-	OpticalLayerParameters opticalLayerParameters;
 	DUOStereoCameraHardwareParameters duoHardwareParameters;
 	InterpolationEngineParameters interpolationEngineParameters;
 };

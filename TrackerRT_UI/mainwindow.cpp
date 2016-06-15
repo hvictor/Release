@@ -11,6 +11,7 @@
 #include "../StaticModel/GroundModel.h"
 
 extern volatile bool systemCalibrated;
+extern volatile bool systemRecording;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -115,6 +116,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->recordToBtn, SIGNAL(clicked(bool)), this, SLOT(chooseRecordDirectory()));
     QObject::connect(ui->startApplicationBtn, SIGNAL(clicked(bool)), this, SLOT(startApplication()));
+    QObject::connect(ui->stopApplicationBtn, SIGNAL(clicked(bool)), this, SLOT(stopApplication()));
 
     QObject::connect(ui->fldModel_sensitivityEpsSlider, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_LinesSensitivityEPS(int)));
 
@@ -157,6 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->slider_ImpactVectorAngleThresh, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetVelocityVectorAngleThresh(int)));
 
+    ui->recordToBtn->setVisible(false);
     // Instantiate Stereo Display
     stereoDisplay = new UIStereoDisplay();
 }
@@ -362,10 +365,16 @@ void MainWindow::updateViewProcessingMode(int processingMode)
 {
     if (processingMode == 0) {
         ui->recordToBtn->setVisible(false);
+        Configuration::getInstance()->operationalMode.processingMode = Tracking;
+        printf("Operational Mode :: Update :: Tracking Mode is active\n");
+        ui->startApplicationBtn->setText("START");
     }
 
     else {
         ui->recordToBtn->setVisible(true);
+        Configuration::getInstance()->operationalMode.processingMode = Record;
+        printf("Operational Mode :: Update :: Recording Mode is active\n");
+        ui->startApplicationBtn->setText("REC");
     }
 }
 
@@ -385,9 +394,18 @@ void MainWindow::saveConfig()
 
 void MainWindow::startApplication()
 {
+    systemRecording = true;
     systemCalibrated = true;
-    stereoDisplay->init(false, true);
-    stereoDisplay->show();
+
+    if (Configuration::getInstance()->operationalMode.processingMode == Tracking) {
+        stereoDisplay->init(false, true);
+        stereoDisplay->show();
+    }
+}
+
+void MainWindow::stopApplication()
+{
+    systemRecording = false;
 }
 
 void MainWindow::updateDynamicModel_UseInputKalmanFilter(bool status)

@@ -29,6 +29,8 @@ Configuration *Configuration::getInstance()
 
 Configuration::Configuration()
 {
+	operationalMode.recordDynamicModelsData = false;
+
 	staticModelParameters.groundPlaneModelDepthSamples = 5;
 	staticModelParameters.netHeight = 500.0;
 
@@ -54,8 +56,9 @@ Configuration::Configuration()
 	opticalLayerParameters.linearLowPassFilterX = 1.0;
 	opticalLayerParameters.linearLowPassFilterY = 1.0;
 
-	sprintf(recordingParameters.recordingDirectory, "/tmp/recordings/");
-	sprintf(recordingParameters.recordingFileName, "tracker.bin");
+	strcpy(recordingParameters.recordingDirectory, "/tmp/recordings/");
+	strcpy(recordingParameters.recordingFileName, "tracker.bin");
+	sprintf(recordingParameters.recordingFileNameFullPath, "%s%s", recordingParameters.recordingDirectory, recordingParameters.recordingFileName);
 
 	filesystem_make_directory(recordingParameters.recordingDirectory);
 

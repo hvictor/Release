@@ -15,6 +15,7 @@
 extern void run();
 extern volatile bool systemReady;
 volatile bool systemCalibrated;
+volatile bool systemRecording;
 extern StereoSensorAbstractionLayer *stereoSALExternPtr;
 
 pthread_t runHdl;

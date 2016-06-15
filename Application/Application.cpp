@@ -59,6 +59,8 @@
 #include "../PlayLogic/PlayLogicFactory.h"
 #include "../PlayLogic/TwoPlayersPlayLogic.h"
 
+#include "../Serialization/serialization.h"
+
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -69,6 +71,7 @@ using namespace cv;
 using namespace cv::gpu;
 
 extern volatile bool systemCalibrated;
+extern volatile bool systemRecording;
 
 // DUO Frame dimensions
 #define WIDTH	320
@@ -203,276 +206,281 @@ void *frames_processor(void *)
 		// Not yet implemented
 	}
 
-	while (1) {
-		FrameData *fd;
+	// If Recording Mode is active, the Frames Processor runs only when the recording of Dynamic Models data is requested
+	// Dynamic Models are fitted, but no Overlay rendering is performed
+	if (configuration->operationalMode.processingMode == Record)
+	{
+		printf("Application :: Frames Processor :: Recording Static Model Data\n");
 
-		// Fetch new frame data from fast concurrent input queue
-		if (array_spinlock_queue_pull(&inputFramesQueue, (void **)&fd) < 0) {
-			usleep(10);
-			continue;
-		}
+		while (systemRecording) {
+			FrameData *fd;
 
-		// Store frame data into local buffer
-		frame_data[bufp] = fd;
-
-		if (!bufp) {
-			bufp++;
-			continue;
-		}
-
-		//
-		// Process frame pair
-		//
-
-		Mat frame0_L, frame0_R;
-		Mat frame1_L, frame1_R;
-
-		if (channels == 1) {
-			// Left data
-			frame0_L = Mat(Size(width, height), CV_8UC1, frame_data[0]->left_data);
-			frame1_L = Mat(Size(width, height), CV_8UC1, frame_data[1]->left_data);
-
-			// Right data
-			frame0_R = Mat(Size(width, height), CV_8UC1, frame_data[0]->right_data);
-			frame1_R = Mat(Size(width, height), CV_8UC1, frame_data[1]->right_data);
-		}
-		else if (channels == 3) {
-			// Left data
-			frame0_L = Mat(Size(width, height), CV_8UC3, frame_data[0]->left_data);
-			frame1_L = Mat(Size(width, height), CV_8UC3, frame_data[1]->left_data);
-
-			// Right data
-			frame0_R = Mat(Size(width, height), CV_8UC3, frame_data[0]->right_data);
-			frame1_R = Mat(Size(width, height), CV_8UC3, frame_data[1]->right_data);
-		}
-		else if (channels == 4) {
-			// Left data
-			frame0_L = Mat(Size(width, height), CV_8UC4, frame_data[0]->left_data);
-			frame1_L = Mat(Size(width, height), CV_8UC4, frame_data[1]->left_data);
-
-			// Right data
-			frame0_R = Mat(Size(width, height), CV_8UC4, frame_data[0]->right_data);
-			frame1_R = Mat(Size(width, height), CV_8UC4, frame_data[1]->right_data);
-		}
-
-		//players = detectPlayers(frame0_L);
-		//Mat filtered0 = hsvManager->filterHSVRange_8UC4(frame0_L, hsvRangeTGT, 0, 0, width, height);
-		//Mat filtered1 = hsvManager->filterHSVRange_8UC4(frame1_L, hsvRangeTGT, 0, 0, width, height);
-
-		//hsvManager->filterHSVRange(frame_data[0]->left_data, width, height, hsvRangeTGT, frame_data[0]->left_data);
-		//hsvManager->filterHSVRange(frame_data[1]->left_data, width, height, hsvRangeTGT, frame_data[1]->left_data);
-		hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
-		//f_8UC1_0 = hsvManager->filterHSVRange_out_Mat8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT);
-
-		//pred_scan_t engage_data = tgtPredator->engage_8UC4(frame_data[1]->left_data, width, height);
-		pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
-		//pred_scan_t engage_data = tgtPredator->engage_Mat8UC1(f_8UC1_0, width, height);
-
-		// Render Field Delimiter and Score
-		if (!configuration->dynamicModelParameters.freePlay) {
-			OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
-			// Testing: OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
-			OverlayRenderer::getInstance()->renderTwoPlayersPlayLogicScoreTracking(frame1_L, (TwoPlayersPlayLogic *)playLogic);
-			OverlayRenderer::getInstance()->renderNet(frame1_L, netVisualProjection);
-			OverlayRenderer::getInstance()->renderTwoPlayersFieldRepresentation(frame1_L, twoPlayersFieldRepresentation);
-		}
-
-		// Update Predator
-		if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
-			tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
-			Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
-			//OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
-			OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
-
-			if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
-				OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame1_L, tgtPredator->get_tracking_wnd());
+			// Fetch new frame data from fast concurrent input queue
+			if (array_spinlock_queue_pull(&inputFramesQueue, (void **)&fd) < 0) {
+				usleep(10);
+				continue;
 			}
 
-			if (fd->depth_data_avail) {
+			// Store frame data into local buffer
+			frame_data[bufp] = fd;
 
-				//OverlayRenderer::getInstance()->renderDepthInformation(frame1_L, targetPosition.x, targetPosition.y,
-				//		ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth));
+			if (!bufp) {
+				bufp++;
+				continue;
+			}
 
-				StereoSensorMeasure3D meas;
-				meas.z_mm = ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth);
-				meas.x_mm = (meas.z_mm * (float)targetPosition.x) / Configuration::getInstance()->zedHardwareParameters.fx_L;
-				meas.y_mm = (meas.z_mm * (float)targetPosition.y) / Configuration::getInstance()->zedHardwareParameters.fy_L;
+			//
+			// Process frame pair
+			//
 
-				if (meas.z_mm > 0.0) {
-					//OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
+			Mat frame0_L, frame0_R;
+			Mat frame1_L, frame1_R;
 
-					Vector3D meas_v;
-					meas_v.x = (double)meas.x_mm;
-					meas_v.y = (double)meas.y_mm;
-					meas_v.z = (double)meas.z_mm;
+			if (channels == 1) {
+				// Left data
+				frame0_L = Mat(Size(width, height), CV_8UC1, frame_data[0]->left_data);
+				frame1_L = Mat(Size(width, height), CV_8UC1, frame_data[1]->left_data);
 
-					// Recalc dynamic model
-					dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);
+				// Right data
+				frame0_R = Mat(Size(width, height), CV_8UC1, frame_data[0]->right_data);
+				frame1_R = Mat(Size(width, height), CV_8UC1, frame_data[1]->right_data);
+			}
+			else if (channels == 3) {
+				// Left data
+				frame0_L = Mat(Size(width, height), CV_8UC3, frame_data[0]->left_data);
+				frame1_L = Mat(Size(width, height), CV_8UC3, frame_data[1]->left_data);
 
-					if (dynamicModelResult.impact) {
-						// Search in the TargetPredator backlog the last impact and mark it as confirmed
-						Vector2D opticalLatestImpactData;
-						pred_state_t latest_impact = tgtPredator->confirm_latest_impact();
-						opticalLatestImpactData.x = (double)latest_impact.x;
-						opticalLatestImpactData.y = (double)latest_impact.y;
+				// Right data
+				frame0_R = Mat(Size(width, height), CV_8UC3, frame_data[0]->right_data);
+				frame1_R = Mat(Size(width, height), CV_8UC3, frame_data[1]->right_data);
+			}
+			else if (channels == 4) {
+				// Left data
+				frame0_L = Mat(Size(width, height), CV_8UC4, frame_data[0]->left_data);
+				frame1_L = Mat(Size(width, height), CV_8UC4, frame_data[1]->left_data);
 
-						if (!configuration->dynamicModelParameters.freePlay) {
-							playLogic->feedWithFloorBounceData(dynamicModelResult.impact_pos, opticalLatestImpactData);
+				// Right data
+				frame0_R = Mat(Size(width, height), CV_8UC4, frame_data[0]->right_data);
+				frame1_R = Mat(Size(width, height), CV_8UC4, frame_data[1]->right_data);
+			}
+
+			hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
+			pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
+
+			// Update Predator
+			if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
+				tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
+
+				/*
+				 *
+				 *
+				 *
+				 * Make Dynamic Model 2D data
+				 *
+				 *
+				 *
+				 *
+				 */
+
+				if (fd->depth_data_avail) {
+
+					StereoSensorMeasure3D meas;
+					meas.z_mm = ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth);
+					meas.x_mm = (meas.z_mm * (float)targetPosition.x) / Configuration::getInstance()->zedHardwareParameters.fx_L;
+					meas.y_mm = (meas.z_mm * (float)targetPosition.y) / Configuration::getInstance()->zedHardwareParameters.fy_L;
+
+					if (meas.z_mm > 0.0) {
+
+						Vector3D meas_v;
+						meas_v.x = (double)meas.x_mm;
+						meas_v.y = (double)meas.y_mm;
+						meas_v.z = (double)meas.z_mm;
+
+						// Recalc dynamic model
+						dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);
+
+						/*
+						 *
+						 *
+						 *
+						 * Make Dynamic Model 3D data
+						 *
+						 *
+						 *
+						 *
+						 */
+
+						if (dynamicModelResult.impact) {
+							// Search in the TargetPredator backlog the last impact and mark it as confirmed
+							Vector2D opticalLatestImpactData;
+							pred_state_t latest_impact = tgtPredator->confirm_latest_impact();
+							opticalLatestImpactData.x = (double)latest_impact.x;
+							opticalLatestImpactData.y = (double)latest_impact.y;
+
+							/*
+							 *
+							 *
+							 *
+							 * Integrate Impact Confirmation Information in Model 3D data
+							 *
+							 *
+							 *
+							 *
+							 */
 						}
 					}
 				}
-
-				/* XYZ
-				StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementData3D(fd->xyz_data, targetPosition.x, targetPosition.y, fd->step_xyz);
-				//StereoSensorMeasure3D measurement = ZEDStereoSensorDriver::readMeasurementMatrix3D(fd->xyzMat, targetPosition.x, targetPosition.y);
-				//float confidence = 0.0;//ZEDStereoSensorDriver::readMeasurementDataConfidence(fd->confidence_data, targetPosition.x, targetPosition.y, fd->step_confidence);
-
-				if (measurement.z_mm > 0.0) {
-					OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
-				}
-				else {
-					if (ZEDStereoSensorDriver::retryTargetScan3D(engage_data, fd->xyz_data, fd->step_xyz, &measurement)) {
-					//if (ZEDStereoSensorDriver::retryTargetScanMatrix3D(engage_data, fd->xyzMat, &measurement)) {
-						OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, measurement);
-					}
-				}
-				*/
-			}
-		}
-
-		// If the Target has been lost, notify the PlayLogic
-		if (tgtPredator->TargetLost && configuration->dynamicModelParameters.notifyTGTLostToModel)
-		{
-			((TwoPlayersPlayLogic *)playLogic)->notifyTargetLost();
-		}
-
-		///////////////////////////////////////////////////////////////////////////////
-		//
-		// Compute CUDA Lucas-Kanade sparse Optical Flow
-		//
-		///////////////////////////////////////////////////////////////////////////////
-
-//		vector<FlowObject> flowObjects = FlowProcessor_ProcessSparseFlow(frame0_L, frame1_L, players);
-//
-//		for (int j = 0; j < flowObjects.size(); j++) {
-//			StateRelatedTable *stateTable = statefulObjectFilter->updateFilterState(flowObjects[j]);
-//		}
-
-		///////////////////////////////////////////////////////////////////////////////
-		//
-		// Compute mean motion centers (Disabled, possible correspondance precision loss)
-		//
-		///////////////////////////////////////////////////////////////////////////////
-
-		//statefulObjectFilter->computeMeanMotionCenters();
-
-		///////////////////////////////////////////////////////////////////////////////
-		//
-		// Get candidate tables
-		//
-		///////////////////////////////////////////////////////////////////////////////
-		//vector<StateRelatedTable *> t = statefulObjectFilter->getTrajectoryCandidateTables();
-
-		// If forcing RGB output
-		if (force_rgb_output) {
-			/*
-			printf("[Debug] RGB Forced output Frame Type\n");
-			GpuMat d_frame(frame0_L);
-			GpuMat d_frame_BGR;
-			Mat h_frame_BGR;
-			gpu::cvtColor(d_frame, d_frame_BGR, CV_GRAY2BGR);
-			d_frame_BGR.download(h_frame_BGR);
-
-			for (int j = 0; j < t.size(); j++) {
-				StateRelatedTable *table = t[j];
-
-				// Update trajectory tracker
-				trajectoryTracker->update(table);
-
-				for (int k = 0; k < table->relatedStates.size(); k++) {
-					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
-
-					if (k < table->relatedStates.size()-1) {
-						rectangle(h_frame_BGR, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), OVERLAY_COLOR_RED, 1);
-					}
-					else {
-						OverlayRenderer::getInstance()->renderTracker(h_frame_BGR, p, 12);
-						OverlayRenderer::getInstance()->renderTrackerState(h_frame_BGR, table, p);
-					}
-				}
 			}
 
-			// Get Interpolated Trajectory Descriptors
-			vector<TrajectoryDescriptor *> trajectoryDescriptors = trajectoryTracker->getCurrentTrackingState();
-			for (vector<TrajectoryDescriptor *>::iterator it = trajectoryDescriptors.begin(); it != trajectoryDescriptors.end(); it++) {
-				OverlayRenderer::getInstance()->renderInterpolatedTrajectoryHexa(h_frame_BGR, *it);
-			}
-
-			// Advance SOF timer
-			statefulObjectFilter->tick();
-
-			// Render human shape recognition trackers
-			OverlayRenderer::getInstance()->renderHumanTrackers(h_frame_BGR, players);
-
-			memcpy(frame_data[0]->left_data, h_frame_BGR.data, width * height * 3 * sizeof(uint8_t));
-
-			*/
-		}
-		// Using immuted original Frame Type
-		else {
-			/* UNUSED
-			for (int j = 0; j < flowObjects.size(); j++) {
-				Point2f p(flowObjects[j].x, flowObjects[j].y);
-				rectangle(frame0_L, Point2f(p.x - 4, p.y - 4), Point2f(p.x + 4, p.y + 4), Scalar(0, 0, 255), 1);
-				line(frame0_L, p, Point2f(p.x-flowObjects[j].displacement_x*10, p.y-flowObjects[j].displacement_y*10), Scalar(0, 200, 200));
-			}
-			*/
-
-			/* UNUSED
-			for (int k = 0; k < t.size(); k++) {
-				FlowObject tmp = t[k]->relatedStates[t[k]->relatedStates.size()-1]->state;
-				circle(frame0_L, Point2f(tmp.x, tmp.y), 8, (0, 0, 255), 2);
-				line(frame0_L, Point2f(tmp.x, tmp.y), Point2f(tmp.x-tmp.displacement_x*3, tmp.y-tmp.displacement_y*3), Scalar(0,255,0), 2);
-			}
-			*/
-
-			/***************
-			for (int j = 0; j < t.size(); j++) {
-				StateRelatedTable *table = t[j];
-
-				// Update trajectory tracker
-				trajectoryTracker->update(table);
-
-				for (int k = 0; k < table->relatedStates.size(); k++) {
-					Point p(table->relatedStates[k]->state.x, table->relatedStates[k]->state.y);
-
-					if (k < table->relatedStates.size()-1) {
-						rectangle(frame0_L, Point(p.x - 2, p.y - 2), Point(p.x + 2, p.y + 2), OVERLAY_COLOR_RED, 1);
-					}
-					else {
-						OverlayRenderer::getInstance()->renderTracker(frame0_L, p, 12);
-						OverlayRenderer::getInstance()->renderTrackerState(frame0_L, table, p);
-					}
-				}
-			}
-
-			statefulObjectFilter->tick();
-			*****************/
-
-			// Render human shape recognition trackers
-			//OverlayRenderer::getInstance()->renderHumanTrackers(frame0_L, players);
-
-			// ENABLE ME
+			// Buffer shift
 			memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
+
+			// Enqueue output frame data
+			array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
+
+			// Left-shift frame data in the local buffer, create space for new data
+			frame_data[0] = frame_data[1];
 		}
-
-
-		// Enqueue output frame data
-		array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
-
-		// Left-shift frame data in the local buffer, create space for new data
-		frame_data[0] = frame_data[1];
 	}
+
+	// Tracking Mode: the Frames Processor operates in nominal mode
+	else
+	{
+		while (1) {
+			FrameData *fd;
+
+			// Fetch new frame data from fast concurrent input queue
+			if (array_spinlock_queue_pull(&inputFramesQueue, (void **)&fd) < 0) {
+				usleep(10);
+				continue;
+			}
+
+			// Store frame data into local buffer
+			frame_data[bufp] = fd;
+
+			if (!bufp) {
+				bufp++;
+				continue;
+			}
+
+			//
+			// Process frame pair
+			//
+
+			Mat frame0_L, frame0_R;
+			Mat frame1_L, frame1_R;
+
+			if (channels == 1) {
+				// Left data
+				frame0_L = Mat(Size(width, height), CV_8UC1, frame_data[0]->left_data);
+				frame1_L = Mat(Size(width, height), CV_8UC1, frame_data[1]->left_data);
+
+				// Right data
+				frame0_R = Mat(Size(width, height), CV_8UC1, frame_data[0]->right_data);
+				frame1_R = Mat(Size(width, height), CV_8UC1, frame_data[1]->right_data);
+			}
+			else if (channels == 3) {
+				// Left data
+				frame0_L = Mat(Size(width, height), CV_8UC3, frame_data[0]->left_data);
+				frame1_L = Mat(Size(width, height), CV_8UC3, frame_data[1]->left_data);
+
+				// Right data
+				frame0_R = Mat(Size(width, height), CV_8UC3, frame_data[0]->right_data);
+				frame1_R = Mat(Size(width, height), CV_8UC3, frame_data[1]->right_data);
+			}
+			else if (channels == 4) {
+				// Left data
+				frame0_L = Mat(Size(width, height), CV_8UC4, frame_data[0]->left_data);
+				frame1_L = Mat(Size(width, height), CV_8UC4, frame_data[1]->left_data);
+
+				// Right data
+				frame0_R = Mat(Size(width, height), CV_8UC4, frame_data[0]->right_data);
+				frame1_R = Mat(Size(width, height), CV_8UC4, frame_data[1]->right_data);
+			}
+
+			hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
+			pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
+
+			// Render Field Delimiter and Score
+			if (!configuration->dynamicModelParameters.freePlay) {
+				OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
+				// Testing: OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
+				OverlayRenderer::getInstance()->renderTwoPlayersPlayLogicScoreTracking(frame1_L, (TwoPlayersPlayLogic *)playLogic);
+				OverlayRenderer::getInstance()->renderNet(frame1_L, netVisualProjection);
+				OverlayRenderer::getInstance()->renderTwoPlayersFieldRepresentation(frame1_L, twoPlayersFieldRepresentation);
+			}
+
+			// Update Predator
+			if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
+				tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
+				Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
+				//OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
+				OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
+
+				if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
+					OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame1_L, tgtPredator->get_tracking_wnd());
+				}
+
+				if (fd->depth_data_avail) {
+
+					//OverlayRenderer::getInstance()->renderDepthInformation(frame1_L, targetPosition.x, targetPosition.y,
+					//		ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth));
+
+					StereoSensorMeasure3D meas;
+					meas.z_mm = ZEDStereoSensorDriver::readMeasurementDataDepth(fd->depth_data, targetPosition.x, targetPosition.y, fd->step_depth);
+					meas.x_mm = (meas.z_mm * (float)targetPosition.x) / Configuration::getInstance()->zedHardwareParameters.fx_L;
+					meas.y_mm = (meas.z_mm * (float)targetPosition.y) / Configuration::getInstance()->zedHardwareParameters.fy_L;
+
+					if (meas.z_mm > 0.0) {
+						//OverlayRenderer::getInstance()->renderTarget3DPosition(frame1_L, targetPosition, meas);
+
+						Vector3D meas_v;
+						meas_v.x = (double)meas.x_mm;
+						meas_v.y = (double)meas.y_mm;
+						meas_v.z = (double)meas.z_mm;
+
+						// Recalc dynamic model
+						dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);
+
+						if (dynamicModelResult.impact) {
+							// Search in the TargetPredator backlog the last impact and mark it as confirmed
+							Vector2D opticalLatestImpactData;
+							pred_state_t latest_impact = tgtPredator->confirm_latest_impact();
+							opticalLatestImpactData.x = (double)latest_impact.x;
+							opticalLatestImpactData.y = (double)latest_impact.y;
+
+							if (!configuration->dynamicModelParameters.freePlay) {
+								playLogic->feedWithFloorBounceData(dynamicModelResult.impact_pos, opticalLatestImpactData);
+							}
+						}
+					}
+				}
+			}
+
+			// If the Target has been lost, notify the PlayLogic
+			if (tgtPredator->TargetLost && configuration->dynamicModelParameters.notifyTGTLostToModel)
+			{
+				((TwoPlayersPlayLogic *)playLogic)->notifyTargetLost();
+			}
+
+			// If forcing RGB output
+			if (force_rgb_output) {
+
+			}
+			// Using immuted original Frame Type
+			else {
+				memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
+			}
+
+			// Enqueue output frame data
+			array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
+
+			// Left-shift frame data in the local buffer, create space for new data
+			frame_data[0] = frame_data[1];
+		}
+	}
+
+	printf("Application :: Frames processor :: Processing terminated\n");
 
 	free(buf_8UC1_0);
 	//free(buf_8UC1_1);
@@ -483,7 +491,7 @@ void *frames_processor(void *)
 //
 // Frames output process
 //
-void *frames_outpt(void *)
+void *frames_output(void *)
 {
 	int counter = 0;
 
@@ -499,9 +507,12 @@ void *frames_outpt(void *)
 	{
 
 		// Start recording
-		stereoRecorder->startFramesRecording("/tmp/record");
+		//stereoRecorder->startFramesRecording("/tmp/record");
 
-		while (1) {
+		// Open binary serialization channel
+		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+
+		while (systemRecording) {
 			char buffer[300];
 			FrameData *frame_data;
 
@@ -509,6 +520,12 @@ void *frames_outpt(void *)
 				continue;
 			}
 
+			serialize_frame_data(frame_data);
+
+			// Direct binary serialization
+
+			// Conversion to OpenCV matrix types left commented for eventual future purposes
+			/*
 			Mat frameL, frameR;
 
 			if (channels == 4) {
@@ -523,75 +540,16 @@ void *frames_outpt(void *)
 				frameL = Mat(Size(width, height), CV_8UC3, frame_data->left_data);
 				frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
 			}
-
-			stereoRecorder->record(frameL, frameR);
+			*/
 
 			// Free fast memory
 			fast_mem_pool_release_memory(frame_data);
 		}
 	}
-	else if (configuration->getOperationalMode().processingMode == Tracking) {
-		// Start recording
-		if (configuration->getOperationalMode().inputDevice == MonoCameraVirtual) {
-			monoRecorder->startFramesRecording("/tmp/out");
 
-			printf("Frames Output :: Mono Processing Mode: Tracking\n");
+	close_serialization_channel();
 
-			while (1) {
-				char buffer[300];
-				FrameData *frame_data;
-
-				if (array_spinlock_queue_pull(&outputFramesQueue, (void **)&frame_data) < 0) {
-					continue;
-				}
-
-				Mat frame;
-
-				if (channels == 1 && !force_rgb_output) {
-					frame = Mat(Size(width, height), CV_8UC1, frame_data->left_data);
-				}
-				else if (channels == 3 || force_rgb_output) {
-					printf("[Debug] Mono recording RGB data\n");
-					frame = Mat(Size(width, height), CV_8UC3, frame_data->left_data);
-				}
-
-				monoRecorder->record(frame);
-
-				// Free fast memory
-				fast_mem_pool_release_memory(frame_data);
-			}
-		}
-		else {
-			stereoRecorder->startFramesRecording("/tmp/out");
-
-			printf("Frames Output :: Processing Mode: Tracking\n");
-
-			while (1) {
-				char buffer[300];
-				FrameData *frame_data;
-
-				if (array_spinlock_queue_pull(&outputFramesQueue, (void **)&frame_data) < 0) {
-					continue;
-				}
-
-				Mat frameL, frameR;
-
-				if (channels == 1 && !force_rgb_output) {
-					frameL = Mat(Size(width, height), CV_8UC1, frame_data->left_data);
-					frameR = Mat(Size(width, height), CV_8UC1, frame_data->right_data);
-				}
-				else if (channels == 3 || force_rgb_output) {
-					frameL = Mat(Size(width, height), CV_8UC3, frame_data->left_data);
-					frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
-				}
-
-				stereoRecorder->record(frameL, frameR);
-
-				// Free fast memory
-				fast_mem_pool_release_memory(frame_data);
-			}
-		}
-	}
+	printf("Application :: Frames output :: Processing terminated\n");
 
 	delete stereoRecorder;
 
@@ -689,11 +647,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 	pthread_create(&frame_processor_thread, 0, frames_processor, 0);
 	printf("Stereo Application :: Frame processor thread running\n");
 
-	// Start frame output thread
-	/*
-	pthread_create(&frame_output_thread, 0, frames_outpt, 0);
-	printf("Stereo Application :: Frame output thread running\n");
-	*/
+	// Start frame output thread when in Record mode
+	if (config->operationalMode.processingMode == Record) {
+		pthread_create(&frame_output_thread, 0, frames_output, 0);
+		printf("Stereo Application :: Frame output thread running\n");
+	}
 
 	struct timespec s;
 	struct timespec t;
@@ -710,7 +668,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		break;
 	case Record:
 		printf("Stereo Application :: Operating Mode: Recording\n");
-		queue = &outputFramesQueue;
+
+		if (config->operationalMode.recordDynamicModelsData)
+			queue = &inputFramesQueue;
+		else
+			queue = &outputFramesQueue;
 		break;
 	default:
 		return;
