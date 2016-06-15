@@ -1240,6 +1240,11 @@
            <string>Recording</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Replay</string>
+          </property>
+         </item>
         </widget>
         <widget class="QLabel" name="label_33">
          <property name="geometry">

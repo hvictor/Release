@@ -741,6 +741,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			usleep(10);
 		}
 	}
+
 	else if (config->getOperationalMode().inputDevice == StereoCameraVirtual)
 	{
 		VirtualStereoCamera *virtualStereoCamera = new VirtualStereoCamera();

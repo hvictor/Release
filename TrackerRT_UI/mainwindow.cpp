@@ -370,11 +370,18 @@ void MainWindow::updateViewProcessingMode(int processingMode)
         ui->startApplicationBtn->setText("START");
     }
 
-    else {
+    else if (processingMode == 1) {
         ui->recordToBtn->setVisible(true);
         Configuration::getInstance()->operationalMode.processingMode = Record;
         printf("Operational Mode :: Update :: Recording Mode is active\n");
         ui->startApplicationBtn->setText("REC");
+    }
+
+    else if (processingMode == 2) {
+        ui->recordToBtn->setVisible(true);
+        Configuration::getInstance()->operationalMode.processingMode = Replay;
+        printf("Operational Mode :: Update :: Replay Mode is active\n");
+        ui->startApplicationBtn->setText("REPLAY");
     }
 }
 
