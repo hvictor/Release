@@ -36,6 +36,9 @@ UICalibrationDisplay::UICalibrationDisplay(QWidget *parent) :
     QObject::connect(ui->widget->glWidget, SIGNAL(floorLinearModelReady()), this, SIGNAL(floorLinearModelReady()));
 
     ui->btnCalibFld->setDisabled(true);
+
+    ui->widget->glWidget->GPUMinSegmentLength = 20;
+    ui->widget->glWidget->GPUMaxSegmentDistance = 100;
 }
 
 UICalibrationDisplay::~UICalibrationDisplay()

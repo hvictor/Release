@@ -37,7 +37,7 @@ Configuration::Configuration()
 	dynamicModelParameters.confidenceThreshold = 100;
 	dynamicModelParameters.trackingWndEnabled = false;
 	dynamicModelParameters.useInputKalmanFilter = false;
-	dynamicModelParameters.impactMaxFloorDistance = 100.0;
+	dynamicModelParameters.impactMaxFloorDistance = 350.0;
 
 	zedHardwareParameters.cameraMatrix_L = Mat(3, 3, CV_32FC1);
 	zedHardwareParameters.rotationVector_L = Mat(1, 3, CV_32FC1);
@@ -58,7 +58,7 @@ Configuration::Configuration()
 
 	filesystem_make_directory(recordingParameters.recordingDirectory);
 
-	dynamicModelParameters.impact2DVelocityVectorAngleThresh = 40.0;
+	dynamicModelParameters.impact2DVelocityVectorAngleThresh = 30.0;
 }
 
 Configuration::~Configuration() {
