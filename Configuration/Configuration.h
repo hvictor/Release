@@ -16,6 +16,10 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <time.h>
 #include <string>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "../OpticalLayer/HSVManager.h"
 #include "../Common/opencv_headers.h"
 
@@ -171,6 +175,9 @@ typedef struct
 	double trackingWndAdaptiveFactorY;
 	int confidenceThreshold;
 
+	// 2D Impact velocity vector angle thresh
+	double impact2DVelocityVectorAngleThresh;
+
 	// Dynamic Model 3D
 	bool recalcDynamicModel3D;
 	bool useInputKalmanFilter;
@@ -179,6 +186,12 @@ typedef struct
 	// Target Predator
 	int targetPredatorTGTLOSTFramesThreshold;
 } DynamicModelParameters;
+
+typedef struct
+{
+	char recordingDirectory[100];
+	char recordingFileName[80];
+} RecordingParameters;
 
 typedef struct
 {
@@ -199,6 +212,7 @@ public:
 	void setStaticModelLinesSensitivityEPS(int value);
 	StaticModelParameters getStaticModelParameters();
 	PlayLogicParameters playLogicParameters;
+	RecordingParameters recordingParameters;
 	void publish();
 
 	// Public properties

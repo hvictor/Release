@@ -27,7 +27,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -2052,7 +2052,7 @@
            <enum>QLCDNumber::Flat</enum>
           </property>
           <property name="value" stdset="0">
-           <double>50.000000000000000</double>
+           <double>100.000000000000000</double>
           </property>
          </widget>
          <widget class="QSlider" name="lowPassXSlider">
@@ -2068,6 +2068,9 @@
            <number>50</number>
           </property>
           <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
            <number>100</number>
           </property>
           <property name="orientation">
@@ -2132,6 +2135,69 @@
           </property>
           <property name="value">
            <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLCDNumber" name="lcd_ImpactVelocityVectorAngleThresh">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>820</x>
+            <y>12</y>
+            <width>51</width>
+            <height>18</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: black; color: lightgreen;</string>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
+          </property>
+          <property name="value" stdset="0">
+           <double>100.000000000000000</double>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_78">
+          <property name="geometry">
+           <rect>
+            <x>470</x>
+            <y>10</y>
+            <width>231</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Impact Velocity Vector Angle:</string>
+          </property>
+         </widget>
+         <widget class="QSlider" name="slider_ImpactVectorAngleThresh">
+          <property name="geometry">
+           <rect>
+            <x>710</x>
+            <y>10</y>
+            <width>101</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="minimum">
+           <number>30</number>
+          </property>
+          <property name="maximum">
+           <number>120</number>
+          </property>
+          <property name="value">
+           <number>40</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -3090,7 +3156,7 @@
           <string>Enable Input Kalman Filter</string>
          </property>
          <property name="checked">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
         </widget>
         <widget class="QLabel" name="label_68">
@@ -3483,6 +3549,22 @@
     <hint type="destinationlabel">
      <x>840</x>
      <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_ImpactVectorAngleThresh</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcd_ImpactVelocityVectorAngleThresh</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>783</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>840</x>
+     <y>94</y>
     </hint>
    </hints>
   </connection>

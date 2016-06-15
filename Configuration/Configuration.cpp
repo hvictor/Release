@@ -10,6 +10,7 @@
 #include <zed/Camera.hpp>
 #include <zed/utils/GlobalDefine.hpp>
 
+#include "../Common/filesystem.h"
 #include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 #include "../TargetPredator/TargetPredator.h"
 
@@ -35,7 +36,7 @@ Configuration::Configuration()
 	dynamicModelParameters.trackingWndEnabled = false;
 	dynamicModelParameters.confidenceThreshold = 100;
 	dynamicModelParameters.trackingWndEnabled = false;
-	dynamicModelParameters.useInputKalmanFilter = true;
+	dynamicModelParameters.useInputKalmanFilter = false;
 	dynamicModelParameters.impactMaxFloorDistance = 100.0;
 
 	zedHardwareParameters.cameraMatrix_L = Mat(3, 3, CV_32FC1);
@@ -49,8 +50,15 @@ Configuration::Configuration()
 
 	dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = 80;
 
-	opticalLayerParameters.linearLowPassFilterX = 0.5;
+	opticalLayerParameters.linearLowPassFilterX = 1.0;
 	opticalLayerParameters.linearLowPassFilterY = 1.0;
+
+	sprintf(recordingParameters.recordingDirectory, "/tmp/recordings/");
+	sprintf(recordingParameters.recordingFileName, "tracker.bin");
+
+	filesystem_make_directory(recordingParameters.recordingDirectory);
+
+	dynamicModelParameters.impact2DVelocityVectorAngleThresh = 40.0;
 }
 
 Configuration::~Configuration() {

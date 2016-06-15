@@ -316,8 +316,6 @@ void *frames_processor(void *)
 						opticalLatestImpactData.x = (double)latest_impact.x;
 						opticalLatestImpactData.y = (double)latest_impact.y;
 
-						OverlayRenderer::getInstance()->renderRedPointerDot(frame1_L, opticalLatestImpactData.x, opticalLatestImpactData.y);
-
 						if (!configuration->dynamicModelParameters.freePlay) {
 							playLogic->feedWithFloorBounceData(dynamicModelResult.impact_pos, opticalLatestImpactData);
 						}

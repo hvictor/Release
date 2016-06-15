@@ -154,6 +154,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->slider_TGTLST_Thresh, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetTargetLostThreshold(int)));
 
+    QObject::connect(ui->slider_ImpactVectorAngleThresh, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetVelocityVectorAngleThresh(int)));
+
     // Instantiate Stereo Display
     stereoDisplay = new UIStereoDisplay();
 }
@@ -189,6 +191,12 @@ void MainWindow::trackingWindowSetAdaptiveTrackingWindow(bool status)
     if (status) {
         updateDynamicModel_SetTrackingWindowMode(AdaptiveTrackingWindow);
     }
+}
+
+void MainWindow::updateDynamicModel_SetVelocityVectorAngleThresh(int value)
+{
+    Configuration::getInstance()->dynamicModelParameters.impact2DVelocityVectorAngleThresh = (double)value;
+    printf("Dynamic Model :: Update :: Velocity vector angle thresh = %.2f [Degrees]\n", Configuration::getInstance()->dynamicModelParameters.impact2DVelocityVectorAngleThresh);
 }
 
 void MainWindow::updateDynamicModel_SetTargetLostThreshold(int value)
