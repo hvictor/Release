@@ -341,7 +341,7 @@ void *frames_processor(void *)
 		}
 
 		// If the Target has been lost, notify the PlayLogic
-		if (tgtPredator->TargetLost)
+		if (tgtPredator->TargetLost && configuration->dynamicModelParameters.notifyTGTLostToModel)
 		{
 			((TwoPlayersPlayLogic *)playLogic)->notifyTargetLost();
 		}

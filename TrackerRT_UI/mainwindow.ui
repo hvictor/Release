@@ -2855,7 +2855,7 @@
          </widget>
          <widget class="QLCDNumber" name="lcd_TGTLST">
           <property name="enabled">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <property name="geometry">
            <rect>
@@ -2878,12 +2878,15 @@
            <number>80</number>
           </property>
          </widget>
-         <widget class="QLabel" name="label_77">
+         <widget class="QLabel" name="label_NotifyTGTLST">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>240</x>
             <y>20</y>
-            <width>221</width>
+            <width>111</width>
             <height>16</height>
            </rect>
           </property>
@@ -2891,15 +2894,18 @@
            <bool>true</bool>
           </property>
           <property name="text">
-           <string>Target Lost [Frames]:</string>
+           <string>After Frames:</string>
           </property>
          </widget>
          <widget class="QSlider" name="slider_TGTLST_Thresh">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
-            <x>240</x>
+            <x>360</x>
             <y>20</y>
-            <width>191</width>
+            <width>71</width>
             <height>20</height>
            </rect>
           </property>
@@ -2914,6 +2920,25 @@
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBox_EnableTGTLST">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>221</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Enable TGT LST</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </widget>
@@ -3027,7 +3052,7 @@
            <bool>true</bool>
           </property>
           <property name="text">
-           <string>Floor distance tolerance:</string>
+           <string>Floor Distance Tolerance:</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_66">

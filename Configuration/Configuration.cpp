@@ -48,7 +48,8 @@ Configuration::Configuration()
 
 	playLogicParameters.playLogicType = TwoPlayers;
 
-	dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = 80;
+	dynamicModelParameters.notifyTGTLostToModel = false;
+	dynamicModelParameters.targetPredatorTGTLOSTFramesThreshold = 30;
 
 	opticalLayerParameters.linearLowPassFilterX = 1.0;
 	opticalLayerParameters.linearLowPassFilterY = 1.0;

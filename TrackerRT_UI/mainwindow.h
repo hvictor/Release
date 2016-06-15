@@ -41,6 +41,7 @@ public slots:
     void updateOpticalLayerParam_LowPassFilterX(int value);
     void updateDynamicModel_DFI(int value);
     void toggleDepthMeasurementsStatus(bool status);
+    void toggleNotifyTGTLSTStatus(bool status);
     void trackingWindowUseToggled(bool status);
     void trackingWindowVisualizeToggled(bool status);
     void updateDynamicModel_UsePredatorTrackingWindow(bool status);

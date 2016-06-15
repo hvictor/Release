@@ -184,6 +184,7 @@ typedef struct
 	double impactMaxFloorDistance;
 
 	// Target Predator
+	bool notifyTGTLostToModel;
 	int targetPredatorTGTLOSTFramesThreshold;
 } DynamicModelParameters;
 

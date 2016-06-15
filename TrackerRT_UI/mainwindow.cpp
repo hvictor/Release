@@ -152,6 +152,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->radioButton_TwoPlayers, SIGNAL(toggled(bool)), this, SLOT(updatePlayModel_SetTwoPlayersLogic(bool)));
     QObject::connect(ui->radioButton_SinglePlayer, SIGNAL(toggled(bool)), this, SLOT(updatePlayModel_SetSinglePlayerLogic(bool)));
 
+    QObject::connect(ui->checkBox_EnableTGTLST, SIGNAL(toggled(bool)), this, SLOT(toggleNotifyTGTLSTStatus(bool)));
     QObject::connect(ui->slider_TGTLST_Thresh, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetTargetLostThreshold(int)));
 
     QObject::connect(ui->slider_ImpactVectorAngleThresh, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetVelocityVectorAngleThresh(int)));
@@ -334,6 +335,26 @@ void MainWindow::toggleDepthMeasurementsStatus(bool status)
         ui->slider_DFI->setEnabled(true);
         ui->lcd_DFI->setEnabled(true);
         updateDynamicModel_DFI((int)ui->lcd_DFI->value());
+    }
+}
+
+void MainWindow::toggleNotifyTGTLSTStatus(bool status)
+{
+    if (status)
+    {
+        ui->label_NotifyTGTLST->setEnabled(true);
+        ui->slider_TGTLST_Thresh->setEnabled(true);
+        ui->lcd_TGTLST->setEnabled(true);
+        Configuration::getInstance()->dynamicModelParameters.notifyTGTLostToModel = true;
+        printf("Dynamic Model :: Update :: Enabled Notification of TGT LST flag to Dynamic Model\n");
+    }
+    else
+    {
+        ui->label_NotifyTGTLST->setEnabled(false);
+        ui->slider_TGTLST_Thresh->setEnabled(false);
+        ui->lcd_TGTLST->setEnabled(false);
+        Configuration::getInstance()->dynamicModelParameters.notifyTGTLostToModel = false;
+        printf("Dynamic Model :: Update :: Disabled Notification of TGT LST flag to Dynamic Model\n");
     }
 }
 
