@@ -139,6 +139,7 @@ void TargetPredator::update_state(int x, int y)
 
 	// Reset value
 	tracker_state.impact_status = false;
+	tracker_state.confirmation = false;
 
 	// Impact signaling
 	if (state.size() > 1) {
