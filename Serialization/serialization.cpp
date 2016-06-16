@@ -37,7 +37,7 @@ bool deserialize_next_frame_data(FrameData *dst)
 	int rbytes = 0;
 
 	// Test bytes to read available in filesystem buffer
-	rbytes = fread(dst->left_data, sizeof(uint8_t), w * h, _fp);
+	rbytes = fread(dst->left_data, sizeof(uint8_t), w * h * 4, _fp);
 
 	// No bytes more to deserialize, leave
 	if (rbytes <= 0)

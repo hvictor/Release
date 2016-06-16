@@ -226,12 +226,12 @@
          </item>
          <item>
           <property name="text">
-           <string>Virtual Mono Camera</string>
+           <string>Virtual Stereo Camera</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Virtual Stereo Camera</string>
+           <string>Virtual Mono Camera</string>
           </property>
          </item>
         </widget>
