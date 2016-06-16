@@ -745,27 +745,35 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 	else if (config->getOperationalMode().inputDevice == StereoCameraVirtual)
 	{
 		VirtualStereoCamera *virtualStereoCamera = new VirtualStereoCamera();
-		virtualStereoCamera->OpenFromFrameSequence("record", "%04d.png");
+		virtualStereoCamera->OpenBinaryRecording(config->recordingParameters.recordingFileNameFullPath);
 
 		printf("Stereo Application :: Input Device: Virtual stereo camera\n");
 
 		while (1) {
-			nanotimer_rt_start(&s);
 
-			FramePair framePair = virtualStereoCamera->readFramePairFromFrameSequence();
+			// Request Memory
 			FrameData *frameData = fast_mem_pool_fetch_memory();
 
-			if (frameData == NULL) continue;
+			// Memory unavailable, release CPU for some microsecs
+			if (frameData == NULL)
+			{
+				usleep(1000);
+				continue;
+			}
 
-			memcpy(frameData->left_data, framePair.L.data, framePair.L.rows * framePair.L.cols * sizeof(uint8_t));
-			memcpy(frameData->right_data, framePair.R.data, framePair.R.rows * framePair.R.cols * sizeof(uint8_t));
+			// Read binary recording data until available
+			bool binary_data_avail = virtualStereoCamera->ReadBinaryRecordingData(frameData);
+
+			// No binary data more available, release memory, close virtual sensor device and leave
+			if (!binary_data_avail) {
+				fast_mem_pool_release_memory(frameData);
+				virtualStereoCamera->CloseBinaryRecording();
+				break;
+			}
 
 			// Enqueue stereo pair data in processing / output queue
 			array_spinlock_queue_push(queue, (void *)frameData);
 
-			nanotimer_rt_stop(&t);
-
-			rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
 		}
 	}
 	else if (config->getOperationalMode().inputDevice == MonoCameraVirtual)
@@ -797,6 +805,8 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
 		}
 	}
+
+	printf("Frames and Measurements Acquisition :: Hardware or recorded data stream exhausted.\n");
 
 	pthread_join(frame_processor_thread, 0);
 }

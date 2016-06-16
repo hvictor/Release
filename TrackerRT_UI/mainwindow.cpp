@@ -105,12 +105,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->processingModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateViewProcessingMode(int)));
 
     // Input Device
-    QObject::connect(ui->deviceComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setInputDevice(int)));
+    QObject::connect(ui->deviceComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setInputDevice(int)));
 
     // Frame Info
     QObject::connect(ui->inputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameChannels(int)));
     QObject::connect(ui->outputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameOutputType(int)));
-    QObject::connect(ui->deviceComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setInputDevice(int)));
     QObject::connect(ui->frameWidthEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameWidth(QString)));
     QObject::connect(ui->frameHeightEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameHeight(QString)));
 
@@ -188,6 +187,18 @@ void MainWindow::showFloorLinearModelCoefficients()
     ui->spinBoxFloorLinearModelY->setValue(floorLinearModel.b * 0.001);
     ui->spinBoxFloorLinearModelZ->setValue(floorLinearModel.c * 0.001);
     ui->spinBoxFloorLinearModelD->setValue(floorLinearModel.d * 0.001);
+}
+
+void MainWindow::setInputDevice(int dev)
+{
+    if (dev == 0) {
+        Configuration::getInstance()->operationalMode.inputDevice = StereoCameraZED;
+        printf("Input Device: StereoLabs ZED Stereo Camera\n");
+    }
+    else if (dev == 3) {
+        Configuration::getInstance()->operationalMode.inputDevice = StereoCameraVirtual;
+        printf("Input Device: Virtual Stereo Camera\n");
+    }
 }
 
 void MainWindow::trackingWindowSetAdaptiveTrackingWindow(bool status)
@@ -375,13 +386,6 @@ void MainWindow::updateViewProcessingMode(int processingMode)
         Configuration::getInstance()->operationalMode.processingMode = Record;
         printf("Operational Mode :: Update :: Recording Mode is active\n");
         ui->startApplicationBtn->setText("REC");
-    }
-
-    else if (processingMode == 2) {
-        ui->recordToBtn->setVisible(true);
-        Configuration::getInstance()->operationalMode.processingMode = Replay;
-        printf("Operational Mode :: Update :: Replay Mode is active\n");
-        ui->startApplicationBtn->setText("REPLAY");
     }
 }
 

@@ -45,7 +45,6 @@ enum ProcessingMode
 {
 	Record,					// Record input frames
 	Tracking,				// Process input frames for Tracking
-	Replay					// Replay fames from saved data
 };
 
 enum OutputFrameType

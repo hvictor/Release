@@ -6,6 +6,8 @@
  */
 
 #include "VirtualStereoCamera.h"
+#include "../Serialization/serialization.h"
+#include "../Common/filesystem.h"
 
 VirtualStereoCamera::VirtualStereoCamera()
 {
@@ -27,6 +29,23 @@ bool VirtualStereoCamera::OpenFromFrameSequence(string frameSequenceDirectoryPat
 	framesDirectorySet = true;
 
 	return true;
+}
+
+bool VirtualStereoCamera::OpenBinaryRecording(char *fileName)
+{
+	return open_deserialization_channel(fileName);
+}
+
+void VirtualStereoCamera::CloseBinaryRecording()
+{
+	close_deserialization_channel();
+}
+
+bool VirtualStereoCamera::ReadBinaryRecordingData(FrameData *pFrameData)
+{
+	printf("VirtualStereoCamera :: Requesting deserialization of binary data\n");
+
+	return deserialize_next_frame_data(pFrameData);
 }
 
 FramePair VirtualStereoCamera::readFramePairFromFrameSequence()

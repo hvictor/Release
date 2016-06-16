@@ -31,6 +31,7 @@ public slots:
     void updateViewProcessingMode(int processingMode);
     void startApplication();
     void stopApplication();
+    void setInputDevice(int dev);
     void updateStaticModel_LinesSensitivityEPS(int value);
     void updateStaticModel_SetFloorPlaneLinearModelFactorX(double a);
     void updateStaticModel_SetFloorPlaneLinearModelFactorY(double b);
