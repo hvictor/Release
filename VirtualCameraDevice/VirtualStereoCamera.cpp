@@ -44,8 +44,6 @@ void VirtualStereoCamera::CloseBinaryRecording()
 
 bool VirtualStereoCamera::ReadBinaryRecordingData(FrameData *pFrameData)
 {
-	printf("VirtualStereoCamera :: Requesting deserialization of binary data\n");
-
 	return deserialize_next_frame_data(pFrameData);
 }
 
