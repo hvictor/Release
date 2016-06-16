@@ -33,7 +33,8 @@ bool VirtualStereoCamera::OpenFromFrameSequence(string frameSequenceDirectoryPat
 
 bool VirtualStereoCamera::OpenBinaryRecording(char *fileName)
 {
-	return open_deserialization_channel(fileName);
+	open_deserialization_channel(fileName);
+	return true;
 }
 
 void VirtualStereoCamera::CloseBinaryRecording()
