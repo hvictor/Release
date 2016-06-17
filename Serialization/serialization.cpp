@@ -51,32 +51,35 @@ void serialize_static_model()
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x), sizeof(float), 1, _fp);
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y), sizeof(float), 1, _fp);
 
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().baseNear.x), sizeof(float), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().baseNear.y), sizeof(float), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().topNear.x), sizeof(float), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().topNear.y), sizeof(float), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().topFar.x), sizeof(float), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().topFar.y), sizeof(float), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().baseFar.x), sizeof(float), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetVisualProjection().baseFar.y), sizeof(float), 1, _fp);
+	NetVisualProjection netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
+	fwrite(&(netVisualProjection.baseNear.x), sizeof(float), 1, _fp);
+	fwrite(&(netVisualProjection.baseNear.y), sizeof(float), 1, _fp);
+	fwrite(&(netVisualProjection.topNear.x), sizeof(float), 1, _fp);
+	fwrite(&(netVisualProjection.topNear.y), sizeof(float), 1, _fp);
+	fwrite(&(netVisualProjection.topFar.x), sizeof(float), 1, _fp);
+	fwrite(&(netVisualProjection.topFar.y), sizeof(float), 1, _fp);
+	fwrite(&(netVisualProjection.baseFar.x), sizeof(float), 1, _fp);
+	fwrite(&(netVisualProjection.baseFar.y), sizeof(float), 1, _fp);
 
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().baseNear.x), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().baseNear.y), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().baseNear.z), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().topNear.x), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().topNear.y), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().topNear.z), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().topFar.x), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().topFar.y), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().topFar.z), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().baseFar.x), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().baseFar.y), sizeof(double), 1, _fp);
-	fwrite(&(NetModel::getInstance()->getNetCoordinates3D().baseFar.z), sizeof(double), 1, _fp);
+	NetCoordinates3D netCoord3D = NetModel::getInstance()->getNetCoordinates3D();
+	fwrite(&(netCoord3D.baseNear.x), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.baseNear.y), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.baseNear.z), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.topNear.x), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.topNear.y), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.topNear.z), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.topFar.x), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.topFar.y), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.topFar.z), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.baseFar.x), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.baseFar.y), sizeof(double), 1, _fp);
+	fwrite(&(netCoord3D.baseFar.z), sizeof(double), 1, _fp);
 
-	fwrite(&(GroundModel::getInstance()->getGroundPlaneLinearModel().a), sizeof(double), 1, _fp);
-	fwrite(&(GroundModel::getInstance()->getGroundPlaneLinearModel().b), sizeof(double), 1, _fp);
-	fwrite(&(GroundModel::getInstance()->getGroundPlaneLinearModel().c), sizeof(double), 1, _fp);
-	fwrite(&(GroundModel::getInstance()->getGroundPlaneLinearModel().d), sizeof(double), 1, _fp);
+	PlaneLinearModel planeLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
+	fwrite(&(planeLinearModel.a), sizeof(double), 1, _fp);
+	fwrite(&(planeLinearModel.b), sizeof(double), 1, _fp);
+	fwrite(&(planeLinearModel.c), sizeof(double), 1, _fp);
+	fwrite(&(planeLinearModel.d), sizeof(double), 1, _fp);
 }
 
 void deserialize_static_model()
