@@ -32,6 +32,7 @@ public slots:
     void startApplication();
     void stopApplication();
     void setInputDevice(int dev);
+    void updatePlaybackParameters_SetPlaybackLatencyDivisor(int value);
     void updateStaticModel_LinesSensitivityEPS(int value);
     void updateStaticModel_SetFloorPlaneLinearModelFactorX(double a);
     void updateStaticModel_SetFloorPlaneLinearModelFactorY(double b);

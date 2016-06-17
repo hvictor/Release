@@ -764,6 +764,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			// Read binary recording data until available
 			bool binary_data_avail = virtualStereoCamera->ReadBinaryRecordingData(frameData);
 
+			// Artificial latency introduction
+			int latency_us = (int)((double)configuration->playbackParameters.playbackBaseLatency_us) / ((double)configuration->playbackParameters.playbackLatencyDivisor);
+			usleep(latency_us);
+
 			// No binary data more available, release memory, close virtual sensor device and leave
 			if (!binary_data_avail) {
 				fast_mem_pool_release_memory(frameData);

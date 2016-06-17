@@ -158,6 +158,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->slider_ImpactVectorAngleThresh, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetVelocityVectorAngleThresh(int)));
 
+    QObject::connect(ui->slider_PlaybackSpeed, SIGNAL(valueChanged(int)), this, SLOT(updatePlaybackParameters_SetPlaybackLatencyDivisor(int)));
+
     ui->recordToBtn->setVisible(false);
     // Instantiate Stereo Display
     stereoDisplay = new UIStereoDisplay();
@@ -187,6 +189,12 @@ void MainWindow::showFloorLinearModelCoefficients()
     ui->spinBoxFloorLinearModelY->setValue(floorLinearModel.b * 0.001);
     ui->spinBoxFloorLinearModelZ->setValue(floorLinearModel.c * 0.001);
     ui->spinBoxFloorLinearModelD->setValue(floorLinearModel.d * 0.001);
+}
+
+void MainWindow::updatePlaybackParameters_SetPlaybackLatencyDivisor(int value)
+{
+    Configuration::getInstance()->playbackParameters.playbackLatencyDivisor = value;
+    printf("Playback Parameters :: Update :: Playback Latency Divisor set to %d\n", Configuration::getInstance()->playbackParameters.playbackLatencyDivisor);
 }
 
 void MainWindow::setInputDevice(int dev)

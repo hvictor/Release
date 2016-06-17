@@ -65,6 +65,9 @@ Configuration::Configuration()
 	filesystem_make_directory(recordingParameters.recordingDirectory);
 
 	dynamicModelParameters.impact2DVelocityVectorAngleThresh = 30.0;
+
+	playbackParameters.playbackLatencyDivisor = 10;
+	playbackParameters.playbackBaseLatency_us = 1E6;
 }
 
 Configuration::~Configuration() {

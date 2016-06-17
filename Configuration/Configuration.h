@@ -203,6 +203,12 @@ typedef struct
 	PlayLogicType playLogicType;
 } PlayLogicParameters;
 
+typedef struct
+{
+	int playbackBaseLatency_us;
+	int playbackLatencyDivisor;
+} PlaybackParameters;
+
 class Configuration {
 public:
 
@@ -235,6 +241,9 @@ public:
 	DUOStereoCameraHardwareParameters getDUOStereoCameraHardwareParameters();
 	ZEDStereoCameraHardwareParameters getZEDStereoCameraHardwareParameters();
 	InterpolationEngineParameters getInterpolationEngineParameters();
+
+	// Playback parameters
+	PlaybackParameters playbackParameters;
 
 	void writeConfigFile(string fileName);
 	void loadConfigFile(string fileName);
