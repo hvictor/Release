@@ -130,6 +130,7 @@ void deserialize_static_model()
 	fread(&(tmpNetCoord3D.baseFar.y), sizeof(double), 1, _fp);
 	fread(&(tmpNetCoord3D.baseFar.z), sizeof(double), 1, _fp);
 	NetModel::getInstance()->setNetCoordinates3D(tmpNetCoord3D);
+	NetModel::getInstance()->setReady(true);
 
 	double a, b, c, d;
 	fread(&a, sizeof(double), 1, _fp);
