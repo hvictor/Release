@@ -40,6 +40,7 @@ bool VirtualStereoCamera::OpenBinaryRecording(char *fileName)
 void VirtualStereoCamera::LoadStaticModelBinaryRecording()
 {
 	deserialize_static_model();
+	NetModel::getInstance()->setReady(true);
 }
 
 void VirtualStereoCamera::CloseBinaryRecording()

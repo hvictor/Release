@@ -195,7 +195,10 @@ void *frames_processor(void *)
 	TwoPlayersFieldRepresentation twoPlayersFieldRepresentation;
 
 	// Generate Field Representation from Static Model in the Play Logic
-	playLogic->generateFieldRepresentationFromModel();
+	// Delegate this unique task on Static Model deserialization complete
+	if (configuration->operationalMode.inputDevice != StereoCameraVirtual) {
+		playLogic->generateFieldRepresentationFromModel();
+	}
 
 	if (configuration->playLogicParameters.playLogicType == TwoPlayers)
 	{
@@ -754,6 +757,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 		// Load Static Model from binary recording stream
 		virtualStereoCamera->LoadStaticModelBinaryRecording();
+
+		// Field representation from model is performed once: only here if Replaying
+		playLogic->generateFieldRepresentationFromModel();
 
 		printf("Stereo Application :: Input Device: Virtual stereo camera\n");
 
