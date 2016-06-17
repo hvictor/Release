@@ -34,6 +34,7 @@ void serialize_static_model()
 	NetVisualProjection netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
 	NetCoordinates3D netCoord3D = NetModel::getInstance()->getNetCoordinates3D();
 	CalibrationData calibrationData = Configuration::getInstance()->calibrationData;
+	PlaneLinearModel planeLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
 
 	fwrite(&(calibrationData.targetHSVRange.Hmin), sizeof(int), 1, _fp);
 	fwrite(&(calibrationData.targetHSVRange.Smin), sizeof(int), 1, _fp);
@@ -51,7 +52,6 @@ void serialize_static_model()
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x), sizeof(float), 1, _fp);
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y), sizeof(float), 1, _fp);
 
-	NetVisualProjection netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
 	fwrite(&(netVisualProjection.baseNear.x), sizeof(float), 1, _fp);
 	fwrite(&(netVisualProjection.baseNear.y), sizeof(float), 1, _fp);
 	fwrite(&(netVisualProjection.topNear.x), sizeof(float), 1, _fp);
@@ -61,7 +61,6 @@ void serialize_static_model()
 	fwrite(&(netVisualProjection.baseFar.x), sizeof(float), 1, _fp);
 	fwrite(&(netVisualProjection.baseFar.y), sizeof(float), 1, _fp);
 
-	NetCoordinates3D netCoord3D = NetModel::getInstance()->getNetCoordinates3D();
 	fwrite(&(netCoord3D.baseNear.x), sizeof(double), 1, _fp);
 	fwrite(&(netCoord3D.baseNear.y), sizeof(double), 1, _fp);
 	fwrite(&(netCoord3D.baseNear.z), sizeof(double), 1, _fp);
@@ -75,7 +74,6 @@ void serialize_static_model()
 	fwrite(&(netCoord3D.baseFar.y), sizeof(double), 1, _fp);
 	fwrite(&(netCoord3D.baseFar.z), sizeof(double), 1, _fp);
 
-	PlaneLinearModel planeLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
 	fwrite(&(planeLinearModel.a), sizeof(double), 1, _fp);
 	fwrite(&(planeLinearModel.b), sizeof(double), 1, _fp);
 	fwrite(&(planeLinearModel.c), sizeof(double), 1, _fp);
