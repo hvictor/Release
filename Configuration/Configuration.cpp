@@ -300,7 +300,6 @@ void Configuration::loadConfigFile(string fileName)
 	fs["CalibrationData_TGT_Smax"] >> calibrationData.targetHSVRange.Smax;
 	fs["CalibrationData_TGT_Vmax"] >> calibrationData.targetHSVRange.Vmax;
 
-	/*
 	fs["CalibrationData_FLD_2D_NearL_X"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x;
 	fs["CalibrationData_FLD_2D_NearL_Y"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y;
 	fs["CalibrationData_FLD_2D_NearR_X"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.x;
@@ -346,7 +345,6 @@ void Configuration::loadConfigFile(string fileName)
 	GroundModel::getInstance()->setGroundPlaneLinearModelFactorY(b);
 	GroundModel::getInstance()->setGroundPlaneLinearModelFactorZ(c);
 	GroundModel::getInstance()->setGroundPlaneLinearModelFactorD(d);
-	*/
 }
 
 void Configuration::display()
