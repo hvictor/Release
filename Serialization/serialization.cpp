@@ -147,7 +147,7 @@ void deserialize_static_model()
 	NetModel::getInstance()->setReady(true);
 	*/
 
-	fwrite(GroundModel::getInstance(), sizeof(GroundModel), 1, _fp);
+	fread(GroundModel::getInstance(), sizeof(GroundModel), 1, _fp);
 	/*
 	double a, b, c, d;
 	fread(&a, sizeof(double), 1, _fp);
