@@ -337,6 +337,7 @@ void Configuration::loadConfigFile(string fileName)
 	fs["StaticModel_Net_3D_BaseFarY"] >> tmpNetCoord3D.baseFar.y;
 	fs["StaticModel_Net_3D_BaseFarZ"] >> tmpNetCoord3D.baseFar.z;
 	NetModel::getInstance()->setNetCoordinates3D(tmpNetCoord3D);
+	NetModel::getInstance()->setReady(true);
 
 	double a, b, c, d;
 	fs["StaticModel_GroundPlaneLinearModelFactorX"] >> a;
