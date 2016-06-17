@@ -41,7 +41,10 @@ public:
 	void setHeight(double height_mm);
 	void computeImagePlaneProjections();
 	NetVisualProjection getNetVisualProjection();
+	void setNetVisualProjection(NetVisualProjection netVisualProjection);
 	NetCoordinates3D getNetCoordinates3D();
+	void setNetCoordinates3D(NetCoordinates3D netCoordinates3D);
+
 	vector<Point2f>	getNetVisualPoints();
 	void computeNetVisualPoints();
 	void setReady(bool ready);

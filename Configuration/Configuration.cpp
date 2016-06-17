@@ -192,6 +192,42 @@ void Configuration::writeConfigFile(string fileName)
 	fs << "CalibrationData_TGT_Smax" << (int)calibrationData.targetHSVRange.Smax;
 	fs << "CalibrationData_TGT_Vmax" << (int)calibrationData.targetHSVRange.Vmax;
 
+	fs << "CalibrationData_FLD_2D_NearL_X" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x;
+	fs << "CalibrationData_FLD_2D_NearL_Y" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y;
+	fs << "CalibrationData_FLD_2D_NearR_X" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.x;
+	fs << "CalibrationData_FLD_2D_NearR_Y" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.y;
+	fs << "CalibrationData_FLD_2D_FarR_X" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.x;
+	fs << "CalibrationData_FLD_2D_FarR_Y" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.y;
+	fs << "CalibrationData_FLD_2D_FarL_X" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x;
+	fs << "CalibrationData_FLD_2D_FarL_Y" << TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y;
+
+	fs << "StaticModel_Net_2D_BaseNearX" << NetModel::getInstance()->getNetVisualProjection().baseNear.x;
+	fs << "StaticModel_Net_2D_BaseNearY" << NetModel::getInstance()->getNetVisualProjection().baseNear.y;
+	fs << "StaticModel_Net_2D_TopNearX" << NetModel::getInstance()->getNetVisualProjection().topNear.x;
+	fs << "StaticModel_Net_2D_TopNearY" << NetModel::getInstance()->getNetVisualProjection().topNear.y;
+	fs << "StaticModel_Net_2D_TopFarX" << NetModel::getInstance()->getNetVisualProjection().topFar.x;
+	fs << "StaticModel_Net_2D_TopFarY" << NetModel::getInstance()->getNetVisualProjection().topFar.y;
+	fs << "StaticModel_Net_2D_BaseFarX" << NetModel::getInstance()->getNetVisualProjection().baseFar.x;
+	fs << "StaticModel_Net_2D_BaseFarY" << NetModel::getInstance()->getNetVisualProjection().baseFar.y;
+
+	fs << "StaticModel_Net_3D_BaseNearX" << NetModel::getInstance()->getNetCoordinates3D().baseNear.x;
+	fs << "StaticModel_Net_3D_BaseNearY" << NetModel::getInstance()->getNetCoordinates3D().baseNear.y;
+	fs << "StaticModel_Net_3D_BaseNearz" << NetModel::getInstance()->getNetCoordinates3D().baseNear.z;
+	fs << "StaticModel_Net_3D_TopNearX" << NetModel::getInstance()->getNetCoordinates3D().topNear.x;
+	fs << "StaticModel_Net_3D_TopNearY" << NetModel::getInstance()->getNetCoordinates3D().topNear.y;
+	fs << "StaticModel_Net_3D_TopNearZ" << NetModel::getInstance()->getNetCoordinates3D().topNear.z;
+	fs << "StaticModel_Net_3D_TopFarX" << NetModel::getInstance()->getNetCoordinates3D().topFar.x;
+	fs << "StaticModel_Net_3D_TopFarY" << NetModel::getInstance()->getNetCoordinates3D().topFar.y;
+	fs << "StaticModel_Net_3D_TopFarZ" << NetModel::getInstance()->getNetCoordinates3D().topFar.z;
+	fs << "StaticModel_Net_3D_BaseFarX" << NetModel::getInstance()->getNetCoordinates3D().baseFar.x;
+	fs << "StaticModel_Net_3D_BaseFarY" << NetModel::getInstance()->getNetCoordinates3D().baseFar.y;
+	fs << "StaticModel_Net_3D_BaseFarZ" << NetModel::getInstance()->getNetCoordinates3D().baseFar.z;
+
+	fs << "StaticModel_GroundPlaneLinearModelFactorX" << GroundModel::getInstance()->getGroundPlaneLinearModel().a;
+	fs << "StaticModel_GroundPlaneLinearModelFactorY" << GroundModel::getInstance()->getGroundPlaneLinearModel().b;
+	fs << "StaticModel_GroundPlaneLinearModelFactorZ" << GroundModel::getInstance()->getGroundPlaneLinearModel().c;
+	fs << "StaticModel_GroundPlaneLinearModelFactorD" << GroundModel::getInstance()->getGroundPlaneLinearModel().d;
+
 	string buf = fs.releaseAndGetString();
 
 	FILE *fp = fopen(fileName.c_str(), "w");
@@ -261,6 +297,52 @@ void Configuration::loadConfigFile(string fileName)
 	fs["CalibrationData_TGT_Hmax"] >> calibrationData.targetHSVRange.Hmax;
 	fs["CalibrationData_TGT_Smax"] >> calibrationData.targetHSVRange.Smax;
 	fs["CalibrationData_TGT_Vmax"] >> calibrationData.targetHSVRange.Vmax;
+
+	fs["CalibrationData_FLD_2D_NearL_X"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x;
+	fs["CalibrationData_FLD_2D_NearL_Y"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y;
+	fs["CalibrationData_FLD_2D_NearR_X"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.x;
+	fs["CalibrationData_FLD_2D_NearR_Y"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.y;
+	fs["CalibrationData_FLD_2D_FarR_X"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.x;
+	fs["CalibrationData_FLD_2D_FarR_Y"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.y;
+	fs["CalibrationData_FLD_2D_FarL_X"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x;
+	fs["CalibrationData_FLD_2D_FarL_Y"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y;
+
+	// Static Model Data
+	NetVisualProjection tmpNetVisualProjection;
+	fs["StaticModel_Net_2D_BaseNearX"] >> tmpNetVisualProjection.baseNear.x;
+	fs["StaticModel_Net_2D_BaseNearY"] >> tmpNetVisualProjection.baseNear.y;
+	fs["StaticModel_Net_2D_TopNearX"] >> tmpNetVisualProjection.topNear.x;
+	fs["StaticModel_Net_2D_TopNearY"] >> tmpNetVisualProjection.topNear.y;
+	fs["StaticModel_Net_2D_TopFarX"] >> tmpNetVisualProjection.topFar.x;
+	fs["StaticModel_Net_2D_TopFarY"] >> tmpNetVisualProjection.topFar.y;
+	fs["StaticModel_Net_2D_BaseFarX"] >> tmpNetVisualProjection.baseFar.x;
+	fs["StaticModel_Net_2D_BaseFarY"] >> tmpNetVisualProjection.baseFar.y;
+	NetModel::getInstance()->setNetVisualProjection(tmpNetVisualProjection);
+
+	NetCoordinates3D tmpNetCoord3D;
+	fs["StaticModel_Net_3D_BaseNearX"] >> tmpNetCoord3D.baseNear.x;
+	fs["StaticModel_Net_3D_BaseNearY"] >> tmpNetCoord3D.baseNear.y;
+	fs["StaticModel_Net_3D_BaseNearz"] >> tmpNetCoord3D.baseNear.z;
+	fs["StaticModel_Net_3D_TopNearX"] >> tmpNetCoord3D.topNear.x;
+	fs["StaticModel_Net_3D_TopNearY"] >> tmpNetCoord3D.topNear.y;
+	fs["StaticModel_Net_3D_TopNearZ"] >> tmpNetCoord3D.topNear.z;
+	fs["StaticModel_Net_3D_TopFarX"] >> tmpNetCoord3D.topFar.x;
+	fs["StaticModel_Net_3D_TopFarY"] >> tmpNetCoord3D.topFar.y;
+	fs["StaticModel_Net_3D_TopFarZ"] >> tmpNetCoord3D.topFar.z;
+	fs["StaticModel_Net_3D_BaseFarX"] >> tmpNetCoord3D.baseFar.x;
+	fs["StaticModel_Net_3D_BaseFarY"] >> tmpNetCoord3D.baseFar.y;
+	fs["StaticModel_Net_3D_BaseFarZ"] >> tmpNetCoord3D.baseFar.z;
+	NetModel::getInstance()->setNetCoordinates3D(tmpNetCoord3D);
+
+	double a, b, c, d;
+	fs["StaticModel_GroundPlaneLinearModelFactorX"] >> a;
+	fs["StaticModel_GroundPlaneLinearModelFactorY"] >> b;
+	fs["StaticModel_GroundPlaneLinearModelFactorZ"] >> c;
+	fs["StaticModel_GroundPlaneLinearModelFactorD"] >> d;
+	GroundModel::getInstance()->setGroundPlaneLinearModelFactorX(a);
+	GroundModel::getInstance()->setGroundPlaneLinearModelFactorY(b);
+	GroundModel::getInstance()->setGroundPlaneLinearModelFactorZ(c);
+	GroundModel::getInstance()->setGroundPlaneLinearModelFactorD(d);
 }
 
 void Configuration::display()

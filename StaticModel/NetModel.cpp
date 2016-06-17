@@ -131,7 +131,17 @@ NetVisualProjection NetModel::getNetVisualProjection()
 	return _netVisualProjection;
 }
 
+void NetModel::setNetVisualProjection(NetVisualProjection netVisualProjection)
+{
+	_netVisualProjection = netVisualProjection;
+}
+
 NetCoordinates3D NetModel::getNetCoordinates3D()
 {
 	return _netCoordinates3D;
+}
+
+void NetModel::setNetCoordinates3D(NetCoordinates3D netCoordinates3D)
+{
+	_netCoordinates3D = netCoordinates3D;
 }
