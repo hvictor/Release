@@ -13,6 +13,8 @@
 #include "../Common/filesystem.h"
 #include "../SensorAbstractionLayer/ZEDStereoSensorDriver.h"
 #include "../TargetPredator/TargetPredator.h"
+#include "../StaticModel/NetModel.h"
+#include "../StaticModel/GroundModel.h"
 
 using namespace sl;
 
