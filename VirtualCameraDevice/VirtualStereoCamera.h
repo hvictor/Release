@@ -26,6 +26,7 @@ public:
 	bool OpenFromFrameSequence(string frameSequenceDirectoryPath, char *frameFileNameFormat);
 	bool OpenBinaryRecording(char *fileName);
 	void CloseBinaryRecording();
+	void LoadStaticModelBinaryRecording();
 	bool ReadBinaryRecordingData(FrameData *pFrameData);
 	FramePair readFramePairFromFrameSequence();
 	bool grayscaleFlag;

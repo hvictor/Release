@@ -513,6 +513,9 @@ void *frames_output(void *)
 		// Open binary serialization channel
 		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
 
+		// Serialize binary Static Model
+		serialize_static_model();
+
 		while (systemRecording) {
 			char buffer[300];
 			FrameData *frame_data;
@@ -745,7 +748,12 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 	else if (config->getOperationalMode().inputDevice == StereoCameraVirtual)
 	{
 		VirtualStereoCamera *virtualStereoCamera = new VirtualStereoCamera();
+
+		// Open binary recording stream
 		virtualStereoCamera->OpenBinaryRecording(config->recordingParameters.recordingFileNameFullPath);
+
+		// Load Static Model from binary recording stream
+		virtualStereoCamera->LoadStaticModelBinaryRecording();
 
 		printf("Stereo Application :: Input Device: Virtual stereo camera\n");
 

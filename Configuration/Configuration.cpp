@@ -303,7 +303,6 @@ void Configuration::loadConfigFile(string fileName)
 	fs["CalibrationData_TGT_Smax"] >> calibrationData.targetHSVRange.Smax;
 	fs["CalibrationData_TGT_Vmax"] >> calibrationData.targetHSVRange.Vmax;
 
-
 	TennisFieldStaticModel::getInstance()->getInstance()->setTennisFieldDelimiter(new TennisFieldDelimiter());
 	fs["CalibrationData_FLD_2D_NearL_X"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x;
 	fs["CalibrationData_FLD_2D_NearL_Y"] >> TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y;
