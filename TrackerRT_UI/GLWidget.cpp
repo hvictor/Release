@@ -137,10 +137,12 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 
     update();
 
-    if (calib_tgt)
+    if (calib_tgt) {
         emit transmitTargetHSVRange(hsv_range);
-    else if (calib_perim)
+    }
+    else if (calib_perim) {
         emit transmitFieldMarkersHSVRange(hsv_range);
+    }
 
     if (calib_perim) {
         bool status;

@@ -99,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->calibratorBtn, SIGNAL(clicked()), this, SLOT(startCalibrator()));
     QObject::connect(ui->btnSaveConfig, SIGNAL(clicked()), this, SLOT(saveConfig()));
+    QObject::connect(ui->btnLoadConfig, SIGNAL(clicked()), this, SLOT(loadConfig()));
 
     // Processing Mode
     QObject::connect(ui->processingModeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setProcessingMode(int)));
@@ -168,6 +169,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::loadConfiguration()
+{
+    Configuration::getInstance()->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
+    printf("Configuration :: Loaded configuration file\n");
 }
 
 void MainWindow::startCalibrator()
