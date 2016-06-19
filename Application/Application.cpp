@@ -884,6 +884,8 @@ void run()
 	staticModel = TennisFieldStaticModel::getInstance();
 	dynamicModel = DynamicModel::getInstance();
 
+	configuration->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
+
 	// Initialize fast memory pool
 	printf("Initializing fast memory pool...\n");
 	if (configuration->getFrameInfo().outputType == ForcedRGB) {
