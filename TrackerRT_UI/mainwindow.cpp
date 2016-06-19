@@ -97,9 +97,11 @@ MainWindow::MainWindow(QWidget *parent) :
     subWindowGPU->setAttribute(Qt::WA_DeleteOnClose);
     ui->mdiArea_5->addSubWindow(subWindowGPU);
 
+    ui->startApplicationBtn->setEnabled(false);
+
     QObject::connect(ui->calibratorBtn, SIGNAL(clicked()), this, SLOT(startCalibrator()));
     QObject::connect(ui->btnSaveConfig, SIGNAL(clicked()), this, SLOT(saveConfig()));
-    QObject::connect(ui->btnLoadConfig, SIGNAL(clicked()), this, SLOT(loadConfig()));
+    QObject::connect(ui->btnLoadConfig, SIGNAL(clicked()), this, SLOT(loadConfiguration()));
 
     // Processing Mode
     QObject::connect(ui->processingModeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setProcessingMode(int)));
@@ -175,6 +177,7 @@ void MainWindow::loadConfiguration()
 {
     Configuration::getInstance()->loadConfigFile("/home/ubuntu/Release/config_recording.xml");
     printf("Configuration :: Loaded configuration file\n");
+    ui->startApplicationBtn->setEnabled(true);
 }
 
 void MainWindow::startCalibrator()
@@ -182,6 +185,7 @@ void MainWindow::startCalibrator()
     UICalibrationDisplay *uiCalibratorDisplay = new UICalibrationDisplay();
 
     QObject::connect(uiCalibratorDisplay, SIGNAL(floorLinearModelReady(void)), this, SLOT(showFloorLinearModelCoefficients(void)));
+    ui->startApplicationBtn->setEnabled(true);
 
     uiCalibratorDisplay->show();
 }
