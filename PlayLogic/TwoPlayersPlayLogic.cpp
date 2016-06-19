@@ -245,7 +245,7 @@ void TwoPlayersPlayLogic::generateFieldRepresentationFromModel()
 	}
 	// If the Net Model is not ready, separate the field in the middle
 	else {
-
+		printf("Two-Players Play Logic: Net Model not ready\n");
 	}
 
 }
