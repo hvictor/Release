@@ -42,9 +42,13 @@ void serialize_static_model()
 	fwrite(&(calibrationData.targetHSVRange.Hmax), sizeof(int), 1, _fp);
 	fwrite(&(calibrationData.targetHSVRange.Smax), sizeof(int), 1, _fp);
 	fwrite(&(calibrationData.targetHSVRange.Vmax), sizeof(int), 1, _fp);
+	printf("%d\n", calibrationData.targetHSVRange.Hmin);
+	printf("%d\n",calibrationData.targetHSVRange.Smin);
+	printf("%d\n",calibrationData.targetHSVRange.Vmin);
+	printf("%d\n",calibrationData.targetHSVRange.Hmax);
+	printf("%d\n",calibrationData.targetHSVRange.Smax);
+	printf("%d\n",calibrationData.targetHSVRange.Vmax);
 
-	fwrite(TennisFieldStaticModel::getInstance(), sizeof(TennisFieldStaticModel), 1, _fp);
-	/*
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x), sizeof(float), 1, _fp);
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y), sizeof(float), 1, _fp);
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.x), sizeof(float), 1, _fp);
@@ -53,10 +57,15 @@ void serialize_static_model()
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.y), sizeof(float), 1, _fp);
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x), sizeof(float), 1, _fp);
 	fwrite(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y), sizeof(float), 1, _fp);
-	*/
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.y);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.y);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y);
 
-	fwrite(NetModel::getInstance(), sizeof(NetModel), 1, _fp);
-	/*
 	fwrite(&(netVisualProjection.baseNear.x), sizeof(float), 1, _fp);
 	fwrite(&(netVisualProjection.baseNear.y), sizeof(float), 1, _fp);
 	fwrite(&(netVisualProjection.topNear.x), sizeof(float), 1, _fp);
@@ -65,6 +74,14 @@ void serialize_static_model()
 	fwrite(&(netVisualProjection.topFar.y), sizeof(float), 1, _fp);
 	fwrite(&(netVisualProjection.baseFar.x), sizeof(float), 1, _fp);
 	fwrite(&(netVisualProjection.baseFar.y), sizeof(float), 1, _fp);
+	printf("%g\n",netVisualProjection.baseNear.x);
+	printf("%g\n",netVisualProjection.baseNear.y);
+	printf("%g\n",netVisualProjection.topNear.x);
+	printf("%g\n",netVisualProjection.topNear.y);
+	printf("%g\n",netVisualProjection.topFar.x);
+	printf("%g\n",netVisualProjection.topFar.y);
+	printf("%g\n",netVisualProjection.baseFar.x);
+	printf("%g\n",netVisualProjection.baseFar.y);
 
 	fwrite(&(netCoord3D.baseNear.x), sizeof(double), 1, _fp);
 	fwrite(&(netCoord3D.baseNear.y), sizeof(double), 1, _fp);
@@ -78,15 +95,27 @@ void serialize_static_model()
 	fwrite(&(netCoord3D.baseFar.x), sizeof(double), 1, _fp);
 	fwrite(&(netCoord3D.baseFar.y), sizeof(double), 1, _fp);
 	fwrite(&(netCoord3D.baseFar.z), sizeof(double), 1, _fp);
-	*/
+	printf("%g\n", netCoord3D.baseNear.x);
+	printf("%g\n",netCoord3D.baseNear.y);
+	printf("%g\n",netCoord3D.baseNear.z);
+	printf("%g\n",netCoord3D.topNear.x);
+	printf("%g\n",netCoord3D.topNear.y);
+	printf("%g\n",netCoord3D.topNear.z);
+	printf("%g\n",netCoord3D.topFar.x);
+	printf("%g\n",netCoord3D.topFar.y);
+	printf("%g\n",netCoord3D.topFar.z);
+	printf("%g\n",netCoord3D.baseFar.x);
+	printf("%g\n",netCoord3D.baseFar.y);
+	printf("%g\n",netCoord3D.baseFar.z);
 
-	fwrite(GroundModel::getInstance(), sizeof(GroundModel), 1, _fp);
-	/*
 	fwrite(&(planeLinearModel.a), sizeof(double), 1, _fp);
 	fwrite(&(planeLinearModel.b), sizeof(double), 1, _fp);
 	fwrite(&(planeLinearModel.c), sizeof(double), 1, _fp);
 	fwrite(&(planeLinearModel.d), sizeof(double), 1, _fp);
-	*/
+	printf("%g\n", planeLinearModel.a);
+	printf("%g\n", planeLinearModel.b);
+	printf("%g\n", planeLinearModel.c);
+	printf("%g\n", planeLinearModel.d);
 }
 
 void deserialize_static_model()
@@ -103,10 +132,15 @@ void deserialize_static_model()
 	fread(&(calibrationData.targetHSVRange.Smax), sizeof(int), 1, _fp);
 	fread(&(calibrationData.targetHSVRange.Vmax), sizeof(int), 1, _fp);
 
+	printf("%d\n", calibrationData.targetHSVRange.Hmin);
+	printf("%d\n",calibrationData.targetHSVRange.Smin);
+	printf("%d\n",calibrationData.targetHSVRange.Vmin);
+	printf("%d\n",calibrationData.targetHSVRange.Hmax);
+	printf("%d\n",calibrationData.targetHSVRange.Smax);
+	printf("%d\n",calibrationData.targetHSVRange.Vmax);
+
 	Configuration::getInstance()->calibrationData = calibrationData;
 
-	fread(TennisFieldStaticModel::getInstance(), sizeof(TennisFieldStaticModel), 1, _fp);
-	/*
 	fread(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x), sizeof(float), 1, _fp);
 	fread(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y), sizeof(float), 1, _fp);
 	fread(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.x), sizeof(float), 1, _fp);
@@ -115,10 +149,16 @@ void deserialize_static_model()
 	fread(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.y), sizeof(float), 1, _fp);
 	fread(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x), sizeof(float), 1, _fp);
 	fread(&(TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y), sizeof(float), 1, _fp);
-	*/
 
-	fread(NetModel::getInstance(), sizeof(NetModel), 1, _fp);
-	/*
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomLeft.y);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->bottomRight.y);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topRight.y);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.x);
+	printf("%g\n", TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter()->topLeft.y);
+
 	NetVisualProjection tmpNetVisualProjection;
 	fread(&(tmpNetVisualProjection.baseNear.x), sizeof(float), 1, _fp);
 	fread(&(tmpNetVisualProjection.baseNear.y), sizeof(float), 1, _fp);
@@ -128,6 +168,15 @@ void deserialize_static_model()
 	fread(&(tmpNetVisualProjection.topFar.y), sizeof(float), 1, _fp);
 	fread(&(tmpNetVisualProjection.baseFar.x), sizeof(float), 1, _fp);
 	fread(&(tmpNetVisualProjection.baseFar.y), sizeof(float), 1, _fp);
+
+	printf("%g\n",tmpNetVisualProjection.baseNear.x);
+	printf("%g\n",tmpNetVisualProjection.baseNear.y);
+	printf("%g\n",tmpNetVisualProjection.topNear.x);
+	printf("%g\n",tmpNetVisualProjection.topNear.y);
+	printf("%g\n",tmpNetVisualProjection.topFar.x);
+	printf("%g\n",tmpNetVisualProjection.topFar.y);
+	printf("%g\n",tmpNetVisualProjection.baseFar.x);
+	printf("%g\n",tmpNetVisualProjection.baseFar.y);
 	NetModel::getInstance()->setNetVisualProjection(tmpNetVisualProjection);
 
 	NetCoordinates3D tmpNetCoord3D;
@@ -143,12 +192,22 @@ void deserialize_static_model()
 	fread(&(tmpNetCoord3D.baseFar.x), sizeof(double), 1, _fp);
 	fread(&(tmpNetCoord3D.baseFar.y), sizeof(double), 1, _fp);
 	fread(&(tmpNetCoord3D.baseFar.z), sizeof(double), 1, _fp);
+
+	printf("%g\n", tmpNetCoord3D.baseNear.x);
+	printf("%g\n",tmpNetCoord3D.baseNear.y);
+	printf("%g\n",tmpNetCoord3D.baseNear.z);
+	printf("%g\n",tmpNetCoord3D.topNear.x);
+	printf("%g\n",tmpNetCoord3D.topNear.y);
+	printf("%g\n",tmpNetCoord3D.topNear.z);
+	printf("%g\n",tmpNetCoord3D.topFar.x);
+	printf("%g\n",tmpNetCoord3D.topFar.y);
+	printf("%g\n",tmpNetCoord3D.topFar.z);
+	printf("%g\n",tmpNetCoord3D.baseFar.x);
+	printf("%g\n",tmpNetCoord3D.baseFar.y);
+	printf("%g\n",tmpNetCoord3D.baseFar.z);
 	NetModel::getInstance()->setNetCoordinates3D(tmpNetCoord3D);
 	NetModel::getInstance()->setReady(true);
-	*/
 
-	fread(GroundModel::getInstance(), sizeof(GroundModel), 1, _fp);
-	/*
 	double a, b, c, d;
 	fread(&a, sizeof(double), 1, _fp);
 	fread(&b, sizeof(double), 1, _fp);
@@ -158,7 +217,10 @@ void deserialize_static_model()
 	GroundModel::getInstance()->setGroundPlaneLinearModelFactorY(b);
 	GroundModel::getInstance()->setGroundPlaneLinearModelFactorZ(c);
 	GroundModel::getInstance()->setGroundPlaneLinearModelFactorD(d);
-	*/
+	printf("%g\n",a);
+	printf("%g\n",b);
+	printf("%g\n",c);
+	printf("%g\n",d);
 }
 
 bool deserialize_next_frame_data(FrameData *dst)
