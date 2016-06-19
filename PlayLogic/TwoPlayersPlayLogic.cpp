@@ -206,6 +206,8 @@ PlayScore *TwoPlayersPlayLogic::retrievePlayScore()
 
 void TwoPlayersPlayLogic::generateFieldRepresentationFromModel()
 {
+	printf("Two-Players Play Logic :: GenerateFieldRepresentationFromModel\n");
+
 	// Fetch Net Model data
 	_netProjection = NetModel::getInstance()->getNetVisualProjection();
 	_netCoord3D = NetModel::getInstance()->getNetCoordinates3D();
