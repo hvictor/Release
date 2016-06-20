@@ -21,14 +21,13 @@ void serialize_frame_data(FrameData *frame_data)
 	// Step Depth:			sizeof(int)
 
 	fwrite(frame_data->left_data, sizeof(uint8_t), w * h * 4, _fp);
-	/*
+
 	fwrite(&depth_data_avail, sizeof(short), 1, _fp);
 	if (depth_data_avail == 1) {
 		printf("Serialization :: Encoding Depth Data\n");
 		fwrite(frame_data->depth_data, sizeof(float), w * h, _fp);
 		fwrite(&(frame_data->step_depth), sizeof(int), 1, _fp);
 	}
-	*/
 
 	fwrite(&(frame_data->frame_counter), sizeof(int), 1, _fp);
 }
@@ -247,7 +246,6 @@ bool deserialize_next_frame_data(FrameData *dst)
 	if (rbytes <= 0)
 		return false;
 
-	/*
 	// Read depth data availability flag
 	fread(&depth_data_avail, sizeof(short), 1, _fp);
 
@@ -263,7 +261,6 @@ bool deserialize_next_frame_data(FrameData *dst)
 	else {
 		dst->depth_data_avail = false;
 	}
-	*/
 
 	fread(&(dst->frame_counter), sizeof(int), 1, _fp);
 

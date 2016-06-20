@@ -538,10 +538,10 @@ void *frames_output(void *)
 		//stereoRecorder->startFramesRecording("/tmp/record");
 
 		// Open binary serialization channel
-		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+		//open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
 
 		// Serialize binary Static Model
-		serialize_static_model();
+		//serialize_static_model();
 
 		while (systemRecording) {
 			char buffer[300];
@@ -704,6 +704,16 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		// Frame counter
 		int frame_counter = 0;
 
+		///////////// REMOVE /////////////
+		// Open binary serialization channel
+		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+
+		// Serialize binary Static Model
+		serialize_static_model();
+
+		printf("DIRECT SERIALIZATION\n");
+		///////////////////////////////////////////
+
 		while (1) {
 			//nanotimer_rt_start(&s);
 
@@ -756,9 +766,12 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			//frameData->right_data = stereoFrame.rightData;
 
 			// Enqueue stereo pair data in processing / output queue
+			serialize_frame_data(frameData);
+			/*
 			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
 				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
 			}
+			*/
 
 			//nanotimer_rt_stop(&t);
 			//rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
