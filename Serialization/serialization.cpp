@@ -23,6 +23,7 @@ void serialize_frame_data(FrameData *frame_data)
 	fwrite(frame_data->left_data, sizeof(uint8_t), w * h * 4, _fp);
 	fwrite(&depth_data_avail, sizeof(short), 1, _fp);
 	if (depth_data_avail == 1) {
+		printf("Serialization :: Encoding Depth Data\n");
 		fwrite(frame_data->depth_data, sizeof(float), w * h, _fp);
 		fwrite(&(frame_data->step_depth), sizeof(int), 1, _fp);
 	}
@@ -35,6 +36,8 @@ void serialize_static_model()
 	NetCoordinates3D netCoord3D = NetModel::getInstance()->getNetCoordinates3D();
 	CalibrationData calibrationData = Configuration::getInstance()->calibrationData;
 	PlaneLinearModel planeLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
+
+	fwrite(&(Configuration::getInstance()->dynamicModelParameters.freePlay), sizeof(bool), 1, _fp);
 
 	fwrite(&(calibrationData.targetHSVRange.Hmin), sizeof(int), 1, _fp);
 	fwrite(&(calibrationData.targetHSVRange.Smin), sizeof(int), 1, _fp);
@@ -124,6 +127,8 @@ void deserialize_static_model()
 	NetVisualProjection netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
 	NetCoordinates3D netCoord3D = NetModel::getInstance()->getNetCoordinates3D();
 	CalibrationData calibrationData;
+
+	fread(&(Configuration::getInstance()->dynamicModelParameters.freePlay), sizeof(bool), 1, _fp);
 
 	fread(&(calibrationData.targetHSVRange.Hmin), sizeof(int), 1, _fp);
 	fread(&(calibrationData.targetHSVRange.Smin), sizeof(int), 1, _fp);
@@ -243,6 +248,7 @@ bool deserialize_next_frame_data(FrameData *dst)
 
 	// Depth data is available, set flag in dst and read UINT8 data and matrix step
 	if (depth_data_avail == 1) {
+		printf("Serialization :: Decoding Depth Data\n");
 		dst->depth_data_avail = true;
 		fread(dst->depth_data, sizeof(float), w * h, _fp);
 		fread(&(dst->step_depth), sizeof(int), 1, _fp);
