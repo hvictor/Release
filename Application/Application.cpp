@@ -208,7 +208,10 @@ void *frames_processor(void *)
 	}
 	else if (configuration->playLogicParameters.playLogicType == SinglePlayer)
 	{
-		// Not yet implemented
+		printf("Application :: PlayLogic :: Single Player\n");
+	}
+	else {
+		printf("Application :: WARNING :: Unknown Play Logic configuration\n");
 	}
 
 	// If Recording Mode is active, the Frames Processor runs only when the recording of Dynamic Models data is requested
