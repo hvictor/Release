@@ -216,6 +216,12 @@ void TwoPlayersPlayLogic::generateFieldRepresentationFromModel()
 	TennisFieldDelimiter *_tFieldDelimPtr = TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter();
 	_tFieldDelimPtr->printDebug();
 
+	cout << "Net Projection:" << endl;
+	cout << "\t" << _netProjection.baseNear << endl;
+	cout << "\t" << _netProjection.topNear << endl;
+	cout << "\t" << _netProjection.topFar << endl;
+	cout << "\t" << _netProjection.baseFar << endl;
+
 	// Prepare the Players' field sides
 	// If the Net Model is ready, use the Net as separator of the two sides
 	if (NetModel::getInstance()->isReady()) {

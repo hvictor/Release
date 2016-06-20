@@ -197,11 +197,13 @@ void *frames_processor(void *)
 	// Generate Field Representation from Static Model in the Play Logic
 	// Delegate this unique task on Static Model deserialization complete
 	if (configuration->operationalMode.inputDevice != StereoCameraVirtual) {
+		printf("Application :: RT Tracking :: Generating Field Representation in Logic\n");
 		playLogic->generateFieldRepresentationFromModel();
 	}
 
 	if (configuration->playLogicParameters.playLogicType == TwoPlayers)
 	{
+		printf("Application :: Retrieving Field Representation from Logic\n");
 		twoPlayersFieldRepresentation = ((TwoPlayersPlayLogic *)playLogic)->retrieveFieldRepresentation();
 	}
 	else if (configuration->playLogicParameters.playLogicType == SinglePlayer)
@@ -407,6 +409,7 @@ void *frames_processor(void *)
 
 			// Render Field Delimiter and Score
 			if (!configuration->dynamicModelParameters.freePlay) {
+				printf("Rendering Two Players\n");
 				OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
 				// Testing: OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
 				OverlayRenderer::getInstance()->renderTwoPlayersPlayLogicScoreTracking(frame1_L, (TwoPlayersPlayLogic *)playLogic);
@@ -759,6 +762,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		virtualStereoCamera->LoadStaticModelBinaryRecording();
 
 		// Field representation from model is performed once: only here if Replaying
+		printf("Application :: Replay :: Generating Field Representation in Logic\n");
 		playLogic->generateFieldRepresentationFromModel();
 
 		printf("Stereo Application :: Input Device: Virtual stereo camera\n");
