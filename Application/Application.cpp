@@ -70,6 +70,7 @@ using namespace std;
 using namespace cv;
 using namespace cv::gpu;
 
+volatile bool staticModelReadyReplay;
 extern volatile bool systemCalibrated;
 extern volatile bool systemRecording;
 
@@ -193,6 +194,17 @@ void *frames_processor(void *)
 
 	// Field Representation for Two-Players Play mode
 	TwoPlayersFieldRepresentation twoPlayersFieldRepresentation;
+
+	// In Replay Mode, the Frames Processor must wait for the Stereo Application thread to complete
+	// the load of the binary encoded Static Model, stored in the recording file.
+	if (configuration->operationalMode.inputDevice == StereoCameraVirtual) {
+
+		while (!staticModelReadyReplay) {
+			printf("Application :: Replay :: Waiting binary Static Model Decode...\n");
+			usleep(10000);
+		}
+
+	}
 
 	// Generate Field Representation from Static Model in the Play Logic
 	// Delegate this unique task on Static Model deserialization complete
@@ -412,7 +424,7 @@ void *frames_processor(void *)
 
 			// Render Field Delimiter and Score
 			if (!configuration->dynamicModelParameters.freePlay) {
-				printf("Rendering Two Players\n");
+
 				OverlayRenderer::getInstance()->renderFieldDelimiter_Mat8UC4(frame1_L, fieldDelimiter);
 				// Testing: OverlayRenderer::getInstance()->renderStaticModelScoreTracking(frame1_L, staticModel);
 				OverlayRenderer::getInstance()->renderTwoPlayersPlayLogicScoreTracking(frame1_L, (TwoPlayersPlayLogic *)playLogic);
@@ -768,7 +780,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		printf("Application :: Replay :: Generating Field Representation in Logic\n");
 		playLogic->generateFieldRepresentationFromModel();
 
-		printf("Stereo Application :: Input Device: Virtual stereo camera\n");
+		// Signal Static Model Ready in Replay Mode
+		staticModelReadyReplay = true;
+		printf("Application :: Replay :: Binary Static Model Decoded: signaling Frames Processor\n");
 
 		while (1) {
 
@@ -878,6 +892,7 @@ FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL)
 void run()
 {
 	systemReady = false;
+	staticModelReadyReplay = false;
 
 	StereoSensorAbstractionLayer *stereoSAL = 0;
 	IRSensorAbstractionLayer *irSAL = 0;
