@@ -252,16 +252,6 @@ void TwoPlayersPlayLogic::generateFieldRepresentationFromModel()
 		_P2Field.farL.x = (double)_netProjection.baseFar.x;
 		_P2Field.farL.y = (double)_netProjection.baseFar.y;
 
-		cout << "TwoPlayersPlayLogic :: generateFieldRepresentationFromModel:" << endl;
-		cout << "\tP1 NL: " << _P1Field.nearL << endl;
-		cout << "\tP1 NR: " << _P1Field.nearR << endl;
-		cout << "\tP1 FR: " << _P1Field.farR << endl;
-		cout << "\tP1 FL: " << _P1Field.farL << endl;
-
-		cout << "\tP2 NL: " << _P1Field.nearL << endl;
-		cout << "\tP2 NR: " << _P1Field.nearR << endl;
-		cout << "\tP2 FR: " << _P1Field.farR << endl;
-		cout << "\tP2 FL: " << _P1Field.farL << endl;
 	}
 	// If the Net Model is not ready, separate the field in the middle
 	else {
