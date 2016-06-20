@@ -189,8 +189,8 @@ void *frames_processor(void *)
 	Mat f_8UC1_0;
 	//uint8_t *buf_8UC1_1 = (uint8_t *)malloc(width * height * sizeof(uint8_t));
 
-	// Fetch the Net's visual projection on the Reference Camera's Image Plane
-	NetVisualProjection netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
+	// Net's visual projection on the Reference Camera's Image Plane
+	NetVisualProjection netVisualProjection;
 
 	// Field Representation for Two-Players Play mode
 	TwoPlayersFieldRepresentation twoPlayersFieldRepresentation;
@@ -203,8 +203,10 @@ void *frames_processor(void *)
 			printf("Application :: Replay :: Waiting binary Static Model Decode...\n");
 			usleep(10000);
 		}
-
 	}
+
+	// Fetch the Net's visual projection on the Reference Camera's Image Plane
+	netVisualProjection = NetModel::getInstance()->getNetVisualProjection();
 
 	// Generate Field Representation from Static Model in the Play Logic
 	// Delegate this unique task on Static Model deserialization complete
