@@ -715,10 +715,16 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 		StereoFrameSize frameSize = stereoSAL->getStereoFrameSize();
 
+		// Frame counter
+		int frame_counter = 0;
+
 		while (1) {
 			//nanotimer_rt_start(&s);
 
 			StereoFrame stereoFrame = stereoSAL->fetchStereoFrame();
+
+			frame_counter++;
+
 			if (stereoFrame.bytesLength <= 0) {
 				usleep(1000);
 				continue;
@@ -731,6 +737,8 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				usleep(1000);
 				continue;
 			}
+
+			frameData->frame_counter = frame_counter;
 
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
 			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
@@ -786,6 +794,8 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		staticModelReadyReplay = true;
 		printf("Application :: Replay :: Binary Static Model Decoded: signaling Frames Processor\n");
 
+		int prev_frame_counter = -1;
+
 		while (1) {
 
 			// Request Memory
@@ -800,6 +810,19 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			// Read binary recording data until available
 			bool binary_data_avail = virtualStereoCamera->ReadBinaryRecordingData(frameData);
+
+			// Check Frame Counter
+			if (prev_frame_counter < 0) {
+				prev_frame_counter = frameData->frame_counter;
+			}
+			else {
+				if ((frameData->frame_counter - prev_frame_counter) > 1) {
+					printf("Frames Processor :: WARNING :: Lost %d Frames (between Frames %d and %d)!\n", (frameData->frame_counter - prev_frame_counter),
+							prev_frame_counter, frameData->frame_counter);
+				}
+
+				prev_frame_counter = frameData->frame_counter;
+			}
 
 			// Artificial latency introduction
 			int latency_us = (int)((double)configuration->playbackParameters.playbackBaseLatency_us) / ((double)configuration->playbackParameters.playbackLatencyDivisor);

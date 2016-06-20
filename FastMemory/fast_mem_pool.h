@@ -36,6 +36,7 @@ typedef struct
 	int step_confidence;
 	int step_depth;
 	//Mat *xyzMat;
+	int frame_counter;
 
 	struct timespec t;
 } FrameData;

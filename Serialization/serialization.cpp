@@ -27,6 +27,8 @@ void serialize_frame_data(FrameData *frame_data)
 		fwrite(frame_data->depth_data, sizeof(float), w * h, _fp);
 		fwrite(&(frame_data->step_depth), sizeof(int), 1, _fp);
 	}
+
+	fwrite(&(frame_data->frame_counter), sizeof(int), 1, _fp);
 }
 
 void serialize_static_model()
@@ -258,6 +260,8 @@ bool deserialize_next_frame_data(FrameData *dst)
 	else {
 		dst->depth_data_avail = false;
 	}
+
+	fread(&(dst->frame_counter), sizeof(int), 1, _fp);
 
 	return true;
 }
