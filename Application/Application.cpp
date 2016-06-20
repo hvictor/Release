@@ -767,6 +767,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			// Enqueue stereo pair data in processing / output queue
 			serialize_frame_data(frameData);
+			if (!systemRecording) {
+				close_serialization_channel();
+				printf("Ok finished direct serialization\n");
+				break;
+			}
 			/*
 			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
 				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
