@@ -359,7 +359,9 @@ void *frames_processor(void *)
 			memcpy(frame_data[0]->left_data, frame0_L.data, width * height * channels * sizeof(uint8_t));
 
 			// Enqueue output frame data
-			array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
+			if (array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]) < 0) {
+				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frame_data[0]->frame_counter);
+			}
 
 			// Left-shift frame data in the local buffer, create space for new data
 			frame_data[0] = frame_data[1];
@@ -497,7 +499,9 @@ void *frames_processor(void *)
 			}
 
 			// Enqueue output frame data
-			array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]);
+			if (array_spinlock_queue_push(&outputFramesQueue, (void *)frame_data[0]) < 0) {
+				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frame_data[0]->frame_counter);
+			}
 
 			// Left-shift frame data in the local buffer, create space for new data
 			frame_data[0] = frame_data[1];
@@ -548,27 +552,8 @@ void *frames_output(void *)
 				continue;
 			}
 
-			serialize_frame_data(frame_data);
-
 			// Direct binary serialization
-
-			// Conversion to OpenCV matrix types left commented for eventual future purposes
-			/*
-			Mat frameL, frameR;
-
-			if (channels == 4) {
-				frameL = Mat(Size(width, height), CV_8UC4, frame_data->left_data);
-				frameR = Mat(Size(width, height), CV_8UC4, frame_data->right_data);
-			}
-			else if (channels == 1 && !force_rgb_output) {
-				frameL = Mat(Size(width, height), CV_8UC1, frame_data->left_data);
-				frameR = Mat(Size(width, height), CV_8UC1, frame_data->right_data);
-			}
-			else if (channels == 3 || force_rgb_output) {
-				frameL = Mat(Size(width, height), CV_8UC3, frame_data->left_data);
-				frameR = Mat(Size(width, height), CV_8UC3, frame_data->right_data);
-			}
-			*/
+			serialize_frame_data(frame_data);
 
 			// Free fast memory
 			fast_mem_pool_release_memory(frame_data);
@@ -771,7 +756,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			//frameData->right_data = stereoFrame.rightData;
 
 			// Enqueue stereo pair data in processing / output queue
-			array_spinlock_queue_push(queue, (void *)frameData);
+			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
+				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
+			}
 
 			//nanotimer_rt_stop(&t);
 			//rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
@@ -839,7 +826,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			}
 
 			// Enqueue stereo pair data in processing / output queue
-			array_spinlock_queue_push(queue, (void *)frameData);
+			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
+				printf("Stereo Application :: Replay :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
+			}
 
 		}
 	}
@@ -865,7 +854,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			memcpy(frameData->left_data, frame.data, mem_bytes);
 
 			// Enqueue stereo pair data in processing / output queue
-			array_spinlock_queue_push(queue, (void *)frameData);
+			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
+				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
+			}
 
 			nanotimer_rt_stop(&t);
 
