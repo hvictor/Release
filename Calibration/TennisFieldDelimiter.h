@@ -20,6 +20,7 @@
 #include <string.h>
 #include <time.h>
 #include <vector>
+#include <iostream>
 
 using namespace cv;
 using namespace std;
@@ -29,6 +30,7 @@ class TennisFieldDelimiter {
 public:
 	TennisFieldDelimiter();
 	virtual ~TennisFieldDelimiter();
+	void printDebug();
 	Point2f bottomLeft;
 	Point2f bottomRight;
 	Point2f topLeft;

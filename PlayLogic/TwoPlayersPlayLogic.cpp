@@ -214,6 +214,7 @@ void TwoPlayersPlayLogic::generateFieldRepresentationFromModel()
 
 	// Fetch 2D Field Model
 	TennisFieldDelimiter *_tFieldDelimPtr = TennisFieldStaticModel::getInstance()->getTennisFieldDelimiter();
+	_tFieldDelimPtr->printDebug();
 
 	// Prepare the Players' field sides
 	// If the Net Model is ready, use the Net as separator of the two sides
