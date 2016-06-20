@@ -726,6 +726,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			frame_counter++;
 
 			if (stereoFrame.bytesLength <= 0) {
+				printf("Stereo Application :: WARNING :: Invalid StereoFrame from hardware (@ Frame Counter: %d)\n", frame_counter);
 				usleep(1000);
 				continue;
 			}
@@ -734,6 +735,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			FrameData *frameData = fast_mem_pool_fetch_memory();
 
 			if (frameData == NULL) {
+				printf("Stereo Application :: WARNING :: Fast Memory Pool temporarily exhausted (@ Frame Counter: %d)\n", frame_counter);
 				usleep(1000);
 				continue;
 			}
