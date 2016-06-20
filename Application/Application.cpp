@@ -828,7 +828,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			// Artificial latency introduction
 			int latency_us = (int)((double)configuration->playbackParameters.playbackBaseLatency_us) / ((double)configuration->playbackParameters.playbackLatencyDivisor);
-			usleep(latency_us);
+			usleep(100000);
 
 			// No binary data more available, release memory, close virtual sensor device and leave
 			if (!binary_data_avail) {
