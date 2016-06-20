@@ -596,6 +596,19 @@ void OverlayRenderer::renderTwoPlayersFieldRepresentation(Mat frame_RGBA, TwoPla
 	Point2f P2FarR(P2Side.farR.x, P2Side.farR.y);
 	Point2f P2FarL(P2Side.farL.x, P2Side.farL.y);
 
+	cout << "OverlayRenderer :: renderTwoPlayersFieldRepresentation:" << endl;
+	cout << "\tP1 NL: " << P1NearL;
+	cout << "\tP1 NR: " << P1NearR;
+	cout << "\tP1 FR: " << P1FarR;
+	cout << "\tP1 FL: " << P1FarL;
+
+	cout << "\tP2: NL" << P2NearL;
+	cout << "\tP2: NR" << P2NearR;
+	cout << "\tP2: FR" << P2FarR;
+	cout << "\tP2: FL" << P2FarL;
+
+
+
 	line(frame_RGBA, P1NearL, P1NearR, OVERLAY_COLOR_RED_RGBA, 2);
 	line(frame_RGBA, P1NearR, P1FarR, OVERLAY_COLOR_YELLOW_RGBA, 2);
 	line(frame_RGBA, P1FarR, P1FarL, OVERLAY_COLOR_RED_RGBA, 2);
