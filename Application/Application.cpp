@@ -544,6 +544,7 @@ void *frames_output(void *)
 			FrameData *frame_data;
 
 			if (array_spinlock_queue_pull(&outputFramesQueue, (void **)&frame_data) < 0) {
+				usleep(100);
 				continue;
 			}
 
@@ -828,7 +829,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			// Artificial latency introduction
 			int latency_us = (int)((double)configuration->playbackParameters.playbackBaseLatency_us) / ((double)configuration->playbackParameters.playbackLatencyDivisor);
-			usleep(100000);
+			usleep(latency_us);
 
 			// No binary data more available, release memory, close virtual sensor device and leave
 			if (!binary_data_avail) {
