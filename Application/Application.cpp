@@ -541,10 +541,13 @@ void *frames_output(void *)
 	{
 		// Open binary serialization channel
 		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
-		open_serialization_channel_async(configuration->recordingParameters.recordingFileNameFullPath);
 
 		// Serialize binary Static Model
 		serialize_static_model();
+
+		close_serialization_channel();
+
+		open_serialization_channel_async(configuration->recordingParameters.recordingFileNameFullPath);
 
 		while (systemRecording) {
 			char buffer[300];
