@@ -66,6 +66,7 @@ public slots:
     void updatePlayModel_SetSinglePlayerLogic(bool status);
     void saveConfig();
     void showFloorLinearModelCoefficients(void);
+    void updateHardwareParam_SetAcquisitionPeriod(double value);
 };
 
 #endif // MAINWINDOW_H
