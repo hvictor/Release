@@ -279,7 +279,7 @@ void close_deserialization_channel()
 
 void open_serialization_channel(char *file_name)
 {
-	_fp = fopen(file_name, "wb");
+	_fp = fopen(file_name, "ab");
 }
 
 void close_serialization_channel()

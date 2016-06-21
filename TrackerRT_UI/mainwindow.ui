@@ -2234,6 +2234,12 @@
             <height>21</height>
            </rect>
           </property>
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>34.000000000000000</double>
+          </property>
          </widget>
         </widget>
         <widget class="QLabel" name="label_59">
