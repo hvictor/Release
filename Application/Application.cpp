@@ -541,7 +541,7 @@ void *frames_output(void *)
 	{
 		// Open binary serialization channel
 		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
-		open_serialization_channel_mem(configuration->recordingParameters.recordingFileNameFullPath);
+		open_serialization_channel_async(configuration->recordingParameters.recordingFileNameFullPath);
 
 		// Serialize binary Static Model
 		serialize_static_model();
@@ -556,7 +556,7 @@ void *frames_output(void *)
 			}
 
 			// Direct binary serialization
-			serialize_frame_data_mem(frame_data);
+			serialize_frame_data_async(frame_data);
 
 			/*
 			printf("Serialization time: elapsed: %.2f [ms], Count: %d, Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),

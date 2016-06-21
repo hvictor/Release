@@ -5,43 +5,35 @@
 #include <string.h>
 #include <stdint.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/mman.h> /* mmap() is defined in this header */
 #include <fcntl.h>
+#include <aio.h>
 
 using namespace std;
 
 static FILE *_fp;
-static struct stat statbuf;
-static int fdout;
-static void *dst_mem;
+static int fd;
 
-void open_serialization_channel_mem(char *fileName)
+void open_serialization_channel_async(char *fileName)
 {
-	fdout = open(fileName, O_RDWR | O_CREAT | O_TRUNC, 0x0777);
-	printf("Performing mmap\n");
-	dst_mem = mmap(0, 100 * sizeof(uint8_t) * 640 * 480 * 4, PROT_READ | PROT_WRITE, MAP_SHARED, fdout, 0);
-	printf("Mmap OK\n");
+	fd = open(fileName, O_RDWR | O_CREAT | O_TRUNC, 0x0777);
 }
 
-void serialize_frame_data_mem(FrameData *frame_data)
+void serialize_frame_data_async(FrameData *frame_data)
 {
 	static int offset = 0;
 
-	if (offset >= 100 * sizeof(uint8_t) * 640 * 480 * 4) {
-		printf("Not writing\n");
-		return;
-	}
+	uint8_t tmp_buf[640 * 480 * 4 * sizeof(uint8_t)];
+	memcpy(tmp_buf, frame_data->left_data, 640 * 480 * 4 * sizeof(uint8_t));
 
-	printf("Serialize Mem: Copying memory...\n");
-	memcpy(dst_mem + offset, frame_data->left_data, sizeof(uint8_t) * 640 * 480 * 4);
-	printf("Serialize Mem: Copied, Syncing...\n");
+	struct aiocb w_aio;
+	w_aio.aio_fildes = fd;
+	w_aio.aio_buf = tmp_buf;
+	w_aio.aio_nbytes = 640 * 480 * 4 * sizeof(uint8_t);
+	w_aio.aio_offset = offset;
 
-	msync(dst_mem, sizeof(uint8_t) * 640 * 480 * 4, MS_ASYNC);
+	aio_write(&w_aio);
 
-	printf("Serialize Mem: Synced.\n");
-
-	offset += sizeof(uint8_t) * 640 * 480 * 4;
+	offset += 640 * 480 * 4 * sizeof(uint8_t);
 }
 
 void serialize_frame_data(FrameData *frame_data)
