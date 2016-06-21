@@ -37,7 +37,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 
 	aio_write(&w_aio);
 
-	offset += 640 * 480 * 4 * sizeof(uint8_t);
+	offset += 640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int);
 }
 
 void serialize_frame_data(FrameData *frame_data)
