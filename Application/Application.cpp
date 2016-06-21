@@ -136,6 +136,10 @@ Configuration *configuration;
 pthread_t frame_processor_thread;
 pthread_t frame_output_thread;
 
+// Thread attributes
+pthread_attr_t frame_processor_attr;
+pthread_attr_t frame_output_attr;
+
 // Trajectory Tracker
 TrajectoryTracker *trajectoryTracker;
 
@@ -663,12 +667,12 @@ void calibrate()
 void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configuration *config)
 {
 	// Start frame processor thread
-	pthread_create(&frame_processor_thread, 0, frames_processor, 0);
+	pthread_create(&frame_processor_thread, &frame_processor_attr, frames_processor, 0);
 	printf("Stereo Application :: Frame processor thread running\n");
 
 	// Start frame output thread when in Record mode
 	if (config->operationalMode.processingMode == Record) {
-		pthread_create(&frame_output_thread, 0, frames_output, 0);
+		pthread_create(&frame_output_thread, &frame_output_attr, frames_output, 0);
 		printf("Stereo Application :: Frame output thread running\n");
 	}
 
@@ -947,6 +951,44 @@ FrameData directFetchRawStereoData(StereoSensorAbstractionLayer *stereoSAL)
 //
 void run()
 {
+	// Affinity variables
+	cpu_set_t cpu_set_main_thread;
+	cpu_set_t cpu_set_frames_processor_thread;
+	cpu_set_t cpu_set_frames_output_thread;
+
+	CPU_ZERO(&cpu_set_main_thread);
+	CPU_ZERO(&cpu_set_frames_processor_thread);
+	CPU_ZERO(&cpu_set_frames_output_thread);
+
+	CPU_SET(1, &cpu_set_main_thread);
+	CPU_SET(2, &cpu_set_frames_processor_thread);
+	CPU_SET(3, &cpu_set_frames_output_thread);
+
+	int frames_processor_affinity_result = pthread_attr_setaffinity_np(&frame_processor_attr, sizeof(cpu_set_t), &cpu_set_frames_processor_thread);
+	int frames_output_affinity_result = pthread_attr_setaffinity_np(&frame_output_attr, sizeof(cpu_set_t), &cpu_set_frames_output_thread);
+
+	if (frames_processor_affinity_result == 0) {
+		printf("Threading :: Success: Frames Processor assigned to CPU core 2\n");
+	}
+	else {
+		printf("Threading :: Error: Frames Processor was not restricted to a specific CPU core\n");
+	}
+
+	if (frames_output_affinity_result == 0) {
+		printf("Threading :: Success: Frames Output assigned to CPU core 3\n");
+	}
+	else {
+		printf("Threading :: Error: Frames Output was not restricted to a specific CPU core\n");
+	}
+
+	int main_thread_affinity_result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set_main_thread);
+	if (main_thread_affinity_result == 0) {
+		printf("Threading :: Success: Main Process assigned to CPU core 1\n");
+	}
+	else {
+		printf("Threading :: Error: Main Process was not restricted to a specific CPU core\n");
+	}
+
 	systemReady = false;
 	staticModelReadyReplay = false;
 
