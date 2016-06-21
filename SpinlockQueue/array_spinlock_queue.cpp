@@ -23,7 +23,9 @@ void array_spinlock_queue_init(SpinlockQueue *q)
 
 int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 {
+	printf("---> array_spinlock_queue_push: Waiting semaphore\n");
 	sem_wait(&q->full);
+	printf("<--- array_spinlock_queue_push: Got semaphore\n");
 
 	pthread_spin_lock(&q->spin);
 	/*
