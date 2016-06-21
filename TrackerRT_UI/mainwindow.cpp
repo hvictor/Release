@@ -139,6 +139,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->doubleSpinBox_AdaptiveTrackingWndX, SIGNAL(valueChanged(double)), this, SLOT(updateDynamicModel_SetAdaptiveTrackingWndX(double)));
     QObject::connect(ui->doubleSpinBox_AdaptiveTrackingWndY, SIGNAL(valueChanged(double)), this, SLOT(updateDynamicModel_SetAdaptiveTrackingWndY(double)));
 
+    QObject::connect(ui->doubleSpinBox_AcquisitionPeriod, SIGNAL(valueChanged(double)), this, SLOT(updateHardwareParam_SetAcquisitionPeriod(double)));
+
     QObject::connect(ui->slider_Confidence, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_Confidence(int)));
 
     QObject::connect(ui->slider_FloorDistTol, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetImpactFloorDistTolerance(int)));
@@ -253,6 +255,12 @@ void MainWindow::updateStaticModel_SetStaticModelMeasureSamples(int value)
 {
     Configuration::getInstance()->staticModelParameters.groundPlaneModelDepthSamples = value;
     printf("Static Model :: Update :: Depth Measure Samples = %d\n", Configuration::getInstance()->staticModelParameters.groundPlaneModelDepthSamples);
+}
+
+void MainWindow::updateHardwareParam_SetAcquisitionPeriod(double value)
+{
+    Configuration::getInstance()->zedHardwareParameters.acquisitionPeriod = value;
+    printf("Hardware Parameters :: Update :: Acquisition Period set to %.2f [ms]\n", Configuration::getInstance()->zedHardwareParameters.acquisitionPeriod);
 }
 
 void MainWindow::updateStaticModel_LinesSensitivityEPS(int value)

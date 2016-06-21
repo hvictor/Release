@@ -43,6 +43,7 @@ Configuration::Configuration()
 	dynamicModelParameters.useInputKalmanFilter = false;
 	dynamicModelParameters.impactMaxFloorDistance = 350.0;
 
+	zedHardwareParameters.acquisitionPeriod = 33.33333333;
 	zedHardwareParameters.cameraMatrix_L = Mat(3, 3, CV_32FC1);
 	zedHardwareParameters.rotationVector_L = Mat(1, 3, CV_32FC1);
 	zedHardwareParameters.translationVector_L = Mat(1, 3, CV_32FC1);

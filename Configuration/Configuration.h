@@ -124,6 +124,8 @@ typedef struct
 	int performanceModeIntValue;
 	int sensingModeIntValue;
 
+	double acquisitionPeriod;
+
 	int depthFrameInterleave;
 
 	// Focal Lengths

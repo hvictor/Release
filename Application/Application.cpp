@@ -716,11 +716,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		// First clock measurement
 		nanotimer_rt_start(&sensor_acq_clk_start);
 
-		while (1) {
+		// Before acquiring the next frame, sleep a sufficient time to reach the current FPS rate
+		// Time [ms] that must elapse between two succesive acquisitions (@ 30 FPS): 1000.0 * 0.03333333 = 33.33333333 [ms]
+		double sensor_acq_period_ms = configuration->zedHardwareParameters.acquisitionPeriod;
 
-			// Before acquiring the next frame, sleep a sufficient time to reach the current FPS rate
-			// Time [ms] that must elapse between two succesive acquisitions (@ 30 FPS): 1000.0 * 0.03333333 = 33.33333333 [ms]
-			double sensor_acq_period_ms = 33.33333333;
+		while (1) {
 
 			// Stop the timer
 			nanotimer_rt_stop(&sensor_acq_clk_stop);
