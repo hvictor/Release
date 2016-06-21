@@ -21,8 +21,12 @@ void open_serialization_channel_async(char *fileName)
 
 void serialize_frame_data_async(FrameData *frame_data)
 {
-	uint8_t tmp_buf[640 * 480 * 4 * sizeof(uint8_t)];
+	uint8_t tmp_buf[640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int)];
+	short depth_data_avail = (frame_data->depth_data_avail) ? 1 : 0;
+
 	memcpy(tmp_buf, frame_data->left_data, 640 * 480 * 4 * sizeof(uint8_t));
+	memcpy(tmp_buf + 640 * 480 * 4 * sizeof(uint8_t), &depth_data_avail, sizeof(short));
+	memcpy(tmp_buf + 640 * 480 * 4 * sizeof(uint8_t) + sizeof(short), &(frame_data->frame_counter), sizeof(int));
 
 	struct aiocb w_aio;
 	w_aio.aio_fildes = fd;
