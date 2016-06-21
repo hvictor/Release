@@ -16,7 +16,7 @@ static int offset = 0;
 
 void open_serialization_channel_async(char *fileName)
 {
-	fd = open(fileName, O_RDWR | O_CREAT | O_TRUNC, 0x0777);
+	fd = open(fileName, O_WRONLY | O_APPEND | O_TRUNC, 0x0777);
 }
 
 void serialize_frame_data_async(FrameData *frame_data)
@@ -33,6 +33,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_buf = tmp_buf;
 	w_aio.aio_nbytes = 640 * 480 * 4 * sizeof(uint8_t);
 	w_aio.aio_offset = offset;
+	w_aio.aio_sigevent.sigev_notify = SIGEV_NONE;
 
 	aio_write(&w_aio);
 
