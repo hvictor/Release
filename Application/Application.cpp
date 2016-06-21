@@ -553,7 +553,6 @@ void *frames_output(void *)
 			// Direct binary serialization
 			nanotimer_rt_start(&s);
 			serialize_frame_data(frame_data);
-			usleep(1000000);
 			nanotimer_rt_stop(&t);
 
 			printf("Serialization time: elapsed: %.2f [ms], Count: %d, Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),
