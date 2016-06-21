@@ -745,7 +745,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			frame_counter++;
 
 			if (stereoFrame.bytesLength <= 0) {
-				//printf("Stereo Application :: WARNING :: Invalid StereoFrame from hardware (@ Frame Counter: %d)\n", frame_counter);
+				printf("Stereo Application :: WARNING :: Invalid StereoFrame from hardware (@ Frame Counter: %d)\n", frame_counter);
 				usleep(1000);
 				continue;
 			}
