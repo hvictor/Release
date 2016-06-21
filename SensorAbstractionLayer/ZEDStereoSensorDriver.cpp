@@ -82,7 +82,7 @@ bool ZEDStereoSensorDriver::openCamera()
 		camera_open = false;
 	}
 
-	zed->sticktoCPUCore(0);
+	zed->stickToCPUCore(0);
 
 	camera_open = true;
 
