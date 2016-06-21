@@ -82,6 +82,8 @@ bool ZEDStereoSensorDriver::openCamera()
 		camera_open = false;
 	}
 
+	zed->sticktoCPUCore(0);
+
 	camera_open = true;
 
 	zed::StereoParameters *stereoParam = zed->getParameters();

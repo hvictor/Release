@@ -741,12 +741,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			if (delay_to_next_acq > 0) {
 				usleep(ceil(delay_to_next_acq * 1000.0));
 			}
-			/* Measure acquisition latency
+			/* Measure acquisition latency */
 			else {
 				acq_late = true;
 				printf("%.2f\n", delay_to_next_acq);
 			}
-			*/
 
 			StereoFrame stereoFrame = stereoSAL->fetchStereoFrame();
 
