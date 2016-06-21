@@ -14,20 +14,32 @@ using namespace std;
 static FILE *_fp;
 static struct stat statbuf;
 static int fdout;
+static void *dst_mem;
 
 void open_serialization_channel_mem(char *fileName)
 {
 	fdout = open(fileName, O_RDWR | O_CREAT | O_TRUNC, 0x0777);
+	printf("Performing mmap\n");
+	dst_mem = mmap(0, 100 * sizeof(uint8_t) * 640 * 480 * 4, PROT_READ | PROT_WRITE, MAP_SHARED, fdout, 0);
+	printf("Mmap OK\n");
 }
 
 void serialize_frame_data_mem(FrameData *frame_data)
 {
 	static int offset = 0;
-	void *dst_mem = mmap(0, sizeof(uint8_t) * 640 * 480 * 4, PROT_READ | PROT_WRITE, MAP_SHARED, fdout, offset);
 
-	memcpy(dst_mem, frame_data->left_data, sizeof(uint8_t) * 640 * 480 * 4);
+	if (offset >= 100 * sizeof(uint8_t) * 640 * 480 * 4) {
+		printf("Not writing\n");
+		return;
+	}
+
+	printf("Serialize Mem: Copying memory...\n");
+	memcpy(dst_mem + offset, frame_data->left_data, sizeof(uint8_t) * 640 * 480 * 4);
+	printf("Serialize Mem: Copied, Syncing...\n");
 
 	msync(dst_mem, sizeof(uint8_t) * 640 * 480 * 4, MS_ASYNC);
+
+	printf("Serialize Mem: Synced.\n");
 
 	offset += sizeof(uint8_t) * 640 * 480 * 4;
 }
