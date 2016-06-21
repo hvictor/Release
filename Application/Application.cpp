@@ -555,11 +555,9 @@ void *frames_output(void *)
 			serialize_frame_data(frame_data);
 			nanotimer_rt_stop(&t);
 
-			/*
 			printf("Serialization time: elapsed: %.2f [ms], Count: %d, Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),
 					outputFramesQueue.count,
 					((double)outputFramesQueue.count)/((double)QUEUE_MAX) * 100.0);
-			*/
 
 			// Free fast memory
 
@@ -719,7 +717,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			frame_counter++;
 
 			if (stereoFrame.bytesLength <= 0) {
-				printf("Stereo Application :: WARNING :: Invalid StereoFrame from hardware (@ Frame Counter: %d)\n", frame_counter);
+				//printf("Stereo Application :: WARNING :: Invalid StereoFrame from hardware (@ Frame Counter: %d)\n", frame_counter);
 				usleep(1000);
 				continue;
 			}
