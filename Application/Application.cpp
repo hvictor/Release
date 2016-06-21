@@ -709,10 +709,38 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 		// Frame counter
 		int frame_counter = 0;
 
+		// RT Clocks
+		struct timespec sensor_acq_clk_start;
+		struct timespec sensor_acq_clk_stop;
+
+		// First clock measurement
+		nanotimer_rt_start(&sensor_acq_clk_start);
+
 		while (1) {
-			//nanotimer_rt_start(&s);
+
+			// Before acquiring the next frame, sleep a sufficient time to reach the current FPS rate
+			// Time [ms] that must elapse between two succesive acquisitions (@ 30 FPS): 1000.0 * 0.03333333 = 33.33333333 [ms]
+			double sensor_acq_period_ms = 33.33333333;
+
+			// Stop the timer
+			nanotimer_rt_stop(&sensor_acq_clk_stop);
+
+			// Currently elapsed time [ms] since last acquisition
+			double elapsed_since_last_acq_ms = nanotimer_rt_ms_diff(&sensor_acq_clk_start, &sensor_acq_clk_stop);
+
+			// Difference to sleep in order to reach the acquisition period
+			double delay_to_next_acq = (sensor_acq_period_ms - elapsed_since_last_acq_ms);
+
+			// Sleep for the necessary time
+			if (delay_to_next_acq > 0) {
+				printf("RT Clk: Sleeping %d [ms] ---> %d [us]\n", delay_to_next_acq, ceil(delay_to_next_acq * 1000.0));
+				usleep(ceil(delay_to_next_acq * 1000.0));
+			}
 
 			StereoFrame stereoFrame = stereoSAL->fetchStereoFrame();
+
+			// Start the timer
+			nanotimer_rt_start(&sensor_acq_clk_start);
 
 			frame_counter++;
 
@@ -725,10 +753,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			// Allocate fast memory
 			FrameData *frameData = fast_mem_pool_fetch_memory();
 
-			if (frameData == NULL) {
+			while (frameData == NULL) {
 				printf("Stereo Application :: WARNING :: Fast Memory Pool temporarily exhausted (@ Frame Counter: %d)\n", frame_counter);
 				usleep(1000);
-				continue;
+				frameData = fast_mem_pool_fetch_memory();
 			}
 
 			frameData->frame_counter = frame_counter;
@@ -757,17 +785,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			else {
 				frameData->depth_data_avail = false;
 			}
-			//frameData->left_data = stereoFrame.leftData;
-			//frameData->right_data = stereoFrame.rightData;
 
 			// Enqueue stereo pair data in processing / output queue
 			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
 				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
 			}
-
-			//nanotimer_rt_stop(&t);
-			//rt_elapsed = nanotimer_rt_ms_diff(&s, &t);
-			usleep(10);
 		}
 	}
 
@@ -1590,4 +1612,3 @@ for (int i = 0; i < 800; i++) {
 // END LEGACY
 //
 ////////////////////////////////////////////////////////////////////////////////////////
-
