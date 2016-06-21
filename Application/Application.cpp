@@ -551,13 +551,13 @@ void *frames_output(void *)
 			}
 
 			// Direct binary serialization
-			nanotimer_rt_start(&s);
 			serialize_frame_data(frame_data);
-			nanotimer_rt_stop(&t);
 
+			/*
 			printf("Serialization time: elapsed: %.2f [ms], Count: %d, Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),
 					outputFramesQueue.count,
 					((double)outputFramesQueue.count)/((double)QUEUE_MAX) * 100.0);
+			*/
 
 			// Free fast memory
 
@@ -733,7 +733,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 
 			// Sleep for the necessary time
 			if (delay_to_next_acq > 0) {
-				printf("RT Clk: Sleeping %d [ms] ---> %d [us]\n", delay_to_next_acq, ceil(delay_to_next_acq * 1000.0));
+				//printf("RT Clk: Sleeping %.2f [ms] ---> %d [us]\n", delay_to_next_acq, ceil(delay_to_next_acq * 1000.0));
 				usleep(ceil(delay_to_next_acq * 1000.0));
 			}
 
