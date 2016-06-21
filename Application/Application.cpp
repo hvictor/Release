@@ -774,10 +774,6 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
 			//memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
 
-			if (acq_late) {
-				OverlayRenderer::getInstance()->renderAcquisitionLateIndicator_8UC4(frameData->left_data, 640, 480);
-			}
-
 			if (stereoFrame.depthData != 0) {
 				frameData->depth_data_avail = true;
 				memcpy(frameData->depth_data, stereoFrame.depthData, frameSize.width * frameSize.height * sizeof(float));
