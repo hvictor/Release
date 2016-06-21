@@ -733,12 +733,14 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			double delay_to_next_acq = (sensor_acq_period_ms - elapsed_since_last_acq_ms);
 
 			// Sleep for the necessary time
+			bool acq_late = false;
 			if (delay_to_next_acq > 0) {
 				//printf("RT Clk: Sleeping %.2f [ms] ---> %d [us]\n", delay_to_next_acq, ceil(delay_to_next_acq * 1000.0));
 				usleep(ceil(delay_to_next_acq * 1000.0));
 			}
 			else {
-				printf("RT Clk: Acquisition is late! (of %.2f ms)\n", delay_to_next_acq);
+				acq_late = true;
+				printf("%.2f\n", delay_to_next_acq);
 			}
 
 			StereoFrame stereoFrame = stereoSAL->fetchStereoFrame();
@@ -766,8 +768,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			frameData->frame_counter = frame_counter;
 
 			memcpy(frameData->left_data, stereoFrame.leftData, stereoFrame.bytesLength);
-			memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
+			//memcpy(frameData->right_data, stereoFrame.rightData, stereoFrame.bytesLength);
 
+			if (acq_late) {
+				OverlayRenderer::getInstance()->renderAcquisitionLateIndicator_8UC4(frameData->left_data, 640, 480);
+			}
 
 			if (stereoFrame.depthData != 0) {
 				frameData->depth_data_avail = true;
