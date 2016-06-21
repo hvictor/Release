@@ -521,7 +521,7 @@ void *frames_processor(void *)
 //
 void *frames_output(void *)
 {
-	struct timespect s, t;
+	struct timespec s, t;
 
 	int counter = 0;
 
@@ -553,9 +553,10 @@ void *frames_output(void *)
 			// Direct binary serialization
 			nanotimer_rt_start(&s);
 			serialize_frame_data(frame_data);
-			nanotimer_rt_start(&t);
+			nanotimer_rt_stop(&t);
 
-			printf("Serialization time: elapsed: %d [ms]\n", nanotimer_rt_ms_diff(&s, &t));
+			printf("Serialization time: elapsed: %d [ms], Output Queue Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),
+					((double)outputFramesQueue.count)/((double)QUEUE_MAX) * 100.0);
 
 			// Free fast memory
 
