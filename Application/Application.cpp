@@ -737,6 +737,9 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 				//printf("RT Clk: Sleeping %.2f [ms] ---> %d [us]\n", delay_to_next_acq, ceil(delay_to_next_acq * 1000.0));
 				usleep(ceil(delay_to_next_acq * 1000.0));
 			}
+			else {
+				printf("RT Clk: Acquisition is late! (of %.2f ms)\n", delay_to_next_acq);
+			}
 
 			StereoFrame stereoFrame = stereoSAL->fetchStereoFrame();
 
