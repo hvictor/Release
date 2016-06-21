@@ -15,4 +15,7 @@ bool deserialize_next_frame_data(FrameData *dst);
 void open_deserialization_channel(char *file_name);
 void close_deserialization_channel();
 
+void open_serialization_channel_mem(char *fileName);
+void serialize_frame_data_mem(FrameData *frame_data);
+
 #endif

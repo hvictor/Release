@@ -4,10 +4,33 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h> /* mmap() is defined in this header */
+#include <fcntl.h>
 
 using namespace std;
 
 static FILE *_fp;
+static struct stat statbuf;
+static int fdout;
+
+void open_serialization_channel_mem(char *fileName)
+{
+	fdout = open(fileName, O_RDWR | O_CREAT | O_TRUNC, 0x0777);
+}
+
+void serialize_frame_data_mem(FrameData *frame_data)
+{
+	static int offset = 0;
+	void *dst_mem = mmap(0, sizeof(uint8_t) * 640 * 480 * 4, PROT_READ | PROT_WRITE, MAP_SHARED, fdout, offset);
+
+	memcpy(dst_mem, frame_data->left_data, sizeof(uint8_t) * 640 * 480 * 4);
+
+	msync(dst_mem, sizeof(uint8_t) * 640 * 480 * 4, MS_ASYNC);
+
+	offset += sizeof(uint8_t) * 640 * 480 * 4;
+}
 
 void serialize_frame_data(FrameData *frame_data)
 {
