@@ -541,8 +541,6 @@ void *frames_output(void *)
 		// Serialize binary Static Model
 		serialize_static_model();
 
-		close_serialization_channel();
-
 		while (systemRecording) {
 			char buffer[300];
 			FrameData *frame_data;
@@ -553,9 +551,8 @@ void *frames_output(void *)
 			}
 
 			// Direct binary serialization
-			open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+			OverlayRenderer::getInstance()->renderFrameCounter_8UC4(frame_data->left_data, 640, 480, frame_data->frame_counter);
 			serialize_frame_data(frame_data);
-			close_serialization_channel();
 
 			/*
 			printf("Serialization time: elapsed: %.2f [ms], Count: %d, Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),

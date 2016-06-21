@@ -67,6 +67,7 @@ public:
 	void renderNet(Mat frame_RGBA, NetVisualProjection netVisualProjection);
 	void renderTwoPlayersFieldRepresentation(Mat frame_RGBA, TwoPlayersFieldRepresentation twoPlayersFieldRepresentation);
 	void renderRedPointerDot(Mat frame_RGBA, double x, double y);
+	void renderFrameCounter_8UC4(uint8_t *u8data, int width, int height, int frame_counter);
 
 private:
 	OverlayRenderer();

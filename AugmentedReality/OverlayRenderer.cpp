@@ -612,3 +612,11 @@ void OverlayRenderer::renderRedPointerDot(Mat frame_RGBA, double x, double y)
 {
 	circle(frame_RGBA, Point2f(x, y), 8, OVERLAY_COLOR_RED_RGBA, -1);
 }
+
+void OverlayRenderer::renderFrameCounter_8UC4(uint8_t *u8data, int width, int height, int frame_counter)
+{
+	char counterMessage[80];
+	sprintf(counterMessage, "Frame: %d", frame_counter);
+	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
+	putText(frame_RGBA, counterMessage, Point(10, 30), FONT_HERSHEY_SIMPLEX, 1.0, OVERLAY_COLOR_YELLOW_RGBA, 2, CV_AA);
+}
