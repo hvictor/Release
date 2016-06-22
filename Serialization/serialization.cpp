@@ -48,7 +48,7 @@ void __hdl_codec_encode_completed_thread(sigval_t val)
 
 void open_serialization_channel_async(char *fileName)
 {
-	fd = open(fileName, O_CREAT | O_WRONLY | O_APPEND | O_TRUNC, 0x0777);
+	fd = open(fileName, O_CREAT | O_RDWR | O_APPEND | O_TRUNC, 0x0777);
 }
 
 void serialize_frame_data_async(FrameData *frame_data)
@@ -102,7 +102,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_nbytes = bufsiz;
 	w_aio.aio_offset = 0;
 	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
-	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
+	//w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
 	//w_aio.aio_sigevent.sigev_signo = SIGIO;
 	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
 
