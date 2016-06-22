@@ -559,6 +559,7 @@ void *frames_output(void *)
 			}
 
 			// Direct binary serialization
+			printf("Application :: serializing async\n");
 			serialize_frame_data_async(frame_data);
 
 			/*

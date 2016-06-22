@@ -36,6 +36,18 @@ void __hdl_codec_encode_completed(int signo, siginfo_t *info, void *context)
   return;
 }
 
+void *__hdl_codec_encode_completed_thread(sigval_t val)
+{
+	printf("codec :: thread handler :: encode complete\n");
+
+	printf("codec :: thread handler :: releasing memory of encode buffer %d\n", val.sival_int);
+	codec_async_mem_release_memory(used_buffers[val.sival_int]);
+	printf("codec :: thread handler :: memory released\n");
+
+
+	return (void *)0;
+}
+
 void open_serialization_channel_async(char *fileName)
 {
 	fd = open(fileName, O_CREAT | O_WRONLY | O_APPEND | O_TRUNC, 0x0777);
@@ -78,17 +90,20 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_buf = encode_buf->data;
 	w_aio.aio_nbytes = offs;
 	//w_aio.aio_offset = offset;
-	w_aio.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
-	w_aio.aio_sigevent.sigev_signo = SIGIO;
+	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
+	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
+	//w_aio.aio_sigevent.sigev_signo = SIGIO;
 	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
 	used_buffers[encode_buf->index] = encode_buf;
 
 	// Notification callback
+	/*
 	struct sigaction sig_act;
 	sigemptyset(&sig_act.sa_mask);
 	sig_act.sa_flags = SA_SIGINFO;
 	sig_act.sa_sigaction = __hdl_codec_encode_completed;
 	sigaction(SIGIO, &sig_act, NULL);
+	*/
 
 	// Write request
 	printf("codec :: ASYNC :: requesting write of %d bytes, encode buffer index: %d\n", offs, encode_buf->index);
