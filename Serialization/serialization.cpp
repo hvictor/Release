@@ -88,8 +88,9 @@ void serialize_frame_data_async(FrameData *frame_data)
 	sigaction(SIGIO, &sig_act, NULL);
 
 	// Write request
-	printf("codec :: ASYNC :: writing %d bytes, encode buffer index: %d\n", offs, encode_buf->index);
+	printf("codec :: ASYNC :: requesting write of %d bytes, encode buffer index: %d\n", offs, encode_buf->index);
 	aio_write(&w_aio);
+	printf("codec :: ASYNC :: request submitted, encode buffer index: %d\n", encode_buf->index);
 
 	/*
 	if (INT_MAX - offset >= (640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int)))
