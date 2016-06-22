@@ -6,6 +6,7 @@
 #include "../StaticModel/NetModel.h"
 #include "../StaticModel/TennisFieldStaticModel.h"
 
+void codec_async_init();
 void open_serialization_channel(char *file_name);
 void close_serialization_channel();
 void serialize_static_model();

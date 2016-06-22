@@ -1014,6 +1014,10 @@ void run()
 	}
 	printf("Fast memory pool initialized.\n");
 
+	printf("System :: CODEC :: Initializing async codec\n");
+	codec_async_init();
+	printf("System :: CODEC :: Async codec initialized\n");
+
 	// Initialize array-based spinlock queues
 	printf("Initializing I/O Frame queues...\n");
 	array_spinlock_queue_init(&inputFramesQueue);

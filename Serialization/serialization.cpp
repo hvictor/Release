@@ -7,6 +7,8 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <aio.h>
+#include <limits.h>
+#include "codec_async_mem.h"
 
 using namespace std;
 
@@ -14,30 +16,85 @@ static FILE *_fp;
 static int fd;
 static int offset = 0;
 
+static codec_buffer_t *used_buffers[80];
+
+void codec_async_init()
+{
+	codec_async_mem_init(640, 480, 4);
+}
+
+void __hdl_codec_encode_completed(int signo, siginfo_t *info, void *context)
+{
+	if (info->si_signo == SIGIO) {
+		codec_async_mem_release_memory(used_buffers[info->si_value.sival_int]);
+	}
+
+  return;
+}
+
 void open_serialization_channel_async(char *fileName)
 {
-	fd = open(fileName, O_WRONLY | O_APPEND | O_TRUNC, 0x0777);
+	fd = open(fileName, O_CREAT | O_WRONLY | O_APPEND | O_TRUNC, 0x0777);
 }
 
 void serialize_frame_data_async(FrameData *frame_data)
 {
-	uint8_t tmp_buf[640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int)];
+	int offs = 0;
+
+	// Fetch fast codec memory for encode
+	codec_buffer_t *encode_buf = codec_async_mem_fetch_memory();
+
 	short depth_data_avail = (frame_data->depth_data_avail) ? 1 : 0;
 
-	memcpy(tmp_buf, frame_data->left_data, 640 * 480 * 4 * sizeof(uint8_t));
-	memcpy(tmp_buf + 640 * 480 * 4 * sizeof(uint8_t), &depth_data_avail, sizeof(short));
-	memcpy(tmp_buf + 640 * 480 * 4 * sizeof(uint8_t) + sizeof(short), &(frame_data->frame_counter), sizeof(int));
+	// Encode data
+	memcpy(encode_buf->data, frame_data->left_data, 640 * 480 * 4 * sizeof(uint8_t));
+	offs += 640 * 480 * 4 * sizeof(uint8_t);
+	memcpy(encode_buf->data + offs, &depth_data_avail, sizeof(short));
+	offs += sizeof(short);
 
+	if (depth_data_avail) {
+		// Encode depth data
+		offs += 640 * 480 * sizeof(float);
+
+		// Encode depth step value
+		offs += sizeof(int);
+
+	}
+
+	memcpy(encode_buf->data + offs, &(frame_data->frame_counter), sizeof(int));
+	offs += sizeof(int);
+
+	// Request async data write
 	struct aiocb w_aio;
-	w_aio.aio_fildes = fd;
-	w_aio.aio_buf = tmp_buf;
-	w_aio.aio_nbytes = 640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int);
-	w_aio.aio_offset = offset;
-	w_aio.aio_sigevent.sigev_notify = SIGEV_NONE;
+	bzero((char *)&w_aio, sizeof(struct aiocb));
 
+	w_aio.aio_fildes = fd;
+	w_aio.aio_buf = encode_buf->data;
+	w_aio.aio_nbytes = offs;
+	//w_aio.aio_offset = offset;
+	w_aio.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
+	w_aio.aio_sigevent.sigev_signo = SIGIO;
+	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
+	used_buffers[encode_buf->index] = encode_buf;
+
+	// Notification callback
+	struct sigaction sig_act;
+	sigemptyset(&sig_act.sa_mask);
+	sig_act.sa_flags = SA_SIGINFO;
+	sig_act.sa_sigaction = __hdl_codec_encode_completed;
+	sigaction(SIGIO, &sig_act, NULL);
+
+	// Write request
 	aio_write(&w_aio);
 
+	/*
+	if (INT_MAX - offset >= (640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int)))
+	{
+		printf("serialization :: ERROR :: offset overflow\n");
+	}
+
 	offset += 640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int);
+	*/
 }
 
 void serialize_frame_data(FrameData *frame_data)
