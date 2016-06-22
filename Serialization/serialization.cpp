@@ -38,11 +38,14 @@ void __hdl_codec_encode_completed(int signo, siginfo_t *info, void *context)
 
 void __hdl_codec_encode_completed_thread(sigval_t val)
 {
+	printf("non faccio un cazzo\n");
+	/*
 	printf("codec :: thread handler :: encode complete\n");
 
 	printf("codec :: thread handler :: releasing memory of encode buffer %d\n", val.sival_int);
 	codec_async_mem_release_memory(used_buffers[val.sival_int]);
 	printf("codec :: thread handler :: memory released\n");
+	*/
 }
 
 void open_serialization_channel_async(char *fileName)
