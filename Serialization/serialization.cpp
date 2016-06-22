@@ -42,7 +42,7 @@ void __hdl_codec_encode_completed_thread(sigval_t val)
 	printf("Codec :: thread handler :: encode complete\n");
 
 	printf("Codec :: thread handler :: releasing memory of encode buffer %d\n", val.sival_int);
-	//codec_async_mem_release_memory(used_buffers[val.sival_int]);
+	codec_async_mem_release_memory(used_buffers[val.sival_int]);
 	printf("Codec :: thread handler :: memory released\n");
 }
 
@@ -58,27 +58,22 @@ void serialize_frame_data_async(FrameData *frame_data)
 	int frame_width = 640;
 	int frame_height = 480;
 	int channels = 4;
-	size_t bufsiz = 100;/*frame_width * frame_height * channels * sizeof(uint8_t) +	// Reference Camera Frame, UINT8, 4 channels
+	size_t bufsiz = frame_width * frame_height * channels * sizeof(uint8_t) +	// Reference Camera Frame, UINT8, 4 channels
 			sizeof(short) +												// Depth Data availability flag
 			frame_width * frame_height * sizeof(float) +				// Depth Data, float, 1 channels
 			sizeof(int) +												// Depth Data aligned representation step offset
-			sizeof(int);*/												// Frame Counter;
+			sizeof(int);												// Frame Counter;
 
 	// Fetch fast codec memory for encode
-	printf("codec :: fetching encode buffer memory\n");
 	codec_buffer_t *encode_buf = codec_async_mem_fetch_memory();
-	printf("codec :: encode buffer memory acquired at %p\n", encode_buf);
 
 	short depth_data_avail = (frame_data->depth_data_avail) ? 1 : 0;
 
-	memset(encode_buf->data, 0, bufsiz);
 	// Encode data
-	/*
 	memcpy(encode_buf->data, frame_data->left_data, 640 * 480 * 4 * sizeof(uint8_t));
 	offs += 640 * 480 * 4 * sizeof(uint8_t);
 	memcpy(encode_buf->data + offs, &depth_data_avail, sizeof(short));
 	offs += sizeof(short);
-	*/
 
 	if (depth_data_avail) {
 		// Encode depth data
@@ -86,12 +81,10 @@ void serialize_frame_data_async(FrameData *frame_data)
 
 		// Encode depth step value
 		offs += sizeof(int);
-
 	}
-	/*
+
 	memcpy(encode_buf->data + offs, &(frame_data->frame_counter), sizeof(int));
 	offs += sizeof(int);
-	*/
 
 	// Request async data write
 	struct aiocb w_aio;
@@ -100,16 +93,16 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_fildes = fd;
 	w_aio.aio_buf = encode_buf->data;
 	w_aio.aio_nbytes = bufsiz;
-	w_aio.aio_offset = 0;
-	w_aio.aio_sigevent.sigev_notify = SIGEV_NONE;//SIGEV_THREAD;
-	//w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
-	//w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
+	w_aio.aio_offset = (intptr_t)-1;
+	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
+	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
+	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
 
-	//used_buffers[encode_buf->index] = encode_buf;
+	used_buffers[encode_buf->index] = encode_buf;
 
 	// Write request
 	printf("codec :: NO WRITE :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
-	//aio_write(&w_aio);
+	aio_write(&w_aio);
 	printf("codec :: NO WRITE :: request submitted, encode buffer index: %d\n", encode_buf->index);
 }
 
