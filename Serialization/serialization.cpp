@@ -42,7 +42,7 @@ void __hdl_codec_encode_completed_thread(sigval_t val)
 	printf("Codec :: thread handler :: encode complete\n");
 
 	printf("Codec :: thread handler :: releasing memory of encode buffer %d\n", val.sival_int);
-	codec_async_mem_release_memory(used_buffers[val.sival_int]);
+	//codec_async_mem_release_memory(used_buffers[val.sival_int]);
 	printf("Codec :: thread handler :: memory released\n");
 }
 
@@ -100,7 +100,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_fildes = fd;
 	w_aio.aio_buf = encode_buf->data;
 	w_aio.aio_nbytes = bufsiz;
-	//w_aio.aio_offset = offset;
+	w_aio.aio_offset = 0;
 	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
 	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
 	//w_aio.aio_sigevent.sigev_signo = SIGIO;
@@ -118,9 +118,9 @@ void serialize_frame_data_async(FrameData *frame_data)
 	*/
 
 	// Write request
-	printf("codec :: ASYNC ZERO :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
+	printf("codec :: OFFS ZERO :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
 	aio_write(&w_aio);
-	printf("codec :: ASYNC ZERO :: request submitted, encode buffer index: %d\n", encode_buf->index);
+	printf("codec :: OFFS ZERO :: request submitted, encode buffer index: %d\n", encode_buf->index);
 
 	/*
 	if (INT_MAX - offset >= (640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int)))
