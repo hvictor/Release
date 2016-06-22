@@ -101,35 +101,17 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_buf = encode_buf->data;
 	w_aio.aio_nbytes = bufsiz;
 	w_aio.aio_offset = 0;
-	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
+	w_aio.aio_sigevent.sigev_notify = SIGEV_NONE;//SIGEV_THREAD;
 	//w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
 	//w_aio.aio_sigevent.sigev_signo = SIGIO;
 	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
 
 	used_buffers[encode_buf->index] = encode_buf;
 
-	// Notification callback
-	/*
-	struct sigaction sig_act;
-	sigemptyset(&sig_act.sa_mask);
-	sig_act.sa_flags = SA_SIGINFO;
-	sig_act.sa_sigaction = __hdl_codec_encode_completed;
-	sigaction(SIGIO, &sig_act, NULL);
-	*/
-
 	// Write request
-	printf("codec :: OFFS ZERO :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
+	printf("codec :: OFFS SIGEV NONE :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
 	aio_write(&w_aio);
-	printf("codec :: OFFS ZERO :: request submitted, encode buffer index: %d\n", encode_buf->index);
-
-	/*
-	if (INT_MAX - offset >= (640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int)))
-	{
-		printf("serialization :: ERROR :: offset overflow\n");
-	}
-
-	offset += 640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int);
-	*/
+	printf("codec :: OFFS SIGEV NONE :: request submitted, encode buffer index: %d\n", encode_buf->index);
 }
 
 void serialize_frame_data(FrameData *frame_data)
