@@ -28,11 +28,11 @@ void codec_async_mem_init(int frame_width, int frame_height, int channels)
 
 	for (int i = 0 ; i < _codec_mem_pool_size; i++) {
 		mem[i].index = i;
-		mem[i].data = (void *)malloc(	frame_width * frame_height * channels * sizeof(uint8_t) +	// Reference Camera Frame, UINT8, 4 channels
+		mem[i].data = (void *)malloc(100/*frame_width * frame_height * channels * sizeof(uint8_t) +	// Reference Camera Frame, UINT8, 4 channels
 										sizeof(short) +												// Depth Data availability flag
 										frame_width * frame_height * sizeof(float) +				// Depth Data, float, 1 channels
 										sizeof(int) +												// Depth Data aligned representation step offset
-										sizeof(int)													// Frame Counter
+										sizeof(int)*/													// Frame Counter
 									);
 
 	}

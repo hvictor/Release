@@ -58,11 +58,11 @@ void serialize_frame_data_async(FrameData *frame_data)
 	int frame_width = 640;
 	int frame_height = 480;
 	int channels = 4;
-	size_t bufsiz = frame_width * frame_height * channels * sizeof(uint8_t) +	// Reference Camera Frame, UINT8, 4 channels
+	size_t bufsiz = 100;/*frame_width * frame_height * channels * sizeof(uint8_t) +	// Reference Camera Frame, UINT8, 4 channels
 			sizeof(short) +												// Depth Data availability flag
 			frame_width * frame_height * sizeof(float) +				// Depth Data, float, 1 channels
 			sizeof(int) +												// Depth Data aligned representation step offset
-			sizeof(int);												// Frame Counter;
+			sizeof(int);*/												// Frame Counter;
 
 	// Fetch fast codec memory for encode
 	printf("codec :: fetching encode buffer memory\n");
