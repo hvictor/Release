@@ -31,7 +31,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 	struct aiocb w_aio;
 	w_aio.aio_fildes = fd;
 	w_aio.aio_buf = tmp_buf;
-	w_aio.aio_nbytes = 640 * 480 * 4 * sizeof(uint8_t);
+	w_aio.aio_nbytes = 640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int);
 	w_aio.aio_offset = offset;
 	w_aio.aio_sigevent.sigev_notify = SIGEV_NONE;
 
