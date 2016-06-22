@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <aio.h>
 #include <limits.h>
+#include <signal.h>
 #include "codec_async_mem.h"
 
 using namespace std;
@@ -42,7 +43,9 @@ void serialize_frame_data_async(FrameData *frame_data)
 	int offs = 0;
 
 	// Fetch fast codec memory for encode
+	printf("codec :: fetching encode buffer memory\n");
 	codec_buffer_t *encode_buf = codec_async_mem_fetch_memory();
+	printf("codec :: encode buffer memory acquired at %p\n", encode_buf);
 
 	short depth_data_avail = (frame_data->depth_data_avail) ? 1 : 0;
 
@@ -85,6 +88,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 	sigaction(SIGIO, &sig_act, NULL);
 
 	// Write request
+	printf("codec :: ASYNC :: writing %d bytes, encode buffer index: %d\n", offs, encode_buf->index);
 	aio_write(&w_aio);
 
 	/*

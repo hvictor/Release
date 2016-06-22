@@ -35,8 +35,6 @@ void codec_async_mem_init(int frame_width, int frame_height, int channels)
 										sizeof(int)													// Frame Counter
 									);
 
-		);
-
 	}
 
 	_mem_count = 0;
