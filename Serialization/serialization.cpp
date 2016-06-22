@@ -26,8 +26,11 @@ void codec_async_init()
 
 void __hdl_codec_encode_completed(int signo, siginfo_t *info, void *context)
 {
+	printf("codec :: handler :: encode complete\n");
 	if (info->si_signo == SIGIO) {
+		printf("codec :: handler :: releasing memory of encode buffer %d\n", info->si_value.sival_int);
 		codec_async_mem_release_memory(used_buffers[info->si_value.sival_int]);
+		printf("codec :: handler :: memory released\n");
 	}
 
   return;
