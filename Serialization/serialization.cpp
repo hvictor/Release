@@ -38,11 +38,14 @@ void __hdl_codec_encode_completed(int signo, siginfo_t *info, void *context)
 
 void __hdl_codec_encode_completed_thread(sigval_t val)
 {
+	printf("Non faccio un cazzo, scommenta set used\n");
+	/*
 	printf("codec :: thread handler :: encode complete\n");
 
 	printf("codec :: thread handler :: releasing memory of encode buffer %d\n", val.sival_int);
 	codec_async_mem_release_memory(used_buffers[val.sival_int]);
 	printf("codec :: thread handler :: memory released\n");
+	*/
 }
 
 void open_serialization_channel_async(char *fileName)
@@ -52,7 +55,7 @@ void open_serialization_channel_async(char *fileName)
 
 void serialize_frame_data_async(FrameData *frame_data)
 {
-	int offs = 0;
+	size_t offs = 0;
 
 	// Fetch fast codec memory for encode
 	printf("codec :: fetching encode buffer memory\n");
@@ -81,7 +84,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 
 	// Request async data write
 	struct aiocb w_aio;
-	bzero((char *)&w_aio, sizeof(struct aiocb));
+	//bzero((char *)&w_aio, sizeof(struct aiocb));
 
 	w_aio.aio_fildes = fd;
 	w_aio.aio_buf = encode_buf->data;
@@ -91,7 +94,8 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
 	//w_aio.aio_sigevent.sigev_signo = SIGIO;
 	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
-	used_buffers[encode_buf->index] = encode_buf;
+
+	//used_buffers[encode_buf->index] = encode_buf;
 
 	// Notification callback
 	/*
