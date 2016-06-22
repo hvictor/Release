@@ -540,12 +540,11 @@ void *frames_output(void *)
 	if (configuration->getOperationalMode().processingMode == Record)
 	{
 		// Open binary serialization channel
-		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+		//open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
 
 		// Serialize binary Static Model
-		serialize_static_model();
-
-		close_serialization_channel();
+		//serialize_static_model();
+		//close_serialization_channel();
 
 		open_serialization_channel_async(configuration->recordingParameters.recordingFileNameFullPath);
 
@@ -574,7 +573,7 @@ void *frames_output(void *)
 		}
 	}
 
-	close_serialization_channel();
+	//close_serialization_channel();
 
 	printf("Application :: Frames output :: Processing terminated\n");
 
