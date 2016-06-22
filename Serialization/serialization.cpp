@@ -108,9 +108,9 @@ void serialize_frame_data_async(FrameData *frame_data)
 	//used_buffers[encode_buf->index] = encode_buf;
 
 	// Write request
-	printf("codec :: OFFS SIGEV NONE, NO USE BUF :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
-	aio_write(&w_aio);
-	printf("codec :: OFFS SIGEV NONE, NO USE BUF :: request submitted, encode buffer index: %d\n", encode_buf->index);
+	printf("codec :: NO WRITE :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
+	//aio_write(&w_aio);
+	printf("codec :: NO WRITE :: request submitted, encode buffer index: %d\n", encode_buf->index);
 }
 
 void serialize_frame_data(FrameData *frame_data)
