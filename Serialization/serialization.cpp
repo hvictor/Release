@@ -24,7 +24,7 @@ void codec_async_init()
 {
 	codec_async_mem_init(640, 480, 4);
 }
-
+/*
 void __hdl_codec_encode_completed(int signo, siginfo_t *info, void *context)
 {
 	printf("codec :: handler :: encode complete\n");
@@ -36,6 +36,7 @@ void __hdl_codec_encode_completed(int signo, siginfo_t *info, void *context)
 
   return;
 }
+*/
 
 void __hdl_codec_encode_completed_thread(sigval_t val)
 {
@@ -63,12 +64,10 @@ void serialize_frame_data_async(FrameData *frame_data)
 	short depth_data_avail = (frame_data->depth_data_avail) ? 1 : 0;
 
 	// Encode data
-	/*
 	memcpy(encode_buf->data, frame_data->left_data, 640 * 480 * 4 * sizeof(uint8_t));
 	offs += 640 * 480 * 4 * sizeof(uint8_t);
 	memcpy(encode_buf->data + offs, &depth_data_avail, sizeof(short));
 	offs += sizeof(short);
-	*/
 
 	if (depth_data_avail) {
 		// Encode depth data
@@ -79,10 +78,8 @@ void serialize_frame_data_async(FrameData *frame_data)
 
 	}
 
-	/*
 	memcpy(encode_buf->data + offs, &(frame_data->frame_counter), sizeof(int));
 	offs += sizeof(int);
-	*/
 
 	// Request async data write
 	struct aiocb w_aio;
@@ -97,7 +94,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 	//w_aio.aio_sigevent.sigev_signo = SIGIO;
 	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
 
-	//used_buffers[encode_buf->index] = encode_buf;
+	used_buffers[encode_buf->index] = encode_buf;
 
 	// Notification callback
 	/*
