@@ -55,6 +55,15 @@ void serialize_frame_data_async(FrameData *frame_data)
 {
 	size_t offs = 0;
 
+	int frame_width = 640;
+	int frame_height = 480;
+	int channels = 4;
+	size_t bufsiz = frame_width * frame_height * channels * sizeof(uint8_t) +	// Reference Camera Frame, UINT8, 4 channels
+			sizeof(short) +												// Depth Data availability flag
+			frame_width * frame_height * sizeof(float) +				// Depth Data, float, 1 channels
+			sizeof(int) +												// Depth Data aligned representation step offset
+			sizeof(int);												// Frame Counter;
+
 	// Fetch fast codec memory for encode
 	printf("codec :: fetching encode buffer memory\n");
 	codec_buffer_t *encode_buf = codec_async_mem_fetch_memory();
@@ -62,11 +71,14 @@ void serialize_frame_data_async(FrameData *frame_data)
 
 	short depth_data_avail = (frame_data->depth_data_avail) ? 1 : 0;
 
+	memset(encode_buf->data, 0, bufsiz);
 	// Encode data
+	/*
 	memcpy(encode_buf->data, frame_data->left_data, 640 * 480 * 4 * sizeof(uint8_t));
 	offs += 640 * 480 * 4 * sizeof(uint8_t);
 	memcpy(encode_buf->data + offs, &depth_data_avail, sizeof(short));
 	offs += sizeof(short);
+	*/
 
 	if (depth_data_avail) {
 		// Encode depth data
@@ -76,9 +88,10 @@ void serialize_frame_data_async(FrameData *frame_data)
 		offs += sizeof(int);
 
 	}
-
+	/*
 	memcpy(encode_buf->data + offs, &(frame_data->frame_counter), sizeof(int));
 	offs += sizeof(int);
+	*/
 
 	// Request async data write
 	struct aiocb w_aio;
@@ -86,7 +99,7 @@ void serialize_frame_data_async(FrameData *frame_data)
 
 	w_aio.aio_fildes = fd;
 	w_aio.aio_buf = encode_buf->data;
-	w_aio.aio_nbytes = offs;
+	w_aio.aio_nbytes = bufsiz;
 	//w_aio.aio_offset = offset;
 	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
 	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
@@ -105,9 +118,9 @@ void serialize_frame_data_async(FrameData *frame_data)
 	*/
 
 	// Write request
-	printf("codec :: ASYNC :: requesting write of %d bytes, encode buffer index: %d\n", offs, encode_buf->index);
+	printf("codec :: ASYNC ZERO :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
 	aio_write(&w_aio);
-	printf("codec :: ASYNC :: request submitted, encode buffer index: %d\n", encode_buf->index);
+	printf("codec :: ASYNC ZERO :: request submitted, encode buffer index: %d\n", encode_buf->index);
 
 	/*
 	if (INT_MAX - offset >= (640 * 480 * 4 * sizeof(uint8_t) + sizeof(short) + sizeof(int)))
