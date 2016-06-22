@@ -18,7 +18,6 @@ static int fd;
 static int offset = 0;
 
 static codec_buffer_t *used_buffers[80];
-static char test_buf[] = "0123456789";
 
 void codec_async_init()
 {
@@ -83,11 +82,11 @@ void serialize_frame_data_async(FrameData *frame_data)
 
 	// Request async data write
 	struct aiocb w_aio;
-	//bzero((char *)&w_aio, sizeof(struct aiocb));
+	bzero((char *)&w_aio, sizeof(struct aiocb));
 
 	w_aio.aio_fildes = fd;
-	w_aio.aio_buf = test_buf;//encode_buf->data;
-	w_aio.aio_nbytes = 9;
+	w_aio.aio_buf = encode_buf->data;
+	w_aio.aio_nbytes = offs;
 	//w_aio.aio_offset = offset;
 	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
 	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
