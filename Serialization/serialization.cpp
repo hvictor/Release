@@ -87,8 +87,8 @@ void serialize_frame_data_async(FrameData *frame_data)
 	offs += sizeof(int);
 
 	// Request async data write
-	struct aiocb w_aio;
-	bzero((char *)&w_aio, sizeof(struct aiocb));
+	struct aiocb64 w_aio;
+	bzero(&w_aio, sizeof(struct aiocb64));
 
 	w_aio.aio_fildes = fd;
 	w_aio.aio_buf = encode_buf->data;
@@ -101,9 +101,9 @@ void serialize_frame_data_async(FrameData *frame_data)
 	used_buffers[encode_buf->index] = encode_buf;
 
 	// Write request
-	printf("codec :: NO WRITE :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
-	aio_write(&w_aio);
-	printf("codec :: NO WRITE :: request submitted, encode buffer index: %d\n", encode_buf->index);
+	printf("codec :: 64 :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
+	aio_write64(&w_aio);
+	printf("codec :: 64 :: request submitted, encode buffer index: %d\n", encode_buf->index);
 }
 
 void serialize_frame_data(FrameData *frame_data)
