@@ -103,15 +103,14 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_offset = 0;
 	w_aio.aio_sigevent.sigev_notify = SIGEV_NONE;//SIGEV_THREAD;
 	//w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
-	//w_aio.aio_sigevent.sigev_signo = SIGIO;
-	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
+	//w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
 
-	used_buffers[encode_buf->index] = encode_buf;
+	//used_buffers[encode_buf->index] = encode_buf;
 
 	// Write request
-	printf("codec :: OFFS SIGEV NONE :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
+	printf("codec :: OFFS SIGEV NONE, NO USE BUF :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
 	aio_write(&w_aio);
-	printf("codec :: OFFS SIGEV NONE :: request submitted, encode buffer index: %d\n", encode_buf->index);
+	printf("codec :: OFFS SIGEV NONE, NO USE BUF :: request submitted, encode buffer index: %d\n", encode_buf->index);
 }
 
 void serialize_frame_data(FrameData *frame_data)
