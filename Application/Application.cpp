@@ -539,17 +539,16 @@ void *frames_output(void *)
 
 	if (configuration->getOperationalMode().processingMode == Record)
 	{
-		/*
+
 		printf("System :: CODEC :: Initializing async codec\n");
 		codec_async_init();
 		printf("System :: CODEC :: Async codec initialized\n");
-		*/
 
 		// Open binary serialization channel
-		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+		//open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
 
 		// Serialize binary Static Model
-		serialize_static_model();
+		//serialize_static_model();
 
 		while (systemRecording) {
 			FrameData *frame_data;
@@ -573,7 +572,7 @@ void *frames_output(void *)
 		}
 	}
 
-	//close_serialization_channel();
+	close_serialization_channel();
 
 	printf("Application :: Frames output :: Processing terminated\n");
 

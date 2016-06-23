@@ -9,6 +9,7 @@
 #include <aio.h>
 #include <limits.h>
 #include <signal.h>
+#include <errno.h>
 #include "codec_async_mem.h"
 
 using namespace std;
@@ -41,9 +42,17 @@ void __hdl_codec_encode_completed_thread(sigval_t val)
 {
 	printf("Codec :: thread handler :: encode complete\n");
 
-	printf("Codec :: thread handler :: releasing memory of encode buffer %d\n", val.sival_int);
-	codec_async_mem_release_memory(used_buffers[val.sival_int]);
-	printf("Codec :: thread handler :: memory released\n");
+	struct aiocb *w_aio = (struct aiocb *)val.sival_ptr;
+	int err = aio_error(w_aio);
+	printf("err = %d\n", err);
+	if (err == EBADF) {
+		printf("codec :: bad fd = %d\n", fd);
+	}
+	else {
+		printf("ok\n");
+	}
+
+	//codec_async_mem_release_memory(used_buffers[val.sival_int]);
 }
 
 void open_serialization_channel_async(char *fileName)
@@ -96,13 +105,13 @@ void serialize_frame_data_async(FrameData *frame_data)
 	w_aio.aio_offset = (intptr_t)-1;
 	w_aio.aio_sigevent.sigev_notify = SIGEV_THREAD;
 	w_aio.aio_sigevent.sigev_notify_function = __hdl_codec_encode_completed_thread;
-	w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
+	//w_aio.aio_sigevent.sigev_value.sival_int = encode_buf->index;
+	w_aio.aio_sigevent.sigev_value.sival_ptr = &w_aio;
 
-	used_buffers[encode_buf->index] = encode_buf;
+	//used_buffers[encode_buf->index] = encode_buf;
 
 	// Write request
-	printf("fd = %d\n", fd);
-	printf("codec :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
+	//printf("codec :: requesting write of (%d over %d) bytes, encode buffer index: %d\n", offs, bufsiz, encode_buf->index);
 	aio_write(&w_aio);
 	printf("codec :: request submitted, encode buffer index: %d\n", encode_buf->index);
 }
