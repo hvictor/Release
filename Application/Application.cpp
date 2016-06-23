@@ -551,10 +551,7 @@ void *frames_output(void *)
 		// Serialize binary Static Model
 		serialize_static_model();
 
-		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
-
 		while (systemRecording) {
-			char buffer[300];
 			FrameData *frame_data;
 
 			if (array_spinlock_queue_pull(&outputFramesQueue, (void **)&frame_data) < 0) {
