@@ -539,14 +539,19 @@ void *frames_output(void *)
 
 	if (configuration->getOperationalMode().processingMode == Record)
 	{
+		/*
+		printf("System :: CODEC :: Initializing async codec\n");
+		codec_async_init();
+		printf("System :: CODEC :: Async codec initialized\n");
+		*/
+
 		// Open binary serialization channel
-		//open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
 
 		// Serialize binary Static Model
-		//serialize_static_model();
-		//close_serialization_channel();
+		serialize_static_model();
 
-		open_serialization_channel_async(configuration->recordingParameters.recordingFileNameFullPath);
+		open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
 
 		while (systemRecording) {
 			char buffer[300];
@@ -558,8 +563,7 @@ void *frames_output(void *)
 			}
 
 			// Direct binary serialization
-			printf("Application :: serializing async\n");
-			serialize_frame_data_async(frame_data);
+			serialize_frame_data(frame_data);
 
 			/*
 			printf("Serialization time: elapsed: %.2f [ms], Count: %d, Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),
@@ -568,7 +572,6 @@ void *frames_output(void *)
 			*/
 
 			// Free fast memory
-
 			fast_mem_pool_release_memory(frame_data);
 		}
 	}
@@ -1013,10 +1016,6 @@ void run()
 		fast_mem_pool_init(configuration->getFrameInfo().width, configuration->getFrameInfo().height, configuration->getFrameInfo().channels);
 	}
 	printf("Fast memory pool initialized.\n");
-
-	printf("System :: CODEC :: Initializing async codec\n");
-	codec_async_init();
-	printf("System :: CODEC :: Async codec initialized\n");
 
 	// Initialize array-based spinlock queues
 	printf("Initializing I/O Frame queues...\n");
