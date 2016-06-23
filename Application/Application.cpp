@@ -544,6 +544,7 @@ void *frames_output(void *)
 		codec_async_init();
 		printf("System :: CODEC :: Async codec initialized\n");
 
+
 		// Open binary serialization channel
 		open_serialization_channel_async(configuration->recordingParameters.recordingFileNameFullPath);
 
@@ -559,7 +560,7 @@ void *frames_output(void *)
 			}
 
 			// Direct binary serialization
-			serialize_frame_data(frame_data);
+			serialize_frame_data_async(frame_data);
 
 			/*
 			printf("Serialization time: elapsed: %.2f [ms], Count: %d, Pressure: %.2f%%\n", nanotimer_rt_ms_diff(&s, &t),
