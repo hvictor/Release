@@ -545,7 +545,7 @@ void *frames_output(void *)
 		printf("System :: CODEC :: Async codec initialized\n");
 
 		// Open binary serialization channel
-		//open_serialization_channel(configuration->recordingParameters.recordingFileNameFullPath);
+		open_serialization_channel_async(configuration->recordingParameters.recordingFileNameFullPath);
 
 		// Serialize binary Static Model
 		//serialize_static_model();
