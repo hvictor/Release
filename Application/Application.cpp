@@ -733,15 +733,11 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			// Stop the timer
 			nanotimer_rt_stop(&sensor_acq_clk_stop);
 
-			FILE *logfp = fopen("/tmp/acq-process-readyt-delayt.txt", "a+");
 			// Currently elapsed time [ms] since last acquisition
 			double elapsed_since_last_acq_ms = nanotimer_rt_ms_diff(&sensor_acq_clk_start, &sensor_acq_clk_stop);
 
 			// Difference to sleep in order to reach the acquisition period
 			double delay_to_next_acq = (sensor_acq_period_ms - elapsed_since_last_acq_ms);
-
-			fprintf(logfp, "%.2f,%.2f\n", elapsed_since_last_acq_ms, delay_to_next_acq);
-			fclose(logfp);
 
 			// Sleep for the necessary time
 			bool acq_late = false;
