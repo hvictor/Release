@@ -8,6 +8,9 @@
 #include <errno.h>
 #include "array_spinlock_queue.h"
 #include "../Configuration/Configuration.h"
+#include "../RealTime/nanotimer_rt.h"
+
+struct timespec s, t;
 
 void array_spinlock_queue_init(SpinlockQueue *q)
 {
@@ -23,6 +26,8 @@ void array_spinlock_queue_init(SpinlockQueue *q)
 
 int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 {
+	nanotimer_rt_start(&s);
+
 	sem_wait(&q->full);
 
 	pthread_spin_lock(&q->spin);
@@ -54,11 +59,18 @@ int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 
 	pthread_spin_unlock(&q->spin);
 
+	nanotimer_rt_stop(&t);
+	FILE *logfp = fopen("/tmp/queue-push.txt", "a+");
+	fprintf(logfp, "%.2f\n", nanotimer_rt_ms_diff(&s, &t));
+	fclose(fp);
+
 	return 0;
 }
 
 int array_spinlock_queue_pull(SpinlockQueue *q, void **data_dest)
 {
+	nanotimer_rt_start(&s);
+
 	sem_wait(&q->empty);
 
 	pthread_spin_lock(&q->spin);
@@ -96,5 +108,10 @@ int array_spinlock_queue_pull(SpinlockQueue *q, void **data_dest)
 //	printf("unlocking and leaving\n");
 	pthread_spin_unlock(&q->spin);
 	
+	nanotimer_rt_stop(&t);
+	FILE *logfp = fopen("/tmp/queue-pull.txt", "a+");
+	fprintf(logfp, "%.2f\n", nanotimer_rt_ms_diff(&s, &t));
+	fclose(fp);
+
 	return 0;
 }
