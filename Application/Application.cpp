@@ -388,7 +388,7 @@ void *frames_processor(void *)
 			}
 			struct timespec queue_pull_t;
 			nanotimer_rt_stop(&queue_pull_t);
-			queue_permanence_times[qi++] = nanotimer_rt_ms_diff(&(fd->t), &queue_pull_t);
+			queue_permanence_times[qi++] = nanotimer_rt_ns_diff(&(fd->t) / 1000.0, &queue_pull_t);
 			if (qi >= 300) break;
 
 			// Store frame data into local buffer

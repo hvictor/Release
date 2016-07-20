@@ -57,7 +57,7 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 
 	nanotimer_rt_stop(&t);
 	FILE *logfp = fopen("/tmp/pool-init.txt", "a+");
-	fprintf(logfp, "init: %.2f ms\n", nanotimer_rt_ms_diff(&s, &t));
+	fprintf(logfp, "init: %.2f ms\n", nanotimer_rt_ns_diff(&s, &t) / 1000.0);
 	fclose(logfp);
 }
 
@@ -86,7 +86,7 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 	nanotimer_rt_stop(&t);
 	FILE *logfp = fopen("/tmp/pool-fetch.txt", "a+");
-	fprintf(logfp, "%.2f\n", nanotimer_rt_ms_diff(&s, &t));
+	fprintf(logfp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) / 1000.0);
 	fclose(logfp);
 
 	return ret;
