@@ -28,11 +28,8 @@ static struct timespec s, t;
 
 void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 {
-	nanotimer_rt_start(&s);
-
 	frame_buffer_size = Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize;
 	pthread_spin_init(&mem_spin, 0);
-
 
 	mem = (FrameData *)malloc(frame_buffer_size * sizeof(FrameData));
 
@@ -54,18 +51,11 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 	mem_tail = mem;
 
 	sem_init(&sem_empty, 0, frame_buffer_size);
-
-	nanotimer_rt_stop(&t);
-	FILE *logfp = fopen("/tmp/pool-init.txt", "a+");
-	fprintf(logfp, "init: %.2f ms\n", nanotimer_rt_ns_diff(&s, &t) / 1000.0);
-	fclose(logfp);
 }
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
 	FrameData *ret;
-
-	nanotimer_rt_start(&s);
 
 	sem_wait(&sem_empty);
 
@@ -83,11 +73,6 @@ FrameData *fast_mem_pool_fetch_memory(void)
 	mem_count--;
 
 	pthread_spin_unlock(&mem_spin);
-
-	nanotimer_rt_stop(&t);
-	FILE *logfp = fopen("/tmp/pool-fetch.txt", "a+");
-	fprintf(logfp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) / 1000.0);
-	fclose(logfp);
 
 	return ret;
 }
@@ -116,6 +101,6 @@ void fast_mem_pool_release_memory(FrameData *pFrameData)
 
 	nanotimer_rt_stop(&t);
 	FILE *logfp = fopen("/tmp/pool-release.txt", "a+");
-	fprintf(logfp, "%.2f\n", nanotimer_rt_ms_diff(&s, &t));
+	fprintf(logfp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) / 1000.0);
 	fclose(logfp);
 }
