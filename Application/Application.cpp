@@ -375,7 +375,7 @@ void *frames_processor(void *)
 	// Tracking Mode: the Frames Processor operates in nominal mode
 	else
 	{
-		double queue_permanence_times[300];
+		double queue_permanence_times[600];
 		int qi = 0;
 
 		while (1) {
@@ -388,8 +388,8 @@ void *frames_processor(void *)
 			}
 			struct timespec queue_pull_t;
 			nanotimer_rt_stop(&queue_pull_t);
-			queue_permanence_times[qi++] = nanotimer_rt_ns_diff(&(fd->t) / 1000.0, &queue_pull_t);
-			if (qi >= 300) break;
+			queue_permanence_times[qi++] = nanotimer_rt_ns_diff(&(fd->t), &queue_pull_t) / 1000.0;
+			if (qi >= 600) break;
 
 			// Store frame data into local buffer
 			frame_data[bufp] = fd;
@@ -520,7 +520,7 @@ void *frames_processor(void *)
 
 		printf("WRITING QUEUE PERMANENCE TIME\n");
 		FILE *logfp = fopen("/tmp/queue_permanence_times.txt", "a+");
-		for (int i = 0; i < 300; i++)
+		for (int i = 0; i < 600; i++)
 			fprintf(logfp, "%.2f\n", queue_permanence_times[i]);
 		fclose(logfp);
 	}
