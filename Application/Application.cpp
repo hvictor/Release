@@ -747,7 +747,10 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			/* Measure acquisition latency */
 			else {
 				acq_late = true;
-				printf("%.2f\n", delay_to_next_acq);
+				FILE *logfp = fopen("/tmp/acq-delay.txt", "a+");
+				printf("acquisition is late of %.2f ms, period=%.2f ms\n", delay_to_next_acq, sensor_acq_period_ms);
+				fprintf(logfp, "%.2f\n", fabsl(delay_to_next_acq));
+				fclose(logfp);
 			}
 
 			StereoFrame stereoFrame = stereoSAL->fetchStereoFrame();
