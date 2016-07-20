@@ -24,8 +24,6 @@ static FrameData *mem_head;
 static FrameData *mem_tail;
 static FrameData *mem;
 
-static struct timespec s, t;
-
 void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 {
 	frame_buffer_size = Configuration::getInstance()->getOpticalLayerParameters().frameBufferSize;
@@ -79,8 +77,6 @@ FrameData *fast_mem_pool_fetch_memory(void)
 
 void fast_mem_pool_release_memory(FrameData *pFrameData)
 {
-	nanotimer_rt_start(&s);
-
 	pthread_spin_lock(&mem_spin);
 
 	*mem_tail = *pFrameData;
@@ -98,9 +94,4 @@ void fast_mem_pool_release_memory(FrameData *pFrameData)
 	sem_post(&sem_empty);
 
 	pthread_spin_unlock(&mem_spin);
-
-	nanotimer_rt_stop(&t);
-	FILE *logfp = fopen("/tmp/pool-release.txt", "a+");
-	fprintf(logfp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) / 1000.0);
-	fclose(logfp);
 }
