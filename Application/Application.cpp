@@ -375,7 +375,7 @@ void *frames_processor(void *)
 	// Tracking Mode: the Frames Processor operates in nominal mode
 	else
 	{
-		double meas[5000];
+		double meas[500];
 
 		int run_i = 0;
 		int run_j = 0;
@@ -390,11 +390,10 @@ void *frames_processor(void *)
 			}
 
 			double percent = (((double)inputFramesQueue.count)*100.0) / 400.0;
-			printf("Input Queue Pressure: %.2f%% (count = %d)\n", percent, inputFramesQueue.count);
 
-			meas[run_i * 100 + run_j] = percent;
+			meas[run_i * 10 + run_j] = percent;
 			run_j++;
-			if (run_j == 100) {
+			if (run_j == 10) {
 				run_j = 0;
 				run_i++;
 				if (run_i == 50)
@@ -535,15 +534,15 @@ void *frames_processor(void *)
 			double mean = 0.0;
 			double var = 0.0;
 
-			for (int j = 0; j < 100; j++) {
-				mean += meas[i * 100 + j];
+			for (int j = 0; j < 10; j++) {
+				mean += meas[i * 10 + j];
 			}
-			mean *= 0.01;
+			mean *= 0.1;
 
-			for (int j = 0; j < 100; j++) {
-				var += (meas[i * 100 + j] - mean)*(meas[i * 100 + j] - mean);
+			for (int j = 0; j < 10; j++) {
+				var += (meas[i * 10 + j] - mean)*(meas[i * 100 + j] - mean);
 			}
-			var /= 99.0;
+			var /= 9.0;
 
 			FILE *logfp = fopen("/tmp/queue_pressure.txt", "a+");
 			fprintf(logfp, "%.2f,%.2f\n", mean, var);
