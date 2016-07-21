@@ -53,15 +53,6 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
-
-			FILE *logfp = fopen("/tmp/pool_mem_inst_usage.txt", "a+");
-			fprintf(logfp, "%.2f\n", (((double)(frame_buffer_size-mem_count)) * 100.0) / ((double)frame_buffer_size));
-			fclose(logfp);
-
-
-
-
-
 	FrameData *ret;
 
 	sem_wait(&sem_empty);

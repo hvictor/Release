@@ -85,6 +85,7 @@ dyn_model_result_t DynamicModel::recalc(Vector3D v, struct timespec t)
 
 		printf("FILT=[%.2f %.2f %.2f]\n", v.x, v.y, v.z);
 
+
 	}
 
 	// Make new dynamical state
