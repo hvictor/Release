@@ -44,7 +44,7 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 		mem[i].depth_data_avail = false;
 	}
 
-	mem_count = 0;
+	mem_count = frame_buffer_size;
 	mem_head = mem;
 	mem_tail = mem;
 
@@ -53,6 +53,46 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
+	static double meas[5000];
+
+	static int run_i = 0;
+	static int run_j = 0;
+
+
+
+	meas[run_i * 100 + run_j] = (((double)mem_count) * 100.0) / ((double)frame_buffer_size);
+	run_j++;
+	if (run_j == 100) {
+		run_j = 0;
+		run_i++;
+		if (run_i == 50) {
+
+			printf("POOL: COMPUTING MEANS AND VARIANCES\n");
+
+			for (int i = 0; i < 50; i++) {
+				double mean = 0.0;
+				double var = 0.0;
+
+				for (int j = 0; j < 100; j++) {
+					mean += meas[i * 100 + j];
+				}
+				mean *= 0.01;
+
+				for (int j = 0; j < 100; j++) {
+					var += (meas[i * 100 + j] - mean)*(meas[i * 100 + j] - mean);
+				}
+				var /= 99.0;
+
+				FILE *logfp = fopen("/tmp/pool_mem_usage.txt", "a+");
+				fprintf(logfp, "%.2f,%.2f\n", mean, var);
+				fclose(logfp);
+			}
+		}
+	}
+
+
+
+
 	FrameData *ret;
 
 	sem_wait(&sem_empty);
