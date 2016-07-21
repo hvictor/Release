@@ -389,7 +389,7 @@ void *frames_processor(void *)
 				continue;
 			}
 
-			meas[run_i * 100 + run_j] = (inputFramesQueue.count / 400.0) * 100.0;
+			meas[run_i * 100 + run_j] = (((double)inputFramesQueue.count)*100.0) / 400.0;
 			run_j++;
 			if (run_j == 100) {
 				run_j = 0;
