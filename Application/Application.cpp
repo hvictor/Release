@@ -384,13 +384,6 @@ void *frames_processor(void *)
 				continue;
 			}
 
-			double percent = (((double)inputFramesQueue.count)*100.0) / 400.0;
-			printf("input queue count = %d, percent=%.2f...\n", inputFramesQueue.count, percent);
-			FILE *logfp = fopen("/tmp/queue_pressure_inst.txt", "a+");
-			fprintf(logfp, "%.2f\n", percent);
-			fclose(logfp);
-
-
 			// Store frame data into local buffer
 			frame_data[bufp] = fd;
 

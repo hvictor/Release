@@ -53,25 +53,11 @@ void fast_mem_pool_init(int frame_width, int frame_height, int channels)
 
 FrameData *fast_mem_pool_fetch_memory(void)
 {
-	/*
-	static double meas[1000];
 
-	static int run_i = 0;
-
-	meas[run_i] = (((double)mem_count) * 100.0) / ((double)frame_buffer_size);
-	run_i++;
-	if (run_i == 1000) {
-
-		printf("POOL: STORING DATA\n");
-
-		for (int i = 0; i < 1000; i++) {
 			FILE *logfp = fopen("/tmp/pool_mem_inst_usage.txt", "a+");
-			fprintf(logfp, "%.2f,%.2f\n", meas[i]);
+			fprintf(logfp, "%.2f\n", (((double)(frame_buffer_size-mem_count)) * 100.0) / ((double)frame_buffer_size));
 			fclose(logfp);
-		}
 
-	}
-	*/
 
 
 
