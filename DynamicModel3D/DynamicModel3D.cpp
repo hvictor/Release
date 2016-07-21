@@ -711,7 +711,7 @@ void DynamicModel3D_RecalcTrajectoryMechanicalState(Vector3D v, bool impacted, u
 	*/
 
 	if (impacted) {
-		printf("IMPACT: RECALC with impact\n");
+		printf("IMPACT: RECALC with impact!\n");
 	}
 
 	// Search a corresponding existing tracker
