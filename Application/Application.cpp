@@ -383,15 +383,14 @@ void *frames_processor(void *)
 		while (1) {
 			FrameData *fd;
 
-
-			double percent = (((double)inputFramesQueue.count)*100.0) / 400.0;
-			printf("Input Queue Pressure: %.2f%% (count = %d)\n", percent, inputFramesQueue.count);
-
 			// Fetch new frame data from fast concurrent input queue
 			if (array_spinlock_queue_pull(&inputFramesQueue, (void **)&fd) < 0) {
 				usleep(10);
 				continue;
 			}
+
+			double percent = (((double)inputFramesQueue.count)*100.0) / 400.0;
+			printf("Input Queue Pressure: %.2f%% (count = %d)\n", percent, inputFramesQueue.count);
 
 			meas[run_i * 100 + run_j] = percent;
 			run_j++;

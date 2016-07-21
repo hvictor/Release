@@ -54,6 +54,8 @@ int array_spinlock_queue_push(SpinlockQueue *q, void *data)
 
 	pthread_spin_unlock(&q->spin);
 
+	printf("spinlock queue: count = %d\n", q->count);
+
 	return 0;
 }
 
