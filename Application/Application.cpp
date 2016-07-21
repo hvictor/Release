@@ -389,6 +389,8 @@ void *frames_processor(void *)
 				continue;
 			}
 
+			printf("input queue count = %d\n", inputFramesQueue.count);
+
 			double percent = (((double)inputFramesQueue.count)*100.0) / 400.0;
 
 			meas[run_i * 10 + run_j] = percent;
