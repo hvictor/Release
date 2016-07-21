@@ -375,11 +375,6 @@ void *frames_processor(void *)
 	// Tracking Mode: the Frames Processor operates in nominal mode
 	else
 	{
-		double meas[500];
-
-		int run_i = 0;
-		int run_j = 0;
-
 		while (1) {
 			FrameData *fd;
 
@@ -389,18 +384,11 @@ void *frames_processor(void *)
 				continue;
 			}
 
-			printf("input queue count = %d...\n", inputFramesQueue.count);
-
 			double percent = (((double)inputFramesQueue.count)*100.0) / 400.0;
-
-			meas[run_i * 10 + run_j] = percent;
-			run_j++;
-			if (run_j == 10) {
-				run_j = 0;
-				run_i++;
-				if (run_i == 50)
-					break;
-			}
+			printf("input queue count = %d, percent=%.2f...\n", inputFramesQueue.count, percent);
+			FILE *logfp = fopen("/tmp/queue_pressure_inst.txt", "a+");
+			fprintf(logfp, "%.2f\n", percent);
+			fclose(logfp);
 
 
 			// Store frame data into local buffer
@@ -529,28 +517,6 @@ void *frames_processor(void *)
 			// Left-shift frame data in the local buffer, create space for new data
 			frame_data[0] = frame_data[1];
 		}
-
-		printf("COMPUTING MEANS AND VARIANCES\n");
-
-		for (int i = 0; i < 50; i++) {
-			double mean = 0.0;
-			double var = 0.0;
-
-			for (int j = 0; j < 10; j++) {
-				mean += meas[i * 10 + j];
-			}
-			mean *= 0.1;
-
-			for (int j = 0; j < 10; j++) {
-				var += (meas[i * 10 + j] - mean)*(meas[i * 100 + j] - mean);
-			}
-			var /= 9.0;
-
-			FILE *logfp = fopen("/tmp/queue_pressure.txt", "a+");
-			fprintf(logfp, "%.2f,%.2f\n", mean, var);
-			fclose(logfp);
-		}
-
 	}
 
 	printf("Application :: Frames processor :: Processing terminated\n");
