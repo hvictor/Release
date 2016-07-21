@@ -444,7 +444,7 @@ void *frames_processor(void *)
 			if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
 				tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 				Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
-				//OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
+				OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
 				OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
 
 				if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
