@@ -375,6 +375,13 @@ void *frames_processor(void *)
 	// Tracking Mode: the Frames Processor operates in nominal mode
 	else
 	{
+		struct timespec deq_t;
+
+		double meas[5000];
+
+		int run_i = 0;
+		int run_j = 0;
+
 		while (1) {
 			FrameData *fd;
 
@@ -383,6 +390,17 @@ void *frames_processor(void *)
 				usleep(10);
 				continue;
 			}
+			nanotimer_rt_stop(&deq_t);
+
+			meas[run_i * 100 + run_j] = nanotimer_rt_ns_diff(&(fd->t), &deq_t) * 0.001; // us
+			run_j++;
+			if (run_j == 100) {
+				run_j = 0;
+				run_i++;
+				if (run_i == 50)
+					break;
+			}
+
 
 			// Store frame data into local buffer
 			frame_data[bufp] = fd;
@@ -510,6 +528,28 @@ void *frames_processor(void *)
 			// Left-shift frame data in the local buffer, create space for new data
 			frame_data[0] = frame_data[1];
 		}
+
+		printf("COMPUTING MEANS AND VARIANCES\n");
+
+		for (int i = 0; i < 50; i++) {
+			double mean = 0.0;
+			double var = 0.0;
+
+			for (int j = 0; j < 100; j++) {
+				mean += meas[i * 100 + j];
+			}
+			mean *= 0.01;
+
+			for (int j = 0; j < 100; j++) {
+				var += (meas[i * 100 + j] - mean)*(meas[i * 100 + j] - mean);
+			}
+			var /= 99.0;
+
+			FILE *logfp = fopen("/tmp/queue_latency.txt", "a+");
+			fprintf(logfp, "%.2f,%.2f\n", mean, var);
+			fclose(logfp);
+		}
+
 	}
 
 	printf("Application :: Frames processor :: Processing terminated\n");
@@ -799,6 +839,7 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			}
 
 			// Enqueue stereo pair data in processing / output queue
+			nanotimer_rt_start(&(frameData->t));
 			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
 				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
 			}
