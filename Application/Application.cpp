@@ -375,8 +375,6 @@ void *frames_processor(void *)
 	// Tracking Mode: the Frames Processor operates in nominal mode
 	else
 	{
-		struct timespec deq_t;
-
 		double meas[5000];
 
 		int run_i = 0;
@@ -390,9 +388,8 @@ void *frames_processor(void *)
 				usleep(10);
 				continue;
 			}
-			nanotimer_rt_stop(&deq_t);
 
-			meas[run_i * 100 + run_j] = nanotimer_rt_ns_diff(&(fd->t), &deq_t) * 0.001; // us
+			meas[run_i * 100 + run_j] = (inputFramesQueue.count / 400.0) * 100.0;
 			run_j++;
 			if (run_j == 100) {
 				run_j = 0;
@@ -545,7 +542,7 @@ void *frames_processor(void *)
 			}
 			var /= 99.0;
 
-			FILE *logfp = fopen("/tmp/queue_latency.txt", "a+");
+			FILE *logfp = fopen("/tmp/queue_pressure.txt", "a+");
 			fprintf(logfp, "%.2f,%.2f\n", mean, var);
 			fclose(logfp);
 		}
@@ -839,7 +836,6 @@ void startStereoApplication(StereoSensorAbstractionLayer *stereoSAL, Configurati
 			}
 
 			// Enqueue stereo pair data in processing / output queue
-			nanotimer_rt_start(&(frameData->t));
 			if (array_spinlock_queue_push(queue, (void *)frameData) < 0) {
 				printf("Stereo Application :: WARNING :: Queue Push failed (@ Frame Counter %d)\n", frameData->frame_counter);
 			}
