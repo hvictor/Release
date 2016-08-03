@@ -210,8 +210,8 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
 
         if (NetModel::getInstance()->isReady()) {
             printf("Overlay :: Rendering Net\n");
-            OverlayRenderer::getInstance()->renderNet_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualProjection());
-            OverlayRenderer::getInstance()->renderNetVisualPoints_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualPoints());
+            //OverlayRenderer::getInstance()->renderNet_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualProjection());
+            //OverlayRenderer::getInstance()->renderNetVisualPoints_8UC4(u8data, 640, 480, NetModel::getInstance()->getNetVisualPoints());
         }
     }
 
