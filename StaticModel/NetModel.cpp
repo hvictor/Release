@@ -127,14 +127,14 @@ void NetModel::computeNetVisualPoints()
 	double deltax = (_netCoordinates3D.baseFar.x - _netCoordinates3D.baseNear.x) * 0.166666667;
 
 	// Base points and top points
-	for (double z = 0.0; z < 5.0; z += 1.0) {
+	for (double z = 1.0; z <= 5.0; z += 1.0) {
 		Vector3D v;
 		v.x = _netCoordinates3D.baseNear.x + z*deltax;
 		v.y = _netCoordinates3D.baseNear.y;
 		v.z = _netCoordinates3D.baseNear.z + z*deltaz;
 		vs.push_back(v);
 	}
-	for (double z = 0.0; z < 5.0; z += 1.0) {
+	for (double z = 1.0; z <= 5.0; z += 1.0) {
 		Vector3D v;
 		v.x = _netCoordinates3D.baseNear.x + z*deltax;
 		v.y = _netCoordinates3D.topNear.y;
@@ -143,14 +143,14 @@ void NetModel::computeNetVisualPoints()
 	}
 
 	// Left and right points
-	for (double y = 0.0; y < 5.0; y += 1.0) {
+	for (double y = 1.0; y <= 5.0; y += 1.0) {
 		Vector3D v;
 		v.x = _netCoordinates3D.baseNear.x;
 		v.y = _netCoordinates3D.topNear.y + y*deltay;
 		v.z = _netCoordinates3D.baseNear.z;
 		vs.push_back(v);
 	}
-	for (double y = 0.0; y < 5.0; y += 1.0) {
+	for (double y = 1.0; y <= 5.0; y += 1.0) {
 		Vector3D v;
 		v.x = _netCoordinates3D.baseFar.x;
 		v.y = _netCoordinates3D.topFar.y + y*deltay;
