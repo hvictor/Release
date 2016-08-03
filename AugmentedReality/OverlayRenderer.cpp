@@ -597,7 +597,7 @@ void OverlayRenderer::renderNetVisualPoints_8UC4(uint8_t *u8data, int width, int
 		left[i] = netVisualPoints[10 + i];
 	}
 	for (int i = 0; i < 5; i++) {
-		right[i] = netVisualPoints[20 + i];
+		right[i] = netVisualPoints[15 + i];
 	}
 
 	// Net lines
