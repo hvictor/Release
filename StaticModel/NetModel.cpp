@@ -100,9 +100,9 @@ void NetModel::computeImagePlaneProjections()
 
 void NetModel::computeNetVisualPoints()
 {
-	float deltay = (_netCoordinates3D.baseNear.y - _netCoordinates3D.baseNear.y) / 10.0;
-	float deltaz = (_netCoordinates3D.baseFar.z - _netCoordinates3D.baseNear.z) / 10.0;
-	float deltax = fabs(_netCoordinates3D.baseFar.x - _netCoordinates3D.baseNear.x) / 10.0;
+	double deltay = (_netCoordinates3D.baseNear.y - _netCoordinates3D.baseNear.y) / 10.0;
+	double deltaz = (_netCoordinates3D.baseFar.z - _netCoordinates3D.baseNear.z) / 10.0;
+	double deltax = fabs(_netCoordinates3D.baseFar.x - _netCoordinates3D.baseNear.x) / 10.0;
 
 	_netVisualPoints.clear();
 

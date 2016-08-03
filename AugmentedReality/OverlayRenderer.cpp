@@ -569,12 +569,12 @@ void OverlayRenderer::renderNet(Mat frame_RGBA, NetVisualProjection netVisualPro
 void OverlayRenderer::renderNetVisualPoints_8UC4(uint8_t *u8data, int width, int height, vector<Point2f> netVisualPoints)
 {
 	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
-	Scalar color = OVERLAY_COLOR_ORANGE_RGBA;
+	Scalar color = OVERLAY_COLOR_GREEN_RGBA;
 
 	for (int i = 0; i < netVisualPoints.size(); i++)
 	{
 		if ((i % 10) == 0) {
-			if (color.val[1] - 10 >= 0) color.val[1] -= 10;
+			if (color.val[2] + 10 >= 0) color.val[1] += 10;
 		}
 
 		circle(frame_RGBA, netVisualPoints[i], 3, color, -1);
