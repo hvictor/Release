@@ -434,8 +434,6 @@ void *frames_processor(void *)
 			hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
 			pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
 
-			printf("Stocazzo\n");
-
 			nanotimer_rt_stop(&t);
 			FILE *fp = fopen("/tmp/optical-layer.txt", "a+");
 			fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) * 0.001);
@@ -462,7 +460,7 @@ void *frames_processor(void *)
 				OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
 
 				nanotimer_rt_stop(&t);
-				FILE *fp = fopen("/tmp/dynamic-model-2d.txt", "a+");
+				fp = fopen("/tmp/dynamic-model-2d.txt", "a+");
 				fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) * 0.001);
 				fclose(fp);
 				nanotimer_rt_start(&s);
@@ -507,7 +505,7 @@ void *frames_processor(void *)
 				}
 
 				nanotimer_rt_stop(&t);
-				FILE *fp = fopen("/tmp/dynamic-model-3d.txt", "a+");
+				fp = fopen("/tmp/dynamic-model-3d.txt", "a+");
 				fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t));
 				fclose(fp);
 
