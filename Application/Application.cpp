@@ -506,7 +506,7 @@ void *frames_processor(void *)
 
 				nanotimer_rt_stop(&t);
 				fp = fopen("/tmp/dynamic-model-3d.txt", "a+");
-				fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t));
+				fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) * 0.001);
 				fclose(fp);
 
 			}
