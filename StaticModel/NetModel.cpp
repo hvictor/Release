@@ -122,9 +122,9 @@ void NetModel::computeNetVisualPoints()
 	}
 	*/
 
-	double deltay = (_netCoordinates3D.baseNear.y - _netCoordinates3D.topNear.y) * 0.25;
-	double deltaz = (_netCoordinates3D.baseFar.z - _netCoordinates3D.baseNear.z) * 0.25;
-	double deltax = (_netCoordinates3D.baseFar.x - _netCoordinates3D.baseNear.x) * 0.25;
+	double deltay = (_netCoordinates3D.baseNear.y - _netCoordinates3D.topNear.y) / 5.0;
+	double deltaz = (_netCoordinates3D.baseFar.z - _netCoordinates3D.baseNear.z) / 5.0;
+	double deltax = (_netCoordinates3D.baseFar.x - _netCoordinates3D.baseNear.x) / 5.0;
 
 	// Base points and top points
 	for (double z = 1.0; z <= 5.0; z += 1.0) {
