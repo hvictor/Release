@@ -215,13 +215,9 @@ PlaneReferenceSystemAxis GroundModel::computePlaneReferenceSystemAxis(PlaneLinea
 			(visualAxisEndPointX.y-visualOrigin.y)*(visualAxisEndPointX.y-visualOrigin.y) +
 			(visualAxisEndPointX.z-visualOrigin.z)*(visualAxisEndPointX.z-visualOrigin.z));
 
-	visualAxisEndPointX.x /= norm;
-	visualAxisEndPointX.y /= norm;
-	visualAxisEndPointX.z /= norm;
-
-	visualAxisEndPointX.x *= 500.0;
-	visualAxisEndPointX.y *= 500.0;
-	visualAxisEndPointX.z *= 500.0;
+	visualAxisEndPointX.x = visualOrigin.x + (500.0 / norm) * (visualAxisEndPointX.x - visualOrigin.x);
+	visualAxisEndPointX.y = visualOrigin.y + (500.0 / norm) * (visualAxisEndPointX.y - visualOrigin.y);
+	visualAxisEndPointX.z = visualOrigin.z + (500.0 / norm) * (visualAxisEndPointX.z - visualOrigin.z);
 
 	axis.xAxisFrom = visualOrigin;
 	axis.xAxisTo = visualAxisEndPointX;
@@ -231,13 +227,9 @@ PlaneReferenceSystemAxis GroundModel::computePlaneReferenceSystemAxis(PlaneLinea
 			(visualAxisEndPointZ.y-visualOrigin.y)*(visualAxisEndPointZ.y-visualOrigin.y) +
 			(visualAxisEndPointZ.z-visualOrigin.z)*(visualAxisEndPointZ.z-visualOrigin.z));
 
-	visualAxisEndPointZ.x /= norm;
-	visualAxisEndPointZ.y /= norm;
-	visualAxisEndPointZ.z /= norm;
-
-	visualAxisEndPointZ.x *= 500.0;
-	visualAxisEndPointZ.y *= 500.0;
-	visualAxisEndPointZ.z *= 500.0;
+	visualAxisEndPointZ.x = visualOrigin.x + (500.0 / norm) * (visualAxisEndPointZ.x - visualOrigin.x);
+	visualAxisEndPointZ.y = visualOrigin.y + (500.0 / norm) * (visualAxisEndPointZ.y - visualOrigin.y);
+	visualAxisEndPointZ.z = visualOrigin.z + (500.0 / norm) * (visualAxisEndPointZ.z - visualOrigin.z);
 
 	axis.zAxisFrom = visualOrigin;
 	axis.zAxisTo = visualAxisEndPointZ;
