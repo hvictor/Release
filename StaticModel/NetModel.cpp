@@ -110,13 +110,11 @@ void NetModel::computeNetVisualPoints()
 	int pos = 0;
 	for (int z = 0; z < 10; z++) {
 		for (int y = 0; y <= 10; y++) {
-			for (int x = 0; x <= 10; x++) {
-				Vector3D v;
-				v.x = _netCoordinates3D.baseNear.x + ((double)x)*deltax;
-				v.y = _netCoordinates3D.topNear.y + ((double)y)*deltay;
-				v.z = _netCoordinates3D.baseNear.z + ((double)z)*deltaz;
-				vs.push_back(v);
-			}
+			Vector3D v;
+			v.x = _netCoordinates3D.baseNear.x + ((double)z)*deltax;
+			v.y = _netCoordinates3D.topNear.y + ((double)y)*deltay;
+			v.z = _netCoordinates3D.baseNear.z + ((double)z)*deltaz;
+			vs.push_back(v);
 		}
 	}
 
