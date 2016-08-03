@@ -206,7 +206,7 @@ void GLWidget::runProbabilisticFieldLinesDetection_GPU()
         OverlayRenderer::getInstance()->renderPlanePointSetProjection_8UC4(u8data, 640, 480,
                                         planeLinearModel.proj_nearL, planeLinearModel.proj_nearR,
                                         planeLinearModel.proj_farR, planeLinearModel.proj_farL);
-        OverlayRenderer::getInstance()->renderPlaneReferenceSystemAxis_8UC4(u8data, 640, 480, refSysAxis);
+        //OverlayRenderer::getInstance()->renderPlaneReferenceSystemAxis_8UC4(u8data, 640, 480, refSysAxis);
 
         if (NetModel::getInstance()->isReady()) {
             printf("Overlay :: Rendering Net\n");
