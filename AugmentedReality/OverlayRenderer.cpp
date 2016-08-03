@@ -571,6 +571,7 @@ void OverlayRenderer::renderNetVisualPoints_8UC4(uint8_t *u8data, int width, int
 	Mat frame_RGBA(Size(width, height), CV_8UC4, u8data);
 	Scalar color = OVERLAY_COLOR_GREEN_RGBA;
 
+	/*
 	for (int i = 0; i < netVisualPoints.size(); i++)
 	{
 		if ((i % 10) == 0) {
@@ -578,6 +579,31 @@ void OverlayRenderer::renderNetVisualPoints_8UC4(uint8_t *u8data, int width, int
 		}
 
 		circle(frame_RGBA, netVisualPoints[i], 3, color, -1);
+	}
+	*/
+
+	Point2f base[5];
+	Point2f top[5];
+	Point2f left[5];
+	Point2f right[5];
+
+	for (int i = 0; i < 5; i++) {
+		base[i] = netVisualPoints[i];
+	}
+	for (int i = 0; i < 5; i++) {
+		top[i] = netVisualPoints[5 + i];
+	}
+	for (int i = 0; i < 5; i++) {
+		left[i] = netVisualPoints[10 + i];
+	}
+	for (int i = 0; i < 5; i++) {
+		right[i] = netVisualPoints[20 + i];
+	}
+
+	// Net lines
+	for (int i = 0; i < 5; i++) {
+		line(frame_RGBA, left[i], right[i], OVERLAY_COLOR_GREEN_RGBA, 1);
+		line(frame_RGBA, top[i], base[i], OVERLAY_COLOR_GREEN_RGBA, 1);
 	}
 }
 
