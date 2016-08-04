@@ -378,10 +378,6 @@ void *frames_processor(void *)
 		while (1) {
 			FrameData *fd;
 
-			struct timespec s, t;
-
-			nanotimer_rt_start(&s);
-
 			// Fetch new frame data from fast concurrent input queue
 			if (array_spinlock_queue_pull(&inputFramesQueue, (void **)&fd) < 0) {
 				usleep(10);
@@ -434,11 +430,6 @@ void *frames_processor(void *)
 			hsvManager->filterHSVRange_out_8UC1(frame_data[1]->left_data, width, height, hsvRangeTGT, buf_8UC1_0);
 			pred_scan_t engage_data = tgtPredator->engage_8UC1(buf_8UC1_0, width, height);
 
-			nanotimer_rt_stop(&t);
-			FILE *fp = fopen("/tmp/optical-layer.txt", "a+");
-			fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) * 0.001);
-			fclose(fp);
-
 			// Render Field Delimiter and Score
 			if (!configuration->dynamicModelParameters.freePlay) {
 
@@ -452,18 +443,10 @@ void *frames_processor(void *)
 			// Update Predator
 			if (engage_data.xl != 0 && engage_data.xr != 0 && engage_data.row != 0) {
 
-				nanotimer_rt_start(&s);
-
 				tgtPredator->update_state(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 				Point targetPosition(engage_data.xl + (engage_data.xr-engage_data.xl)/2, engage_data.row);
 				OverlayRenderer::getInstance()->renderTargetTracker(frame1_L, targetPosition);
 				OverlayRenderer::getInstance()->renderPredatorState(frame1_L, tgtPredator);
-
-				nanotimer_rt_stop(&t);
-				fp = fopen("/tmp/dynamic-model-2d.txt", "a+");
-				fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) * 0.001);
-				fclose(fp);
-				nanotimer_rt_start(&s);
 
 				if (configuration->dynamicModelParameters.trackingWndEnabled && configuration->dynamicModelParameters.visualizeTrackingWnd) {
 					OverlayRenderer::getInstance()->renderPredatorTrackingWnd(frame1_L, tgtPredator->get_tracking_wnd());
@@ -503,12 +486,6 @@ void *frames_processor(void *)
 						}
 					}
 				}
-
-				nanotimer_rt_stop(&t);
-				fp = fopen("/tmp/dynamic-model-3d.txt", "a+");
-				fprintf(fp, "%.2f\n", nanotimer_rt_ns_diff(&s, &t) * 0.001);
-				fclose(fp);
-
 			}
 
 			// If the Target has been lost, notify the PlayLogic
