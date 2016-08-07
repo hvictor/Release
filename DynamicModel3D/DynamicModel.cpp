@@ -118,15 +118,12 @@ dyn_model_result_t DynamicModel::recalc(Vector3D v, struct timespec t)
 		kalmanFilter->recalc(filterCallCounter++, v.x, v.y, v.z, &v.x, &v.y, &v.z);
 
 		printf("FILT=[%.2f %.2f %.2f]\n", v.x, v.y, v.z);
-
-
 	}
 
 	// Make new dynamical state
 	dyn_state_t *dyn = make_dynamical_state(v, t);
 
 	// Compute velocity and acceleration components based on previous state
-
 	if(state.size() > 1) {
 		compute_dynamical_state_data(dyn, *(state.begin()), &res);
 	}

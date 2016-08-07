@@ -478,6 +478,7 @@ void *frames_processor(void *)
 							// Prior to recalculating the dynamic model, the 3D impact state is the last in the model.
 							dynamicModel->UMA_signal_impact_2D();
 						}
+
 						dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);
 
 						if (dynamicModelResult.impact) {
