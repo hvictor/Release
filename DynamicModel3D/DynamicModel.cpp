@@ -30,6 +30,16 @@ DynamicModel::~DynamicModel()
 {
 }
 
+void DynamicModel::UMA_signal_impact_2D()
+{
+
+}
+
+void DynamicModel::UMA_reset()
+{
+
+}
+
 void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t *prev, dyn_model_result_t *res)
 {
 	struct timespec *prev_t = &(prev->t);
@@ -48,11 +58,28 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 
 	res->impact = false;
 
+	// Update the UMA component and retrieve the ground-impact status
+	// The UMA component internally interpolates the 3D impact position based on linear regression
+	// The interpolated state is inserted in the states list and returned
+	dyn_state_t *uma_interp_state = 0;
+	if ((uma_interp_state = uma_update(actual)) != 0)
+	{
+		if (config->dynamicModelParameters.useInputKalmanFilter) {
+			kalmanFilter->initParameters(actual->pos.x, actual->pos.y, actual->pos.z);
+			filterCallCounter = 1;
+		}
 
+		res->impact = true;
+		uma_interp_state->impacted = true;
+		res->impact_pos = uma_interp_state->pos;
+	}
+
+	// CAMBIA CONDIZIONE: ---> use UMA
+	////////////////////////////////// 07.08.2016
+	/*
 	if (prev->vy >= 0.0 && actual->vy < 0.0) {
 
 		if (config->dynamicModelParameters.useInputKalmanFilter) {
-			printf("Dynamic Model :: Input Data KF :: Kalman Filter re-initialized on new trajectory section\n");
 			kalmanFilter->initParameters(actual->pos.x, actual->pos.y, actual->pos.z);
 			filterCallCounter = 1;
 		}
@@ -66,6 +93,8 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 			prev->impacted = true;
 		}
 	}
+	*/
+	///////////////////////////////////
 }
 
 dyn_model_result_t DynamicModel::recalc(Vector3D v, struct timespec t)

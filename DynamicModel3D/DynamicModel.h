@@ -47,6 +47,8 @@ class DynamicModel {
 public:
 	virtual ~DynamicModel();
 	dyn_model_result_t recalc(Vector3D v, struct timespec t);
+	void UMA_signal_impact_2D();
+	void UMA_reset();
 	static DynamicModel *getInstance();
 
 private:

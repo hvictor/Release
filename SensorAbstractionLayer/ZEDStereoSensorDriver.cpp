@@ -238,16 +238,6 @@ StereoFrame ZEDStereoSensorDriver::fetchStereoFrame()
 	frame.rightData = (uint8_t *)(zed->retrieveImage(zed::SIDE::RIGHT)).data;
 	frame.depthData = 0;
 
-
-	//////////////////////////
-	Mat tmp = imread("/home/ubuntu/Desktop/calib_frame.png");
-	Mat calibFrame(Size(640, 480), CV_8UC4);
-	resize(tmp, calibFrame, Size(640, 480));
-	frame.leftData = (uint8_t *)malloc(640*480*4*sizeof(uint8_t));
-	memcpy(frame.leftData, calibFrame.data, 640*480*4*sizeof(uint8_t));
-	//////////////////////////
-
-
 	if (computeDepth) {
 
 		// Confidence

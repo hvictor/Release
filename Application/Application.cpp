@@ -470,7 +470,11 @@ void *frames_processor(void *)
 						meas_v.y = (double)meas.y_mm;
 						meas_v.z = (double)meas.z_mm;
 
-						// Recalc dynamic model
+						// Recalc dynamic model, and set 2D impact state for UMA guiding
+						// If the prev 2D state is an impact, signal it to the 3D dynamic model before recalc
+						if (tgtPredator->prev_state_is_impact()) {
+							dynamicModel->UMA_signal_impact_2D();
+						}
 						dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);
 
 						if (dynamicModelResult.impact) {
@@ -491,6 +495,7 @@ void *frames_processor(void *)
 			// If the Target has been lost, notify the PlayLogic
 			if (tgtPredator->TargetLost && configuration->dynamicModelParameters.notifyTGTLostToModel)
 			{
+				dynamicModel->UMA_reset();
 				((TwoPlayersPlayLogic *)playLogic)->notifyTargetLost();
 			}
 
