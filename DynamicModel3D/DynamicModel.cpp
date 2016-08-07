@@ -24,6 +24,7 @@ DynamicModel::DynamicModel()
 	filterCallCounter = 0;
 	config = Configuration::getInstance();
 	_groundModel = GroundModel::getInstance();
+	uma_init();
 }
 
 DynamicModel::~DynamicModel()
@@ -32,7 +33,10 @@ DynamicModel::~DynamicModel()
 
 void DynamicModel::UMA_signal_impact_2D()
 {
-
+	// Prior recalculating the model with a new state, signal that the 2D dynamic model has detected
+	// an impact on its previous state. The 2D dynamic model's previous state is the latest state of the 3D dynamic model
+	// before recalc, under the assumption DFI=1.
+	(*state.begin())->impacted_2D = true;
 }
 
 void DynamicModel::UMA_reset()
@@ -64,14 +68,15 @@ void DynamicModel::compute_dynamical_state_data(dyn_state_t *actual, dyn_state_t
 	dyn_state_t *uma_interp_state = 0;
 	if ((uma_interp_state = uma_update(actual)) != 0)
 	{
+		res->impact = true;
+		uma_interp_state->impacted = true;
+		res->impact_pos = uma_interp_state->pos;
+
+		// Reset the Input Kalman Filter if needed
 		if (config->dynamicModelParameters.useInputKalmanFilter) {
 			kalmanFilter->initParameters(actual->pos.x, actual->pos.y, actual->pos.z);
 			filterCallCounter = 1;
 		}
-
-		res->impact = true;
-		uma_interp_state->impacted = true;
-		res->impact_pos = uma_interp_state->pos;
 	}
 
 	// CAMBIA CONDIZIONE: ---> use UMA

@@ -473,6 +473,9 @@ void *frames_processor(void *)
 						// Recalc dynamic model, and set 2D impact state for UMA guiding
 						// If the prev 2D state is an impact, signal it to the 3D dynamic model before recalc
 						if (tgtPredator->prev_state_is_impact()) {
+
+							// Signal that the previously inserted state in the 3D dynamic model is an impact.
+							// Prior to recalculating the dynamic model, the 3D impact state is the last in the model.
 							dynamicModel->UMA_signal_impact_2D();
 						}
 						dyn_model_result_t dynamicModelResult = dynamicModel->recalc(meas_v, fd->t);

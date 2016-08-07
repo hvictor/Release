@@ -35,6 +35,7 @@ typedef struct
 	struct timespec t;	// Instant
 
 	bool impacted;		// Impact status
+	bool impacted_2D;	// Impact status, 2D
 } dyn_state_t;
 
 typedef struct
