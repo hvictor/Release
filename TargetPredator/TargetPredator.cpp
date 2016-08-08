@@ -81,7 +81,8 @@ bool TargetPredator::compute_impact_status(double old_velocityX, double old_velo
 
 bool TargetPredator::prev_state_is_impact()
 {
-	list<pred_state_t>::iterator prev = state.begin() + 1;
+	list<pred_state_t>::iterator prev = state.begin();
+	prev++;
 	return prev->impact_status;
 }
 
