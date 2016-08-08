@@ -6,6 +6,7 @@
  */
 
 #include "DynamicModel.h"
+#include "uma.h"
 
 DynamicModel *DynamicModel::getInstance()
 {
