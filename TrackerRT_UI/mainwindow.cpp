@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->recordToBtn->setVisible(false);
-
+/*
     ui->lcdPeakCPU0->setSegmentStyle(QLCDNumber::Flat);
     ui->lcdPeakCPU0->setStyleSheet("background-color: black; color: lightgreen;");
 
@@ -96,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
     subWindowGPU->setWindowFlags(Qt::FramelessWindowHint);
     subWindowGPU->setAttribute(Qt::WA_DeleteOnClose);
     ui->mdiArea_5->addSubWindow(subWindowGPU);
+    */
 
     QObject::connect(ui->calibratorBtn, SIGNAL(clicked()), this, SLOT(startCalibrator()));
     QObject::connect(ui->btnSaveConfig, SIGNAL(clicked()), this, SLOT(saveConfig()));
