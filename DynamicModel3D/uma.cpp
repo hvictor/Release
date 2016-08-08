@@ -51,6 +51,8 @@ dyn_state_t *uma_analyze_buffer_data()
 		return 0;
 	}
 
+	// Find y-wise buffered local minima
+
 	// Impact shifted to the buffer central position, perform linear regression analysis
 	// Compute delta t and mean velocity during descent
 	double delta_ms = nanotimer_rt_ms_diff(&(initial_state->t), &(impact_state->t));
