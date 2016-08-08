@@ -110,10 +110,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->deviceComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setInputDevice(int)));
 
     // Frame Info
-    QObject::connect(ui->inputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameChannels(int)));
-    QObject::connect(ui->outputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameOutputType(int)));
-    QObject::connect(ui->frameWidthEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameWidth(QString)));
-    QObject::connect(ui->frameHeightEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameHeight(QString)));
+    //QObject::connect(ui->inputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameChannels(int)));
+    //QObject::connect(ui->outputFrameTypeComboBox, SIGNAL(currentIndexChanged(int)), uiModel, SLOT(setFrameOutputType(int)));
+    //QObject::connect(ui->frameWidthEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameWidth(QString)));
+    //QObject::connect(ui->frameHeightEdit, SIGNAL(textChanged(QString)), uiModel, SLOT(setFrameHeight(QString)));
 
     QObject::connect(ui->recordToBtn, SIGNAL(clicked(bool)), this, SLOT(chooseRecordDirectory()));
     QObject::connect(ui->startApplicationBtn, SIGNAL(clicked(bool)), this, SLOT(startApplication()));
