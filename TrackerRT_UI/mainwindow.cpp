@@ -146,10 +146,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->slider_FloorDistTol, SIGNAL(valueChanged(int)), this, SLOT(updateDynamicModel_SetImpactFloorDistTolerance(int)));
 
+    /*
     QObject::connect(ui->spinBoxFloorLinearModelX, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorX(double)));
     QObject::connect(ui->spinBoxFloorLinearModelY, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorY(double)));
     QObject::connect(ui->spinBoxFloorLinearModelZ, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorZ(double)));
     QObject::connect(ui->spinBoxFloorLinearModelD, SIGNAL(valueChanged(double)), this, SLOT(updateStaticModel_SetFloorPlaneLinearModelFactorD(double)));
+    */
 
     QObject::connect(ui->sliderNetHeight, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetNetHeight(int)));
     QObject::connect(ui->sliderMeasSMP, SIGNAL(valueChanged(int)), this, SLOT(updateStaticModel_SetStaticModelMeasureSamples(int)));
