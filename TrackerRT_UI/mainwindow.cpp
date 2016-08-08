@@ -195,10 +195,12 @@ void MainWindow::showFloorLinearModelCoefficients()
 
     PlaneLinearModel floorLinearModel = GroundModel::getInstance()->getGroundPlaneLinearModel();
 
+    /*
     ui->spinBoxFloorLinearModelX->setValue(floorLinearModel.a * 0.001);
     ui->spinBoxFloorLinearModelY->setValue(floorLinearModel.b * 0.001);
     ui->spinBoxFloorLinearModelZ->setValue(floorLinearModel.c * 0.001);
     ui->spinBoxFloorLinearModelD->setValue(floorLinearModel.d * 0.001);
+    */
 }
 
 void MainWindow::updatePlaybackParameters_SetPlaybackLatencyDivisor(int value)
