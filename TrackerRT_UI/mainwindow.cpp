@@ -345,6 +345,7 @@ void MainWindow::updatePlayModel_SetSinglePlayerLogic(bool status)
 
 void MainWindow::cpuCoreChanged(int value)
 {
+    /*
     QObject *sender = QObject::sender();
 
     if (sender == ui->horizontalSlider)
@@ -358,6 +359,7 @@ void MainWindow::cpuCoreChanged(int value)
     else if (sender == ui->horizontalSlider_6)
         this->ui->lcdPeakGPU->display(CircularIndicator::gpu_freq[value]);
         //this->ui->labelPeakGPU->setText(QString("Peak ") + QString::number(CircularIndicator::gpu_freq[value]) + " [MHz]");
+        */
 }
 
 void MainWindow::toggleDepthMeasurementsStatus(bool status)
