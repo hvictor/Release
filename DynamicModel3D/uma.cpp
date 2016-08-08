@@ -96,11 +96,15 @@ dyn_state_t *uma_update(dyn_state_t *state)
 			prev->impacted = true;
 		}
 
+		printf("UMA :: relaxed solution is OK\n");
+
 		return prev;
 	}
 
 	// Perform buffered data analysis
 	dyn_state_t *res = uma_analyze_buffer_data();
+
+	printf("UMA :: Algorithm results: impact state = [%.2f %.2f %.2f]\n",res->pos.x, res->pos.y, res->pos.z);
 
 	return res;
 }
